@@ -1,0 +1,31 @@
+= form_with(model: book) do |form|
+  - if book.errors.any?
+    #error_explanation
+      h2
+        = pluralize(book.errors.count, "error")
+        | prohibited this book from being saved:
+      ul
+        - book.errors.each do |error|
+          li= error.full_message
+  p
+    = form.label :title
+    = form.text_field :title
+  p
+    = form.label :original_title
+    = form.text_field :original_title
+  p
+    = form.label :reference
+    = form.text_field :reference
+  p
+    = form.label :image_url
+    = form.text_field :image_url
+  p
+    = form.label :year_published
+    = form.text_field :year_published
+  .actions
+    = form.submit
+
+
+br
+
+iframe src='https://www.goodreads.com/search?q=Herbert+G.+Wells+The+Secret+Places+of+the+Heart'

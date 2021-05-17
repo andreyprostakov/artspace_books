@@ -1,0 +1,88 @@
+// Place all the styles related to the books controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+body a {
+  color: #000;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+    color: #000;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
+.books-table {
+  .year-link {
+    font-weight: bold;
+  }
+
+  .current-year {
+    border: 1px solid black;
+    padding: 2px;
+  }
+
+  .book-case {
+    display: inline-block;
+    position: relative;
+    width: 130px;
+    min-height: 250px;
+    margin: 10px 20px 0 0;
+    vertical-align: top;
+  }
+
+  .book-author {
+    font-size: 10px;
+  }
+
+  .book-title {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .book-cover {
+    display: block;
+    position: relative;
+    height: 200px;
+    width: 130px;
+    border-radius: 3px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      .book-actions {
+        display: block;
+      }
+    }
+  }
+
+  .book-actions {
+    display: none;
+    position: absolute;
+    width: 75px;
+    height: 42px;
+    margin: auto auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+
+    a {
+      display: block;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
+  }
+}

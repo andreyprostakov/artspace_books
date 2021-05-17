@@ -1,0 +1,29 @@
+p#notice= notice
+h1 Books
+table.books-table[
+  data-behaviour='books-list'
+  data-nav-future-url=(books_path(year: @next_year) if @next_year.present?)
+  data-nav-past-url=(books_path(year: @previous_year) if @previous_year.present?)
+  ]
+  tbody
+    - indexed_books = @books.group_by(&:year_published)
+    - indexed_books.each do |year, books|
+      tr
+        td
+          - if year == @year
+            .current-year = year
+          - else
+            = link_to year, books_path(year: year), class: 'year-link'
+        td
+          - books.each do |book|
+            .book-case
+              .book-cover style="background-image: url('#{book_cover_image_url(book)}')"
+                .book-actions
+                  = link_to 'Edit', edit_book_path(book)
+                  = link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' }
+              = link_to book.author.fullname, author_path(book.author_id), class: 'book-author'
+              .book-title
+                - if book.reference.present?
+                  = link_to book.title, book.reference, target: '_blank'
+                - else
+                  = book.title
