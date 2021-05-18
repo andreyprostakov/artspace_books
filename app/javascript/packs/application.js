@@ -10,6 +10,8 @@ import "channels"
 import 'jquery'
 import 'lodash'
 
+import 'components/clipboard-control'
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
@@ -17,8 +19,14 @@ ActiveStorage.start()
 class Navigator {
   constructor() {
     this.$booksListContainer = $('[data-behaviour=books-list]')
+    this.nowUrl = '/books'
     this.futureUrl = this.$booksListContainer.data('nav-future-url')
     this.pastUrl = this.$booksListContainer.data('nav-past-url')
+    this.bigBangUrl = this.$booksListContainer.data('nav-big-bang-url')
+  }
+
+  gotoNow() {
+    window.location = this.nowUrl
   }
 
   gotoFuture() {
@@ -32,23 +40,33 @@ class Navigator {
 
     window.location = this.pastUrl
   }
+
+  gotoBigBang() {
+    window.location = this.bigBangUrl
+  }
 }
 
 $(() => {
-  console.log('page ready!')
   var navigator = new Navigator()
+
   $('body').on('keyup', (e) => {
     console.log(e.key)
     switch (e.key) {
       case 'ArrowUp':
         e.preventDefault()
-        console.log('Future!')
         navigator.gotoFuture()
         break
       case 'ArrowDown':
         e.preventDefault()
-        console.log('Past!')
         navigator.gotoPast()
+        break
+      case 'Home':
+        e.preventDefault()
+        navigator.gotoNow()
+        break
+      case 'End':
+        e.preventDefault()
+        navigator.gotoBigBang()
         break
     }
   })

@@ -28,6 +28,7 @@ gem 'slim'
 gem 'wikipedia-client'
 gem 'httparty'
 gem 'bootstrap', '~> 5.0.1'
+gem 'annotate'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

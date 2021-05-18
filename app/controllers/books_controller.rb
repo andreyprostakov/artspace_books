@@ -5,19 +5,7 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    years = Book.order(year_published: :asc).pluck(:year_published).uniq
-    if params[:year] && (year = params[:year].to_i).in?(years)
-      @year = year
-    else
-      @year = years.last
-    end
-    year_index = years.index(@year)
-    @next_year = years[year_index + 1]
-    @previous_year = years[year_index - 1]
-    years_to_load = [@previous_year, @year, @next_year]
-    years_to_load << years[year_index + 2] if @previous_year.nil?
-    years_to_load << years[year_index - 2] if @next_year.nil?
-    years_to_load.compact!
+    years_to_load = fetch_years_navigation
     @books = Book.preload(:author).order(year_published: :desc, title: :asc).where(year_published: years_to_load)
     session[:last_books_filter] = request.url
   end
@@ -69,6 +57,28 @@ class BooksController < ApplicationController
   end
 
   private
+
+  def fetch_years_navigation
+    years = Book.order(year_published: :asc).pluck(:year_published).uniq
+
+    if params[:year] && (year = params[:year].to_i).in?(years)
+      @year = year
+    else
+      @year = years.last
+    end
+
+    year_index = years.index(@year)
+    @next_year = years[year_index + 1]
+    @previous_year = years[year_index - 1]
+    @first_year = years.first
+    [
+      (years[year_index - 2] if @next_year.nil?),
+      @previous_year,
+      @year,
+      @next_year,
+      (years[year_index + 2] if @previous_year.nil?)
+    ].compact
+  end
 
   def set_book
     @book = Book.find(params[:id])

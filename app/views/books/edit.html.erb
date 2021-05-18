@@ -2,5 +2,5 @@
 
 <%= render 'form', book: @book %>
 
-<%= link_to 'Show', @book %> |
+<%= link_to 'Destroy', @book, method: :delete, data: { confirm: 'Are you sure?' } %> | 
 <%= link_to 'Back', return_destination %>
