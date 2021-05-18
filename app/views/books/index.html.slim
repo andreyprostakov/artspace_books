@@ -2,16 +2,15 @@ p#notice= notice
 h1 Books
 table.books-table[
   data-behaviour='books-list'
-  data-nav-future-url=(books_path(year: @next_year) if @next_year.present?)
-  data-nav-past-url=(books_path(year: @previous_year) if @previous_year.present?)
-  data-nav-big-bang-url=(books_path(year: @first_year))
+  data-books-years=(@years)
+  data-current-year=(@current_year)
   ]
   tbody
     - indexed_books = @books.group_by(&:year_published)
     - indexed_books.each do |year, books|
       tr
         td
-          - if year == @year
+          - if year == @current_year
             .current-year = year
           - else
             = link_to year, books_path(year: year), class: 'year-link'
@@ -27,8 +26,8 @@ table.books-table[
               = link_to book.author.fullname, author_path(book.author_id), class: 'book-author'
 
               .book-title
-                - if book.reference.present?
-                  = link_to book.title, book.reference, target: '_blank'
+                - if book.url.present?
+                  = link_to book.title, book.url, target: '_blank'
                 - else
                   = book.title
 
