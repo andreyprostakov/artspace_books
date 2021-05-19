@@ -1,9 +1,12 @@
 class Navigator {
   constructor() {
     this.$booksListContainer = $('[data-behaviour=books-list]')
+    if (this.$booksListContainer.length == 0) { return }
+
     this.allYears = this.$booksListContainer.data('books-years')
     this.currentYear = this.$booksListContainer.data('current-year')
-    this.currentYearIndex = this.allYears.indexOf(this.currentYear);
+    this.currentYearIndex = this.allYears.indexOf(this.currentYear)
+    this.valid = true
   }
 
   gotoNow() {
@@ -29,6 +32,7 @@ class Navigator {
 
 $(() => {
   var navigator = new Navigator()
+  if (!navigator.valid) { return }
 
   $('body').on('keyup', (e) => {
     console.log(e.key)

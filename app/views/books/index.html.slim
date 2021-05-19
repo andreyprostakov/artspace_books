@@ -1,5 +1,9 @@
 p#notice= notice
+
 h1 Books
+
+= react_component 'BooksList', years: @years, currentYear: @current_year
+
 table.books-table[
   data-behaviour='books-list'
   data-books-years=(@years)

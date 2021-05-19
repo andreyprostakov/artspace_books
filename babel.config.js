@@ -25,6 +25,9 @@ module.exports = function(api) {
           }
         }
       ],
+      [
+        '@babel/preset-react'
+      ],
       (isProductionEnv || isDevelopmentEnv) && [
         '@babel/preset-env',
         {
@@ -41,6 +44,7 @@ module.exports = function(api) {
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
+      ["@babel/plugin-proposal-private-methods", { "loose": true }]
       [
         '@babel/plugin-proposal-class-properties',
         {
