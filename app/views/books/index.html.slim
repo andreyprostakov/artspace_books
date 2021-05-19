@@ -21,7 +21,7 @@ table.books-table[
               .book-cover style="background-image: url('#{book_cover_image_url(book)}')"
                 .book-actions
                   = link_to 'Edit', edit_book_path(book)
-                  = link_to 'Search..', "http://google.com/search?#{{ q: [book.author.fullname, book.title].join(' ') }.to_query}", target: '_blank'
+                  = link_to 'Search..', "http://google.com/search?#{{ q: ['goodreads', book.author.fullname, book.title].join(' ') }.to_query}", target: '_blank'
 
               = link_to book.author.fullname, author_path(book.author_id), class: 'book-author'
 
