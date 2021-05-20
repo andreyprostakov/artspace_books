@@ -20,6 +20,8 @@ table.books-table[
             = link_to year, books_path(year: year), class: 'year-link'
 
         td
+          = react_component('BooksListItem', id: 13, title: 'Readme!', authorId: 3)
+
           - books.each do |book|
             .book-case
               .book-cover style="background-image: url('#{book_cover_image_url(book)}')"
