@@ -44,7 +44,7 @@ module.exports = function(api) {
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',
       '@babel/plugin-transform-destructuring',
-      ["@babel/plugin-proposal-private-methods", { "loose": true }]
+      ['@babel/plugin-proposal-private-methods', { 'loose': true }]
       [
         '@babel/plugin-proposal-class-properties',
         {
@@ -68,7 +68,8 @@ module.exports = function(api) {
         {
           async: false
         }
-      ]
+      ],
+      ['@babel/plugin-proposal-decorators', { 'legacy': true }]
     ].filter(Boolean)
   }
 }

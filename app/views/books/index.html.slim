@@ -2,39 +2,4 @@ p#notice= notice
 
 h1 Books
 
-= react_component 'BooksList', years: @years, currentYear: @current_year
-
-table.books-table[
-  data-behaviour='books-list'
-  data-books-years=(@years)
-  data-current-year=(@current_year)
-  ]
-  tbody
-    - indexed_books = @books.group_by(&:year_published)
-    - indexed_books.each do |year, books|
-      tr
-        td
-          - if year == @current_year
-            .current-year = year
-          - else
-            = link_to year, books_path(year: year), class: 'year-link'
-
-        td
-          = react_component('BooksListItem', id: 13, title: 'Readme!', authorId: 3)
-
-          - books.each do |book|
-            .book-case
-              .book-cover style="background-image: url('#{book_cover_image_url(book)}')"
-                .book-actions
-                  = link_to 'Edit', edit_book_path(book)
-                  = link_to 'Search..', "http://google.com/search?#{{ q: ['goodreads', book.author.fullname, book.title].join(' ') }.to_query}", target: '_blank'
-
-              = link_to book.author.fullname, author_path(book.author_id), class: 'book-author'
-
-              .book-title
-                - if book.url.present?
-                  = link_to book.title, book.url, target: '_blank'
-                - else
-                  = book.title
-
-= hidden_field_tag :clipboard_buffer, id: 'clipboard_buffer'
+= react_component 'BooksListPage'

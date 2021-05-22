@@ -8,8 +8,6 @@ import Turbolinks from 'turbolinks'
 import 'jquery'
 import 'lodash'
 
-import 'components/books-navigator'
-
 Rails.start()
 Turbolinks.start()
 
