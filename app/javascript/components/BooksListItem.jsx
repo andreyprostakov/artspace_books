@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import classnames from 'classnames'
@@ -14,9 +14,16 @@ const booksListItem = (props) => {
   const { id } = props
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
+  const ref = useRef(null)
   const isSelected = useSelector(selectSelectedBookId) == id
+  useEffect(() => {
+    if (isSelected) {
+      ref.current?.scrollIntoViewIfNeeded()
+    }
+  })
+
   return (
-    <div className={ classnames('book-case', { 'selected': isSelected }) }>
+    <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <div className='book-cover' style={ { backgroundImage: 'url(\'' + book.coverUrl + '\')' } }>
         <div className='book-actions'>
         <a href='#'>Edit</a>

@@ -21,7 +21,6 @@ class BooksList extends React.Component {
     const { years } = this.props
     return (
       <div className='books-list'>
-        <NavController/>
         { years.map(year =>
           <BooksListYearRow year={ year } key={ year }/>
         ) }
