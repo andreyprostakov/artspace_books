@@ -20,6 +20,7 @@
     "react-keydown": "^1.9.12",
     "react-redux": "^7.2.4",
     "react_ujs": "^2.6.1",
+    "redux-thunk": "^2.3.0",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"

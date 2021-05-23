@@ -2,28 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import classnames from 'classnames'
-import { selectBookById } from 'store/booksListSlice'
+import { selectBook, selectAuthor, selectSelectedBookId } from 'store/booksListSlice'
 
-const searchUrl = (book) => {
+const searchUrl = (book, author) => {
   var params = new URLSearchParams()
-  params.append('q', `goodreads ${book.author_id} ${book.title}`)
+  params.append('q', `goodreads ${author?.fullname} ${book.title}`)
   return `http://google.com/search?${params.toString()}`
 }
 
 const booksListItem = (props) => {
   const { id } = props
-  const book = useSelector(selectBookById(id))
-  const isSelected = useSelector(state => state.booksList.selectedBookId == id)
+  const book = useSelector(selectBook(id))
+  const author = useSelector(selectAuthor(book.author_id))
+  const isSelected = useSelector(selectSelectedBookId) == id
   return (
     <div className={ classnames('book-case', { 'selected': isSelected }) }>
       <div className='book-cover' style={ { backgroundImage: 'url(\'' + book.cover_url + '\')' } }>
         <div className='book-actions'>
         <a href='#'>Edit</a>
-        <a href={ searchUrl(book) } target='_blank'>Search..</a>
+        <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
         </div>
       </div>
 
-      <a href='#' className='book-author'>AUTHOR NAME</a>
+      <div href='#' className='book-author'>{ author?.fullname }</div>
 
       <div className='book-title'>
         { book.url

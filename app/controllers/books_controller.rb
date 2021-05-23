@@ -59,21 +59,9 @@ class BooksController < ApplicationController
   private
 
   def fetch_years_navigation
-    years = Book.order(year_published: :asc).pluck(:year_published).uniq
-    @years = years
+    return params[:years] if params[:years].present?
 
-    if params[:year] && (year = params[:year].to_i).in?(years)
-      @current_year = year
-    else
-      @current_year = years.last
-    end
-
-    year_index = years.index(@current_year)
-    [
-      (years[year_index - 1] if year_index >= 1),
-      @current_year,
-      years[year_index + 1]
-    ].compact
+    Book.order(year_published: :desc).pluck(:year_published).uniq.first(3).compact
   end
 
   def set_book

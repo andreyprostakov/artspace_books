@@ -1,33 +1,37 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectBookIdsByYear, selectCurrentYears, addBooks } from 'store/booksListSlice'
+import { connect, useSelector, useDispatch } from 'react-redux'
+import { selectBookIdsByYear, selectYearsToDisplay, fetchBooks, fetchAuthors, fetchYears, setSelection } from 'store/booksListSlice'
 import BooksListItem from 'components/BooksListItem'
 import NavController from 'components/NavController'
 import booksLoader from 'serverApi/booksLoader'
 
-const booksList = () => {
-  const dispatch = useDispatch()
-  const currentYears = useSelector(selectCurrentYears)
-  const [loadStarted, setLoadStarted] = useState(false)
-
-  if (!loadStarted) {
-    setLoadStarted(true)
-    booksLoader.initialLoad().then((books) => dispatch(addBooks(books)))
+class BooksList extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props
+    Promise.all([
+      dispatch(fetchYears),
+      dispatch(fetchAuthors),
+      dispatch(fetchBooks)
+    ]).then(() =>
+      dispatch(setSelection())
+    )
   }
 
-  return (
-    <div className='books-list'>
-      <NavController/>
-      { currentYears.reverse().map(year =>
-        <BooksListYearRow year={ year } key={ year }/>
-      ) }
-    </div>
-  )
+  render () {
+    const { years } = this.props
+    return (
+      <div className='books-list'>
+        <NavController/>
+        { years.map(year =>
+          <BooksListYearRow year={ year } key={ year }/>
+        ) }
+      </div>
+    )
+  }
 }
 
 const BooksListYearRow = (props) => {
   const bookIds = useSelector(selectBookIdsByYear(props.year))
-  console.log(bookIds)
   return (
     <div className='list-year row'>
       <div className='year-number col-1'>
@@ -36,6 +40,7 @@ const BooksListYearRow = (props) => {
           <div className='tick-sign'/>
         </div>
       </div>
+
       <div className='year-books col-11'>
         { bookIds.map(bookId =>
           <BooksListItem id={ bookId } key={ bookId }/>
@@ -45,4 +50,10 @@ const BooksListYearRow = (props) => {
   )
 }
 
-export default booksList
+const mapStateToProps = state => {
+  return {
+    years: selectYearsToDisplay()(state)
+  }
+}
+
+export default connect(mapStateToProps)(BooksList)

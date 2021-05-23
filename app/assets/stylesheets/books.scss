@@ -27,6 +27,11 @@ body a {
     }
   }
 
+  .year-books {
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+
   .year-link {
     font-weight: bold;
   }

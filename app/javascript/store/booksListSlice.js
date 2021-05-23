@@ -1,84 +1,143 @@
-import { groupBy, find, mapValues, sort, uniq } from 'lodash'
-import { createSlice, configureStore } from '@reduxjs/toolkit'
+import { compact, difference, groupBy, find, first, last, mapValues, sort, uniq } from 'lodash'
+import { createSelector, createSlice, configureStore, current } from '@reduxjs/toolkit'
 
 const slice = createSlice({
   name: 'booksList',
   initialState: {
-    books: [],
-    selectedBookId: null
+    books: {
+      byIds: {},
+      currentId: null,
+      yearsLoaded: []
+    },
+    years: {
+      all: [],
+      current: null
+    },
+    authors: {
+      byIds: {}
+    }
   },
   reducers: {
+    setYears: (state, action) => {
+      const years = action.payload
+      state.years.all = years.sort()
+    },
+
+    setCurrentYear: (state, action) => {
+      const targetYear = action.payload
+      state.years.current = targetYear
+      state.books.currentId = Object.values(state.books.byIds).find(book => book.year == targetYear)?.id
+    },
+
+    setAuthors: (state, action) => {
+      const authors = action.payload
+      state.authors.byIds = {}
+      authors.forEach(author => state.authors.byIds[author.id] = author)
+    },
+
+    setBooks: (state, action) => {
+      const books = action.payload
+      state.books.byIds = {}
+      books.forEach(book => state.books.byIds[book.id] = book)
+
+      const years = uniq(books.map(book => book.year))
+      state.books.yearsLoaded = years
+    },
+
     addBooks: (state, action) => {
       const books = action.payload
-      state.books = state.books.concat(books)
-      if (!state.selectedBookId) {
-        state.selectedBookId = _.first(books).id
-      }
+      books.forEach(book => state.books.byIds[book.id] = book)
+
+      const years = uniq(books.map(book => book.year))
+      state.books.yearsLoaded = uniq([...state.books.yearsLoaded, ...years])
     },
 
-    shiftSelectionDown: (state) => {
-      const { books, selectedBookId } = state
-      if (books.length < 1 || !selectedBookId) { return }
-
-      const years = uniq(books.map(book => book.year)).sort()
-      const currentYear = find(books, { id: selectedBookId })?.year
-      const previousYear = years[years.indexOf(currentYear) - 1]
-      if (!previousYear) { return }
-
-      const newSelectedBook = find(books, { year: previousYear })
-      if (!newSelectedBook) { return }
-
-      state.selectedBookId = newSelectedBook.id
+    setSelection: (state) => {
+      const year = last(state.years.all)
+      state.years.current = year
+      state.books.currentId = Object.values(state.books.byIds).find(book => book.year == year).id
     },
 
-    shiftSelectionUp: (state) => {
-      const { books, selectedBookId } = state
-      if (books.length < 1 || !selectedBookId) { return }
+    shiftBookSelection: (state, action) => {
+      const shift = action.payload
+      const yearBookIds = Object.values(state.books.byIds).filter(book => book.year == state.years.current).map(book => book.id)
+      const index = yearBookIds.indexOf(state.books.currentId)
+      const targetId = yearBookIds[index + shift]
+      if (!targetId) { return }
 
-      const years = uniq(books.map(book => book.year)).sort()
-      const currentYear = find(books, { id: selectedBookId })?.year
-      const nextYear = years[years.indexOf(currentYear) + 1]
-      if (!nextYear) { return }
-
-      const newSelectedBook = find(books, { year: nextYear })
-      if (!newSelectedBook) { return }
-
-      state.selectedBookId = newSelectedBook.id
-    },
-
-    shiftSelectionRight: (state) => {
-      const { books, selectedBookId } = state
-      if (books.length < 1 || !selectedBookId) { return }
-
-      const selectedBook = find(books, { id: selectedBookId })
-      const selectedBookIndex = books.indexOf(selectedBook)
-      const newSelectedBook = books.find((book, index) => (index > selectedBookIndex) && (book.year == selectedBook.year))
-      if (!newSelectedBook) { return }
-
-      state.selectedBookId = newSelectedBook.id
-    },
-
-    shiftSelectionLeft: (state) => {
-      const { books, selectedBookId } = state
-      if (books.length < 1 || !selectedBookId) { return }
-
-      const selectedBook = find(books, { id: selectedBookId })
-      const reversedBooks = books.slice().reverse()
-      const selectedBookIndex = reversedBooks.indexOf(selectedBook)
-      const newSelectedBook = reversedBooks.find((book, index) => (index > selectedBookIndex) && (book.year == selectedBook.year))
-      if (!newSelectedBook) { return }
-
-      state.selectedBookId = newSelectedBook.id
+      state.books.currentId = targetId
     }
   }
 })
 
-export const { addBooks, shiftSelectionDown, shiftSelectionUp, shiftSelectionLeft, shiftSelectionRight } = slice.actions
 
-export const selectBooks = state => state.booksList.books
-export const selectBookIds = state => state.booksList.books.map(book => book.id)
-export const selectBookById = id => state => find(state.booksList.books, { id: id })
-export const selectBookIdsByYear = year => state => state.booksList.books.filter(book => book.year == year).map(book => book.id)
-export const selectCurrentYears = state => uniq(state.booksList.books.map(book => book.year)).sort()
+export const selectYearsReversed = state => state.booksList.years.all.slice().reverse()
+
+export const selectYearsToDisplay = (year = null) => state => {
+  console.log('selectYearsToDisplay')
+  console.log([year, state.booksList.years.current])
+  const topYear = year || state.booksList.years.current
+  const { all } = state.booksList.years
+  const allReversed = all.slice().reverse()
+  const index = allReversed.indexOf(topYear)
+  const r = compact(
+    [
+      topYear,
+      allReversed[index + 1],
+      allReversed[index + 2]
+    ]
+  )
+  console.log(r)
+  return r
+}
+
+export const selectAuthor = id => state => state.booksList.authors.byIds[id]
+
+export const selectBook = id => state => state.booksList.books.byIds[id]
+
+export const selectSelectedBookId = state => state.booksList.books.currentId
+
+export const selectBookIdsByYear = year => state => {
+  return Object.values(state.booksList.books.byIds).filter(book => book.year == year).map(book => book.id)
+}
+
+export const { setSelection, shiftBookSelection } = slice.actions
+
+
+export async function fetchYears(dispatch, getState) {
+  const response = await $.ajax({ url: 'years.json' })
+  dispatch(slice.actions.setYears(response))
+}
+
+export async function fetchAuthors(dispatch, getState) {
+  const response = await $.ajax({ url: 'authors.json' })
+  dispatch(slice.actions.setAuthors(response))
+}
+
+export async function fetchBooks(dispatch, getState) {
+  const response = await $.ajax({ url: 'books.json' })
+  dispatch(slice.actions.setBooks(response))
+}
+
+export function shiftYear(shift) {
+  return async (dispatch, getState) => {
+    const state = getState()
+    const { all, current } = state.booksList.years
+    const index = all.indexOf(current)
+    const targetYear = all[index + shift]
+    console.log(targetYear)
+    if (!targetYear) { return }
+
+    const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
+    const yearsToLoad = difference(yearsToDisplay, state.booksList.books.yearsLoaded)
+    if (yearsToLoad.length > 0) {
+      var params = new URLSearchParams()
+      yearsToLoad.forEach(year => params.append('years[]', year))
+      const response = await $.ajax({ url: `books.json?${params.toString()}` })
+      dispatch(slice.actions.addBooks(response))
+    }
+    dispatch(slice.actions.setCurrentYear(targetYear))
+  }
+}
 
 export default slice.reducer

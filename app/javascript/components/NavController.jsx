@@ -1,37 +1,64 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import keydown, { Keys } from 'react-keydown'
-import { shiftSelectionDown, shiftSelectionUp, selectCurrentYears } from 'store/booksListSlice'
+import { shiftSelectionLeft, shiftSelectionRight, shiftYear, shiftBookSelection } from 'store/booksListSlice'
 
 window.Keys = Keys
 
-@keydown(Keys.DOWN, Keys.UP)
+@keydown()
 class NavController extends React.Component {
   @keydown(Keys.DOWN)
-  dddshiftSelectionDown(event) {
-    const { dispatch } = this.props
+  handleKeyPressDown(event) {
     console.log('SHIFT DOWN!')
     event.preventDefault()
-    console.log(event)
-    console.log([dispatch, shiftSelectionDown])
-    dispatch({ type: 'booksList/shiftSelectionDown' })
+    this.down()
   }
 
   @keydown(Keys.UP)
-  dddshiftSelectionUp(event) {
-    const { dispatch } = this.props
+  handleKeyPressUp(event) {
     event.preventDefault()
-    dispatch({ type: 'booksList/shiftSelectionUp' })
+    this.up()
+  }
+
+  @keydown(Keys.LEFT)
+  handleKeyPressLeft(event) {
+    event.preventDefault()
+    this.left()
+  }
+
+  @keydown(Keys.RIGHT)
+  handleKeyPressRight(event) {
+    event.preventDefault()
+    this.right()
+  }
+
+  up() {
+    const { dispatch } = this.props
+    dispatch(shiftYear(+1))
+  }
+
+  down() {
+    const { dispatch } = this.props
+    dispatch(shiftYear(-1))
+  }
+
+  left() {
+    const { dispatch } = this.props
+    dispatch(shiftBookSelection(-1))
+  }
+
+  right() {
+    const { dispatch } = this.props
+    dispatch(shiftBookSelection(+1))
   }
 
   render() {
-    const { dispatch } = this.props
     return (
       <div className='button-group'>
-        <button className='btn btn-light' onClick={ () => dispatch(() => shiftSelectionUp()) }>UP</button>
-        <button className='btn btn-light' onClick={ () => dispatch(() => shiftSelectionDown()) }>DOWN</button>
-        <button className='btn btn-light'>LEFT</button>
-        <button className='btn btn-light'>RIGHT</button>
+        <button className='btn btn-light' onClick={ () => this.up() }>UP</button>
+        <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
+        <button className='btn btn-light' onClick={ () => this.left() }>LEFT</button>
+        <button className='btn btn-light' onClick={ () => this.right() }>RIGHT</button>
       </div>
     )
   }
