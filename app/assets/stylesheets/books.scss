@@ -29,7 +29,7 @@ body a {
 
   .year-books {
     white-space: nowrap;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 
   .year-link {
@@ -61,6 +61,11 @@ body a {
   }
 
   .book-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
     font-size: 12px;
     font-style: italic;
   }

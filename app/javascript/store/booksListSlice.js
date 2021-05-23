@@ -1,5 +1,6 @@
 import { compact, difference, groupBy, find, first, last, mapValues, sort, uniq } from 'lodash'
 import { createSelector, createSlice, configureStore, current } from '@reduxjs/toolkit'
+import apiClient from 'serverApi/apiClient'
 
 const slice = createSlice({
   name: 'booksList',
@@ -74,21 +75,17 @@ const slice = createSlice({
 export const selectYearsReversed = state => state.booksList.years.all.slice().reverse()
 
 export const selectYearsToDisplay = (year = null) => state => {
-  console.log('selectYearsToDisplay')
-  console.log([year, state.booksList.years.current])
   const topYear = year || state.booksList.years.current
   const { all } = state.booksList.years
   const allReversed = all.slice().reverse()
   const index = allReversed.indexOf(topYear)
-  const r = compact(
+  return compact(
     [
       topYear,
       allReversed[index + 1],
       allReversed[index + 2]
     ]
   )
-  console.log(r)
-  return r
 }
 
 export const selectAuthor = id => state => state.booksList.authors.byIds[id]
@@ -115,7 +112,8 @@ export async function fetchAuthors(dispatch, getState) {
 }
 
 export async function fetchBooks(dispatch, getState) {
-  const response = await $.ajax({ url: 'books.json' })
+  const yearsToDisplay = selectYearsToDisplay()(getState())
+  const response = await apiClient.getBooks({ years: yearsToDisplay })
   dispatch(slice.actions.setBooks(response))
 }
 
@@ -131,9 +129,7 @@ export function shiftYear(shift) {
     const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
     const yearsToLoad = difference(yearsToDisplay, state.booksList.books.yearsLoaded)
     if (yearsToLoad.length > 0) {
-      var params = new URLSearchParams()
-      yearsToLoad.forEach(year => params.append('years[]', year))
-      const response = await $.ajax({ url: `books.json?${params.toString()}` })
+      const response = await apiClient.getBooks({ years: yearsToLoad })
       dispatch(slice.actions.addBooks(response))
     }
     dispatch(slice.actions.setCurrentYear(targetYear))

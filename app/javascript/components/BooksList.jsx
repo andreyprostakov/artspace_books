@@ -3,16 +3,16 @@ import { connect, useSelector, useDispatch } from 'react-redux'
 import { selectBookIdsByYear, selectYearsToDisplay, fetchBooks, fetchAuthors, fetchYears, setSelection } from 'store/booksListSlice'
 import BooksListItem from 'components/BooksListItem'
 import NavController from 'components/NavController'
-import booksLoader from 'serverApi/booksLoader'
 
 class BooksList extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
     Promise.all([
       dispatch(fetchYears),
-      dispatch(fetchAuthors),
-      dispatch(fetchBooks)
+      dispatch(fetchAuthors)
     ]).then(() =>
+      dispatch(fetchBooks)
+    ).then(() =>
       dispatch(setSelection())
     )
   }
@@ -41,10 +41,12 @@ const BooksListYearRow = (props) => {
         </div>
       </div>
 
-      <div className='year-books col-11'>
-        { bookIds.map(bookId =>
-          <BooksListItem id={ bookId } key={ bookId }/>
-        ) }
+      <div className='col-11'>
+        <div className='year-books'>
+          { bookIds.map(bookId =>
+            <BooksListItem id={ bookId } key={ bookId }/>
+          ) }
+        </div>
       </div>
     </div>
   )
