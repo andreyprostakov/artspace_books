@@ -114,3 +114,9 @@ body a {
     }
   }
 }
+
+.book-modal-backdrop {
+  &.show {
+    opacity: 0.2;
+  }
+}

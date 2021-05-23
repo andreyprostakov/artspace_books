@@ -8,6 +8,7 @@ const slice = createSlice({
     books: {
       byIds: {},
       currentId: null,
+      modalShown: false,
       yearsLoaded: []
     },
     years: {
@@ -67,6 +68,12 @@ const slice = createSlice({
       if (!targetId) { return }
 
       state.books.currentId = targetId
+    },
+
+    setBookModalShown: (state, action) => {
+      if (!state.books.currentId) { return }
+
+      state.books.modalShown = action.payload
     }
   }
 })
@@ -94,11 +101,13 @@ export const selectBook = id => state => state.booksList.books.byIds[id]
 
 export const selectSelectedBookId = state => state.booksList.books.currentId
 
+export const selectBookModalShown = state => state.booksList.books.modalShown
+
 export const selectBookIdsByYear = year => state => {
   return Object.values(state.booksList.books.byIds).filter(book => book.year == year).map(book => book.id)
 }
 
-export const { setSelection, shiftBookSelection } = slice.actions
+export const { setSelection, shiftBookSelection, setBookModalShown } = slice.actions
 
 
 export async function fetchYears(dispatch, getState) {
@@ -123,7 +132,6 @@ export function shiftYear(shift) {
     const { all, current } = state.booksList.years
     const index = all.indexOf(current)
     const targetYear = all[index + shift]
-    console.log(targetYear)
     if (!targetYear) { return }
 
     const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
@@ -133,6 +141,12 @@ export function shiftYear(shift) {
       dispatch(slice.actions.addBooks(response))
     }
     dispatch(slice.actions.setCurrentYear(targetYear))
+  }
+}
+
+export function submitBookDetails(details) {
+  return async (dispatch, getState) => {
+    return null
   }
 }
 

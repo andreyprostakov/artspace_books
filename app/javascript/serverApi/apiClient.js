@@ -17,6 +17,44 @@ class ApiClient {
       books.map(bookData => Book.parse(bookData))
     )
   }
+
+  getBookDetails(id) {
+    return $.ajax({
+      url: `/books/${id}.json`
+    }).then((book) => {
+      const {
+        id, title,
+        original_title: originalTitle,
+        goodreads_url: goodreadsUrl, wiki_url: wikiUrl,
+        image_url: imageUrl,
+        author_id: authorId,
+        year_published: yearPublished
+      } = book
+      return {
+        id, title, goodreadsUrl, wikiUrl, imageUrl, authorId, yearPublished
+      }
+    })
+  }
+
+  putBookDetails(id, details) {
+    const {
+      title,
+      originalTitle: original_title,
+      goodreadsUrl: goodreads_url,
+      wikiUrl: wiki_url,
+      imageUrl: image_url,
+      authorId: author_id,
+      yearPublished: year_published
+    } = details
+    const body = {
+      title, goodreads_url, wiki_url, image_url, author_id, year_published
+    }
+    return $.ajax({
+      url: `/books/${id}.json`,
+      type: 'PUT',
+      data: { book: body }
+    })
+  }
 }
 
 const objectToParams = (object) => {

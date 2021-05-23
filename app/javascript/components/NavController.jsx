@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import keydown, { Keys } from 'react-keydown'
-import { shiftSelectionLeft, shiftSelectionRight, shiftYear, shiftBookSelection } from 'store/booksListSlice'
+import { shiftYear, shiftBookSelection, setBookModalShown } from 'store/booksListSlice'
 
 window.Keys = Keys
 
@@ -9,7 +9,6 @@ window.Keys = Keys
 class NavController extends React.Component {
   @keydown(Keys.DOWN)
   handleKeyPressDown(event) {
-    console.log('SHIFT DOWN!')
     event.preventDefault()
     this.down()
   }
@@ -30,6 +29,14 @@ class NavController extends React.Component {
   handleKeyPressRight(event) {
     event.preventDefault()
     this.right()
+  }
+
+  @keydown(Keys.ENTER)
+  handleEnter(event) {
+    event.preventDefault()
+    console.log('ENTER!')
+    const { dispatch } = this.props
+    dispatch(setBookModalShown(true))
   }
 
   up() {
@@ -54,12 +61,15 @@ class NavController extends React.Component {
 
   render() {
     return (
-      <div className='button-group'>
-        <button className='btn btn-light' onClick={ () => this.up() }>UP</button>
-        <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
-        <button className='btn btn-light' onClick={ () => this.left() }>LEFT</button>
-        <button className='btn btn-light' onClick={ () => this.right() }>RIGHT</button>
-      </div>
+      <>
+        <div className='button-group'>
+          <button className='btn btn-light' onClick={ () => this.up() }>UP</button>
+          <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
+          <button className='btn btn-light' onClick={ () => this.left() }>LEFT</button>
+          <button className='btn btn-light' onClick={ () => this.right() }>RIGHT</button>
+        </div>
+        { this.props.children }
+      </>
     )
   }
 }

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { selectBook, selectAuthor, selectSelectedBookId } from 'store/booksListSlice'
+import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown } from 'store/booksListSlice'
+import BookModal from 'components/BookModal'
 
 const searchUrl = (book, author) => {
   var params = new URLSearchParams()
@@ -16,6 +17,8 @@ const booksListItem = (props) => {
   const author = useSelector(selectAuthor(book.authorId))
   const ref = useRef(null)
   const isSelected = useSelector(selectSelectedBookId) == id
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (isSelected) {
       ref.current?.scrollIntoViewIfNeeded()
@@ -26,7 +29,7 @@ const booksListItem = (props) => {
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <div className='book-cover' style={ { backgroundImage: 'url(\'' + book.coverUrl + '\')' } }>
         <div className='book-actions'>
-        <a href='#'>Edit</a>
+        <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
         <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
         </div>
       </div>
