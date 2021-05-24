@@ -9,7 +9,6 @@ import apiClient from 'serverApi/apiClient'
 class BookModal extends React.Component {
   constructor(props) {
     super(props)
-    this.formRef = createRef()
     this.state = {
       details: null
     }
@@ -41,7 +40,7 @@ class BookModal extends React.Component {
           <Modal.Title>Edit book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { details && <BookForm id='book_form' bookDetails={ details } onSubmit={ () => this.handleSuccess() } ref={ this.formRef }/> }
+          { details && <BookForm id='book_form' bookDetails={ details } onSubmit={ () => this.handleSuccess() }/> }
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={() => this.handleClose()}>
