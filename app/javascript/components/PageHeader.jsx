@@ -7,7 +7,7 @@ const PageHeader = () => {
   const dispatch = useDispatch()
   return (
     <h1 className='page-header'>
-      <span onClick={ () => dispatch(initializeList) } class='root-link'>Books</span>
+      <span onClick={ () => dispatch(initializeList) } className='root-link'>Books</span>
       { author
         && <span> | { author.fullname }</span>
       }

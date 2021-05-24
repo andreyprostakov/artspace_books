@@ -152,6 +152,11 @@ export const selectCurrentAuthor = state => {
 
 export const selectBook = id => state => state.booksList.books.byIds[id]
 
+export const selectCurrentBook = state => {
+  const { byIds: all, currentId } = state.booksList.books
+  return all[currentId]
+}
+
 export const selectSelectedBookId = state => state.booksList.books.currentId
 
 export const selectBookModalShown = state => state.booksList.books.modalShown

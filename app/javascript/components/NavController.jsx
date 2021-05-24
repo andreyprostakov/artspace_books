@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import keydown, { Keys } from 'react-keydown'
-import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown } from 'store/booksListSlice'
+import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor } from 'store/booksListSlice'
 
 window.Keys = Keys
 
@@ -60,10 +60,20 @@ class NavController extends React.Component {
   }
 
   @keydown(Keys.E)
-  handleEnter(event) {
+  handleKeyPressE(event) {
     event.preventDefault()
     const { dispatch } = this.props
     dispatch(setBookModalShown(true))
+  }
+
+  @keydown(Keys.A)
+  handleKeyPressA(event) {
+    event.preventDefault()
+    const { currentBook, dispatch } = this.props
+    console.log(currentBook)
+    if (!currentBook) { return }
+
+    dispatch(setCurrentAuthor(currentBook.authorId))
   }
 
   up() {
@@ -89,16 +99,17 @@ class NavController extends React.Component {
   render() {
     return (
       <>
-        <div className='button-group'>
-          <button className='btn btn-light' onClick={ () => this.up() }>UP</button>
-          <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
-          <button className='btn btn-light' onClick={ () => this.left() }>LEFT</button>
-          <button className='btn btn-light' onClick={ () => this.right() }>RIGHT</button>
-        </div>
+        <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
         { this.props.children }
       </>
     )
   }
 }
 
-export default connect()(NavController)
+const mapStateToProps = (state) => {
+  return {
+    currentBook: selectCurrentBook(state)
+  }
+}
+
+export default connect(mapStateToProps)(NavController)
