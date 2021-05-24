@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
-import { selectBookIdsByYear, selectYearsToDisplay, fetchBooks, fetchAuthors, fetchYears, setSelection } from 'store/booksListSlice'
+import { selectBookIdsByYear, selectYearsToDisplay, initializeList } from 'store/booksListSlice'
 import BooksListItem from 'components/BooksListItem'
 import NavController from 'components/NavController'
 
 class BooksList extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props
-    Promise.all([
-      dispatch(fetchYears),
-      dispatch(fetchAuthors)
-    ]).then(() =>
-      dispatch(fetchBooks)
-    ).then(() =>
-      dispatch(setSelection())
-    )
+    dispatch(initializeList)
   }
 
   render () {

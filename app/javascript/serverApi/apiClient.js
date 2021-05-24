@@ -2,8 +2,8 @@ import { isArray } from 'lodash'
 import { Book } from 'serverApi/Book'
 
 class ApiClient {
-  getYears() {
-    return $.ajax({ url: '/years.json '})
+  getYears(query = {}) {
+    return $.ajax({ url: `/years.json?${objectToParams(query)}`})
   }
 
   getAuthors() {
@@ -69,8 +69,8 @@ const objectToParams = (object) => {
     const value = object[key]
     if (isArray(value)) {
       value.forEach(entry => params.append(`${key}[]`, entry))
-    } else {
-      parans.append(key, value)
+    } else if (value) {
+      params.append(key, value)
     }
   })
   return params.toString()

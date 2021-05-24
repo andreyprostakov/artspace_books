@@ -18,7 +18,8 @@ const slice = createSlice({
       current: null
     },
     authors: {
-      byIds: {}
+      byIds: {},
+      currentId: null
     }
   },
   reducers: {
@@ -53,7 +54,13 @@ const slice = createSlice({
     setAuthors: (state, action) => {
       const authors = action.payload
       state.authors.byIds = {}
+      state.authors.currentId = null
       authors.forEach(author => state.authors.byIds[author.id] = author)
+    },
+
+    setCurrentAuthorId: (state, action) => {
+      const id = action.payload
+      state.authors.currentId = id
     },
 
     setBooks: (state, action) => {
@@ -62,6 +69,8 @@ const slice = createSlice({
       books.forEach(book => state.books.byIds[book.id] = book)
 
       const years = uniq(books.map(book => book.year))
+      state.books.yearsToLoad = []
+      state.books.yearsInLoading = []
       state.books.yearsLoaded = years
     },
 
@@ -96,7 +105,7 @@ const slice = createSlice({
     setSelection: (state) => {
       const year = last(state.years.all)
       state.years.current = year
-      state.books.currentId = Object.values(state.books.byIds).find(book => book.year == year).id
+      state.books.currentId = Object.values(state.books.byIds).find(book => book.year == year)?.id
     },
 
     shiftBookSelection: (state, action) => {
@@ -136,6 +145,11 @@ export const selectYearsToDisplay = (year = null) => state => {
 
 export const selectAuthor = id => state => state.booksList.authors.byIds[id]
 
+export const selectCurrentAuthor = state => {
+  const { byIds: all, currentId } = state.booksList.authors
+  return all[currentId]
+}
+
 export const selectBook = id => state => state.booksList.books.byIds[id]
 
 export const selectSelectedBookId = state => state.booksList.books.currentId
@@ -146,23 +160,27 @@ export const selectBookIdsByYear = year => state => {
   return Object.values(state.booksList.books.byIds).filter(book => book.year == year).map(book => book.id)
 }
 
-export const { setSelection, shiftBookSelection, setBookModalShown } = slice.actions
+export const { setSelection, shiftBookSelection, setBookModalShown, setCurrentAuthorId } = slice.actions
 
 
-export async function fetchYears(dispatch, getState) {
-  const response = await $.ajax({ url: 'years.json' })
-  dispatch(slice.actions.setYears(response))
+function fetchYears(params = {}) {
+  return async (dispatch, getState) => {
+    const years = await apiClient.getYears(params)
+    dispatch(slice.actions.setYears(years))
+  }
 }
 
 export async function fetchAuthors(dispatch, getState) {
-  const response = await $.ajax({ url: 'authors.json' })
+  const response = await apiClient.getAuthors()
   dispatch(slice.actions.setAuthors(response))
 }
 
-export async function fetchBooks(dispatch, getState) {
-  const yearsToDisplay = selectYearsToDisplay()(getState())
-  const response = await apiClient.getBooks({ years: yearsToDisplay })
-  dispatch(slice.actions.setBooks(response))
+function fetchBooks(params = {}) {
+  return async (dispatch, getState) => {
+    const yearsToDisplay = selectYearsToDisplay()(getState())
+    const response = await apiClient.getBooks({ ...params, years: yearsToDisplay })
+    dispatch(slice.actions.setBooks(response))
+  }
 }
 
 export function reloadBook(id) {
@@ -177,18 +195,19 @@ function loadBooksLazily(dispatch, getState) {
     setTimeout(
       () => {
         const { yearsToLoad: years } = getState().booksList.books
+        const { currentId: currentAuthorId } = getState().booksList.authors
         dispatch(slice.actions.markYearsAsLoading())
         if (years.length < 1) {
           resolve([])
           return
         }
 
-        apiClient.getBooks({ years }).then((books) => {
+        apiClient.getBooks({ years, author_id: currentAuthorId }).then((books) => {
           dispatch(slice.actions.markYearsAsLoaded(years))
           resolve(books)
         })
       },
-      1000
+      400
     )
   })
 }
@@ -226,6 +245,28 @@ export function gotoFirstYear() {
 
 export function gotoLastYear() {
   return changeSelectedYear(state => last(state.booksList.years.all))
+}
+
+export function initializeList(dispatch) {
+  Promise.all([
+    dispatch(fetchYears()),
+    dispatch(fetchAuthors)
+  ]).then(() =>
+    dispatch(fetchBooks())
+  ).then(() =>
+    dispatch(setSelection())
+  )
+}
+
+export const setCurrentAuthor = authorId => (dispatch, getState) => {
+  dispatch(slice.actions.setCurrentAuthorId(authorId))
+  Promise.all([
+    dispatch(fetchYears({ author_id: authorId }))
+  ]).then(() =>
+    dispatch(fetchBooks({ author_id: authorId }))
+  ).then(() =>
+    dispatch(setSelection())
+  )
 }
 
 export default slice.reducer

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown } from 'store/booksListSlice'
+import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown, setCurrentAuthor } from 'store/booksListSlice'
 import BookModal from 'components/BookModal'
 
 const searchUrl = (book, author) => {
@@ -29,12 +29,12 @@ const booksListItem = (props) => {
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <div className='book-cover' style={ { backgroundImage: 'url(\'' + book.coverUrl + '\')' } }>
         <div className='book-actions'>
-        <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
+        <a href='/' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
         <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
         </div>
       </div>
 
-      <div href='#' className='book-author' title={ author.fullname }>{ author.fullname }</div>
+      <div href='#' className='book-author' title={ author.fullname } onClick={ () => dispatch(setCurrentAuthor(author.id)) }>{ author.fullname }</div>
 
       <div className='book-title' title={ book.title }>
         { book.url

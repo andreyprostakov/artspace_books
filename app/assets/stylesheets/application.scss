@@ -7,3 +7,10 @@
 body {
   overflow: hidden;
 }
+
+.page-header {
+  .root-link {
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+}

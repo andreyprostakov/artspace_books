@@ -7,6 +7,7 @@ class BooksController < ApplicationController
   def index
     years_to_load = fetch_years_navigation
     @books = Book.preload(:author).order(year_published: :desc, title: :asc).where(year_published: years_to_load)
+    @books = @books.where(author_id: params[:author_id]) if params[:author_id].present?
     session[:last_books_filter] = request.url
   end
 
