@@ -29,7 +29,7 @@ const booksListItem = (props) => {
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <div className='book-cover' style={ { backgroundImage: 'url(\'' + book.coverUrl + '\')' } }>
         <div className='book-actions'>
-        <a href='/' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
+        <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
         <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
         </div>
       </div>
