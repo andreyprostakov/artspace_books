@@ -18,6 +18,12 @@ class ApiClient {
     )
   }
 
+  getBook(id) {
+    return $.ajax({
+      url: `/books/list/${id}.json`
+    }).then((bookData) => Book.parse(bookData))
+  }
+
   getBookDetails(id) {
     return $.ajax({
       url: `/books/${id}.json`
@@ -31,7 +37,7 @@ class ApiClient {
         year_published: yearPublished
       } = book
       return {
-        id, title, goodreadsUrl, wikiUrl, imageUrl, authorId, yearPublished
+        id, title, originalTitle, goodreadsUrl, wikiUrl, imageUrl, authorId, yearPublished
       }
     })
   }
@@ -47,7 +53,7 @@ class ApiClient {
       yearPublished: year_published
     } = details
     const body = {
-      title, goodreads_url, wiki_url, image_url, author_id, year_published
+      title, original_title, goodreads_url, wiki_url, image_url, author_id, year_published
     }
     return $.ajax({
       url: `/books/${id}.json`,

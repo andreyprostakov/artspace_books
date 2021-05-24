@@ -1,4 +1,4 @@
-import { compact, difference, groupBy, find, first, last, mapValues, sort, uniq } from 'lodash'
+import { compact, difference, groupBy, find, first, last, mapValues, max, min, remove, sort, uniq } from 'lodash'
 import { createSelector, createSlice, configureStore, current } from '@reduxjs/toolkit'
 import apiClient from 'serverApi/apiClient'
 
@@ -44,6 +44,27 @@ const slice = createSlice({
 
       const years = uniq(books.map(book => book.year))
       state.books.yearsLoaded = years
+    },
+
+    addBook: (state, action) => {
+      const book = action.payload
+      const { year: bookYear } = book
+      const { all: allYears, current: previouslyCurrentYear } = state.years
+
+      state.books.byIds[book.id] = book
+      state.books.currentId = book.id
+      if (!allYears.includes(bookYear)) {
+        state.years.all = [...allYears, bookYear].sort()
+        state.books.yearsLoaded = [...state.books.yearsLoaded, bookYear]
+      }
+      if (previouslyCurrentYear !== bookYear) {
+        state.years.current = bookYear
+
+        const yearBook = Object.values(state.books.byIds).find(book => book.year == previouslyCurrentYear)
+        if (!yearBook) {
+          state.years.all = state.years.all.filter(year => year != previouslyCurrentYear)
+        }
+      }
     },
 
     addBooks: (state, action) => {
@@ -126,12 +147,17 @@ export async function fetchBooks(dispatch, getState) {
   dispatch(slice.actions.setBooks(response))
 }
 
-export function shiftYear(shift) {
+export function reloadBook(id) {
+  return async (dispatch, getState) => {
+    const response = await apiClient.getBook(id)
+    dispatch(slice.actions.addBook(response))
+  }
+}
+
+function changeSelectedYear(selectTargetYear) {
   return async (dispatch, getState) => {
     const state = getState()
-    const { all, current } = state.booksList.years
-    const index = all.indexOf(current)
-    const targetYear = all[index + shift]
+    const targetYear = selectTargetYear(state)
     if (!targetYear) { return }
 
     const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
@@ -140,14 +166,28 @@ export function shiftYear(shift) {
       const response = await apiClient.getBooks({ years: yearsToLoad })
       dispatch(slice.actions.addBooks(response))
     }
-    dispatch(slice.actions.setCurrentYear(targetYear))
+
+    if (state.booksList.years.current != targetYear) {
+      dispatch(slice.actions.setCurrentYear(targetYear))
+    }
   }
 }
 
-export function submitBookDetails(details) {
-  return async (dispatch, getState) => {
-    return null
-  }
+export function shiftYear(shift) {
+  return changeSelectedYear(state => {
+    const { all, current } = state.booksList.years
+    const index = all.indexOf(current)
+    const targetIndex = max([0, min([all.length - 1, index + shift])])
+    return all[targetIndex]
+  })
+}
+
+export function gotoFirstYear() {
+  return changeSelectedYear(state => first(state.booksList.years.all))
+}
+
+export function gotoLastYear() {
+  return changeSelectedYear(state => last(state.booksList.years.all))
 }
 
 export default slice.reducer

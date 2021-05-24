@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :authors
   resources :books
   resources :years
+  get 'books/list/:id' => 'books_lists#show'
 end

@@ -12,8 +12,8 @@ const booksListPage = () => {
       <div className='page'>
         <NavController>
           <BooksList/>
-          <BookModal/>
         </NavController>
+        <BookModal/>
       </div>
     </Provider>
   );

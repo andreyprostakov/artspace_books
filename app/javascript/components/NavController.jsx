@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import keydown, { Keys } from 'react-keydown'
-import { shiftYear, shiftBookSelection, setBookModalShown } from 'store/booksListSlice'
+import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown } from 'store/booksListSlice'
 
 window.Keys = Keys
 
@@ -13,10 +13,38 @@ class NavController extends React.Component {
     this.down()
   }
 
+  @keydown(Keys.PAGEDOWN)
+  handleKeyPressPageDown(event) {
+    event.preventDefault()
+    const { dispatch } = this.props
+    dispatch(shiftYear(-2))
+  }
+
+  @keydown(Keys.END)
+  handleKeyPressEnd(event) {
+    event.preventDefault()
+    const { dispatch } = this.props
+    dispatch(gotoFirstYear())
+  }
+
   @keydown(Keys.UP)
   handleKeyPressUp(event) {
     event.preventDefault()
     this.up()
+  }
+
+  @keydown(Keys.PAGEUP)
+  handleKeyPressPageUp(event) {
+    event.preventDefault()
+    const { dispatch } = this.props
+    dispatch(shiftYear(+2))
+  }
+
+  @keydown(Keys.HOME)
+  handleKeyPressHome(event) {
+    event.preventDefault()
+    const { dispatch } = this.props
+    dispatch(gotoLastYear())
   }
 
   @keydown(Keys.LEFT)
@@ -31,10 +59,9 @@ class NavController extends React.Component {
     this.right()
   }
 
-  @keydown(Keys.ENTER)
+  @keydown(Keys.E)
   handleEnter(event) {
     event.preventDefault()
-    console.log('ENTER!')
     const { dispatch } = this.props
     dispatch(setBookModalShown(true))
   }
