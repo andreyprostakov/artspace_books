@@ -9,7 +9,9 @@ const slice = createSlice({
       byIds: {},
       currentId: null,
       modalShown: false,
-      yearsLoaded: []
+      yearsLoaded: [],
+      yearsToLoad: [],
+      yearsInLoading: []
     },
     years: {
       all: [],
@@ -23,6 +25,23 @@ const slice = createSlice({
     setYears: (state, action) => {
       const years = action.payload
       state.years.all = years.sort()
+    },
+
+    addYearsToLoad: (state, action) => {
+      const years = difference(action.payload, [...state.books.yearsInLoading, ...state.books.yearsLoaded])
+      state.books.yearsToLoad = uniq([...state.books.yearsToLoad, ...years])
+    },
+
+    markYearsAsLoading: (state, action) => {
+      const years = action.payload
+      state.books.yearsInLoading = uniq([...state.books.yearsInLoading, ...years])
+      state.books.yearsToLoad = difference(state.books.yearsToLoad, years)
+    },
+
+    markYearsAsLoaded: (state, action) => {
+      const years = action.payload
+      state.books.yearsLoaded = uniq([...state.books.yearsLoaded, ...years])
+      state.books.yearsInLoading = difference(state.books.yearsInLoading, years)
     },
 
     setCurrentYear: (state, action) => {
@@ -72,7 +91,6 @@ const slice = createSlice({
       books.forEach(book => state.books.byIds[book.id] = book)
 
       const years = uniq(books.map(book => book.year))
-      state.books.yearsLoaded = uniq([...state.books.yearsLoaded, ...years])
     },
 
     setSelection: (state) => {
@@ -154,6 +172,28 @@ export function reloadBook(id) {
   }
 }
 
+function loadBooksLazily(dispatch, getState) {
+  return new Promise((resolve) => {
+    setTimeout(
+      () => {
+        const { yearsToLoad: years } = getState().booksList.books
+        if (years.length < 1) {
+          resolve([])
+          return
+        }
+
+        dispatch(slice.actions.markYearsAsLoading(years))
+
+        apiClient.getBooks({ years }).then((books) => {
+          dispatch(slice.actions.markYearsAsLoading(years))
+          resolve(books)
+        })
+      },
+      10
+    )
+  })
+}
+
 function changeSelectedYear(selectTargetYear) {
   return async (dispatch, getState) => {
     const state = getState()
@@ -161,11 +201,10 @@ function changeSelectedYear(selectTargetYear) {
     if (!targetYear) { return }
 
     const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
-    const yearsToLoad = difference(yearsToDisplay, state.booksList.books.yearsLoaded)
-    if (yearsToLoad.length > 0) {
-      const response = await apiClient.getBooks({ years: yearsToLoad })
-      dispatch(slice.actions.addBooks(response))
-    }
+    dispatch(slice.actions.addYearsToLoad(yearsToDisplay))
+
+    const books = await loadBooksLazily(dispatch, getState)
+    dispatch(slice.actions.addBooks(books))
 
     if (state.booksList.years.current != targetYear) {
       dispatch(slice.actions.setCurrentYear(targetYear))
