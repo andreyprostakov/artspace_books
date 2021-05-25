@@ -1,6 +1,8 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
+  protect_from_forgery with: :null_session
+
   helper_method :return_destination
 
   def index
@@ -11,7 +13,7 @@ class BooksController < ApplicationController
   def create
     @book = Book.new(book_params)
     if @book.save
-      head :ok
+      render json: {}
     else
       render json: @book.errors, status: :unprocessable_entity
     end
@@ -19,7 +21,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(book_params)
-      head :ok
+      render json: {}
     else
       render json: @book.errors, status: :unprocessable_entity
     end

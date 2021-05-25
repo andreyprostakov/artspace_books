@@ -1,4 +1,4 @@
-export class Book {
+class Book {
   static parse(bookData) {
     return {
       ...bookData,
@@ -7,3 +7,5 @@ export class Book {
     }
   }
 }
+
+export default Book

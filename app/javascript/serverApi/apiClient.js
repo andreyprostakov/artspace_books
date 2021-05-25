@@ -1,5 +1,6 @@
 import { isArray } from 'lodash'
-import { Book } from 'serverApi/Book'
+import AuthorDetails from 'serverApi/AuthorDetails'
+import Book from 'serverApi/Book'
 
 class ApiClient {
   getYears(query = {}) {
@@ -8,6 +9,29 @@ class ApiClient {
 
   getAuthors() {
     return $.ajax({ url: '/authors.json '})
+  }
+
+  getAuthorDetails(id) {
+    return $.ajax({
+      url: `/authors/${id}/details.json`
+    }).then((data) =>
+      AuthorDetails.parse(data)
+    )
+  }
+
+  putAuthorDetails(id, details) {
+    const body = {
+      fullname: details.fullname,
+      image_url: details.imageUrl,
+      wiki_url: details.wikiUrl,
+      birth_year: details.birthYear,
+      death_year: details.deathYear
+    }
+    return $.ajax({
+      url: `/authors/${id}/details.json`,
+      type: 'PUT',
+      data: { author: body }
+    })
   }
 
   getBooks(query = {}) {

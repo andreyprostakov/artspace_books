@@ -10,13 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_180656) do
+ActiveRecord::Schema.define(version: 2021_05_25_215829) do
 
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
     t.string "reference"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image_url"
+    t.string "wiki_url"
+    t.integer "birth_year"
+    t.integer "death_year"
   end
 
   create_table "books", force: :cascade do |t|

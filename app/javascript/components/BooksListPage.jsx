@@ -1,10 +1,13 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from 'store/store'
-import BooksList from 'components/BooksList'
+import { Row, Col } from 'react-bootstrap'
+
+import AuthorModal from 'components/AuthorModal'
 import BookModal from 'components/BookModal'
 import NavController from 'components/NavController'
 import PageHeader from 'components/PageHeader'
+import PageContent from 'components/PageContent'
 
 const booksListPage = () => {
   window.STORE = store
@@ -13,9 +16,10 @@ const booksListPage = () => {
       <div className='page'>
         <PageHeader/>
         <NavController>
-          <BooksList/>
+          <PageContent/>
         </NavController>
         <BookModal/>
+        <AuthorModal/>
       </div>
     </Provider>
   );

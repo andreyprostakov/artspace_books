@@ -3,8 +3,12 @@
 # Table name: authors
 #
 #  id         :integer          not null, primary key
+#  birth_year :integer
+#  death_year :integer
 #  fullname   :string           not null
+#  image_url  :string
 #  reference  :string
+#  wiki_url   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

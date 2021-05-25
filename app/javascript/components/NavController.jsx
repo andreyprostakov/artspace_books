@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
+import { Button, Container, Row } from 'react-bootstrap'
 import keydown, { Keys } from 'react-keydown'
-import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor } from 'store/booksListSlice'
+import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor, initializeList } from 'store/booksListSlice'
 
 window.Keys = Keys
 
@@ -70,10 +71,16 @@ class NavController extends React.Component {
   handleKeyPressA(event) {
     event.preventDefault()
     const { currentBook, dispatch } = this.props
-    console.log(currentBook)
     if (!currentBook) { return }
 
     dispatch(setCurrentAuthor(currentBook.authorId))
+  }
+
+  @keydown(Keys.BACKSPACE)
+  handleKeyPressBackspace(event) {
+    event.preventDefault()
+    const { dispatch } = this.props
+    dispatch(initializeList)
   }
 
   up() {
@@ -98,10 +105,12 @@ class NavController extends React.Component {
 
   render() {
     return (
-      <>
-        <button className='btn btn-light' onClick={ () => this.down() }>DOWN</button>
+      <Container>
+        <Row style={ { marginTop: 58, marginBottom: 5 } }>
+          <Button variant='outline-danger' onClick={ () => this.down() }>DOWN</Button>
+        </Row>
         { this.props.children }
-      </>
+      </Container>
     )
   }
 }

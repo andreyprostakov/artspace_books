@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resources :books
   resources :years
   get 'books/list/:id' => 'books_lists#show'
+  get 'authors/:id/details' => 'author_details#show'
+  put 'authors/:id/details' => 'author_details#update'
 end
