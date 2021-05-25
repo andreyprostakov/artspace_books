@@ -10,8 +10,8 @@ const pageContent = () => {
   const author = useSelector(selectCurrentAuthor)
   return (
     <Row>
-      { author && <Col xs={ 4 } className='author-card'><AuthorCard/></Col> }
-      { <Col xs={ author ? 8 : 12 }><BooksList/></Col> }
+      { author && <Col xs={ 4 } lg={ 3 }className='author-card'><AuthorCard/></Col> }
+      { <Col xs={ author ? 8 : 12 } lg={ author ? 9 : 12 }><BooksList/></Col> }
     </Row>
   );
 }
