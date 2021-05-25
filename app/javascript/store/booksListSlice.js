@@ -25,7 +25,8 @@ const slice = createSlice({
   reducers: {
     setYears: (state, action) => {
       const years = action.payload
-      state.years.all = years.sort()
+      state.years.all = years
+      state.years.current = last(years)
     },
 
     addYearsToLoad: (state, action) => {
@@ -183,7 +184,7 @@ export async function fetchAuthors(dispatch, getState) {
 function fetchBooks(params = {}) {
   return async (dispatch, getState) => {
     const yearsToDisplay = selectYearsToDisplay()(getState())
-    const response = await apiClient.getBooks({ ...params, years: yearsToDisplay })
+    const response = await apiClient.getBooks({ years: yearsToDisplay, ...params })
     dispatch(slice.actions.setBooks(response))
   }
 }
@@ -267,9 +268,10 @@ export const setCurrentAuthor = authorId => (dispatch, getState) => {
   dispatch(slice.actions.setCurrentAuthorId(authorId))
   Promise.all([
     dispatch(fetchYears({ author_id: authorId }))
-  ]).then(() =>
-    dispatch(fetchBooks({ author_id: authorId }))
-  ).then(() =>
+  ]).then(() => {
+    const years = getState().booksList.years.all
+    dispatch(fetchBooks({ years: years, author_id: authorId }))
+  }).then(() =>
     dispatch(setSelection())
   )
 }
