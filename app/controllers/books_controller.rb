@@ -6,7 +6,7 @@ class BooksController < ApplicationController
   helper_method :return_destination
 
   def index
-    @books = Book.preload(:author).order(year_published: :desc, title: :asc).where(year_published: params[:years])
+    @books = Book.order(year_published: :desc, title: :asc).where(year_published: params[:years])
     @books = @books.where(author_id: params[:author_id]) if params[:author_id].present?
   end
 
