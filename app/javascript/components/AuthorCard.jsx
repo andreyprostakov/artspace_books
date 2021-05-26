@@ -11,12 +11,9 @@ const AuthorCard = () => {
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails)
   if (isEmpty(authorDetails)) {
-    console.log('RELOADING')
     dispatch(reloadCurrentAuthorDetails)
     return null
   }
-  console.log('NOT RELOADING')
-  console.log(authorDetails)
 
   return (
     <Card>
@@ -29,8 +26,9 @@ const AuthorCard = () => {
           }
         </Card.Title>
         <Card.Text>
-          <p>{ [authorDetails.birthYear, authorDetails.deathYear].join('--') }</p>
-          <p>Books: { books.length }</p>
+          <span>{ [authorDetails.birthYear, authorDetails.deathYear].join('--') }</span>
+          <br/>
+          <span>Books: { books.length }</span>
         </Card.Text>
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => dispatch(setAuthorModalShown(true)) }>Edit</Button>

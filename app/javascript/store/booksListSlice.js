@@ -28,7 +28,9 @@ const slice = createSlice({
     setYears: (state, action) => {
       const years = action.payload
       state.years.all = years
-      state.years.current = last(years)
+      if (!years.includes(state.years.current)) {
+        state.years.current = last(years)
+      }
     },
 
     addYearsToLoad: (state, action) => {
@@ -118,7 +120,7 @@ const slice = createSlice({
       const years = uniq(books.map(book => book.year))
     },
 
-    setSelection: (state) => {
+    resetSelection: (state) => {
       const year = last(state.years.all)
       state.years.current = year
       state.books.currentId = Object.values(state.books.byIds).find(book => book.year == year)?.id
@@ -190,7 +192,7 @@ export const selectBookIdsByYear = year => state => {
 }
 
 export const {
-  setSelection,
+  resetSelection,
   shiftBookSelection,
   setBookModalShown,
   setCurrentAuthorId,
@@ -283,13 +285,17 @@ export function gotoLastYear() {
 }
 
 export function initializeList(dispatch) {
-  Promise.all([
+  return showFullList(dispatch).then(() =>
+    dispatch(resetSelection())
+  )
+}
+
+export function showFullList(dispatch) {
+  return Promise.all([
     dispatch(fetchYears()),
     dispatch(fetchAuthors)
   ]).then(() =>
     dispatch(fetchBooks())
-  ).then(() =>
-    dispatch(setSelection())
   )
 }
 
@@ -300,14 +306,10 @@ export const setCurrentAuthor = authorId => (dispatch, getState) => {
   ]).then(() => {
     const years = getState().booksList.years.all
     dispatch(fetchBooks({ years: years, author_id: authorId }))
-  }).then(() =>
-    dispatch(setSelection())
-  )
+  })
 }
 
 export async function reloadCurrentAuthorDetails(dispatch, getState) {
-  console.log('reloadCurrentAuthorDetails')
-  console.log(getState)
   const { currentId } = getState().booksList.authors
   if (!currentId) { return }
 

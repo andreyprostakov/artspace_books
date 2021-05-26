@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Button, Container, Row } from 'react-bootstrap'
 import keydown, { Keys } from 'react-keydown'
-import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor, initializeList } from 'store/booksListSlice'
+import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor, selectCurrentAuthor, showFullList } from 'store/booksListSlice'
 
 window.Keys = Keys
 
@@ -70,17 +70,20 @@ class NavController extends React.Component {
   @keydown(Keys.A)
   handleKeyPressA(event) {
     event.preventDefault()
-    const { currentBook, dispatch } = this.props
-    if (!currentBook) { return }
+    const { currentAuthor, currentBook, dispatch } = this.props
 
-    dispatch(setCurrentAuthor(currentBook.authorId))
+    if (currentAuthor) {
+      dispatch(showFullList)
+    } else if (currentBook) {
+      dispatch(setCurrentAuthor(currentBook.authorId))
+    }
   }
 
   @keydown(Keys.BACKSPACE)
   handleKeyPressBackspace(event) {
     event.preventDefault()
     const { dispatch } = this.props
-    dispatch(initializeList)
+    dispatch(showFullList)
   }
 
   up() {
@@ -117,7 +120,8 @@ class NavController extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentBook: selectCurrentBook(state)
+    currentBook: selectCurrentBook(state),
+    currentAuthor: selectCurrentAuthor(state)
   }
 }
 

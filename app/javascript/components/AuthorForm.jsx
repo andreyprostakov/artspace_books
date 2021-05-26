@@ -22,8 +22,8 @@ class AuthorForm extends React.Component {
     )
     Object.keys(formData).forEach(key => formData[key] = formData[key].value)
     apiClient.putAuthorDetails(authorDetails.id, formData)
-             .fail((response) => { console.log(response); this.setState({ errors: response.responseJSON }) })
-             .then(() => { console.log('THEN'); onSubmit() })
+             .fail((response) => this.setState({ errors: response.responseJSON }))
+             .then(() => onSubmit())
   }
 
   render() {
