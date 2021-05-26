@@ -11,7 +11,8 @@ const slice = createSlice({
       modalShown: false,
       yearsLoaded: [],
       yearsToLoad: [],
-      yearsInLoading: []
+      yearsInLoading: [],
+      defaultImageUrl: null
     },
     years: {
       all: [],
@@ -117,6 +118,11 @@ const slice = createSlice({
       books.forEach(book => state.books.byIds[book.id] = book)
     },
 
+    setDefaultBookImageUrl: (state, action) => {
+      const url = action.payload
+      state.books.defaultImageUrl = url
+    },
+
     updateCurrentBookId: (state) => {
       const { current: currentYear } = state.years
       const { currentId: currentBookId, byIds: allBooks } = state.books
@@ -167,9 +173,21 @@ export const selectYearsToDisplay = (year = null) => state => {
   )
 }
 
-const selectYearsToLoad = years => state => {
+const selectYearsToLoad = year => state => {
+  const { all } = state.booksList.years
   const { yearsToLoad, yearsInLoading, yearsLoaded } = state.booksList.books
-  return [...yearsToLoad, ...difference(years, [...yearsInLoading, ...yearsLoaded])]
+  const allReversed = all.slice().reverse()
+  const index = allReversed.indexOf(year)
+  const nearYears = compact(
+    [
+      allReversed[index - 2],
+      allReversed[index - 1],
+      year,
+      allReversed[index + 1],
+      allReversed[index + 2]
+    ]
+  )
+  return [...yearsToLoad, ...difference(nearYears, [...yearsInLoading, ...yearsLoaded])]
 }
 
 export const selectAuthor = id => state => state.booksList.authors.byIds[id]
@@ -202,12 +220,15 @@ export const selectBookIdsByYear = year => state => {
   return Object.values(state.booksList.books.byIds).filter(book => book.year == year).map(book => book.id)
 }
 
+export const selectBookDefaultImageUrl = state => state.booksList.books.defaultImageUrl
+
 export const {
   resetSelection,
   shiftBookSelection,
   setBookModalShown,
   setCurrentAuthorId,
-  setAuthorModalShown
+  setAuthorModalShown,
+  setDefaultBookImageUrl
 } = slice.actions
 
 
@@ -280,8 +301,7 @@ function changeSelectedYear(selectTargetYear) {
       dispatch(slice.actions.updateCurrentBookId())
     }
 
-    const yearsToDisplay = selectYearsToDisplay(targetYear)(state)
-    const yearsToLoad = selectYearsToLoad(yearsToDisplay)(state)
+    const yearsToLoad = selectYearsToLoad(targetYear)(state)
     if (yearsToLoad.length < 1) { return }
 
     dispatch(slice.actions.addYearsToLoad(yearsToLoad))
