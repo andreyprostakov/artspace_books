@@ -4,18 +4,15 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDizzy, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 
-import { selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/booksListSlice'
+import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/booksListSlice'
 
 const BooksListAuthorBirth = () => {
-  const { deathYear } = useSelector(selectCurrentAuthorDetails)
-  console.log(`DEATH YEAR: ${deathYear}`)
+  const currentId = useSelector(selectCurrentAuthorId)
+  const { id, deathYear } = useSelector(selectCurrentAuthorDetails)
   const currentYear = useSelector(selectCurrentYear)
-  console.log(`CURRENT YEAR: ${currentYear}`)
   const publishingYears = useSelector(selectYearsReversed)
-  console.log(`PUBLISHING YEARS`)
-  console.log(publishingYears)
 
-  const show = deathYear && (!currentYear || (currentYear == first(publishingYears)))
+  const show = (id == currentId) && deathYear && (!currentYear || (currentYear == first(publishingYears)))
   if (!show) { return null }
 
   return (

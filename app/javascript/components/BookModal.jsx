@@ -1,22 +1,24 @@
+import { isEmpty } from 'lodash'
 import React, { createRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
-import { selectBookModalShown, setBookModalShown, selectSelectedBookId, reloadBook, shiftYear } from 'store/booksListSlice'
+
+import {
+  selectBookModalShown,
+  setBookModalShown,
+  selectSelectedBookId,
+  selectCurrentBookDetails,
+  loadCurrentBookDetails,
+  reloadBook,
+  shiftYear
+} from 'store/booksListSlice'
 import BookForm from 'components/BookForm'
 import apiClient from 'serverApi/apiClient'
 
 class BookModal extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      details: null
-    }
-  }
-
   handleClose() {
     this.props.hideModal()
-    this.setState({ details: null })
   }
 
   handleSuccess() {
@@ -26,12 +28,10 @@ class BookModal extends React.Component {
   }
 
   render() {
-    const { details } = this.state
-    const { show, bookId } = this.props
-    if (show && !details) {
-      apiClient.getBookDetails(bookId).then((details) => {
-        this.setState({ details })
-      })
+    const { show, bookId, bookDetails, loadDetails } = this.props
+    if (isEmpty(bookDetails) || bookDetails.id !== bookId) {
+      loadDetails()
+      return null
     }
 
     return (
@@ -40,7 +40,7 @@ class BookModal extends React.Component {
           <Modal.Title>Edit book</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { details && <BookForm id='book_form' bookDetails={ details } onSubmit={ () => this.handleSuccess() }/> }
+          { bookDetails && <BookForm id='book_form' bookDetails={ bookDetails } onSubmit={ () => this.handleSuccess() }/> }
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={() => this.handleClose()}>
@@ -58,7 +58,8 @@ class BookModal extends React.Component {
 const mapStateToProps = (state) => {
   return {
     show: selectBookModalShown(state),
-    bookId: selectSelectedBookId(state)
+    bookId: selectSelectedBookId(state),
+    bookDetails: selectCurrentBookDetails(state)
   }
 }
 
@@ -66,7 +67,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(setBookModalShown(false)),
     reloadBook: (id) => dispatch(reloadBook(id)),
-    refreshList: () => dispatch(shiftYear(0))
+    refreshList: () => dispatch(shiftYear(0)),
+    loadDetails: () => dispatch(loadCurrentBookDetails)
   }
 }
 

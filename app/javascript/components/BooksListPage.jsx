@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider, useDispatch } from 'react-redux'
 import store from 'store/store'
-import { Row, Col } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 
 import AuthorModal from 'components/AuthorModal'
 import BookModal from 'components/BookModal'
@@ -16,14 +16,14 @@ const booksListPage = (props) => {
   store.dispatch(setDefaultBookImageUrl(props.default_book_image_url))
   return (
     <Provider store={ store }>
-      <div className='page'>
-        <PageHeader/>
-        <NavController>
-          <PageContent/>
-        </NavController>
-        <BookModal/>
-        <AuthorModal/>
-      </div>
+      <NavController>
+        <Container className='page'>
+          <PageHeader/>
+            <PageContent/>
+          <BookModal/>
+          <AuthorModal/>
+        </Container>
+      </NavController>
     </Provider>
   );
 }

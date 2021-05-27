@@ -8,6 +8,7 @@ const slice = createSlice({
     books: {
       byIds: {},
       currentId: null,
+      currentDetails: {},
       modalShown: false,
       yearsLoaded: [],
       yearsToLoad: [],
@@ -60,14 +61,12 @@ const slice = createSlice({
       const authors = action.payload
       state.authors.byIds = {}
       state.authors.currentId = null
-      state.authors.currentDetails = {}
       authors.forEach(author => state.authors.byIds[author.id] = author)
     },
 
     setCurrentAuthorId: (state, action) => {
       const id = action.payload
       state.authors.currentId = id
-      state.authors.currentDetails = {}
     },
 
     setCurrentAuthorDetails: (state, action) => {
@@ -152,6 +151,11 @@ const slice = createSlice({
       if (!state.books.currentId) { return }
 
       state.books.modalShown = action.payload
+    },
+
+    setCurrentBookDetails: (state, action) => {
+      const details = action.payload
+      state.books.currentDetails = details
     }
   }
 })
@@ -215,6 +219,8 @@ export const selectCurrentBook = state => {
 }
 
 export const selectSelectedBookId = state => state.booksList.books.currentId
+
+export const selectCurrentBookDetails = state => state.booksList.books.currentDetails
 
 export const selectBookModalShown = state => state.booksList.books.modalShown
 
@@ -362,6 +368,14 @@ export async function reloadCurrentAuthorDetails(dispatch, getState) {
 
   const details = await apiClient.getAuthorDetails(currentId)
   dispatch(slice.actions.setCurrentAuthorDetails(details))
+}
+
+export async function loadCurrentBookDetails(dispatch, getState) {
+  const { currentId } = getState().booksList.books
+  if (!currentId) { return }
+
+  const details = await apiClient.getBookDetails(currentId)
+  dispatch(slice.actions.setCurrentBookDetails(details))
 }
 
 export default slice.reducer

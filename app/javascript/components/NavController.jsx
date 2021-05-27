@@ -1,75 +1,37 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Button, Container, Row } from 'react-bootstrap'
-import keydown, { Keys } from 'react-keydown'
-import { gotoFirstYear, gotoLastYear, shiftYear, shiftBookSelection, setBookModalShown, selectCurrentBook, setCurrentAuthor, selectCurrentAuthor, showFullList } from 'store/booksListSlice'
+import { HotKeys } from "react-hotkeys";
 
-window.Keys = Keys
+import {
+  gotoFirstYear, gotoLastYear, shiftYear,
+  shiftBookSelection, selectCurrentBook,
+  setBookModalShown, selectBookModalShown,
+  setCurrentAuthor, selectCurrentAuthor,
+  showFullList
+} from 'store/booksListSlice'
 
-@keydown()
+const keyMap = {
+  DOWN: 'Down',
+  PAGE_DOWN: 'PageDown',
+  END: 'End',
+  UP: 'Up',
+  PAGE_UP: 'PageUp',
+  START: 'Home',
+  TOGGLE_EDIT: 'e',
+  TOGGLE_AUTHOR: 'a',
+  BACK: 'Backspace',
+  LEFT: 'Left',
+  RIGHT: 'Right'
+}
+
 class NavController extends React.Component {
-  @keydown(Keys.DOWN)
-  handleKeyPressDown(event) {
-    event.preventDefault()
-    this.down()
+  handleToggleEdit() {
+    const { dispatch, bookModalShown } = this.props
+    dispatch(setBookModalShown(!bookModalShown))
   }
 
-  @keydown(Keys.PAGEDOWN)
-  handleKeyPressPageDown(event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(shiftYear(-2))
-  }
-
-  @keydown(Keys.END)
-  handleKeyPressEnd(event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(gotoFirstYear())
-  }
-
-  @keydown(Keys.UP)
-  handleKeyPressUp(event) {
-    event.preventDefault()
-    this.up()
-  }
-
-  @keydown(Keys.PAGEUP)
-  handleKeyPressPageUp(event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(shiftYear(+2))
-  }
-
-  @keydown(Keys.HOME)
-  handleKeyPressHome(event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(gotoLastYear())
-  }
-
-  @keydown(Keys.LEFT)
-  handleKeyPressLeft(event) {
-    event.preventDefault()
-    this.left()
-  }
-
-  @keydown(Keys.RIGHT)
-  handleKeyPressRight(event) {
-    event.preventDefault()
-    this.right()
-  }
-
-  @keydown(Keys.E)
-  handleKeyPressE(event) {
-    event.preventDefault()
-    const { dispatch } = this.props
-    dispatch(setBookModalShown(true))
-  }
-
-  @keydown(Keys.A)
-  handleKeyPressA(event) {
-    event.preventDefault()
+  handleToggleAuthor() {
     const { currentAuthor, currentBook, dispatch } = this.props
 
     if (currentAuthor) {
@@ -79,41 +41,30 @@ class NavController extends React.Component {
     }
   }
 
-  @keydown(Keys.BACKSPACE)
-  handleKeyPressBackspace(event) {
-    event.preventDefault()
+  handlers() {
     const { dispatch } = this.props
-    dispatch(showFullList)
-  }
+    return {
+      DOWN: () => this.props.dispatch(shiftYear(-1)),
+      PAGE_DOWN: () => dispatch(shiftYear(-2)),
+      END: () => dispatch(gotoFirstYear()),
+      UP: () => dispatch(shiftYear(+1)),
+      PAGE_UP: () => dispatch(shiftYear(-2)),
+      START: () => dispatch(gotoLastYear()),
 
-  up() {
-    const { dispatch } = this.props
-    dispatch(shiftYear(+1))
-  }
+      RIGHT: () => dispatch(shiftBookSelection(+1)),
+      LEFT: () => dispatch(shiftBookSelection(-1)),
 
-  down() {
-    const { dispatch } = this.props
-    dispatch(shiftYear(-1))
-  }
-
-  left() {
-    const { dispatch } = this.props
-    dispatch(shiftBookSelection(-1))
-  }
-
-  right() {
-    const { dispatch } = this.props
-    dispatch(shiftBookSelection(+1))
+      BACK: () => dispatch(showFullList),
+      TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
+      TOGGLE_EDIT: () => this.handleToggleEdit()
+    }
   }
 
   render() {
     return (
-      <Container>
-        <Row style={ { marginTop: 58, marginBottom: 5 } }>
-          <Button variant='outline-danger' onClick={ () => this.down() }>DOWN</Button>
-        </Row>
+      <HotKeys keyMap={ keyMap } handlers={ this.handlers() }>
         { this.props.children }
-      </Container>
+      </HotKeys>
     )
   }
 }
@@ -121,7 +72,8 @@ class NavController extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentBook: selectCurrentBook(state),
-    currentAuthor: selectCurrentAuthor(state)
+    currentAuthor: selectCurrentAuthor(state),
+    bookModalShown: selectBookModalShown(state)
   }
 }
 

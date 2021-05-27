@@ -4,14 +4,20 @@ import { Button, ButtonGroup, Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
 import ImageContainer from 'components/ImageContainer'
-import { selectCurrentAuthor, selectBooks, setAuthorModalShown, selectCurrentAuthorDetails, reloadCurrentAuthorDetails } from 'store/booksListSlice'
+import {
+  selectCurrentAuthorId,
+  selectBooks,
+  setAuthorModalShown,
+  selectCurrentAuthorDetails,
+  reloadCurrentAuthorDetails
+} from 'store/booksListSlice'
 
 const AuthorCard = () => {
-  const author = useSelector(selectCurrentAuthor)
   const books = useSelector(selectBooks)
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails)
-  if (isEmpty(authorDetails)) {
+  const authorId = useSelector(selectCurrentAuthorId)
+  if (isEmpty(authorDetails) || authorDetails.id !== authorId) {
     dispatch(reloadCurrentAuthorDetails)
     return null
   }

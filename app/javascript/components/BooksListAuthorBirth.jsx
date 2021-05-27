@@ -4,14 +4,15 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBirthdayCake, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
 
-import { selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/booksListSlice'
+import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/booksListSlice'
 
 const BooksListAuthorBirth = () => {
-  const { birthYear } = useSelector(selectCurrentAuthorDetails)
+  const currentId = useSelector(selectCurrentAuthorId)
+  const { id, birthYear } = useSelector(selectCurrentAuthorDetails)
   const currentYear = useSelector(selectCurrentYear)
   const publishingYears = useSelector(selectYearsReversed)
 
-  const show = birthYear && (!currentYear || (currentYear == last(publishingYears)))
+  const show = (id == currentId) && birthYear && (!currentYear || (currentYear == last(publishingYears)))
   if (!show) { return null }
 
   return (
