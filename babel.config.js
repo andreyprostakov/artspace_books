@@ -68,8 +68,7 @@ module.exports = function(api) {
         {
           async: false
         }
-      ],
-      ['@babel/plugin-proposal-decorators', { 'legacy': true }]
+      ]
     ].filter(Boolean)
   }
 }
