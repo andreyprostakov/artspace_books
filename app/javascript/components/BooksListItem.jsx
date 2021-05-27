@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown, setCurrentAuthor, selectBookDefaultImageUrl } from 'store/booksListSlice'
+
 import BookModal from 'components/BookModal'
+import ImageContainer from 'components/ImageContainer'
+import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown, setCurrentAuthor, selectBookDefaultImageUrl } from 'store/booksListSlice'
 
 const searchUrl = (book, author) => {
   var params = new URLSearchParams()
@@ -28,12 +30,12 @@ const booksListItem = (props) => {
 
   return (
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
-      <div className='book-cover' style={ { backgroundImage: 'url(\'' + coverUrl + '\')' } }>
+      <ImageContainer className='book-cover' url={ coverUrl }>
         <div className='book-actions'>
-        <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
-        <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
+          <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
+          <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
         </div>
-      </div>
+      </ImageContainer>
 
       <div href='#' className='book-author' title={ author.fullname } onClick={ () => dispatch(setCurrentAuthor(author.id)) }>{ author.fullname }</div>
 

@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, ButtonGroup, Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
+import ImageContainer from 'components/ImageContainer'
 import { selectCurrentAuthor, selectBooks, setAuthorModalShown, selectCurrentAuthorDetails, reloadCurrentAuthorDetails } from 'store/booksListSlice'
 
 const AuthorCard = () => {
@@ -16,8 +17,8 @@ const AuthorCard = () => {
   }
 
   return (
-    <Card>
-      <Card.Img variant='top' src={ authorDetails.imageUrl }/>
+    <Card className='author-card'>
+      { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
       <Card.Body>
         <Card.Title>
           { authorDetails.wikiUrl
