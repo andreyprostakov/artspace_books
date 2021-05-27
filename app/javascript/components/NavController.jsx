@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Button, Container, Row } from 'react-bootstrap'
-import { HotKeys } from "react-hotkeys";
+import { GlobalHotKeys } from "react-hotkeys";
 
 import {
   gotoFirstYear, gotoLastYear, shiftYear,
@@ -62,9 +62,9 @@ class NavController extends React.Component {
 
   render() {
     return (
-      <HotKeys keyMap={ keyMap } handlers={ this.handlers() }>
+      <GlobalHotKeys keyMap={ keyMap } handlers={ this.handlers() }>
         { this.props.children }
-      </HotKeys>
+      </GlobalHotKeys>
     )
   }
 }
