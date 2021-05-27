@@ -4,6 +4,7 @@
 @import 'scaffolds';
 
 body {
+  min-width: 900px;
   overflow: hidden;
 }
 
@@ -12,4 +13,20 @@ body {
     cursor: pointer;
     text-transform: uppercase;
   }
+}
+
+body a {
+  color: #000;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+    color: #000;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+}
+
+.page {
+  padding-top: 56px;
 }

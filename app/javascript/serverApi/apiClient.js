@@ -5,16 +5,16 @@ import BookDetails from 'serverApi/BookDetails'
 
 class ApiClient {
   getYears(query = {}) {
-    return $.ajax({ url: `/years.json?${objectToParams(query)}`})
+    return $.ajax({ url: `/years?${objectToParams(query)}`})
   }
 
   getAuthors() {
-    return $.ajax({ url: '/authors.json '})
+    return $.ajax({ url: '/authors '})
   }
 
   getAuthorDetails(id) {
     return $.ajax({
-      url: `/authors/${id}/details.json`
+      url: `/authors/${id}/details`
     }).then((data) => AuthorDetails.parse(data))
   }
 
@@ -27,7 +27,7 @@ class ApiClient {
       death_year: details.deathYear
     }
     return $.ajax({
-      url: `/authors/${id}/details.json`,
+      url: `/authors/${id}/details`,
       type: 'PUT',
       data: { author: body }
     })
@@ -35,7 +35,7 @@ class ApiClient {
 
   getBooks(query = {}) {
     return $.ajax({
-      url: `/books.json?${objectToParams(query)}`
+      url: `/books?${objectToParams(query)}`
     }).then((books) =>
       books.map(bookData => Book.parse(bookData))
     )
@@ -43,13 +43,13 @@ class ApiClient {
 
   getBook(id) {
     return $.ajax({
-      url: `/books/list/${id}.json`
+      url: `/books/${id}`
     }).then((data) => Book.parse(data))
   }
 
   getBookDetails(id) {
     return $.ajax({
-      url: `/books/${id}.json`
+      url: `/books/${id}/details`
     }).then((data) => BookDetails.parse(data))
   }
 
@@ -67,7 +67,7 @@ class ApiClient {
       title, original_title, goodreads_url, wiki_url, image_url, author_id, year_published
     }
     return $.ajax({
-      url: `/books/${id}.json`,
+      url: `/books/${id}/details`,
       type: 'PUT',
       data: { book: body }
     })

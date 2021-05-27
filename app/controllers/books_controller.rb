@@ -1,35 +1,11 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :set_book, only: %i[show]
 
   protect_from_forgery with: :null_session
-
-  helper_method :return_destination
 
   def index
     @books = Book.order(year_published: :desc, title: :asc).where(year_published: params[:years])
     @books = @books.where(author_id: params[:author_id]) if params[:author_id].present?
-  end
-
-  def create
-    @book = Book.new(book_params)
-    if @book.save
-      render json: {}
-    else
-      render json: @book.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @book.update(book_params)
-      render json: {}
-    else
-      render json: @book.errors, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @book.destroy
-    head :no_content
   end
 
   private

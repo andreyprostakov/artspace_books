@@ -11,7 +11,7 @@ import PageContent from 'components/PageContent'
 
 import { setDefaultBookImageUrl } from 'store/booksListSlice'
 
-const booksListPage = (props) => {
+const Page = (props) => {
   window.STORE = store
   store.dispatch(setDefaultBookImageUrl(props.default_book_image_url))
   return (
@@ -28,4 +28,4 @@ const booksListPage = (props) => {
   );
 }
 
-export default booksListPage
+export default Page

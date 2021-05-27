@@ -1,9 +1,17 @@
 Rails.application.routes.draw do
-  root to: 'books#index'
-  resources :authors
-  resources :books
-  resources :years
-  get 'books/list/:id' => 'books_lists#show'
-  get 'authors/:id/details' => 'author_details#show'
-  put 'authors/:id/details' => 'author_details#update'
+  root to: 'home#index', format: :html
+
+  defaults format: :json do
+    resources :authors, only: :index do
+      post :details, to: 'author_details#create', on: :collection
+      resource :details, controller: 'author_details', only: %i[show update]
+    end
+
+    resources :books, only: %i[index show] do
+      post :details, to: 'book_details#create', on: :collection
+      resource :details, controller: 'book_details', only: %i[show update]
+    end
+
+    resources :years, only: :index
+  end
 end

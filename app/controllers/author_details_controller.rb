@@ -6,6 +6,18 @@ class AuthorDetailsController < ApplicationController
   def show
   end
 
+  def create
+    @author = Author.new(author_params)
+
+    respond_to do |format|
+      if @author.save
+        format.json { render :show, status: :created, location: @author }
+      else
+        format.json { render json: @author.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     if @author.update(author_params)
       render json: {}
@@ -17,7 +29,7 @@ class AuthorDetailsController < ApplicationController
   private
 
   def set_author
-    @author = Author.find(params[:id])
+    @author = Author.find(params[:author_id])
   end
 
   def author_params
