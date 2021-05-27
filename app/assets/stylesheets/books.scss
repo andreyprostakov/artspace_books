@@ -19,15 +19,68 @@ body a {
 }
 
 .books-list {
-  .year-number {
-    border-left: 2px solid;
-    padding-top: 100px;
+  .list-year {
+    .year-number {
+      border-left: 2px solid;
+      padding-top: 100px;
 
-    .tick-sign {
-      display: block;
-      width: 10px;
-      border-bottom: 2px solid;
-      margin: -10px 0px 0px -16px;
+      .tick-sign {
+        display: block;
+        width: 10px;
+        border-bottom: 2px solid;
+        margin: -10px 0px 0px -16px;
+      }
+    }
+
+    &.death-year {
+      .year-number {
+        padding-top: 5px;
+        padding-bottom: 35px;
+      }
+
+      .death-icon {
+        display: block;
+        padding: 8px 0px;
+        position: absolute;
+        top: -2px;
+        left: -8px;
+        background-color: #fff;
+      }
+
+      .ellipsis-icon-bottom {
+        position: absolute;
+        left: -3px;
+        bottom: 0px;
+        background-color: #fff;
+        padding: 10px 0;
+        font-weight: 100;
+        font-size: 10px;
+      }
+    }
+
+    &.birth-year {
+      .year-number {
+        padding-top: 35px;
+      }
+
+      .birthday-icon {
+        display: block;
+        padding: 10px 0px;
+        position: absolute;
+        bottom: -10px;
+        left: -7px;
+        background-color: #fff;
+      }
+
+      .ellipsis-icon-top {
+        position: absolute;
+        left: -3px;
+        top: 0px;
+        background-color: #fff;
+        padding: 10px 0;
+        font-weight: 100;
+        font-size: 10px;
+      }
     }
   }
 

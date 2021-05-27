@@ -159,6 +159,8 @@ const slice = createSlice({
 
 export const selectYearsReversed = state => state.booksList.years.all.slice().reverse()
 
+export const selectCurrentYear = state => state.booksList.years.current
+
 export const selectYearsToDisplay = (year = null) => state => {
   const topYear = year || state.booksList.years.current
   const { all } = state.booksList.years

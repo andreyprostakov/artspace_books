@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee, faDizzy, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
+
 import { selectBookIdsByYear, selectYearsToDisplay, initializeList } from 'store/booksListSlice'
+import BooksListAuthorBirth from 'components/BooksListAuthorBirth'
+import BooksListAuthorDeath from 'components/BooksListAuthorDeath'
 import BooksListItem from 'components/BooksListItem'
 import NavController from 'components/NavController'
 
@@ -14,9 +19,11 @@ class BooksList extends React.Component {
     const { years } = this.props
     return (
       <div className='books-list'>
+        <BooksListAuthorDeath/>
         { years.map(year =>
           <BooksListYearRow year={ year } key={ year }/>
         ) }
+        <BooksListAuthorBirth/>
       </div>
     )
   }
