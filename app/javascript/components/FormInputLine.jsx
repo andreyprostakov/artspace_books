@@ -3,7 +3,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const FormInputLine = (props) => {
-  const { controlId, label, value, autoFocus, readOnly } = props
+  const { controlId, label, value, autoFocus, readOnly, onChange } = props
   const errors = props.errors || []
   return (
     <Form.Group as={ Row } controlId={ controlId }>
@@ -11,7 +11,7 @@ const FormInputLine = (props) => {
         { label }
       </Form.Label>
       <Col sm={ 9 }>
-        <Form.Control type='text' defaultValue={ value } isInvalid={ errors.length > 0 } autoFocus={ autoFocus } readOnly={ readOnly }/>
+        <Form.Control type='text' defaultValue={ value } isInvalid={ errors.length > 0 } autoFocus={ autoFocus } readOnly={ readOnly } onChange={ onChange }/>
         <Form.Control.Feedback type='invalid' tooltip>
           { errors.join('; ') }
         </Form.Control.Feedback>
@@ -24,7 +24,8 @@ FormInputLine.propTypes = {
   controlId: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.any,
-  errors: PropTypes.array
+  errors: PropTypes.array,
+  onChange: PropTypes.func
 }
 FormInputLine.defaultProps = {
   autoFocus: false

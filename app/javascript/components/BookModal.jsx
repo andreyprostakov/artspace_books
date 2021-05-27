@@ -9,6 +9,7 @@ import {
   setBookModalShown,
   selectSelectedBookId,
   selectCurrentBookDetails,
+  selectAuthor,
   loadCurrentBookDetails,
   reloadBook,
   shiftYear
@@ -28,16 +29,19 @@ class BookModal extends React.Component {
   }
 
   render() {
-    const { show, bookId, bookDetails, loadDetails } = this.props
+    const { show, bookId, bookDetails, loadDetails, selectAuthor } = this.props
     if (isEmpty(bookDetails) || bookDetails.id !== bookId) {
       loadDetails()
       return null
     }
+    const author = selectAuthor(bookDetails.authorId)
 
     return (
-      <Modal show={ show } onHide={() => this.handleClose()} size='lg' centered backdropClassName='book-modal-backdrop'>
+      <Modal show={ show } onHide={() => this.handleClose()} size='lg' centered className='book-modal' backdropClassName='book-modal-backdrop'>
         <Modal.Header>
-          <Modal.Title>Edit book</Modal.Title>
+          <Modal.Title>
+            Edit book
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           { bookDetails && <BookForm id='book_form' bookDetails={ bookDetails } onSubmit={ () => this.handleSuccess() }/> }
@@ -59,7 +63,8 @@ const mapStateToProps = (state) => {
   return {
     show: selectBookModalShown(state),
     bookId: selectSelectedBookId(state),
-    bookDetails: selectCurrentBookDetails(state)
+    bookDetails: selectCurrentBookDetails(state),
+    selectAuthor: (id) => selectAuthor(id)(state)
   }
 }
 

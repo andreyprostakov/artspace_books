@@ -2,6 +2,25 @@
   padding-top: 15px;
 }
 
+.book-modal {
+  .search-row {
+    text-align: center;
+
+    .search-goodreads {
+      border-radius: 13px;
+      padding: 4px 13px;
+      color: #382110;
+      background-color: #f4f2e9;
+    }
+
+    .search-wiki {
+      border-radius: 13px;
+      padding: 4px 7px;
+      background-color: #f8f9fa;
+    }
+  }
+}
+
 .books-list {
   .list-year {
     .year-number {
