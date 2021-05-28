@@ -5,7 +5,8 @@ import classnames from 'classnames'
 
 import BookModal from 'components/BookModal'
 import ImageContainer from 'components/ImageContainer'
-import { selectBook, selectAuthor, selectSelectedBookId, setBookModalShown, setCurrentAuthor, selectBookDefaultImageUrl } from 'store/booksListSlice'
+import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageUrl } from 'store/selectors'
+import { setBookModalShown, setCurrentAuthor } from 'store/actions'
 
 const searchUrl = (book, author) => {
   var params = new URLSearchParams()
@@ -18,9 +19,9 @@ const booksListItem = (props) => {
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
   const ref = useRef(null)
-  const isSelected = useSelector(selectSelectedBookId) == id
+  const isSelected = useSelector(selectSelectedBookId()) == id
   const dispatch = useDispatch()
-  const coverUrl = book.coverUrl || useSelector(selectBookDefaultImageUrl)
+  const coverUrl = book.coverUrl || useSelector(selectBookDefaultImageUrl())
 
   useEffect(() => {
     if (isSelected) {

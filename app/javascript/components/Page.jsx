@@ -9,7 +9,7 @@ import NavController from 'components/NavController'
 import PageHeader from 'components/PageHeader'
 import PageContent from 'components/PageContent'
 
-import { setDefaultBookImageUrl } from 'store/booksListSlice'
+import { setDefaultBookImageUrl } from 'store/actions'
 
 const Page = (props) => {
   window.STORE = store

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
 import SearchRow from 'components/BookFormSearchRow'
-import { selectAuthor } from 'store/booksListSlice'
+import { selectAuthor } from 'store/selectors'
 import apiClient from 'serverApi/apiClient'
 
 class BookForm extends React.Component {

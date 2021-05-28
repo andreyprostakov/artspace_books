@@ -7,18 +7,17 @@ import ImageContainer from 'components/ImageContainer'
 import {
   selectCurrentAuthorId,
   selectBooks,
-  setAuthorModalShown,
-  selectCurrentAuthorDetails,
-  loadCurrentAuthorDetails
-} from 'store/booksListSlice'
+  selectCurrentAuthorDetails
+} from 'store/selectors'
+import { setAuthorModalShown, loadCurrentAuthorDetails } from 'store/actions'
 
 const AuthorCard = () => {
-  const books = useSelector(selectBooks)
+  const books = useSelector(selectBooks())
   const dispatch = useDispatch()
-  const authorDetails = useSelector(selectCurrentAuthorDetails)
-  const authorId = useSelector(selectCurrentAuthorId)
+  const authorDetails = useSelector(selectCurrentAuthorDetails())
+  const authorId = useSelector(selectCurrentAuthorId())
   if (isEmpty(authorDetails) || authorDetails.id !== authorId) {
-    dispatch(loadCurrentAuthorDetails)
+    dispatch(loadCurrentAuthorDetails())
     return null
   }
 

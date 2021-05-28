@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux'
 
 import BooksList from 'components/BooksList'
 import AuthorCard from 'components/AuthorCard'
-import { selectCurrentAuthor } from 'store/booksListSlice'
+import { selectCurrentAuthor } from 'store/selectors'
 
 const pageContent = () => {
-  const author = useSelector(selectCurrentAuthor)
+  const author = useSelector(selectCurrentAuthor())
   return (
     <Row>
       { author && <Col xs={ 4 } lg={ 3 }className='author-card'><AuthorCard/></Col> }

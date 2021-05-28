@@ -4,12 +4,19 @@ import { Button, Container, Row } from 'react-bootstrap'
 import { GlobalHotKeys } from "react-hotkeys";
 
 import {
-  gotoFirstYear, gotoLastYear, shiftYear,
-  shiftBookSelection, selectCurrentBook,
-  setBookModalShown, selectBookModalShown,
-  setCurrentAuthor, selectCurrentAuthor,
-  showFullList
-} from 'store/booksListSlice'
+  selectCurrentBook,
+  selectBookModalShown,
+  selectCurrentAuthor,
+} from 'store/selectors'
+import {
+  gotoFirstYear,
+  gotoLastYear,
+  setBookModalShown,
+  setCurrentAuthor,
+  shiftBookSelection,
+  shiftYear,
+  showFullList,
+} from 'store/actions'
 
 const keyMap = {
   DOWN: 'Down',
@@ -35,7 +42,7 @@ class NavController extends React.Component {
     const { currentAuthor, currentBook, dispatch } = this.props
 
     if (currentAuthor) {
-      dispatch(showFullList)
+      dispatch(showFullList())
     } else if (currentBook) {
       dispatch(setCurrentAuthor(currentBook.authorId))
     }
@@ -54,7 +61,7 @@ class NavController extends React.Component {
       RIGHT: () => dispatch(shiftBookSelection(+1)),
       LEFT: () => dispatch(shiftBookSelection(-1)),
 
-      BACK: () => dispatch(showFullList),
+      BACK: () => dispatch(showFullList()),
       TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
       TOGGLE_EDIT: () => this.handleToggleEdit()
     }
@@ -71,9 +78,9 @@ class NavController extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentBook: selectCurrentBook(state),
-    currentAuthor: selectCurrentAuthor(state),
-    bookModalShown: selectBookModalShown(state)
+    currentBook: selectCurrentBook()(state),
+    currentAuthor: selectCurrentAuthor()(state),
+    bookModalShown: selectBookModalShown()(state)
   }
 }
 

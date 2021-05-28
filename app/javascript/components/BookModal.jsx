@@ -6,14 +6,16 @@ import { Button, Modal } from 'react-bootstrap'
 
 import {
   selectBookModalShown,
-  setBookModalShown,
   selectSelectedBookId,
   selectCurrentBookDetails,
   selectAuthor,
+} from 'store/selectors'
+import {
+  setBookModalShown,
   loadCurrentBookDetails,
   reloadBook,
   shiftYear
-} from 'store/booksListSlice'
+} from 'store/actions'
 import BookForm from 'components/BookForm'
 import apiClient from 'serverApi/apiClient'
 
@@ -61,9 +63,9 @@ class BookModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    show: selectBookModalShown(state),
-    bookId: selectSelectedBookId(state),
-    bookDetails: selectCurrentBookDetails(state),
+    show: selectBookModalShown()(state),
+    bookId: selectSelectedBookId()(state),
+    bookDetails: selectCurrentBookDetails()(state),
     selectAuthor: (id) => selectAuthor(id)(state)
   }
 }
@@ -73,7 +75,7 @@ const mapDispatchToProps = (dispatch) => {
     hideModal: () => dispatch(setBookModalShown(false)),
     reloadBook: (id) => dispatch(reloadBook(id)),
     refreshList: () => dispatch(shiftYear(0)),
-    loadDetails: () => dispatch(loadCurrentBookDetails)
+    loadDetails: () => dispatch(loadCurrentBookDetails())
   }
 }
 

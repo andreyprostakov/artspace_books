@@ -5,15 +5,17 @@ import { Button, Modal } from 'react-bootstrap'
 
 import {
   selectAuthorModalShown,
-  setAuthorModalShown,
   selectCurrentAuthorId,
-  setCurrentAuthorId,
-  reloadBook,
-  shiftYear,
   selectCurrentAuthorDetails,
+} from 'store/selectors'
+import {
   loadCurrentAuthorDetails,
-  loadNewAuthor
-} from 'store/booksListSlice'
+  setCurrentAuthorId,
+  loadNewAuthor,
+  reloadBook,
+  setAuthorModalShown,
+  shiftYear,
+} from 'store/actions'
 import AuthorForm from 'components/AuthorForm'
 import apiClient from 'serverApi/apiClient'
 
@@ -28,7 +30,6 @@ class AuthorModal extends React.Component {
 
   handleSuccess(data) {
     const { authorId, loadNewAuthorDetails, reloadDetails } = this.props
-    console.log([authorId, data.id])
     if (data.id && authorId != data.id) {
       loadNewAuthorDetails(data.id)
     } else {
@@ -62,16 +63,16 @@ class AuthorModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    show: selectAuthorModalShown(state),
-    authorId: selectCurrentAuthorId(state),
-    authorDetails: selectCurrentAuthorDetails(state)
+    show: selectAuthorModalShown()(state),
+    authorId: selectCurrentAuthorId()(state),
+    authorDetails: selectCurrentAuthorDetails()(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(setAuthorModalShown(false)),
-    reloadDetails: () => dispatch(loadCurrentAuthorDetails),
+    reloadDetails: () => dispatch(loadCurrentAuthorDetails()),
     loadNewAuthorDetails: (id) => dispatch(loadNewAuthor(id)),
     setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id))
   }
