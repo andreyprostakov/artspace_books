@@ -10,6 +10,18 @@ class BookDetails {
       yearPublished: data.year_published
     }
   }
+
+  static objectToServerData(details) {
+    return {
+      title: details.title,
+      original_title: details.originalTitle,
+      goodreads_url: details.goodreadsUrl,
+      wiki_url: details.wikiUrl,
+      image_url: details.imageUrl,
+      author_id: details.authorId,
+      year_published: details.yearPublished,
+    }
+  }
 }
 
 export default BookDetails

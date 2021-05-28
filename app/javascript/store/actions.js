@@ -10,7 +10,9 @@ export const {
   setCurrentAuthorId,
   setDefaultBookImageUrl,
   shiftBookSelection,
-  showNewAuthorModal
+  showNewAuthorModal,
+  showNewBookModal,
+  updateAuthor,
 } = slice.actions
 
 export const fetchAuthors = () => async (dispatch, getState) => {
@@ -70,6 +72,12 @@ export const loadCurrentAuthorDetails = () => async (dispatch, getState) => {
 export const loadNewAuthor = (id) => async (dispatch, getState) => {
   const details = await apiClient.getAuthorDetails(id)
   dispatch(slice.actions.switchToNewAuthor(details))
+}
+
+export const loadAuthor = (id) => async (dispatch, getState) => {
+  console.log(`loadAuthor ${id}`)
+  const author = await apiClient.getAuthor(id)
+  dispatch(slice.actions.addAuthor(author))
 }
 
 export const loadCurrentBookDetails = () => async (dispatch, getState) => {

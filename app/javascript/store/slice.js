@@ -29,6 +29,7 @@ export const slice = createSlice({
     setYears: (state, action) => {
       const years = action.payload
       state.years.all = years
+      console.log([years, state.years.current, !years.includes(state.years.current)])
       if (!years.includes(state.years.current)) {
         state.years.current = last(years)
       }
@@ -74,23 +75,31 @@ export const slice = createSlice({
     },
 
     setAuthorModalShown: (state, action) => {
-      state.authors.modalShown = action.payload
+      const shown = action.payload
+      state.authors.modalShown = shown
+      if (!shown) { state.authors.bookDetails = {} }
     },
 
     showNewAuthorModal: (state, action) => {
       state.authors.currentId = null
-      state.authors.currentDetails = {}
+      state.authors.currentDetails = { new: true }
       state.authors.modalShown = true
     },
 
     switchToNewAuthor: (state, action) => {
       const details = action.payload
       state.authors.currentId = details.id
+      state.authors.currentDetails = details
       state.authors.byIds[details.id] = { id: details.id, fullname: details.fullname }
       state.years.all = []
       state.years.current = null
       state.books.byIds = {}
       state.books.currentId = null
+    },
+
+    addAuthor: (state, action) => {
+      const author = action.payload
+      state.authors.byIds[author.id] = author
     },
 
 
@@ -162,14 +171,24 @@ export const slice = createSlice({
     },
 
     setBookModalShown: (state, action) => {
-      if (!state.books.currentId) { return }
-
-      state.books.modalShown = action.payload
+      const shown = action.payload
+      state.books.modalShown = shown
+      if (!shown) { state.books.bookDetails = {} }
     },
 
     setCurrentBookDetails: (state, action) => {
       const details = action.payload
       state.books.currentDetails = details
+    },
+
+    showNewBookModal: (state, action) => {
+      const authorId = state.authors.currentId
+      if (!authorId) { return }
+
+      state.books.currentId = null
+      state.books.modalShown = true
+      state.books.currentDetails = { authorId, new: true }
+      state.years.current = null
     }
   }
 })

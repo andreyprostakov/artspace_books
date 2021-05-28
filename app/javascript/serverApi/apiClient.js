@@ -12,6 +12,10 @@ class ApiClient {
     return $.ajax({ url: '/authors '})
   }
 
+  getAuthor(id) {
+    return $.ajax({ url: `/authors/${id}` })
+  }
+
   getAuthorDetails(id) {
     return $.ajax({
       url: `/authors/${id}/details`
@@ -57,21 +61,19 @@ class ApiClient {
   }
 
   putBookDetails(id, details) {
-    const {
-      title,
-      originalTitle: original_title,
-      goodreadsUrl: goodreads_url,
-      wikiUrl: wiki_url,
-      imageUrl: image_url,
-      authorId: author_id,
-      yearPublished: year_published
-    } = details
-    const body = {
-      title, original_title, goodreads_url, wiki_url, image_url, author_id, year_published
-    }
+    const body = BookDetails.objectToServerData(details)
     return $.ajax({
       url: `/books/${id}/details`,
       type: 'PUT',
+      data: { book: body }
+    })
+  }
+
+  postBookDetails(details) {
+    const body = BookDetails.objectToServerData(details)
+    return $.ajax({
+      url: '/books/details',
+      type: 'POST',
       data: { book: body }
     })
   }

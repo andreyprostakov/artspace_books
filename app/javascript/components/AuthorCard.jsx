@@ -9,14 +9,14 @@ import {
   selectBooks,
   selectCurrentAuthorDetails
 } from 'store/selectors'
-import { setAuthorModalShown, loadCurrentAuthorDetails } from 'store/actions'
+import { setAuthorModalShown, loadCurrentAuthorDetails, showNewBookModal } from 'store/actions'
 
 const AuthorCard = () => {
   const books = useSelector(selectBooks())
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const authorId = useSelector(selectCurrentAuthorId())
-  if (isEmpty(authorDetails) || authorDetails.id !== authorId) {
+  if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
     dispatch(loadCurrentAuthorDetails())
     return null
   }
@@ -38,7 +38,7 @@ const AuthorCard = () => {
         </Card.Text>
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => dispatch(setAuthorModalShown(true)) }>Edit</Button>
-          <Button variant='outline-info'>+ Book</Button>
+          <Button variant='outline-info' onClick={ () => dispatch(showNewBookModal()) }>+ Book</Button>
         </ButtonGroup>
       </Card.Body>
     </Card>

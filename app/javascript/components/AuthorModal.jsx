@@ -12,7 +12,7 @@ import {
   loadCurrentAuthorDetails,
   setCurrentAuthorId,
   loadNewAuthor,
-  reloadBook,
+  loadAuthor,
   setAuthorModalShown,
   shiftYear,
 } from 'store/actions'
@@ -29,21 +29,24 @@ class AuthorModal extends React.Component {
   }
 
   handleSuccess(data) {
-    const { authorId, loadNewAuthorDetails, reloadDetails } = this.props
-    if (data.id && authorId != data.id) {
+    const { currentAuthorId, loadNewAuthorDetails, authorDetails, loadDetails, loadAuthor } = this.props
+    if (authorDetails.new) {
       loadNewAuthorDetails(data.id)
     } else {
-      reloadDetails()
+      loadDetails()
     }
+    loadAuthor(authorDetails.new ? data.id : currentAuthorId)
     this.handleClose()
   }
 
   render() {
-    const { show, authorId, authorDetails } = this.props
+    const { show, authorDetails } = this.props
     return (
       <Modal show={ show } onHide={() => this.handleClose()} size='lg' centered backdropClassName='book-modal-backdrop'>
         <Modal.Header>
-          <Modal.Title>Edit author</Modal.Title>
+          <Modal.Title>
+            { authorDetails.new ? 'New author' : 'Edit author' }
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           { (authorDetails !== {}) && <AuthorForm id='author_details_form' authorDetails={ authorDetails } onSubmit={ (data) => this.handleSuccess(data) }/> }
@@ -64,7 +67,7 @@ class AuthorModal extends React.Component {
 const mapStateToProps = (state) => {
   return {
     show: selectAuthorModalShown()(state),
-    authorId: selectCurrentAuthorId()(state),
+    currentAuthorId: selectCurrentAuthorId()(state),
     authorDetails: selectCurrentAuthorDetails()(state)
   }
 }
@@ -72,8 +75,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(setAuthorModalShown(false)),
-    reloadDetails: () => dispatch(loadCurrentAuthorDetails()),
+    loadDetails: () => dispatch(loadCurrentAuthorDetails()),
     loadNewAuthorDetails: (id) => dispatch(loadNewAuthor(id)),
+    loadAuthor: (id) => dispatch(loadAuthor(id)),
     setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id))
   }
 }

@@ -24,15 +24,15 @@ class BookModal extends React.Component {
     this.props.hideModal()
   }
 
-  handleSuccess() {
-    const { bookId, reloadBook, refreshList } = this.props
-    reloadBook(bookId).then(() => refreshList())
+  handleSuccess(data) {
+    const { currentBookId, bookDetails, reloadBook, refreshList } = this.props
+    reloadBook(bookDetails.new ? data.id : currentBookId).then(() => refreshList())
     this.handleClose()
   }
 
   render() {
-    const { show, bookId, bookDetails, loadDetails, selectAuthor } = this.props
-    if (isEmpty(bookDetails) || bookDetails.id !== bookId) {
+    const { show, currentBookId, bookDetails, loadDetails, selectAuthor } = this.props
+    if (isEmpty(bookDetails) || (bookDetails.id && bookDetails.id !== currentBookId)) {
       loadDetails()
       return null
     }
@@ -42,11 +42,11 @@ class BookModal extends React.Component {
       <Modal show={ show } onHide={() => this.handleClose()} size='lg' centered className='book-modal' backdropClassName='book-modal-backdrop'>
         <Modal.Header>
           <Modal.Title>
-            Edit book
+            { bookDetails.new ? 'New book' : 'Edit book' }
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { bookDetails && <BookForm id='book_form' bookDetails={ bookDetails } onSubmit={ () => this.handleSuccess() }/> }
+          { bookDetails && <BookForm id='book_form' bookDetails={ bookDetails } onSubmit={ (data) => this.handleSuccess(data) }/> }
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={() => this.handleClose()}>
@@ -64,7 +64,7 @@ class BookModal extends React.Component {
 const mapStateToProps = (state) => {
   return {
     show: selectBookModalShown()(state),
-    bookId: selectSelectedBookId()(state),
+    currentBookId: selectSelectedBookId()(state),
     bookDetails: selectCurrentBookDetails()(state),
     selectAuthor: (id) => selectAuthor(id)(state)
   }

@@ -15,10 +15,10 @@ class AuthorForm extends React.Component {
 
   sendRequest(formData) {
     const { authorDetails } = this.props
-    if (authorDetails.id) {
-      return apiClient.putAuthorDetails(authorDetails.id, formData)
-    } else {
+    if (authorDetails.new) {
       return apiClient.postAuthorDetails(formData)
+    } else {
+      return apiClient.putAuthorDetails(authorDetails.id, formData)
     }
   }
 

@@ -16,17 +16,26 @@ class BookForm extends React.Component {
     this.state = { errors: {}, currentTitle: bookDetails.title }
   }
 
+  sendRequest(bookDetails, formData) {
+    const { authorDetails } = this.props
+    if (bookDetails.new) {
+      return apiClient.postBookDetails(formData)
+    } else {
+      return apiClient.putBookDetails(bookDetails.id, formData)
+    }
+  }
+
   handleSubmit(event) {
-    const { onSubmit, bookDetails } = this.props
+    const { onSubmit, bookDetails, author } = this.props
     event.preventDefault()
     const formData = pick(
       event.target.elements,
       'title', 'originalTitle', 'goodreadsUrl', 'wikiUrl', 'imageUrl', 'yearPublished'
     )
     Object.keys(formData).forEach(key => formData[key] = formData[key].value)
-    apiClient.putBookDetails(bookDetails.id, formData)
-             .fail((response) => this.setState({ errors: response.responseJSON }))
-             .then(() => onSubmit())
+    formData.authorId = author.id
+    this.sendRequest(bookDetails, formData).fail((response) => this.setState({ errors: response.responseJSON }))
+                                           .then((data) => onSubmit(data))
   }
 
   render() {
