@@ -15,20 +15,23 @@ class ApiClient {
   getAuthorDetails(id) {
     return $.ajax({
       url: `/authors/${id}/details`
-    }).then((data) => AuthorDetails.parse(data))
+    }).then((data) => AuthorDetails.serverDataToObject(data))
   }
 
   putAuthorDetails(id, details) {
-    const body = {
-      fullname: details.fullname,
-      image_url: details.imageUrl,
-      wiki_url: details.wikiUrl,
-      birth_year: details.birthYear,
-      death_year: details.deathYear
-    }
+    const body = AuthorDetails.objectToServerData(details)
     return $.ajax({
       url: `/authors/${id}/details`,
       type: 'PUT',
+      data: { author: body }
+    })
+  }
+
+  postAuthorDetails(details) {
+    const body = AuthorDetails.objectToServerData(details)
+    return $.ajax({
+      url: '/authors/details',
+      type: 'POST',
       data: { author: body }
     })
   }

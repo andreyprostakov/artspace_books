@@ -75,10 +75,25 @@ const slice = createSlice({
     },
 
     setAuthorModalShown: (state, action) => {
-      if (!state.authors.currentId) { return }
-
       state.authors.modalShown = action.payload
     },
+
+    showNewAuthorModal: (state, action) => {
+      state.authors.currentId = null
+      state.authors.currentDetails = {}
+      state.authors.modalShown = true
+    },
+
+    switchToNewAuthor: (state, action) => {
+      const details = action.payload
+      state.authors.currentId = details.id
+      state.authors.byIds[details.id] = { id: details.id, fullname: details.fullname }
+      state.years.all = []
+      state.years.current = null
+      state.books.byIds = {}
+      state.books.currentId = null
+    },
+
 
     setBooks: (state, action) => {
       const books = action.payload
@@ -160,6 +175,16 @@ const slice = createSlice({
   }
 })
 
+export const {
+  resetSelection,
+  shiftBookSelection,
+  setBookModalShown,
+  setCurrentAuthorId,
+  setAuthorModalShown,
+  setDefaultBookImageUrl,
+  showNewAuthorModal
+} = slice.actions
+
 
 export const selectYearsReversed = state => state.booksList.years.all.slice().reverse()
 
@@ -229,15 +254,6 @@ export const selectBookIdsByYear = year => state => {
 }
 
 export const selectBookDefaultImageUrl = state => state.booksList.books.defaultImageUrl
-
-export const {
-  resetSelection,
-  shiftBookSelection,
-  setBookModalShown,
-  setCurrentAuthorId,
-  setAuthorModalShown,
-  setDefaultBookImageUrl
-} = slice.actions
 
 
 function fetchYears(params = {}) {
@@ -362,12 +378,20 @@ export const setCurrentAuthor = authorId => (dispatch, getState) => {
   })
 }
 
-export async function reloadCurrentAuthorDetails(dispatch, getState) {
+export async function loadCurrentAuthorDetails(dispatch, getState) {
   const { currentId } = getState().booksList.authors
+  console.log(currentId)
   if (!currentId) { return }
 
   const details = await apiClient.getAuthorDetails(currentId)
   dispatch(slice.actions.setCurrentAuthorDetails(details))
+}
+
+export function loadNewAuthor(id) {
+  return async (dispatch, getState) => {
+    const details = await apiClient.getAuthorDetails(id)
+    dispatch(slice.actions.switchToNewAuthor(details))
+  }
 }
 
 export async function loadCurrentBookDetails(dispatch, getState) {

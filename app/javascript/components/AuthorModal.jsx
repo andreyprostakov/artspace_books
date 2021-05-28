@@ -2,7 +2,18 @@ import React, { createRef, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
-import { selectAuthorModalShown, setAuthorModalShown, selectCurrentAuthorId, reloadBook, shiftYear, selectCurrentAuthorDetails, reloadCurrentAuthorDetails } from 'store/booksListSlice'
+
+import {
+  selectAuthorModalShown,
+  setAuthorModalShown,
+  selectCurrentAuthorId,
+  setCurrentAuthorId,
+  reloadBook,
+  shiftYear,
+  selectCurrentAuthorDetails,
+  loadCurrentAuthorDetails,
+  loadNewAuthor
+} from 'store/booksListSlice'
 import AuthorForm from 'components/AuthorForm'
 import apiClient from 'serverApi/apiClient'
 
@@ -15,8 +26,14 @@ class AuthorModal extends React.Component {
     this.props.hideModal()
   }
 
-  handleSuccess() {
-    this.props.reloadDetails()
+  handleSuccess(data) {
+    const { authorId, loadNewAuthorDetails, reloadDetails } = this.props
+    console.log([authorId, data.id])
+    if (data.id && authorId != data.id) {
+      loadNewAuthorDetails(data.id)
+    } else {
+      reloadDetails()
+    }
     this.handleClose()
   }
 
@@ -28,7 +45,7 @@ class AuthorModal extends React.Component {
           <Modal.Title>Edit author</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { (authorDetails !== {}) && <AuthorForm id='author_details_form' authorDetails={ authorDetails } onSubmit={ () => this.handleSuccess() }/> }
+          { (authorDetails !== {}) && <AuthorForm id='author_details_form' authorDetails={ authorDetails } onSubmit={ (data) => this.handleSuccess(data) }/> }
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={() => this.handleClose()}>
@@ -54,7 +71,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(setAuthorModalShown(false)),
-    reloadDetails: () => dispatch(reloadCurrentAuthorDetails)
+    reloadDetails: () => dispatch(loadCurrentAuthorDetails),
+    loadNewAuthorDetails: (id) => dispatch(loadNewAuthor(id)),
+    setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id))
   }
 }
 

@@ -8,13 +8,10 @@ class AuthorDetailsController < ApplicationController
 
   def create
     @author = Author.new(author_params)
-
-    respond_to do |format|
-      if @author.save
-        format.json { render :show, status: :created, location: @author }
-      else
-        format.json { render json: @author.errors, status: :unprocessable_entity }
-      end
+    if @author.save
+      render json: { id: @author.id }
+    else
+      render json: @author.errors, status: :unprocessable_entity
     end
   end
 
@@ -33,6 +30,6 @@ class AuthorDetailsController < ApplicationController
   end
 
   def author_params
-    params.fetch(:author, {}).permit(:fullname, :image_url, :wiki_url, :birth_year, :death_year)
+    params.fetch(:author, {}).permit(:fullname, :image_url, :reference, :birth_year, :death_year)
   end
 end

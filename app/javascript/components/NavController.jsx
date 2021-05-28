@@ -48,7 +48,7 @@ class NavController extends React.Component {
       PAGE_DOWN: () => dispatch(shiftYear(-2)),
       END: () => dispatch(gotoFirstYear()),
       UP: () => dispatch(shiftYear(+1)),
-      PAGE_UP: () => dispatch(shiftYear(-2)),
+      PAGE_UP: () => dispatch(shiftYear(+2)),
       START: () => dispatch(gotoLastYear()),
 
       RIGHT: () => dispatch(shiftBookSelection(+1)),

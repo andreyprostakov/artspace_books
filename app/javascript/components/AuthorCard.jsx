@@ -9,7 +9,7 @@ import {
   selectBooks,
   setAuthorModalShown,
   selectCurrentAuthorDetails,
-  reloadCurrentAuthorDetails
+  loadCurrentAuthorDetails
 } from 'store/booksListSlice'
 
 const AuthorCard = () => {
@@ -18,7 +18,7 @@ const AuthorCard = () => {
   const authorDetails = useSelector(selectCurrentAuthorDetails)
   const authorId = useSelector(selectCurrentAuthorId)
   if (isEmpty(authorDetails) || authorDetails.id !== authorId) {
-    dispatch(reloadCurrentAuthorDetails)
+    dispatch(loadCurrentAuthorDetails)
     return null
   }
 

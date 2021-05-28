@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Nav, Navbar } from 'react-bootstrap'
-import { selectCurrentAuthor, showFullList, shiftYear } from 'store/booksListSlice'
+import { selectCurrentAuthor, showFullList, shiftYear, showNewAuthorModal } from 'store/booksListSlice'
 
 const PageHeader = () => {
   const author = useSelector(selectCurrentAuthor)
@@ -11,7 +11,7 @@ const PageHeader = () => {
       <Navbar.Brand>Books</Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link onClick={ () => dispatch(showFullList) }>Home</Nav.Link>
-        <Nav.Link onClick={ () => console.log('CLICK A!') }>Add author</Nav.Link>
+        <Nav.Link onClick={ () => dispatch(showNewAuthorModal()) }>Add author</Nav.Link>
       </Nav>
     </Navbar>
   )
