@@ -6,17 +6,14 @@
   .search-row {
     text-align: center;
 
-    .search-goodreads {
+    .icon-goodreads {
       border-radius: 13px;
       padding: 4px 13px;
-      color: #382110;
-      background-color: #f4f2e9;
     }
 
-    .search-wiki {
+    .icon-wiki {
       border-radius: 13px;
       padding: 4px 7px;
-      background-color: #f8f9fa;
     }
   }
 }
@@ -139,7 +136,7 @@
   .book-actions {
     display: none;
     position: absolute;
-    width: 75px;
+    width: 110px;
     height: 52px;
     margin: auto auto;
     left: 0;
@@ -149,16 +146,42 @@
     border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
+    padding: 8px;
+    white-space: normal;
+    line-height: 33px;
+    text-align: center;
 
-    a {
-      display: block;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
+    .icon-edit {
+      margin-right: 3px;
+      background-color: #fff;
+      padding: 3px 3px;
+      border-radius: 5px;
+      opacity: 0.8;
 
       &:hover {
-        background-color: transparent;
-        text-decoration: underline;
+        opacity: 0.9;
+      }
+    }
+
+    .icon-google {
+      margin-right: 3px;
+      padding: 3px 5px;
+      border-radius: 5px;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .icon-goodreads {
+      margin-right: 3px;
+      padding: 3px 7px;
+      border-radius: 5px;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 0.9;
       }
     }
   }
@@ -170,9 +193,69 @@
   }
 }
 
+.book-form-goodreads-line {
+  .search-goodreads-container {
+    .icon-google {
+      padding: 8px 10px;
+      vertical-align: -webkit-baseline-middle;
+      border-radius: 10px;
+      box-shadow: 2px 2px 4px #ced4da;
+      color: #ea4335;
+    }
+
+    .icon-relation {
+      font-size: 18px;
+      position: absolute;
+      right: -5px;
+      color: #ced4da;
+      top: 6px;
+    }
+  }
+
+  .link-goodreads-container {
+    .icon-relation {
+      font-size: 18px;
+      position: absolute;
+      left: -1px;
+      color: #ced4da;
+      top: 6px;
+    }
+
+    .icon-goodreads {
+      padding: 8px 12px;
+      border-radius: 10px;
+      vertical-align: -webkit-baseline-middle;
+    }
+  }
+}
+
 .author-card {
   .author-image {
     width: 100%;
     height: 225px;
   }
+}
+
+.icon-google {
+  opacity: 0.7;
+  box-shadow: 2px 2px 4px #ced4da;
+  color: #ea4335;
+  background-color: #fff;
+
+  &:hover {
+    opacity: 1.0;
+    color: #ea4335;
+    background-color: #fff;
+  }
+}
+
+.icon-goodreads {
+  &, &:hover {
+    color: #382110;
+    background-color: #f4f2e9;
+  }
+}
+
+.icon-wiki {
+  background-color: #f8f9fa;
 }

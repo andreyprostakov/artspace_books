@@ -5,7 +5,7 @@ import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
-import SearchRow from 'components/BookFormSearchRow'
+import BookFormGoodreadsLine from 'components/BookFormGoodreadsLine'
 import { selectAuthor } from 'store/selectors'
 import apiClient from 'serverApi/apiClient'
 
@@ -40,7 +40,7 @@ class BookForm extends React.Component {
 
   render() {
     const { bookDetails, author } = this.props
-    const { errors } = this.state
+    const { currentTitle, errors } = this.state
 
     return (
       <Form id='book_form' onSubmit={ (e) => this.handleSubmit(e) }>
@@ -48,10 +48,7 @@ class BookForm extends React.Component {
         <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published } autoFocus/>
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                    onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
-        { this.state.currentTitle
-          && <SearchRow author={ author } currentTitle={ this.state.currentTitle }/> }
-        <InputLine controlId='wikiUrl' label='Wiki URL' value={ bookDetails.wikiUrl } errors={ errors.wiki_url }/>
-        <InputLine controlId='goodreadsUrl' label='Goodreads URL' value={ bookDetails.goodreadsUrl } errors={ errors.goodreads_url }/>
+        <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreadsUrl } author={ author } currentTitle={ currentTitle }/>
         <InputLine controlId='imageUrl' label='Cover URL' value={ bookDetails.imageUrl } errors={ errors.image_url }/>
         <Row />
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }/>

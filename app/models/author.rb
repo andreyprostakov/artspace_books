@@ -8,6 +8,7 @@
 #  fullname   :string           not null
 #  image_url  :string
 #  reference  :string
+#  wiki_url   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

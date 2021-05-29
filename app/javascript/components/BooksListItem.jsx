@@ -5,6 +5,9 @@ import classnames from 'classnames'
 
 import BookModal from 'components/BookModal'
 import ImageContainer from 'components/ImageContainer'
+import EditIcon from 'components/icons/EditIcon'
+import GoodreadsIcon from 'components/icons/GoodreadsIcon'
+import GoogleIcon from 'components/icons/GoogleIcon'
 import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageUrl } from 'store/selectors'
 import { setBookModalShown, setCurrentAuthor } from 'store/actions'
 
@@ -33,16 +36,18 @@ const booksListItem = (props) => {
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <ImageContainer className='book-cover' url={ coverUrl }>
         <div className='book-actions'>
-          <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(setBookModalShown(true)) }}>Edit</a>
-          <a href={ searchUrl(book, author) } target='_blank'>Search..</a>
+          { isSelected
+            && <EditIcon onClick={ (e) => dispatch(setBookModalShown(true)) }/> }
+          <GoodreadsIcon url={ book.goodreadsUrl }/>
+          <GoogleIcon queryParts={ [author.fullname, book.title] }/>
         </div>
       </ImageContainer>
 
       <div href='#' className='book-author' title={ author.fullname } onClick={ () => dispatch(setCurrentAuthor(author.id)) }>{ author.fullname }</div>
 
       <div className='book-title' title={ book.title }>
-        { book.url
-          ? <a href={ book.url }>{ book.title }</a>
+        { book.goodreadsUrl
+          ? <a href={ book.goodreadsUrl }>{ book.title }</a>
           : book.title
         }
       </div>

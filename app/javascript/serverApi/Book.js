@@ -3,7 +3,8 @@ class Book {
     return {
       ...bookData,
       authorId: bookData.author_id,
-      coverUrl: bookData.cover_url
+      coverUrl: bookData.cover_url,
+      goodreadsUrl: bookData.goodreads_url
     }
   }
 }
