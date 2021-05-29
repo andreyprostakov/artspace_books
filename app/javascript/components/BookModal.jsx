@@ -34,7 +34,7 @@ class BookModal extends React.Component {
 
   render() {
     const { show, currentBookId, bookDetails, loadDetails, selectAuthor } = this.props
-    if (isEmpty(bookDetails) || (bookDetails.id && bookDetails.id !== currentBookId)) {
+    if (show && (isEmpty(bookDetails) || (bookDetails.id && bookDetails.id !== currentBookId))) {
       loadDetails()
       return null
     }
