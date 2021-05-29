@@ -45,17 +45,16 @@ class BookForm extends React.Component {
     return (
       <Form id='book_form' onSubmit={ (e) => this.handleSubmit(e) }>
         <InputLine controlId='authorId' label='Author' value={ author?.fullname } readOnly/>
+        <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published } autoFocus/>
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
-          autoFocus onChange={ (e) => this.setState({ currentTitle: e.target.value }) }
-        />
+                   onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
         { this.state.currentTitle
           && <SearchRow author={ author } currentTitle={ this.state.currentTitle }/> }
+        <InputLine controlId='wikiUrl' label='Wiki URL' value={ bookDetails.wikiUrl } errors={ errors.wiki_url }/>
         <InputLine controlId='goodreadsUrl' label='Goodreads URL' value={ bookDetails.goodreadsUrl } errors={ errors.goodreads_url }/>
         <InputLine controlId='imageUrl' label='Cover URL' value={ bookDetails.imageUrl } errors={ errors.image_url }/>
         <Row />
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }/>
-        <InputLine controlId='wikiUrl' label='Wiki URL' value={ bookDetails.wikiUrl } errors={ errors.wiki_url }/>
-        <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published }/>
       </Form>
     )
   }

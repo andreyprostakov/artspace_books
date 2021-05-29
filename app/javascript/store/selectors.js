@@ -1,4 +1,7 @@
 import { compact, difference } from 'lodash'
+import shuffle from 'knuth-shuffle-seeded'
+
+export const selectSeed = () => state => state.booksList.seed
 
 // YEARS
 
@@ -69,8 +72,16 @@ export const selectCurrentBookDetails = () => state => state.booksList.books.cur
 
 export const selectBookModalShown = () => state => state.booksList.books.modalShown
 
+export const selectShuffledBooksOfYear = (year) => state => {
+  const { seed } = state.booksList
+  return shuffle(
+    Object.values(state.booksList.books.byIds).filter(book => book.year == year),
+    seed
+  )
+}
+
 export const selectBookIdsByYear = year => state => {
-  return Object.values(state.booksList.books.byIds).filter(book => book.year == year).map(book => book.id)
+  return selectShuffledBooksOfYear(year)(state).map(book => book.id)
 }
 
 export const selectBookDefaultImageUrl = () => state => state.booksList.books.defaultImageUrl

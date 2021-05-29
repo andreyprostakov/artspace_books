@@ -16,6 +16,7 @@
     "bootstrap": "4.6.0",
     "classnames": "^2.3.1",
     "jquery": "^3.6.0",
+    "knuth-shuffle-seeded": "^1.0.6",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

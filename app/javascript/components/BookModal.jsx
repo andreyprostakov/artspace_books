@@ -12,6 +12,7 @@ import {
 } from 'store/selectors'
 import {
   setBookModalShown,
+  setCurrentBookDetails,
   loadCurrentBookDetails,
   reloadBook,
   shiftYear
@@ -21,6 +22,7 @@ import apiClient from 'serverApi/apiClient'
 
 class BookModal extends React.Component {
   handleClose() {
+    this.props.setCurrentBookDetails({})
     this.props.hideModal()
   }
 
@@ -75,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
     hideModal: () => dispatch(setBookModalShown(false)),
     reloadBook: (id) => dispatch(reloadBook(id)),
     refreshList: () => dispatch(shiftYear(0)),
-    loadDetails: () => dispatch(loadCurrentBookDetails())
+    loadDetails: () => dispatch(loadCurrentBookDetails()),
+    setCurrentBookDetails: (details) => dispatch(setCurrentBookDetails(details)),
   }
 }
 

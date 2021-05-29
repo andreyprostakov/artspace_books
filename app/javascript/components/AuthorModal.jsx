@@ -11,6 +11,7 @@ import {
 import {
   loadCurrentAuthorDetails,
   setCurrentAuthorId,
+  setCurrentAuthorDetails,
   loadNewAuthor,
   loadAuthor,
   setAuthorModalShown,
@@ -25,6 +26,7 @@ class AuthorModal extends React.Component {
   }
 
   handleClose() {
+    this.props.setCurrentAuthorDetails({})
     this.props.hideModal()
   }
 
@@ -78,7 +80,8 @@ const mapDispatchToProps = (dispatch) => {
     loadDetails: () => dispatch(loadCurrentAuthorDetails()),
     loadNewAuthorDetails: (id) => dispatch(loadNewAuthor(id)),
     loadAuthor: (id) => dispatch(loadAuthor(id)),
-    setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id))
+    setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id)),
+    setCurrentAuthorDetails: (details) => dispatch(setCurrentAuthorDetails(details)),
   }
 }
 

@@ -1,4 +1,5 @@
 import { difference, find, last, sort, uniq } from 'lodash'
+import shuffle from 'knuth-shuffle-seeded'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const slice = createSlice({
@@ -26,10 +27,11 @@ export const slice = createSlice({
     }
   },
   reducers: {
+    setSeed: (state) => { state.seed = Date.now() },
+
     setYears: (state, action) => {
       const years = action.payload
       state.years.all = years
-      console.log([years, state.years.current, !years.includes(state.years.current)])
       if (!years.includes(state.years.current)) {
         state.years.current = last(years)
       }
@@ -104,7 +106,8 @@ export const slice = createSlice({
 
 
     setBooks: (state, action) => {
-      const books = action.payload
+      const { seed } = state
+      const books = shuffle(action.payload, seed)
       state.books.byIds = {}
       books.forEach(book => state.books.byIds[book.id] = book)
 
@@ -136,7 +139,8 @@ export const slice = createSlice({
     },
 
     addBooks: (state, action) => {
-      const books = action.payload
+      const { seed } = state
+      const books = shuffle(action.payload, seed)
       books.forEach(book => state.books.byIds[book.id] = book)
     },
 
@@ -145,35 +149,15 @@ export const slice = createSlice({
       state.books.defaultImageUrl = url
     },
 
-    updateCurrentBookId: (state) => {
-      const { current: currentYear } = state.years
-      const { currentId: currentBookId, byIds: allBooks } = state.books
-      const currentBook = currentBookId && allBooks[currentBookId]
-      if (!currentBook || currentBook.year !== currentYear) {
-        state.books.currentId = Object.values(allBooks).find(book => book.year == currentYear)?.id
-      }
-    },
-
-    resetSelection: (state) => {
-      const year = last(state.years.all)
-      state.years.current = year
-      state.books.currentId = Object.values(state.books.byIds).find(book => book.year == year)?.id
-    },
-
-    shiftBookSelection: (state, action) => {
-      const shift = action.payload
-      const yearBookIds = Object.values(state.books.byIds).filter(book => book.year == state.years.current).map(book => book.id)
-      const index = yearBookIds.indexOf(state.books.currentId)
-      const targetId = yearBookIds[index + shift]
-      if (!targetId) { return }
-
-      state.books.currentId = targetId
-    },
-
     setBookModalShown: (state, action) => {
       const shown = action.payload
       state.books.modalShown = shown
       if (!shown) { state.books.bookDetails = {} }
+    },
+
+    setCurrentBookId: (state, action) => {
+      const id = action.payload
+      state.books.currentId = id
     },
 
     setCurrentBookDetails: (state, action) => {
