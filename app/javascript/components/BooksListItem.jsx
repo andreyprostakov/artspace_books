@@ -9,7 +9,8 @@ import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageUrl } from 'store/selectors'
-import { setBookModalShown, setCurrentAuthor } from 'store/actions'
+import { setBookModalShown } from 'store/actions'
+import { useUrlStore } from 'store/urlStore'
 
 const booksListItem = (props) => {
   const { id } = props
@@ -19,7 +20,9 @@ const booksListItem = (props) => {
   const currentBookId = useSelector(selectSelectedBookId())
   const isSelected = currentBookId == id
   const dispatch = useDispatch()
-  const coverUrl = book.coverUrl || useSelector(selectBookDefaultImageUrl())
+  const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
+  const coverUrl = book.coverUrl || defaultCoverUrl
+  const [{}, { gotoAuthor }] = useUrlStore()
 
   useEffect(() => {
     if (isSelected) {
@@ -38,7 +41,7 @@ const booksListItem = (props) => {
         </div>
       </ImageContainer>
 
-      <div href='#' className='book-author' title={ author.fullname } onClick={ () => dispatch(setCurrentAuthor(author.id)) }>{ author.fullname }</div>
+      <div href='#' className='book-author' title={ author.fullname } onClick={ () => gotoAuthor(author.id) }>{ author.fullname }</div>
 
       <div className='book-title' title={ book.title }>
         { book.goodreadsUrl

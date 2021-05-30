@@ -12,11 +12,10 @@ import {
   gotoFirstYear,
   gotoLastYear,
   setBookModalShown,
-  setCurrentAuthor,
   shiftBookSelection,
   shiftYear,
-  showFullList,
 } from 'store/actions'
+import { connectToUrlStore } from 'store/urlStore'
 
 const keyMap = {
   DOWN: 'Down',
@@ -39,17 +38,17 @@ class NavController extends React.Component {
   }
 
   handleToggleAuthor() {
-    const { currentAuthor, currentBook, dispatch } = this.props
+    const { currentAuthor, currentBook, urlStoreActions } = this.props
 
     if (currentAuthor) {
-      dispatch(showFullList())
-    } else if (currentBook) {
-      dispatch(setCurrentAuthor(currentBook.authorId))
+      urlStoreActions.gotoBooks()
+    } else {
+      urlStoreActions.gotoAuthor(currentBook.authorId)
     }
   }
 
   handlers() {
-    const { dispatch } = this.props
+    const { dispatch, urlStoreActions } = this.props
     return {
       DOWN: () => this.props.dispatch(shiftYear(-1)),
       PAGE_DOWN: () => dispatch(shiftYear(-2)),
@@ -61,7 +60,7 @@ class NavController extends React.Component {
       RIGHT: () => dispatch(shiftBookSelection(+1)),
       LEFT: () => dispatch(shiftBookSelection(-1)),
 
-      BACK: () => dispatch(showFullList()),
+      BACK: () => dispatch(urlStoreActions.gotoBooks()),
       TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
       TOGGLE_EDIT: () => this.handleToggleEdit()
     }
@@ -84,4 +83,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(NavController)
+export default connectToUrlStore(connect(mapStateToProps)(NavController))

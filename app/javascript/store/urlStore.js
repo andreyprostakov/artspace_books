@@ -1,21 +1,38 @@
 import React, { useState , useEffect } from 'react'
 import { useLocation, useParams, useHistory } from 'react-router-dom'
 
+import { objectToParams } from 'utils/objectToParams'
+
 export const useUrlStore = () => {
-  const [state, setInfo] = useState({})
-  const query = new URLSearchParams(useLocation().search)
-  const params = useParams()
   const history = useHistory()
+  const location = useLocation()
+  const params = useParams()
+  const authorId = parseInt(params.authorId) || null
+  const query = new URLSearchParams(location.search)
+  const bookId = parseInt(query.get('book_id')) || null
+  const [state, setInfo] = useState({ bookId: bookId, authorId: authorId })
+
+  window.PARAMS = params
+  window.URL_STATE = state
+  window.QUERY = query
+  window.LOCATION = location
 
   useEffect(() => {
-    const bookId = parseInt(query.get('book_id'))
     if (bookId && bookId !== state.bookId) {
-      setInfo({ bookId })
+      setInfo({ ...state, bookId })
     }
-  })
+  }, [bookId])
+
+  useEffect(() => {
+    if (authorId && authorId !== state.authorId) {
+      setInfo({ ...state, authorId })
+    }
+  }, [params])
 
   const actions = {
-    setCurrentBookId: (id) => history.push(`/books?book_id=${id}`)
+    gotoBook: (id, options = {}) => history.push(`${location.pathname}?book_id=${id}`),
+    gotoBooks: () => history.push(`/books?${objectToParams({ book_id: bookId })}`),
+    gotoAuthor: (id, options = {}) => history.push(`/authors/${id}?${objectToParams({ book_id: bookId })}`)
   }
 
   return [state, actions]
@@ -23,7 +40,7 @@ export const useUrlStore = () => {
 
 export const connectToUrlStore = (Component) => {
   return (props) => {
-    const [urlState, urlStateActions] = useUrlStore()
-    return <Component { ...props } urlState={ urlState } urlStateActions= { urlStateActions }/>
+    const [urlStore, urlStoreActions] = useUrlStore()
+    return <Component { ...props } urlStore={ urlStore } urlStoreActions= { urlStoreActions }/>
   }
 }

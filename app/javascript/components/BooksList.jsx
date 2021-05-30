@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faDizzy, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
 
 import { selectBookIdsByYear, selectYearsToDisplay, selectCurrentBook } from 'store/selectors'
-import { fetchDisplayedBooks, setCurrentBookId } from 'store/actions'
+import { fetchBooksForYears } from 'store/actions'
 import BooksListAuthorBirth from 'components/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/BooksListAuthorDeath'
 import BooksListItem from 'components/BooksListItem'
@@ -12,17 +12,17 @@ import NavController from 'components/NavController'
 
 const BooksList = () => {
   const dispatch = useDispatch()
-  const years = useSelector(selectYearsToDisplay())
+  const yearsToDisplay = useSelector(selectYearsToDisplay())
   const currentBook = useSelector(selectCurrentBook())
 
   useEffect(() => {
-    dispatch(fetchDisplayedBooks())
+    dispatch(fetchBooksForYears(yearsToDisplay))
   }, [currentBook?.year])
 
   return (
     <div className='books-list'>
       <BooksListAuthorDeath/>
-      { years.map(year =>
+      { yearsToDisplay.map(year =>
         <BooksListYearRow year={ year } key={ year }/>
       ) }
       <BooksListAuthorBirth/>

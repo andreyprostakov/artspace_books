@@ -9,7 +9,7 @@ import {
   selectBooks,
   selectCurrentAuthorDetails
 } from 'store/selectors'
-import { setAuthorModalShown, loadCurrentAuthorDetails, showNewBookModal } from 'store/actions'
+import { setAuthorModalShown, showNewBookModal } from 'store/actions'
 
 const AuthorCard = () => {
   const books = useSelector(selectBooks())
@@ -17,7 +17,6 @@ const AuthorCard = () => {
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const authorId = useSelector(selectCurrentAuthorId())
   if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
-    dispatch(loadCurrentAuthorDetails())
     return null
   }
 

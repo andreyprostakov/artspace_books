@@ -29,14 +29,14 @@ export const slice = createSlice({
   reducers: {
     setSeed: (state) => { state.seed = Date.now() },
 
-    setYears: (state, action) => {
+    addYears: (state, action) => {
       const years = action.payload
-      state.years.all = years
+      state.years.all = uniq([...state.years.all, ...years])
     },
 
     addYearsToLoad: (state, action) => {
       const years = action.payload
-      state.books.yearsToLoad = years
+      state.books.yearsToLoad = difference(years, state.books.yearsLoaded)
     },
 
     markYearsAsLoading: (state, action) => {
@@ -54,7 +54,6 @@ export const slice = createSlice({
     setAuthors: (state, action) => {
       const authors = action.payload
       state.authors.byIds = {}
-      state.authors.currentId = null
       authors.forEach(author => state.authors.byIds[author.id] = author)
     },
 
@@ -124,6 +123,16 @@ export const slice = createSlice({
         state.books.byIds[book.id] = book
         state.books.yearsLoaded.push(book.year)
       })
+    },
+
+    cleanBooksList: (state, actions) => {
+      state.books.byIds = {}
+      state.books.yearsLoaded = []
+    },
+
+    cleanYearsList: (state, action) => {
+      state.years.all = []
+      state.years.current = null
     },
 
     setDefaultBookImageUrl: (state, action) => {

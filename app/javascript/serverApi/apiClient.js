@@ -1,11 +1,18 @@
 import { isArray } from 'lodash'
+import { objectToParams } from 'utils/objectToParams'
 import AuthorDetails from 'serverApi/AuthorDetails'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 
 class ApiClient {
-  getYears(query = {}) {
-    return $.ajax({ url: `/years.json?${objectToParams(query)}`})
+  getYears() {
+    return $.ajax({ url: '/years.json' })
+  }
+
+  getAuthorYears(authorId) {
+    return $.ajax({
+      url: `/years.json?${ objectToParams({ author_id: authorId }) }`
+    })
   }
 
   getAuthors() {
@@ -43,9 +50,13 @@ class ApiClient {
   getBooks(query = {}) {
     return $.ajax({
       url: `/books.json?${objectToParams(query)}`
-    }).then((books) =>
-      books.map(bookData => Book.parse(bookData))
-    )
+    }).then((books) => books.map(bookData => Book.parse(bookData)))
+  }
+
+  getAuthorBooks(authorId) {
+    return $.ajax({
+      url: `/books.json?${ objectToParams({ author_id: authorId }) }`
+    }).then((books) => books.map(bookData => Book.parse(bookData)))
   }
 
   getBook(id) {
@@ -77,19 +88,6 @@ class ApiClient {
       data: { book: body }
     })
   }
-}
-
-const objectToParams = (object) => {
-  var params = new URLSearchParams()
-  Object.keys(object).forEach(key => {
-    const value = object[key]
-    if (isArray(value)) {
-      value.forEach(entry => params.append(`${key}[]`, entry))
-    } else if (value) {
-      params.append(key, value)
-    }
-  })
-  return params.toString()
 }
 
 export default new ApiClient()

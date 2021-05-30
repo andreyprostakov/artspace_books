@@ -23,7 +23,6 @@ const Page = (props) => {
             <PageHeader/>
             <PageContent/>
             <BookModal/>
-            <AuthorModal/>
           </Container>
         </NavController>
       </BrowserRouter>

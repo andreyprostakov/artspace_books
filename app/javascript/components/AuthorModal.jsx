@@ -9,7 +9,7 @@ import {
   selectCurrentAuthorDetails,
 } from 'store/selectors'
 import {
-  loadCurrentAuthorDetails,
+  loadAuthorDetails,
   setCurrentAuthorId,
   setCurrentAuthorDetails,
   loadNewAuthor,
@@ -35,7 +35,7 @@ class AuthorModal extends React.Component {
     if (authorDetails.new) {
       loadNewAuthorDetails(data.id)
     } else {
-      loadDetails()
+      loadDetails(currentAuthorId)
     }
     loadAuthor(authorDetails.new ? data.id : currentAuthorId)
     this.handleClose()
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(setAuthorModalShown(false)),
-    loadDetails: () => dispatch(loadCurrentAuthorDetails()),
+    loadDetails: (id) => dispatch(loadAuthorDetails(id)),
     loadNewAuthorDetails: (id) => dispatch(loadNewAuthor(id)),
     loadAuthor: (id) => dispatch(loadAuthor(id)),
     setCurrentAuthorId: (id) => dispatch(setCurrentAuthorId(id)),
