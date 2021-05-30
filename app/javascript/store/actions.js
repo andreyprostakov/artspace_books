@@ -149,7 +149,8 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
     dispatch(setCurrentAuthorId(authorId)),
     dispatch(fetchAuthorBooks(authorId)),
   ]).then(() => {
-    if (currentBookId) {
+    const authorBookIds = Object.values(getState().booksList.books.byIds).filter(book => book.authorId == authorId).map(book => book.id)
+    if (currentBookId && authorBookIds.includes(currentBookId)) {
       dispatch(reloadBook(currentBookId))
       dispatch(setCurrentBookId(currentBookId))
     } else {

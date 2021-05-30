@@ -10,7 +10,7 @@ export const useUrlStore = () => {
   const authorId = parseInt(params.authorId) || null
   const query = new URLSearchParams(location.search)
   const bookId = parseInt(query.get('book_id')) || null
-  const [state, setInfo] = useState({ bookId: bookId, authorId: authorId })
+  const [state, setInfo] = useState({ bookId: bookId, authorId: authorId, newAuthorModalShown: location.hash == '#new-author' })
 
   window.PARAMS = params
   window.URL_STATE = state
@@ -18,21 +18,40 @@ export const useUrlStore = () => {
   window.LOCATION = location
 
   useEffect(() => {
-    if (bookId && bookId !== state.bookId) {
+    if (bookId !== state.bookId) {
       setInfo({ ...state, bookId })
     }
   }, [bookId])
 
   useEffect(() => {
-    if (authorId && authorId !== state.authorId) {
+    if (authorId !== state.authorId) {
       setInfo({ ...state, authorId })
     }
-  }, [params])
+  }, [authorId])
+
+  useEffect(() => {
+    setInfo({ ...state, newAuthorModalShown: location.hash == '#new-author' })
+  }, [location.hash])
 
   const actions = {
-    gotoBook: (id, options = {}) => history.push(`${location.pathname}?book_id=${id}`),
-    gotoBooks: () => history.push(`/books?${objectToParams({ book_id: bookId })}`),
-    gotoAuthor: (id, options = {}) => history.push(`/authors/${id}?${objectToParams({ book_id: bookId })}`)
+    gotoBook: (id, options = {}) => {
+      history.push(`${location.pathname}?book_id=${id}`)
+    },
+    gotoBooks: () => {
+      history.push(`/books?${objectToParams({ book_id: bookId })}`)
+    },
+    gotoAuthor: (id, options = {}) => {
+      history.push(`/authors/${id}?${objectToParams({ book_id: bookId })}`)
+    },
+    gotoNewAuthor: (id) => {
+      history.push(`/authors/${id}`)
+    },
+    openNewAuthorModal: () => {
+      history.push([location.path, location.search, '#new-author'].join(''))
+    },
+    closeNewAuthorModal: () => {
+      history.push([location.path, location.search].join(''))
+    }
   }
 
   return [state, actions]

@@ -12,7 +12,7 @@ import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageU
 import { setBookModalShown } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
-const booksListItem = (props) => {
+const BooksListItem = (props) => {
   const { id } = props
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
@@ -53,8 +53,8 @@ const booksListItem = (props) => {
   );
 }
 
-booksListItem.propTypes = {
+BooksListItem.propTypes = {
   id: PropTypes.number.isRequired
 };
 
-export default booksListItem
+export default BooksListItem

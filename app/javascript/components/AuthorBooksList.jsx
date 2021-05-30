@@ -15,7 +15,6 @@ const AuthorBooksList = () => {
     <>
       <Col xs={ 4 } lg={ 3 } className='author-card'>
         <AuthorCard/>
-        <AuthorModal/>
       </Col>
       <Col xs={ 8 } lg={ 9 }>
         <BooksList/>

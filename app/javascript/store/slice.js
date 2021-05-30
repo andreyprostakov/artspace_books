@@ -127,6 +127,7 @@ export const slice = createSlice({
 
     cleanBooksList: (state, actions) => {
       state.books.byIds = {}
+      state.books.currentId = null
       state.books.yearsLoaded = []
     },
 

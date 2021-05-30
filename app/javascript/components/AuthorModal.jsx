@@ -19,6 +19,7 @@ import {
 } from 'store/actions'
 import AuthorForm from 'components/AuthorForm'
 import apiClient from 'serverApi/apiClient'
+import { connectToUrlStore } from 'store/urlStore'
 
 class AuthorModal extends React.Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class AuthorModal extends React.Component {
   }
 
   handleClose() {
-    this.props.setCurrentAuthorDetails({})
+    const { closeNewAuthorModal } = this.props.urlStoreActions
+    closeNewAuthorModal()
     this.props.hideModal()
   }
 
@@ -42,9 +44,9 @@ class AuthorModal extends React.Component {
   }
 
   render() {
-    const { show, authorDetails } = this.props
+    const { authorDetails, urlStore } = this.props
     return (
-      <Modal show={ show } onHide={() => this.handleClose()} size='lg' centered backdropClassName='book-modal-backdrop'>
+      <Modal show={ urlStore.newAuthorModalShown } onHide={() => this.handleClose()} size='lg' centered backdropClassName='book-modal-backdrop'>
         <Modal.Header>
           <Modal.Title>
             { authorDetails.new ? 'New author' : 'Edit author' }
@@ -68,7 +70,6 @@ class AuthorModal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    show: selectAuthorModalShown()(state),
     currentAuthorId: selectCurrentAuthorId()(state),
     authorDetails: selectCurrentAuthorDetails()(state)
   }
@@ -85,4 +86,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorModal)
+export default connectToUrlStore(connect(mapStateToProps, mapDispatchToProps)(AuthorModal))

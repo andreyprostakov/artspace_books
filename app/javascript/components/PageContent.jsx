@@ -10,11 +10,12 @@ import {
 
 import BooksList from 'components/BooksList'
 import AuthorBooksList from 'components/AuthorBooksList'
+import AuthorNewModal from 'components/AuthorNewModal'
 import { selectCurrentAuthor, selectCurrentAuthorId, selectSelectedBookId, selectSeed } from 'store/selectors'
 import { reloadBook, setCurrentBookId, setSeed, setupStoreForBooksPage, setupStoreForAuthorPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
-const pageContent = () => {
+const PageContent = () => {
   const author = useSelector(selectCurrentAuthor())
   const [{ bookId }, { gotoBook }] = useUrlStore()
   const dispatch = useDispatch()
@@ -56,6 +57,7 @@ const pageContent = () => {
             UNKNOWN ROUTE
           </Route>
         </Switch>
+        <AuthorNewModal/>
       </Row>
     </>
   );
@@ -90,4 +92,4 @@ const AuthorPage = () => {
   )
 }
 
-export default pageContent
+export default PageContent
