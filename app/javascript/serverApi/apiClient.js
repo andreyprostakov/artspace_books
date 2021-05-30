@@ -5,27 +5,27 @@ import BookDetails from 'serverApi/BookDetails'
 
 class ApiClient {
   getYears(query = {}) {
-    return $.ajax({ url: `/years?${objectToParams(query)}`})
+    return $.ajax({ url: `/years.json?${objectToParams(query)}`})
   }
 
   getAuthors() {
-    return $.ajax({ url: '/authors '})
+    return $.ajax({ url: '/authors.json'})
   }
 
   getAuthor(id) {
-    return $.ajax({ url: `/authors/${id}` })
+    return $.ajax({ url: `/authors/${id}.json` })
   }
 
   getAuthorDetails(id) {
     return $.ajax({
-      url: `/authors/${id}/details`
+      url: `/authors/${id}/details.json`
     }).then((data) => AuthorDetails.serverDataToObject(data))
   }
 
   putAuthorDetails(id, details) {
     const body = AuthorDetails.objectToServerData(details)
     return $.ajax({
-      url: `/authors/${id}/details`,
+      url: `/authors/${id}/details.json`,
       type: 'PUT',
       data: { author: body }
     })
@@ -34,7 +34,7 @@ class ApiClient {
   postAuthorDetails(details) {
     const body = AuthorDetails.objectToServerData(details)
     return $.ajax({
-      url: '/authors/details',
+      url: '/authors/details.json',
       type: 'POST',
       data: { author: body }
     })
@@ -42,7 +42,7 @@ class ApiClient {
 
   getBooks(query = {}) {
     return $.ajax({
-      url: `/books?${objectToParams(query)}`
+      url: `/books.json?${objectToParams(query)}`
     }).then((books) =>
       books.map(bookData => Book.parse(bookData))
     )
@@ -50,20 +50,20 @@ class ApiClient {
 
   getBook(id) {
     return $.ajax({
-      url: `/books/${id}`
+      url: `/books/${id}.json`
     }).then((data) => Book.parse(data))
   }
 
   getBookDetails(id) {
     return $.ajax({
-      url: `/books/${id}/details`
+      url: `/books/${id}/details.json`
     }).then((data) => BookDetails.parse(data))
   }
 
   putBookDetails(id, details) {
     const body = BookDetails.objectToServerData(details)
     return $.ajax({
-      url: `/books/${id}/details`,
+      url: `/books/${id}/details.json`,
       type: 'PUT',
       data: { book: body }
     })
@@ -72,7 +72,7 @@ class ApiClient {
   postBookDetails(details) {
     const body = BookDetails.objectToServerData(details)
     return $.ajax({
-      url: '/books/details',
+      url: '/books/details.json',
       type: 'POST',
       data: { book: body }
     })

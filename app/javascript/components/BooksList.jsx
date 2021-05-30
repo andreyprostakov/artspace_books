@@ -1,33 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee, faDizzy, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
 
-import { selectBookIdsByYear, selectYearsToDisplay } from 'store/selectors'
-import { initializeList } from 'store/actions'
+import { selectBookIdsByYear, selectYearsToDisplay, selectCurrentBook } from 'store/selectors'
+import { fetchDisplayedBooks, setCurrentBookId } from 'store/actions'
 import BooksListAuthorBirth from 'components/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/BooksListAuthorDeath'
 import BooksListItem from 'components/BooksListItem'
 import NavController from 'components/NavController'
 
-class BooksList extends React.Component {
-  componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(initializeList())
-  }
+const BooksList = () => {
+  const dispatch = useDispatch()
+  const years = useSelector(selectYearsToDisplay())
+  const currentBook = useSelector(selectCurrentBook())
 
-  render () {
-    const { years } = this.props
-    return (
-      <div className='books-list'>
-        <BooksListAuthorDeath/>
-        { years.map(year =>
-          <BooksListYearRow year={ year } key={ year }/>
-        ) }
-        <BooksListAuthorBirth/>
-      </div>
-    )
-  }
+  useEffect(() => {
+    dispatch(fetchDisplayedBooks())
+  }, [currentBook?.year])
+
+  return (
+    <div className='books-list'>
+      <BooksListAuthorDeath/>
+      { years.map(year =>
+        <BooksListYearRow year={ year } key={ year }/>
+      ) }
+      <BooksListAuthorBirth/>
+    </div>
+  )
 }
 
 const BooksListYearRow = (props) => {
@@ -54,7 +54,7 @@ const BooksListYearRow = (props) => {
 
 const mapStateToProps = state => {
   return {
-    years: selectYearsToDisplay()(state)
+    selectYearsToDisplay: () => selectYearsToDisplay()(state)
   }
 }
 

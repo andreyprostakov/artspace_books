@@ -5,6 +5,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'booksList',
   initialState: {
+    seed: null,
     books: {
       byIds: {},
       currentId: null,
@@ -16,8 +17,7 @@ export const slice = createSlice({
       defaultImageUrl: null
     },
     years: {
-      all: [],
-      current: null
+      all: []
     },
     authors: {
       byIds: {},
@@ -32,9 +32,6 @@ export const slice = createSlice({
     setYears: (state, action) => {
       const years = action.payload
       state.years.all = years
-      if (!years.includes(state.years.current)) {
-        state.years.current = last(years)
-      }
     },
 
     addYearsToLoad: (state, action) => {
@@ -52,11 +49,6 @@ export const slice = createSlice({
       const years = action.payload
       state.books.yearsLoaded = uniq([...state.books.yearsLoaded, ...years])
       state.books.yearsInLoading = difference(state.books.yearsInLoading, years)
-    },
-
-    setCurrentYear: (state, action) => {
-      const targetYear = action.payload
-      state.years.current = targetYear
     },
 
     setAuthors: (state, action) => {
@@ -94,7 +86,6 @@ export const slice = createSlice({
       state.authors.currentDetails = details
       state.authors.byIds[details.id] = { id: details.id, fullname: details.fullname }
       state.years.all = []
-      state.years.current = null
       state.books.byIds = {}
       state.books.currentId = null
     },
@@ -104,23 +95,12 @@ export const slice = createSlice({
       state.authors.byIds[author.id] = author
     },
 
-
-    setBooks: (state, action) => {
-      const { seed } = state
-      const books = shuffle(action.payload, seed)
-      state.books.byIds = {}
-      books.forEach(book => state.books.byIds[book.id] = book)
-
-      const years = uniq(books.map(book => book.year))
-      state.books.yearsToLoad = []
-      state.books.yearsInLoading = []
-      state.books.yearsLoaded = years
-    },
-
     addBook: (state, action) => {
       const book = action.payload
       const { year: bookYear } = book
-      const { all: allYears, current: previouslyCurrentYear } = state.years
+      const { all: allYears } = state.years
+      const previousCurrentBook = state.books.byIds[state.books.currentId]
+      const previousCurrentYear = previousCurrentBook?.year
 
       state.books.byIds[book.id] = book
       state.books.currentId = book.id
@@ -128,12 +108,11 @@ export const slice = createSlice({
         state.years.all = [...allYears, bookYear].sort()
         state.books.yearsLoaded = [...state.books.yearsLoaded, bookYear]
       }
-      if (previouslyCurrentYear !== bookYear) {
-        state.years.current = bookYear
 
-        const yearBook = Object.values(state.books.byIds).find(book => book.year == previouslyCurrentYear)
+      if (previousCurrentYear && previousCurrentYear !== bookYear) {
+        const yearBook = Object.values(state.books.byIds).find(book => book.year == previousCurrentYear)
         if (!yearBook) {
-          state.years.all = state.years.all.filter(year => year != previouslyCurrentYear)
+          state.years.all = state.years.all.filter(year => year != previousCurrentYear)
         }
       }
     },
@@ -141,7 +120,10 @@ export const slice = createSlice({
     addBooks: (state, action) => {
       const { seed } = state
       const books = shuffle(action.payload, seed)
-      books.forEach(book => state.books.byIds[book.id] = book)
+      books.forEach(book => {
+        state.books.byIds[book.id] = book
+        state.books.yearsLoaded.push(book.year)
+      })
     },
 
     setDefaultBookImageUrl: (state, action) => {
@@ -172,7 +154,6 @@ export const slice = createSlice({
       state.books.currentId = null
       state.books.modalShown = true
       state.books.currentDetails = { authorId, new: true }
-      state.years.current = null
     }
   }
 })

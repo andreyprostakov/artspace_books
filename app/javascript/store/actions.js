@@ -1,9 +1,9 @@
 import { first, last, max, min } from 'lodash'
 
 import { slice } from 'store/slice'
-import { selectYearsToDisplay, selectTargetYear, selectYearsToLoad, selectShuffledBooksOfYear } from 'store/selectors'
 import apiClient from 'serverApi/apiClient'
 
+import { selectYearsToDisplay, selectBookIdsByYear, selectCurrentBook , selectTargetYear, selectYearsToLoad, selectShuffledBooksOfYear } from 'store/selectors'
 export const {
   setAuthorModalShown,
   setBookModalShown,
@@ -11,8 +11,8 @@ export const {
   setCurrentAuthorDetails,
   setCurrentBookId,
   setCurrentBookDetails,
-  setCurrentYear,
   setDefaultBookImageUrl,
+  setSeed,
   showNewAuthorModal,
   showNewBookModal,
   updateAuthor,
@@ -29,8 +29,9 @@ export const reloadBook = (id) => async (dispatch, getState) => {
 }
 
 export const shiftYear = (shift) => changeSelectedYear(state => {
-  const { all, current } = state.booksList.years
-  const index = all.indexOf(current)
+  const { all } = state.booksList.years
+  const currentYear = selectCurrentBook()(state)?.year
+  const index = all.indexOf(currentYear)
   const targetIndex = max([0, min([all.length - 1, index + shift])])
   return all[targetIndex]
 })
@@ -40,9 +41,7 @@ export const gotoFirstYear = () => changeSelectedYear(state => first(state.books
 export const gotoLastYear = () => changeSelectedYear(state => last(state.booksList.years.all))
 
 export const initializeList = () => (dispatch) => {
-  dispatch(slice.actions.setSeed())
-  return showFullList()(dispatch).
-    then(() => dispatch(resetSelection()))
+  return showFullList()(dispatch)
 }
 
 export const showFullList = () => (dispatch) => {
@@ -90,48 +89,49 @@ export const loadCurrentBookDetails = () => async (dispatch, getState) => {
   dispatch(slice.actions.setCurrentBookDetails(details))
 }
 
-const updateCurrentBookId = () => (dispatch, getState) => {
-  const state = getState().booksList
-  const { current: currentYear } = state.years
-  const { currentId: currentBookId, byIds: allBooks } = state.books
-  const currentBook = currentBookId && allBooks[currentBookId]
-  if (!currentBook || currentBook.year !== currentYear) {
-    const orderedBooks = selectShuffledBooksOfYear(currentYear)(getState())
-    dispatch(setCurrentBookId(first(orderedBooks)?.id))
-  }
+const setCurrentBookToYear = (targetYear) => (dispatch, getState) => {
+  const state = getState()
+  const currentBook = selectCurrentBook()(state)
+  if (currentBook?.year == targetYear) { return }
+
+  const newCurrentBookId = first(selectBookIdsByYear(targetYear)(state))
+  dispatch(setCurrentBookId(newCurrentBookId))
 }
 
 const resetSelection = () => (dispatch, getState) => {
   const state = getState().booksList
   const year = last(state.years.all)
   const orderedBooks = selectShuffledBooksOfYear(year)(getState())
-  dispatch(setCurrentYear(year))
   dispatch(setCurrentBookId(first(orderedBooks)?.id))
 }
 
 export const shiftBookSelection = (shift) => (dispatch, getState) => {
-  const state = getState().booksList
-  const yearBookIds = selectShuffledBooksOfYear(state.years.current)(getState())
-                        .map(book => book.id)
-  const index = yearBookIds.indexOf(state.books.currentId)
+  const state = getState()
+  const currentBook = selectCurrentBook()(state)
+  const yearBookIds = selectShuffledBooksOfYear(currentBook.year)(state).map(book => book.id)
+  const index = yearBookIds.indexOf(currentBook.id)
   const targetId = yearBookIds[index + shift]
   if (!targetId) { return }
 
   dispatch(setCurrentBookId(targetId))
 }
 
-// PRIVATE
+export const fetchDisplayedBooks = () => (dispatch, getState) => {
+  return fetchBooks()(dispatch, getState)
+}
 
-const fetchYears = (params = {}) => async (dispatch, getState) => {
+export const fetchYears = (params = {}) => async (dispatch, getState) => {
   const years = await apiClient.getYears(params)
   dispatch(slice.actions.setYears(years))
 }
 
-const fetchBooks = (params = {}) => async (dispatch, getState) => {
+export const fetchBooks = (params = {}) => async (dispatch, getState) => {
   const yearsToDisplay = selectYearsToDisplay()(getState())
-  const response = await apiClient.getBooks({ years: yearsToDisplay, ...params })
-  dispatch(slice.actions.setBooks(response))
+  const loadedBooks = await apiClient.getBooks({ years: yearsToDisplay, ...params })
+  dispatch(slice.actions.addBooks(loadedBooks))
 }
+
+// PRIVATE
 
 const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
   if (index > 100) {
@@ -169,10 +169,7 @@ const changeSelectedYear = (selectTargetYear) => async (dispatch, getState) => {
   const targetYear = selectTargetYear(state)
   if (!targetYear) { return }
 
-  if (state.booksList.years.current != targetYear) {
-    dispatch(slice.actions.setCurrentYear(targetYear))
-    dispatch(updateCurrentBookId())
-  }
+  dispatch(setCurrentBookToYear(targetYear))
 
   const yearsToLoad = selectYearsToLoad(targetYear)(state)
   if (yearsToLoad.length < 1) { return }
@@ -181,5 +178,5 @@ const changeSelectedYear = (selectTargetYear) => async (dispatch, getState) => {
 
   const books = await loadBooksLazily(dispatch, getState)
   dispatch(slice.actions.addBooks(books))
-  dispatch(updateCurrentBookId())
+  dispatch(setCurrentBookToYear(targetYear))
 }

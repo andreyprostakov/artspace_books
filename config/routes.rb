@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root to: 'home#index', format: :html
+  root to: 'home#index'
 
-  defaults format: :json do
+  scope constraints: lambda { |req| req.format == :json } do
     resources :authors, only: %i[index show] do
       post :details, to: 'author_details#create', on: :collection
       resource :details, controller: 'author_details', only: %i[show update]
@@ -14,4 +14,6 @@ Rails.application.routes.draw do
 
     resources :years, only: :index
   end
+
+  get '*path', to: 'home#index', format: :html
 end

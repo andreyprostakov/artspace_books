@@ -7,10 +7,16 @@ export const selectSeed = () => state => state.booksList.seed
 
 export const selectYearsReversed = () => state => state.booksList.years.all.slice().reverse()
 
-export const selectCurrentYear = () => state => state.booksList.years.current
+export const selectCurrentYear = () => state => {
+  const book = selectCurrentBook()(state)
+  return book?.year
+}
 
 export const selectYearsToDisplay = () => state => {
-  const topYear = state.booksList.years.current
+  const currentBook = selectCurrentBook()(state)
+  if (!currentBook) { return [] }
+
+  const topYear = currentBook?.year
   const { all } = state.booksList.years
   const allReversed = all.slice().reverse()
   const index = allReversed.indexOf(topYear)

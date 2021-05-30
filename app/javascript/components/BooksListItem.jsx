@@ -11,18 +11,13 @@ import GoogleIcon from 'components/icons/GoogleIcon'
 import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageUrl } from 'store/selectors'
 import { setBookModalShown, setCurrentAuthor } from 'store/actions'
 
-const searchUrl = (book, author) => {
-  var params = new URLSearchParams()
-  params.append('q', `goodreads ${author.fullname} ${book.title}`)
-  return `http://google.com/search?${params.toString()}`
-}
-
 const booksListItem = (props) => {
   const { id } = props
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
   const ref = useRef(null)
-  const isSelected = useSelector(selectSelectedBookId()) == id
+  const currentBookId = useSelector(selectSelectedBookId())
+  const isSelected = currentBookId == id
   const dispatch = useDispatch()
   const coverUrl = book.coverUrl || useSelector(selectBookDefaultImageUrl())
 
