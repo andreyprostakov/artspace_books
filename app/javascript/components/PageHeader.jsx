@@ -15,7 +15,7 @@ const PageHeader = () => {
       <Navbar.Brand>Books</Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link onClick={ () => gotoBooks() }>Home</Nav.Link>
-        <Nav.Link onClick={ () => openNewAuthorModal() }>Add author</Nav.Link>
+        <Nav.Link onClick={ () => openNewAuthorModal() }>+Author</Nav.Link>
       </Nav>
     </Navbar>
   )
