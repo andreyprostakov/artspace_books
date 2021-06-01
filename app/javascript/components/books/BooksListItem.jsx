@@ -8,7 +8,7 @@ import ImageContainer from 'components/ImageContainer'
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
-import { selectBook, selectAuthor, selectSelectedBookId, selectBookDefaultImageUrl } from 'store/selectors'
+import { selectBook, selectAuthor, selectCurrentBookId, selectBookDefaultImageUrl } from 'store/selectors'
 import { setBookModalShown } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -17,7 +17,7 @@ const BooksListItem = (props) => {
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
   const ref = useRef(null)
-  const currentBookId = useSelector(selectSelectedBookId())
+  const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())

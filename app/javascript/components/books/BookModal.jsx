@@ -6,7 +6,7 @@ import { Button, Modal } from 'react-bootstrap'
 
 import {
   selectBookModalShown,
-  selectSelectedBookId,
+  selectCurrentBookId,
   selectCurrentBookDetails,
   selectAuthor,
 } from 'store/selectors'
@@ -66,7 +66,7 @@ class BookModal extends React.Component {
 const mapStateToProps = (state) => {
   return {
     show: selectBookModalShown()(state),
-    currentBookId: selectSelectedBookId()(state),
+    currentBookId: selectCurrentBookId()(state),
     bookDetails: selectCurrentBookDetails()(state),
     selectAuthor: (id) => selectAuthor(id)(state)
   }

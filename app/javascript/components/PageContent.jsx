@@ -6,14 +6,11 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import BooksPage from 'components/books/BooksPage'
 import AuthorPage from 'components/authors/AuthorPage'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
-import { selectSelectedBookId, selectSeed } from 'store/selectors'
-import { setCurrentBookId, setSeed } from 'store/actions'
-import { useUrlStore } from 'store/urlStore'
+import { selectSeed } from 'store/selectors'
+import { setSeed } from 'store/actions'
 
 const PageContent = () => {
-  const [{ bookId }, { gotoBook }] = useUrlStore()
   const dispatch = useDispatch()
-  const currentBookId = useSelector(selectSelectedBookId())
   const seed = useSelector(selectSeed())
 
   useEffect(() => {
@@ -21,18 +18,6 @@ const PageContent = () => {
 
     dispatch(setSeed())
   }, [seed])
-
-  useEffect(() => {
-    if (!bookId || currentBookId == bookId) { return } 
-
-    dispatch(setCurrentBookId(bookId))
-  }, [bookId])
-
-  useEffect(() => {
-    if (!currentBookId || currentBookId == bookId) { return }
-
-    gotoBook(currentBookId)
-  }, [currentBookId])
 
   return (
     <>

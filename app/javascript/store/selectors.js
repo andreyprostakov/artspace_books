@@ -70,7 +70,7 @@ export const selectCurrentBook = () => state => {
   return all[currentId]
 }
 
-export const selectSelectedBookId = () => state => state.booksList.books.currentId
+export const selectCurrentBookId = () => state => state.booksList.books.currentId
 
 export const selectCurrentBookDetails = () => state => state.booksList.books.currentDetails
 

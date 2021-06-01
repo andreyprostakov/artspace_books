@@ -35,7 +35,7 @@ export const slice = createSlice({
 
     addYearsToLoad: (state, action) => {
       const years = action.payload
-      state.books.yearsToLoad = difference(years, state.books.yearsLoaded)
+      state.books.yearsToLoad = [...state.books.yearsToLoad, ...difference(years, state.books.yearsLoaded)]
     },
 
     markYearsAsLoading: (state, action) => {
