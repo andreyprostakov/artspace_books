@@ -21,6 +21,22 @@ const AuthorCard = () => {
     return null
   }
 
+  const renderLifetime = () => {
+    if (!authorDetails.birthYear) { return null }
+
+    const birthLabel = `${authorDetails.birthYear}--`
+    const age = authorDetails.deathYear
+                ? authorDetails.deathYear - authorDetails.birthYear
+                : new Date().getFullYear() - authorDetails.birthYear
+    const ageLabel = `(age ${age})`
+
+    return [
+      birthLabel,
+      authorDetails.deathYear,
+      ageLabel
+    ].join('')
+  }
+
   return (
     <Card className='author-card'>
       { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
@@ -32,7 +48,7 @@ const AuthorCard = () => {
           }
         </Card.Title>
         <Card.Text>
-          <span>{ [authorDetails.birthYear, authorDetails.deathYear].join('--') }</span>
+          <span>{ renderLifetime() }</span>
           <br/>
           <span>Books: { books.length }</span>
         </Card.Text>
