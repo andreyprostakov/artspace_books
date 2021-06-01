@@ -29,7 +29,7 @@ const BooksList = () => {
 
   useEffect(() => {
     dispatch(fetchBooksForYears(yearsToDisplay))
-  }, [currentBook?.year])
+  }, [currentBook])
 
   return (
     <div className='books-list'>

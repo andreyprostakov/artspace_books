@@ -68,7 +68,9 @@ const setCurrentBookToYear = (targetYear) => (dispatch, getState) => {
   if (currentBook?.year == targetYear) { return }
 
   const newCurrentBookId = first(selectBookIdsByYear(targetYear)(state))
-  dispatch(setCurrentBookId(newCurrentBookId))
+  if (newCurrentBookId) {
+    dispatch(setCurrentBookId(newCurrentBookId))
+  }
 }
 
 export const shiftBookSelection = (shift) => (dispatch, getState) => {
