@@ -22,8 +22,7 @@ export const slice = createSlice({
     authors: {
       byIds: {},
       currentId: null,
-      currentDetails: {},
-      modalShown: false
+      currentDetails: {}
     }
   },
   reducers: {
@@ -65,28 +64,6 @@ export const slice = createSlice({
     setCurrentAuthorDetails: (state, action) => {
       const details = action.payload
       state.authors.currentDetails = details
-    },
-
-    setAuthorModalShown: (state, action) => {
-      const shown = action.payload
-      state.authors.modalShown = shown
-      if (!shown) { state.authors.bookDetails = {} }
-    },
-
-    showNewAuthorModal: (state, action) => {
-      state.authors.currentId = null
-      state.authors.currentDetails = { new: true }
-      state.authors.modalShown = true
-    },
-
-    switchToNewAuthor: (state, action) => {
-      const details = action.payload
-      state.authors.currentId = details.id
-      state.authors.currentDetails = details
-      state.authors.byIds[details.id] = { id: details.id, fullname: details.fullname }
-      state.years.all = []
-      state.books.byIds = {}
-      state.books.currentId = null
     },
 
     addAuthor: (state, action) => {

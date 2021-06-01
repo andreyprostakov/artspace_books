@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import AuthorBooksList from 'components/authors/AuthorBooksList'
-import AuthorNewModal from 'components/authors/AuthorNewModal'
+import AuthorEditModal from 'components/authors/AuthorEditModal'
 import { selectCurrentAuthorId } from 'store/selectors'
 import { setupStoreForAuthorPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
@@ -21,7 +21,10 @@ const AuthorPage = () => {
   if (!currentAuthorId) { return null }
 
   return (
-    <AuthorBooksList/>
+    <>
+      <AuthorBooksList/>
+      <AuthorEditModal/>
+    </>
   )
 }
 

@@ -13,7 +13,6 @@ import {
   selectYearsReversed
 } from 'store/selectors'
 export const {
-  setAuthorModalShown,
   setBookModalShown,
   setCurrentAuthorId,
   setCurrentAuthorDetails,
@@ -21,7 +20,6 @@ export const {
   setCurrentBookDetails,
   setDefaultBookImageUrl,
   setSeed,
-  showNewAuthorModal,
   showNewBookModal,
   updateAuthor,
 } = slice.actions
@@ -51,11 +49,6 @@ export const gotoLastYear = () => changeSelectedYear(state => last(state.booksLi
 export const loadAuthorDetails = (authorId) => async (dispatch, getState) => {
   const details = await apiClient.getAuthorDetails(authorId)
   dispatch(slice.actions.setCurrentAuthorDetails(details))
-}
-
-export const loadNewAuthor = (id) => async (dispatch, getState) => {
-  const details = await apiClient.getAuthorDetails(id)
-  dispatch(slice.actions.switchToNewAuthor(details))
 }
 
 export const loadAuthor = (id) => async (dispatch, getState) => {

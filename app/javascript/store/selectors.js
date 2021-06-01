@@ -59,8 +59,6 @@ export const selectCurrentAuthor = () => state => {
   return all[currentId]
 }
 
-export const selectAuthorModalShown = () => state => state.booksList.authors.modalShown
-
 // BOOKS
 
 export const selectBook = id => state => state.booksList.books.byIds[id]

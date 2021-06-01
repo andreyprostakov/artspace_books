@@ -6,12 +6,11 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import BooksPage from 'components/books/BooksPage'
 import AuthorPage from 'components/authors/AuthorPage'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
-import { selectCurrentAuthor, selectSelectedBookId, selectSeed } from 'store/selectors'
+import { selectSelectedBookId, selectSeed } from 'store/selectors'
 import { setCurrentBookId, setSeed } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const PageContent = () => {
-  const author = useSelector(selectCurrentAuthor())
   const [{ bookId }, { gotoBook }] = useUrlStore()
   const dispatch = useDispatch()
   const currentBookId = useSelector(selectSelectedBookId())
