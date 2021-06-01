@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { connect, useSelector, useDispatch } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee, faDizzy, faBirthdayCake } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { selectBookIdsByYear, selectYearsToDisplay, selectCurrentBook } from 'store/selectors'
+import { selectYearsToDisplay, selectCurrentBook } from 'store/selectors'
 import { fetchBooksForYears } from 'store/actions'
 import BooksListAuthorBirth from 'components/books/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/books/BooksListAuthorDeath'
-import BooksListItem from 'components/books/BooksListItem'
-import NavController from 'components/NavController'
+import BooksListYearRow from 'components/books/BooksListYearRow'
 
 const BooksList = () => {
   const dispatch = useDispatch()
@@ -30,32 +27,4 @@ const BooksList = () => {
   )
 }
 
-const BooksListYearRow = (props) => {
-  const bookIds = useSelector(selectBookIdsByYear(props.year))
-  return (
-    <div className='list-year row'>
-      <div className='year-number col-1'>
-        <div className='align-bottom'>
-          { props.year }
-          <div className='tick-sign'/>
-        </div>
-      </div>
-
-      <div className='col-11'>
-        <div className='year-books'>
-          { bookIds.map(bookId =>
-            <BooksListItem id={ bookId } key={ bookId }/>
-          ) }
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const mapStateToProps = state => {
-  return {
-    selectYearsToDisplay: () => selectYearsToDisplay()(state)
-  }
-}
-
-export default connect(mapStateToProps)(BooksList)
+export default BooksList
