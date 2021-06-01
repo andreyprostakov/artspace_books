@@ -5,9 +5,9 @@ import { faCoffee, faDizzy, faBirthdayCake } from '@fortawesome/free-solid-svg-i
 
 import { selectBookIdsByYear, selectYearsToDisplay, selectCurrentBook } from 'store/selectors'
 import { fetchBooksForYears } from 'store/actions'
-import BooksListAuthorBirth from 'components/BooksListAuthorBirth'
-import BooksListAuthorDeath from 'components/BooksListAuthorDeath'
-import BooksListItem from 'components/BooksListItem'
+import BooksListAuthorBirth from 'components/books/BooksListAuthorBirth'
+import BooksListAuthorDeath from 'components/books/BooksListAuthorDeath'
+import BooksListItem from 'components/books/BooksListItem'
 import NavController from 'components/NavController'
 
 const BooksList = () => {

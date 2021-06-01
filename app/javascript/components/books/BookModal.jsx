@@ -17,7 +17,7 @@ import {
   reloadBook,
   shiftYear
 } from 'store/actions'
-import BookForm from 'components/BookForm'
+import BookForm from 'components/books/BookForm'
 import apiClient from 'serverApi/apiClient'
 
 class BookModal extends React.Component {

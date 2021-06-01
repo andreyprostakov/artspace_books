@@ -4,7 +4,7 @@ import { Col } from 'react-bootstrap'
 
 import AuthorCard from 'components/authors/AuthorCard'
 import AuthorModal from 'components/authors/AuthorModal'
-import BooksList from 'components/BooksList'
+import BooksList from 'components/books/BooksList'
 import { selectCurrentAuthorId } from 'store/selectors'
 
 const AuthorBooksList = () => {

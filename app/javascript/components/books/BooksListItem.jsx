@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 
-import BookModal from 'components/BookModal'
+import BookModal from 'components/books/BookModal'
 import ImageContainer from 'components/ImageContainer'
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'

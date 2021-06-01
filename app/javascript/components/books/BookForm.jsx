@@ -5,7 +5,7 @@ import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
-import BookFormGoodreadsLine from 'components/BookFormGoodreadsLine'
+import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { selectAuthor } from 'store/selectors'
 import apiClient from 'serverApi/apiClient'
 
