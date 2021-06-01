@@ -1,10 +1,11 @@
-import { pick } from 'lodash'
+import { isEmpty, pick } from 'lodash'
 import React from 'react'
 import { connect } from 'react-redux'
 import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
+import BookFormCoverLine from 'components/books/BookFormCoverLine'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { selectAuthor } from 'store/selectors'
 import apiClient from 'serverApi/apiClient'
@@ -41,7 +42,7 @@ class BookForm extends React.Component {
   render() {
     const { bookDetails, author } = this.props
     const { currentTitle, errors } = this.state
-    if (!author) { return null }
+    if (!author || isEmpty(bookDetails)) { return null }
 
     return (
       <Form id='book_form' onSubmit={ (e) => this.handleSubmit(e) }>
@@ -49,8 +50,8 @@ class BookForm extends React.Component {
         <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published } autoFocus/>
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                    onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
-        <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreadsUrl } author={ author } currentTitle={ currentTitle }/>
-        <InputLine controlId='imageUrl' label='Cover URL' value={ bookDetails.imageUrl } errors={ errors.image_url }/>
+        <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
+        <BookFormCoverLine controlId='imageUrl' bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentTitle }/>
         <Row />
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }/>
       </Form>

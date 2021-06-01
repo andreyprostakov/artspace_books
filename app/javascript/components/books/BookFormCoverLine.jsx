@@ -4,43 +4,37 @@ import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
-import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
 
-const BookFormGoodreadsLine = (props) => {
-  const { controlId, bookDetails, currentTitle, author } = props
+const BookFormCoverLine = (props) => {
+  const { author, bookDetails, controlId, currentTitle } = props
   const errors = props.errors || []
-  const [currentUrl, setUrl] = useState(bookDetails.goodreadsUrl)
 
   return (
     <Form.Group as={ Row } controlId={ controlId } className='book-form-goodreads-line'>
       <Form.Label column sm={ 3 }>
-        Goodreads URL
+        Cover URL
       </Form.Label>
       <Col sm={ 1 } className='search-goodreads-container' hidden={ !currentTitle }>
-        <GoogleIcon queryParts={ ['goodreads', author.fullname, currentTitle] }/>
+        <GoogleIcon queryParts={ ['book cover', author.fullname, currentTitle] } optionalParams={ { tbm: 'isch' } }/>
         <div className='icon-relation'><FontAwesomeIcon icon={ faCaretRight }/></div>
       </Col>
-      <Col sm={ 7 }>
-        <Form.Control type='text' defaultValue={ currentUrl } isInvalid={ errors.length > 0 } onChange={ (e) => setUrl(e.target.value) }/>
+      <Col sm={ 8 }>
+        <Form.Control type='text' defaultValue={ bookDetails.imageUrl } isInvalid={ errors.length > 0 }/>
         <Form.Control.Feedback type='invalid' tooltip>
           { errors.join('; ') }
         </Form.Control.Feedback>
-      </Col>
-      <Col sm={ 1 } className='link-goodreads-container' hidden={ !currentUrl }>
-        <div className='icon-relation'><FontAwesomeIcon icon={ faCaretRight }/></div>
-        <GoodreadsIcon url={ currentUrl }/>
       </Col>
     </Form.Group>
   )
 }
 
-BookFormGoodreadsLine.propTypes = {
+BookFormCoverLine.propTypes = {
   controlId: PropTypes.string.isRequired,
-  bookDetails: PropTypes.object.isRequired,
+  bookDetails: PropTypes.object,
   author: PropTypes.object.isRequired,
-  errors: PropTypes.array,
-  currentTitle: PropTypes.string
+  currentTitle: PropTypes.string,
+  errors: PropTypes.array
 }
 
-export default BookFormGoodreadsLine
+export default BookFormCoverLine
