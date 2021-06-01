@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 
-import BookModal from 'components/books/BookModal'
 import ImageContainer from 'components/ImageContainer'
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
@@ -22,7 +21,7 @@ const BooksListItem = (props) => {
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
-  const [{}, { gotoAuthor }] = useUrlStore()
+  const [{}, { gotoAuthor, openEditBookModal }] = useUrlStore()
 
   useEffect(() => {
     if (isSelected) {
@@ -35,7 +34,7 @@ const BooksListItem = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl }>
         <div className='book-actions'>
           { isSelected
-            && <EditIcon onClick={ (e) => dispatch(setBookModalShown(true)) }/> }
+            && <EditIcon onClick={ (e) => openEditBookModal() }/> }
           <GoodreadsIcon url={ book.goodreadsUrl }/>
           <GoogleIcon queryParts={ [author.fullname, book.title] }/>
         </div>

@@ -10,23 +10,21 @@ import AuthorForm from 'components/authors/AuthorForm'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorEditModal = () => {
-  const [{ editAuthorModalShown }, { closeEditAuthorModal }] = useUrlStore()
+  const [{ editAuthorModalShown }, { closeModal }] = useUrlStore()
   const currentAuthorId = useSelector(selectCurrentAuthorId())
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const dispatch = useDispatch()
 
-  const handleClose = () => closeEditAuthorModal()
-
   const handleSuccess = () => {
     dispatch(loadAuthorDetails(currentAuthorId))
     dispatch(loadAuthor(currentAuthorId))
-    handleClose()
+    closeModal()
   }
 
   if (isEmpty(authorDetails)) { return null }
 
   return (
-    <Modal show={ editAuthorModalShown } onHide={ () => handleClose() } size='lg' centered backdropClassName='book-modal-backdrop'>
+    <Modal show={ editAuthorModalShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
       <Modal.Header>
         <Modal.Title>Edit author</Modal.Title>
       </Modal.Header>
@@ -34,7 +32,7 @@ const AuthorEditModal = () => {
         <AuthorForm id='author_details_form' authorDetails={ authorDetails } onSubmit={ (data) => handleSuccess(data) }/>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={ () => handleClose() }>
+        <Button variant='secondary' onClick={ () => closeModal() }>
           Close
         </Button>
         <Button variant='primary' form='author_details_form' type='submit'>

@@ -1,17 +1,14 @@
-import React, { useState } from 'react'
-import { connect, useSelector, useDispatch } from 'react-redux'
-import { Button, Container, Row } from 'react-bootstrap'
-import { GlobalHotKeys } from "react-hotkeys";
+import React from 'react'
+import { connect } from 'react-redux'
+import { GlobalHotKeys } from 'react-hotkeys'
 
 import {
   selectCurrentBook,
-  selectBookModalShown,
   selectCurrentAuthor,
 } from 'store/selectors'
 import {
   gotoFirstYear,
   gotoLastYear,
-  setBookModalShown,
   shiftBookSelection,
   shiftYear,
 } from 'store/actions'
@@ -33,8 +30,14 @@ const keyMap = {
 
 class NavController extends React.Component {
   handleToggleEdit() {
-    const { dispatch, bookModalShown } = this.props
-    dispatch(setBookModalShown(!bookModalShown))
+    const { urlStore, urlStoreActions, currentBook } = this.props
+    if (!currentBook) { return }
+
+    if (urlStore.editBookModalShown) {
+      urlStoreActions.closeModal()
+    } else {
+      urlStoreActions.openEditBookModal()
+    }
   }
 
   handleToggleAuthor() {
@@ -60,7 +63,7 @@ class NavController extends React.Component {
       RIGHT: () => dispatch(shiftBookSelection(+1)),
       LEFT: () => dispatch(shiftBookSelection(-1)),
 
-      BACK: () => dispatch(urlStoreActions.gotoBooks()),
+      BACK: () => urlStoreActions.closeModal(),
       TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
       TOGGLE_EDIT: () => this.handleToggleEdit()
     }
@@ -78,8 +81,7 @@ class NavController extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentBook: selectCurrentBook()(state),
-    currentAuthor: selectCurrentAuthor()(state),
-    bookModalShown: selectBookModalShown()(state)
+    currentAuthor: selectCurrentAuthor()(state)
   }
 }
 

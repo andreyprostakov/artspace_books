@@ -41,6 +41,7 @@ class BookForm extends React.Component {
   render() {
     const { bookDetails, author } = this.props
     const { currentTitle, errors } = this.state
+    if (!author) { return null }
 
     return (
       <Form id='book_form' onSubmit={ (e) => this.handleSubmit(e) }>

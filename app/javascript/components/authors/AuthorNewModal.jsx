@@ -7,19 +7,17 @@ import AuthorForm from 'components/authors/AuthorForm'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorNewModal = () => {
-  const [{ newAuthorModalShown }, { closeNewAuthorModal, gotoNewAuthor }] = useUrlStore()
+  const [{ newAuthorModalShown }, { closeModal, gotoNewAuthor }] = useUrlStore()
   const dispatch = useDispatch()
-
-  const handleClose = () => closeNewAuthorModal()
 
   const handleSuccess = (data) => {
     const { id: newAuthorId } = data
-    handleClose()
+    closeModal()
     gotoNewAuthor(newAuthorId)
   }
 
   return (
-    <Modal show={ newAuthorModalShown } onHide={ () => handleClose() } size='lg' centered backdropClassName='book-modal-backdrop'>
+    <Modal show={ newAuthorModalShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
       <Modal.Header>
         <Modal.Title>New author</Modal.Title>
       </Modal.Header>
@@ -27,7 +25,7 @@ const AuthorNewModal = () => {
         <AuthorForm id='author_details_form' authorDetails={ { new: true } } onSubmit={ (data) => handleSuccess(data) }/>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={() => handleClose()}>
+        <Button variant='secondary' onClick={() => closeModal()}>
           Close
         </Button>
         <Button variant='primary' form='author_details_form' type='submit'>

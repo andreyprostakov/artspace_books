@@ -10,7 +10,6 @@ export const slice = createSlice({
       byIds: {},
       currentId: null,
       currentDetails: {},
-      modalShown: false,
       yearsLoaded: [],
       yearsToLoad: [],
       yearsInLoading: [],
@@ -118,12 +117,6 @@ export const slice = createSlice({
       state.books.defaultImageUrl = url
     },
 
-    setBookModalShown: (state, action) => {
-      const shown = action.payload
-      state.books.modalShown = shown
-      if (!shown) { state.books.bookDetails = {} }
-    },
-
     setCurrentBookId: (state, action) => {
       const id = action.payload
       state.books.currentId = id
@@ -132,15 +125,6 @@ export const slice = createSlice({
     setCurrentBookDetails: (state, action) => {
       const details = action.payload
       state.books.currentDetails = details
-    },
-
-    showNewBookModal: (state, action) => {
-      const authorId = state.authors.currentId
-      if (!authorId) { return }
-
-      state.books.currentId = null
-      state.books.modalShown = true
-      state.books.currentDetails = { authorId, new: true }
     }
   }
 })

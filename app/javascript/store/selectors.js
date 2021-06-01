@@ -74,8 +74,6 @@ export const selectCurrentBookId = () => state => state.booksList.books.currentI
 
 export const selectCurrentBookDetails = () => state => state.booksList.books.currentDetails
 
-export const selectBookModalShown = () => state => state.booksList.books.modalShown
-
 export const selectShuffledBooksOfYear = (year) => state => {
   const { seed } = state.booksList
   return shuffle(

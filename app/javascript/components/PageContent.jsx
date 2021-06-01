@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import BooksPage from 'components/books/BooksPage'
+import BookEditModal from 'components/books/BookEditModal'
 import AuthorPage from 'components/authors/AuthorPage'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
 import { selectSeed } from 'store/selectors'
@@ -40,6 +41,7 @@ const PageContent = () => {
           </Route>
         </Switch>
         <AuthorNewModal/>
+        <BookEditModal/>
       </Row>
     </>
   );

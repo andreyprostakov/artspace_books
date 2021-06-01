@@ -13,14 +13,12 @@ import {
   selectYearsReversed
 } from 'store/selectors'
 export const {
-  setBookModalShown,
   setCurrentAuthorId,
   setCurrentAuthorDetails,
   setCurrentBookId,
   setCurrentBookDetails,
   setDefaultBookImageUrl,
   setSeed,
-  showNewBookModal,
   updateAuthor,
 } = slice.actions
 
