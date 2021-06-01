@@ -4,7 +4,6 @@ import store from 'store/store'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter } from 'react-router-dom'
 
-import AuthorModal from 'components/AuthorModal'
 import BookModal from 'components/BookModal'
 import NavController from 'components/NavController'
 import PageHeader from 'components/PageHeader'

@@ -1,16 +1,11 @@
 import React, { useState , useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-
-import {
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 
 import BooksList from 'components/BooksList'
-import AuthorBooksList from 'components/AuthorBooksList'
-import AuthorNewModal from 'components/AuthorNewModal'
+import AuthorPage from 'components/authors/AuthorPage'
+import AuthorNewModal from 'components/authors/AuthorNewModal'
 import { selectCurrentAuthor, selectCurrentAuthorId, selectSelectedBookId, selectSeed } from 'store/selectors'
 import { reloadBook, setCurrentBookId, setSeed, setupStoreForBooksPage, setupStoreForAuthorPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
@@ -71,24 +66,6 @@ const BooksPage = () => {
 
   return (
     <BooksList/>
-  )
-}
-
-const AuthorPage = () => {
-  const [{ authorId, bookId }] = useUrlStore()
-  const dispatch = useDispatch()
-  const currentAuthorId = useSelector(selectCurrentAuthorId())
-
-  useEffect(() => {
-    if (!authorId) { return }
-
-    dispatch(setupStoreForAuthorPage(authorId, bookId))
-  }, [authorId])
-
-  if (!currentAuthorId) { return null }
-
-  return (
-    <AuthorBooksList/>
   )
 }
 

@@ -17,7 +17,7 @@ import {
   setAuthorModalShown,
   shiftYear,
 } from 'store/actions'
-import AuthorForm from 'components/AuthorForm'
+import AuthorForm from 'components/authors/AuthorForm'
 import apiClient from 'serverApi/apiClient'
 import { connectToUrlStore } from 'store/urlStore'
 

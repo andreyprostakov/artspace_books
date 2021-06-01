@@ -12,9 +12,8 @@ const PageHeader = () => {
   const [{}, { gotoBooks, openNewAuthorModal }] = useUrlStore()
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand>
-      <Navbar.Brand>Books</Navbar.Brand>
       <Nav className='mr-auto'>
-        <Nav.Link onClick={ () => gotoBooks() }>Home</Nav.Link>
+        <Nav.Link onClick={ () => gotoBooks() }><b>Books</b></Nav.Link>
         <Nav.Link onClick={ () => openNewAuthorModal() }>+Author</Nav.Link>
       </Nav>
     </Navbar>

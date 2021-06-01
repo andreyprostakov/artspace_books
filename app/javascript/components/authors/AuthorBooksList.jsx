@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 
-import AuthorCard from 'components/AuthorCard'
-import AuthorModal from 'components/AuthorModal'
+import AuthorCard from 'components/authors/AuthorCard'
+import AuthorModal from 'components/authors/AuthorModal'
 import BooksList from 'components/BooksList'
 import { selectCurrentAuthorId } from 'store/selectors'
 
