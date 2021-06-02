@@ -27,6 +27,11 @@ export const fetchAuthors = () => async (dispatch, getState) => {
   dispatch(slice.actions.setAuthors(response))
 }
 
+export const fetchAllTags = () => async (dispatch) => {
+  const response = await apiClient.getTags()
+  dispatch(slice.actions.setTags(response))
+}
+
 export const reloadBook = (id) => async (dispatch, getState) => {
   const response = await apiClient.getBook(id)
   dispatch(slice.actions.addBook(response))
@@ -119,6 +124,7 @@ export const setupStoreForBooksPage = (currentBookId = null) => async (dispatch,
   Promise.all([
     dispatch(slice.actions.cleanYearsList()),
     dispatch(slice.actions.cleanBooksList()),
+    dispatch(fetchAllTags()),
     dispatch(setCurrentAuthorId(null)),
     dispatch(fetchYears()),
     dispatch(fetchAuthors())
@@ -136,6 +142,7 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
   Promise.all([
     dispatch(slice.actions.cleanYearsList()),
     dispatch(slice.actions.cleanBooksList()),
+    dispatch(fetchAllTags()),
     dispatch(loadAuthor(authorId)),
     dispatch(loadAuthorDetails(authorId)),
     dispatch(fetchAuthorYears(authorId)),
@@ -152,8 +159,12 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
   })
 }
 
+export const setupStoreForTagsPage = () => async (dispatch, getState) => {
+    dispatch(fetchAllTags())
+}
+
 export const setupStoreForAuthorsPage = () => async (dispatch, getState) => {
-  dispatch(fetchAuthors())
+    dispatch(fetchAllTags())
 }
 
 // PRIVATE

@@ -7,7 +7,8 @@ class BookDetails {
       wikiUrl: data.wiki_url,
       imageUrl: data.image_url,
       authorId: data.author_id,
-      yearPublished: data.year_published
+      yearPublished: data.year_published,
+      tagIds: data.tag_ids
     }
   }
 
@@ -20,6 +21,7 @@ class BookDetails {
       image_url: details.imageUrl,
       author_id: details.authorId,
       year_published: details.yearPublished,
+      tags: details.tags,
     }
   }
 }

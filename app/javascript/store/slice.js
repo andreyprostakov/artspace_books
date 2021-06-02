@@ -22,6 +22,9 @@ export const slice = createSlice({
       byIds: {},
       currentId: null,
       currentDetails: {}
+    },
+    tags: {
+      byIds: {}
     }
   },
   reducers: {
@@ -125,6 +128,13 @@ export const slice = createSlice({
     setCurrentBookDetails: (state, action) => {
       const details = action.payload
       state.books.currentDetails = details
+    },
+
+    setTags: (state, action) => {
+      const tags = action.payload
+      const indexedTags = {}
+      tags.forEach(tag => indexedTags[tag.id] = tag)
+      state.tags.byIds = indexedTags
     }
   }
 })

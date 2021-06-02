@@ -7,3 +7,4 @@ json.wiki_url book.wiki_url
 json.image_url book.image_url
 json.author_id book.author_id
 json.year_published book.year_published
+json.tag_ids book.tag_ids

@@ -7,8 +7,8 @@ class BookDetailsController < ApplicationController
   end
 
   def create
-    @book = Book.new(book_params)
-    if @book.save
+    @book = Book.new
+    if BookForm.new(@book).update(book_params)
       render json: { id: @book.id }
     else
       render json: @book.errors, status: :unprocessable_entity
@@ -16,7 +16,7 @@ class BookDetailsController < ApplicationController
   end
 
   def update
-    if @book.update(book_params)
+    if BookForm.new(@book).update(book_params)
       render json: {}
     else
       render json: @book.errors, status: :unprocessable_entity
@@ -30,6 +30,14 @@ class BookDetailsController < ApplicationController
   end
 
   def book_params
-    params.fetch(:book, {}).permit(:title, :year_published, :original_title, :image_url, :wiki_url, :goodreads_url, :author_id)
+    params.fetch(:book, {})
+          .permit(:title,
+                  :year_published,
+                  :original_title,
+                  :image_url,
+                  :wiki_url,
+                  :goodreads_url,
+                  :author_id,
+                  tags: [])
   end
 end

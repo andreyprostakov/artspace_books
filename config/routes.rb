@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     end
 
     resources :years, only: :index
+
+    resources :tags, only: :index
   end
 
   get '*path', to: 'home#index', format: :html

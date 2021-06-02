@@ -1,4 +1,4 @@
-import { compact, difference } from 'lodash'
+import { compact, difference, pick } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 
 export const selectSeed = () => state => state.booksList.seed
@@ -89,3 +89,9 @@ export const selectBookIdsByYear = year => state => {
 }
 
 export const selectBookDefaultImageUrl = () => state => state.booksList.books.defaultImageUrl
+
+// TAGS
+
+export const selectAllTags = () => state => Object.values(state.booksList.tags.byIds)
+
+export const selectTags = (ids) => state => Object.values(pick(state.booksList.tags.byIds, ids))

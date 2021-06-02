@@ -42,6 +42,7 @@ export const useUrlStore = () => {
     gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),
     gotoAuthor: (id) => goto(`/authors/${id}?${objectToParams({ book_id: bookId })}`),
     gotoAuthors: () => goto('/authors'),
+    gotoTags: () => goto('/tags'),
     gotoNewAuthor: (id) => goto(`/authors/${id}`),
 
     openNewAuthorModal: () => showModal(NEW_AUTHOR_HASH),

@@ -88,6 +88,10 @@ class ApiClient {
       data: { book: body }
     })
   }
+
+  getTags() {
+    return $.ajax({ url: '/tags.json' })
+  }
 }
 
 export default new ApiClient()
