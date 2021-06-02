@@ -48,6 +48,8 @@ export const selectYearsToLoad = year => state => {
 
 // AUTHORS
 
+export const selectAuthors = () => state => Object.values(state.booksList.authors.byIds)
+
 export const selectAuthor = id => state => state.booksList.authors.byIds[id]
 
 export const selectCurrentAuthorId = () => state => state.booksList.authors.currentId

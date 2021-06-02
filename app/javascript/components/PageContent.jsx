@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import BooksPage from 'components/books/BooksPage'
 import BookEditModal from 'components/books/BookEditModal'
 import AuthorPage from 'components/authors/AuthorPage'
+import AuthorsPage from 'components/authors/AuthorsPage'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
 import { selectSeed } from 'store/selectors'
 import { setSeed } from 'store/actions'
@@ -34,6 +35,10 @@ const PageContent = () => {
           
           <Route path='/authors/:authorId'>
             <AuthorPage/>
+          </Route>
+
+          <Route path='/authors'>
+            <AuthorsPage/>
           </Route>
 
           <Route path='/:foobar'>

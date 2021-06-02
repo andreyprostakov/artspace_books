@@ -6,11 +6,12 @@ import { useUrlStore } from 'store/urlStore'
 
 const PageHeader = () => {
   const dispatch = useDispatch()
-  const [{}, { gotoBooks, openNewAuthorModal }] = useUrlStore()
+  const [{}, { gotoAuthors, gotoBooks, openNewAuthorModal }] = useUrlStore()
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand>
       <Nav className='mr-auto'>
         <Nav.Link onClick={ () => gotoBooks() }><b>Books</b></Nav.Link>
+        <Nav.Link onClick={ () => gotoAuthors() }><b>Authors</b></Nav.Link>
         <Nav.Link onClick={ () => openNewAuthorModal() }>+Author</Nav.Link>
       </Nav>
     </Navbar>

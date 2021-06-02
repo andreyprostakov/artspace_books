@@ -152,6 +152,10 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
   })
 }
 
+export const setupStoreForAuthorsPage = () => async (dispatch, getState) => {
+  dispatch(fetchAuthors())
+}
+
 // PRIVATE
 
 const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
