@@ -21,6 +21,10 @@ class Author < ApplicationRecord
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
 
+  def tag_ids
+    TagConnection.where(entity_type: Book.name, entity_id: book_ids).pluck(:tag_id).uniq
+  end
+
   protected
 
   def strip_name

@@ -5,8 +5,10 @@ import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 
 class ApiClient {
-  getYears() {
-    return $.ajax({ url: '/years.json' })
+  getYears({ tagId } = {}) {
+    return $.ajax({
+      url: `/years.json?${ objectToParams({ tag_id: tagId }) }`
+    })
   }
 
   getAuthorYears(authorId) {
@@ -47,9 +49,9 @@ class ApiClient {
     })
   }
 
-  getBooks(query = {}) {
+  getBooks({ years, authorId, tagId }) {
     return $.ajax({
-      url: `/books.json?${objectToParams(query)}`
+      url: `/books.json?${objectToParams({ years, author_id: authorId, tag_id: tagId })}`
     }).then((books) => books.map(bookData => Book.parse(bookData)))
   }
 

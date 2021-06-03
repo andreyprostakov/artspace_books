@@ -1,14 +1,12 @@
-import { isEmpty } from 'lodash'
+import { isEmpty, sortBy } from 'lodash'
 import React from 'react'
 import { Button, ButtonGroup, Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
 import ImageContainer from 'components/ImageContainer'
-import {
-  selectCurrentAuthorId,
-  selectBooks,
-  selectCurrentAuthorDetails
-} from 'store/selectors'
+import TagBadge from 'components/TagBadge'
+
+import { selectCurrentAuthorId, selectBooks, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorCard = () => {
@@ -17,6 +15,7 @@ const AuthorCard = () => {
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const authorId = useSelector(selectCurrentAuthorId())
   const [{}, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
+  const tags = useSelector(selectTags(authorDetails.tagIds))
   if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
     return null
   }
@@ -37,6 +36,8 @@ const AuthorCard = () => {
     ].join('')
   }
 
+  const sortedTags = sortBy(tags, 'name')
+
   return (
     <Card className='author-card'>
       { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
@@ -51,7 +52,14 @@ const AuthorCard = () => {
           <span>{ renderLifetime() }</span>
           <br/>
           <span>Books: { books.length }</span>
+          <p>
+            { tags.map(tag =>
+              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
+            ) }
+          </p>
         </Card.Text>
+
+
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>
           <Button variant='outline-info' onClick={ () => openNewBookModal() }>+ Book</Button>

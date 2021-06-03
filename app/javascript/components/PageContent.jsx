@@ -8,6 +8,7 @@ import BookEditModal from 'components/books/BookEditModal'
 import AuthorPage from 'components/authors/AuthorPage'
 import AuthorsPage from 'components/authors/AuthorsPage'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
+import TagPage from 'components/TagPage'
 import TagsPage from 'components/TagsPage'
 import { selectSeed } from 'store/selectors'
 import { setSeed } from 'store/actions'
@@ -40,6 +41,10 @@ const PageContent = () => {
 
           <Route path='/authors'>
             <AuthorsPage/>
+          </Route>
+
+          <Route path='/tags/:tagId'>
+            <TagPage/>
           </Route>
 
           <Route path='/tags'>

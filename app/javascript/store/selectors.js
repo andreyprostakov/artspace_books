@@ -95,3 +95,5 @@ export const selectBookDefaultImageUrl = () => state => state.booksList.books.de
 export const selectAllTags = () => state => Object.values(state.booksList.tags.byIds)
 
 export const selectTags = (ids) => state => Object.values(pick(state.booksList.tags.byIds, ids))
+
+export const selectTag  = (id) => state => state.booksList.tags.byIds[id]

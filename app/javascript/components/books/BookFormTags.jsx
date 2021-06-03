@@ -3,15 +3,13 @@ import { Col, Form, Row, Badge } from 'react-bootstrap'
 import TagsInput from 'react-tagsinput'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import classNames from 'classnames'
 
 import 'react-tagsinput/react-tagsinput.css'
 
 import { selectTags } from 'store/selectors'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import TagBadge from 'components/TagBadge'
+import TagRemoveIcon from 'components/icons/TagRemoveIcon'
 
 const BookFormTags = (props) => {
   const { bookDetails, onChange } = props
@@ -39,21 +37,11 @@ BookFormTags.propTypes = {
   onChange: PropTypes.func
 }
 
-const renderTagCloseIcon = ({ classNameRemove, onRemove }) => {
-  return (
-    <FontAwesomeIcon icon={ faTimesCircle }
-      className={ classNames('tag-remove-icon', classNameRemove) }
-      onClick={ (e) => onRemove(key) }
-    />
-  )
-
-}
-
 const renderTag = (props) => {
   let {tag, key, disabled, classNameRemove, onRemove, getTagDisplayValue, ...other} = props
   return (
     <TagBadge variant='dark' key={ key } text={ getTagDisplayValue(tag) }
-      renderPostfix={ () => renderTagCloseIcon({ classNameRemove, onRemove }) }
+      renderPostfix={ () => <TagRemoveIcon className={ classNameRemove } onRemove={ () => onRemove(key) }/> }
     />
   )
 }

@@ -4,7 +4,8 @@ class AuthorDetails {
       ...data,
       imageUrl: data.image_url,
       birthYear: data.birth_year,
-      deathYear: data.death_year
+      deathYear: data.death_year,
+      tagIds: data.tag_ids
     }
   }
 

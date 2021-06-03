@@ -12,18 +12,23 @@ export const useUrlStore = () => {
   const history = useHistory()
   const location = useLocation()
   const params = useParams()
-  const authorId = parseInt(params.authorId) || null
   const query = new URLSearchParams(location.search)
+  const hash = location.hash
+
+  const authorId = parseInt(params.authorId) || null
   const bookId = parseInt(query.get('book_id')) || null
+  const tagId = parseInt(params.tagId) || null
 
   const calculateState = () => ({
-    bookId: bookId,
-    authorId: authorId,
-    newAuthorModalShown: location.hash == NEW_AUTHOR_HASH,
-    editAuthorModalShown: authorId && (location.hash == EDIT_AUTHOR_HASH),
-    newBookModalShown: location.hash == NEW_BOOK_HASH,
-    editBookModalShown: bookId && (location.hash == EDIT_BOOK_HASH),
+    authorId,
+    bookId,
+    tagId,
+    newAuthorModalShown: hash == NEW_AUTHOR_HASH,
+    editAuthorModalShown: authorId && (hash == EDIT_AUTHOR_HASH),
+    newBookModalShown: hash == NEW_BOOK_HASH,
+    editBookModalShown: bookId && (hash == EDIT_BOOK_HASH),
   })
+
   const goto = (path) => history.push(path)
   const showModal = (hash) => goto([location.path, location.search, hash].join(''))
   const [state, setInfo] = useState(calculateState())
@@ -35,11 +40,12 @@ export const useUrlStore = () => {
 
   useEffect(() => {
     setInfo(calculateState())
-  }, [authorId, bookId, location.hash])
+  }, [authorId, bookId, tagId, location.hash])
 
   const actions = {
     gotoBook: (id) => goto(`${location.pathname}?book_id=${id}`),
-    gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),
+    gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),    
+    gotoTag: (id) => goto(`/tags/${id}?${objectToParams({ book_id: bookId })}`),
     gotoAuthor: (id) => goto(`/authors/${id}?${objectToParams({ book_id: bookId })}`),
     gotoAuthors: () => goto('/authors'),
     gotoTags: () => goto('/tags'),

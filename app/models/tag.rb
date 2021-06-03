@@ -12,7 +12,7 @@
 #  index_tags_on_name  (name) UNIQUE
 #
 class Tag < ApplicationRecord
-  has_many :tag_connections, class_name: 'TagConnection', dependent: :restrict_with_error
+  has_many :tag_connections, class_name: 'TagConnection', dependent: :destroy
 
   before_validation :strip_name
 

@@ -89,8 +89,8 @@ export const shiftBookSelection = (shift) => (dispatch, getState) => {
   dispatch(setCurrentBookId(targetId))
 }
 
-export const fetchYears = () => async (dispatch, getState) => {
-  const years = await apiClient.getYears()
+export const fetchYears = (query = {}) => async (dispatch, getState) => {
+  const years = await apiClient.getYears(query)
   dispatch(slice.actions.addYears(years))
 }
 
@@ -100,7 +100,12 @@ export const fetchAuthorYears = (authorId) => async (dispatch, getState) => {
 }
 
 export const fetchAuthorBooks = (authorId) => async (dispatch, getState) => {
-  const books = await apiClient.getAuthorBooks(authorId)
+  const books = await apiClient.getBooks({ authorId })
+  dispatch(slice.actions.addBooks(books))
+}
+
+export const fetchTagBooks = (tagId) => async (dispatch, getState) => {
+  const books = await apiClient.getBooks({ tagId })
   dispatch(slice.actions.addBooks(books))
 }
 
@@ -124,8 +129,8 @@ export const setupStoreForBooksPage = (currentBookId = null) => async (dispatch,
   Promise.all([
     dispatch(slice.actions.cleanYearsList()),
     dispatch(slice.actions.cleanBooksList()),
-    dispatch(fetchAllTags()),
     dispatch(setCurrentAuthorId(null)),
+    dispatch(fetchAllTags()),
     dispatch(fetchYears()),
     dispatch(fetchAuthors())
   ]).then(() => {
@@ -163,6 +168,24 @@ export const setupStoreForTagsPage = () => async (dispatch, getState) => {
     dispatch(fetchAllTags())
 }
 
+export const setupStoreForTagPage = (tagId, currentBookId = null) => async (dispatch, getState) => {
+  Promise.all([
+    dispatch(slice.actions.cleanYearsList()),
+    dispatch(slice.actions.cleanBooksList()),
+    dispatch(fetchAllTags()),
+    dispatch(fetchYears({ tagId })),
+    dispatch(fetchAuthors()),
+    dispatch(fetchTagBooks(tagId)),
+  ]).then(() => {
+    if (currentBookId) {
+      dispatch(reloadBook(currentBookId))
+      dispatch(setCurrentBookId(currentBookId))
+    } else {
+      dispatch(pickCurrentBookFromLatestYear())
+    }
+  })
+}
+
 export const setupStoreForAuthorsPage = () => async (dispatch, getState) => {
     dispatch(fetchAllTags())
 }
@@ -183,7 +206,7 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
       lazyBookLoadIteration(dispatch, getState, resolve, index + 1)
     } else {
       dispatch(slice.actions.markYearsAsLoading())
-      apiClient.getBooks({ years: yearsToLoad, author_id: currentAuthorId }).then((books) => {
+      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId }).then((books) => {
         dispatch(slice.actions.markYearsAsLoaded(yearsToLoad))
         resolve(books)
       })

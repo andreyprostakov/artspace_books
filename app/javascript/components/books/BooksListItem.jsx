@@ -46,7 +46,7 @@ const BooksListItem = (props) => {
           </div>
           <div className='book-tags'>
             { sortedTags.map(tag =>
-              <TagBadge text={ tag.name } key={ tag.id }/>
+              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id }/>
             ) }
           </div>
         </div>

@@ -29,6 +29,10 @@ class Book < ApplicationRecord
 
   before_validation :strip_title
 
+  scope :with_tags, lambda { |tag_ids|
+    includes(:tag_connections).references(:tag_connections).where('tag_connections.tag_id IN (?)', Array(tag_ids))
+  }
+
   def tag_ids
     tag_connections.map(&:tag_id)
   end
