@@ -15,7 +15,17 @@
 class Author < ApplicationRecord
   has_many :books, class_name: 'Book', dependent: :restrict_with_error
 
+  before_validation :strip_name
+
   validates :fullname, presence: true, uniqueness: true
   validates :birth_year, numericality: { only_integer: true, allow_nil: true }
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
+
+  protected
+
+  def strip_name
+    return if fullname.blank?
+
+    fullname.strip!
+  end
 end

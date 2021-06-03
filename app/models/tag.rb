@@ -12,7 +12,17 @@
 #  index_tags_on_name  (name) UNIQUE
 #
 class Tag < ApplicationRecord
-  validates :name, presence: true, uniqueness: true
-
   has_many :tag_connections, class_name: 'TagConnection', dependent: :restrict_with_error
+
+  before_validation :strip_name
+
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, format: /\A[\w\d-]+\z/
+
+  protected
+
+  def strip_name
+    return if name.blank?
+
+    name.strip!
+  end
 end

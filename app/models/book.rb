@@ -23,11 +23,21 @@ class Book < ApplicationRecord
   has_many :tag_connections, class_name: 'TagConnection', as: :entity
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
   validates :year_published, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
+  before_validation :strip_title
+
   def tag_ids
     tag_connections.map(&:tag_id)
+  end
+
+  protected
+
+  def strip_title
+    return if title.blank?
+
+    title.strip!
   end
 end

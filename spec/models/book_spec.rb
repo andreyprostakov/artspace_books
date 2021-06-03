@@ -6,13 +6,23 @@ RSpec.describe Book do
   it { is_expected.to have_many(:tags).class_name(Tag.name).through(:tag_connections) }
 
   describe 'validation' do
+    subject { build(:book) }
+
     it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_uniqueness_of(:title).scoped_to(:author_id) }
     it { is_expected.to validate_presence_of(:author_id) }
     it { is_expected.to validate_presence_of(:year_published) }
     it { is_expected.to validate_numericality_of(:year_published).only_integer }
 
     it 'has a valid factory' do
       expect(build(:book)).to be_valid
+    end
+  end
+
+  context 'before validation' do
+    it 'strips the title' do
+      book = described_class.new(title: "   TITLE  \n")
+      expect { book.valid? }.to change(book, :title).to('TITLE')
     end
   end
 
