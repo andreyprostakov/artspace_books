@@ -1,3 +1,4 @@
+import { sortBy } from 'lodash'
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,7 +8,9 @@ import ImageContainer from 'components/ImageContainer'
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
-import { selectBook, selectAuthor, selectCurrentBookId, selectBookDefaultImageUrl } from 'store/selectors'
+import TagBadge from 'components/TagBadge'
+
+import { selectBook, selectAuthor, selectCurrentBookId, selectBookDefaultImageUrl, selectTags } from 'store/selectors'
 import { setBookModalShown } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -22,6 +25,8 @@ const BooksListItem = (props) => {
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
   const [{}, { gotoAuthor, openEditBookModal }] = useUrlStore()
+  const tags = useSelector(selectTags(book.tagIds))
+  const sortedTags = sortBy(tags, tag => -tag.connections_count)
 
   useEffect(() => {
     if (isSelected) {
@@ -32,11 +37,18 @@ const BooksListItem = (props) => {
   return (
     <div className={ classnames('book-case', { 'selected': isSelected }) } ref={ ref }>
       <ImageContainer className='book-cover' url={ coverUrl }>
-        <div className='book-actions'>
-          { isSelected
-            && <EditIcon onClick={ (e) => openEditBookModal() }/> }
-          <GoodreadsIcon url={ book.goodreadsUrl }/>
-          <GoogleIcon queryParts={ [author.fullname, book.title] }/>
+        <div className='book-overlay'>
+          <div className='book-actions'>
+            { isSelected
+              && <EditIcon onClick={ (e) => openEditBookModal() }/> }
+            <GoodreadsIcon url={ book.goodreadsUrl }/>
+            <GoogleIcon queryParts={ [author.fullname, book.title] }/>
+          </div>
+          <div className='book-tags'>
+            { sortedTags.map(tag =>
+              <TagBadge text={ tag.name } key={ tag.id }/>
+            ) }
+          </div>
         </div>
       </ImageContainer>
 

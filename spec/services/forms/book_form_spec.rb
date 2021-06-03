@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BookForm do
+RSpec.describe Forms::BookForm do
   let(:form) { described_class.new(book) }
   let(:book) { build(:book) }
 

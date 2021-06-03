@@ -1,4 +1,4 @@
-class BookForm
+class Forms::BookForm
   def initialize(book)
     @book = book
   end

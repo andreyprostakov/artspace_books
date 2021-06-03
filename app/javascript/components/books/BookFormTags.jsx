@@ -11,13 +11,13 @@ import 'react-tagsinput/react-tagsinput.css'
 
 import { selectTags } from 'store/selectors'
 import GoogleIcon from 'components/icons/GoogleIcon'
+import TagBadge from 'components/TagBadge'
 
 const BookFormTags = (props) => {
   const { bookDetails, onChange } = props
   const [localTags, setLocalTags] = useState(useSelector(selectTags(bookDetails.tagIds)))
 
   useEffect(() => {
-    console.log(localTags)
     onChange(localTags)
   }, [localTags])
 
@@ -39,15 +39,22 @@ BookFormTags.propTypes = {
   onChange: PropTypes.func
 }
 
-const renderTag = (props) => {
-  let {tag, key, disabled, onRemove, classNameRemove, getTagDisplayValue, ...other} = props
+const renderTagCloseIcon = ({ classNameRemove, onRemove }) => {
   return (
-    <Badge pill variant='light' key={ key} className='tag-container'>
-      <span className='tag-name'>{ getTagDisplayValue(tag) }</span>
-      { !disabled &&
-        <FontAwesomeIcon icon={ faTimesCircle } className={ classNames('tag-remove-icon', classNameRemove) } onClick={ (e) => onRemove(key) } />
-      }
-    </Badge>
+    <FontAwesomeIcon icon={ faTimesCircle }
+      className={ classNames('tag-remove-icon', classNameRemove) }
+      onClick={ (e) => onRemove(key) }
+    />
+  )
+
+}
+
+const renderTag = (props) => {
+  let {tag, key, disabled, classNameRemove, onRemove, getTagDisplayValue, ...other} = props
+  return (
+    <TagBadge variant='dark' key={ key } text={ getTagDisplayValue(tag) }
+      renderPostfix={ () => renderTagCloseIcon({ classNameRemove, onRemove }) }
+    />
   )
 }
 

@@ -21,7 +21,7 @@ class BookDetails {
       image_url: details.imageUrl,
       author_id: details.authorId,
       year_published: details.yearPublished,
-      tags: details.tags,
+      tag_names: details.tagNames,
     }
   }
 }
