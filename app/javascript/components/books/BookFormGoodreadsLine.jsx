@@ -22,7 +22,9 @@ const BookFormGoodreadsLine = (props) => {
         <div className='icon-relation'><FontAwesomeIcon icon={ faCaretRight }/></div>
       </Col>
       <Col sm={ 7 }>
-        <Form.Control type='text' defaultValue={ currentUrl } isInvalid={ errors.length > 0 } onChange={ (e) => setUrl(e.target.value) }/>
+        <Form.Control type='text' defaultValue={ currentUrl } isInvalid={ errors.length > 0 }
+          onChange={ (e) => setUrl(e.target.value) } autoComplete='off'
+        />
         <Form.Control.Feedback type='invalid' tooltip>
           { errors.join('; ') }
         </Form.Control.Feedback>

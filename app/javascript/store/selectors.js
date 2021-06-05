@@ -23,8 +23,7 @@ export const selectYearsToDisplay = () => state => {
   return compact(
     [
       topYear,
-      allReversed[index + 1],
-      allReversed[index + 2]
+      allReversed[index + 1]
     ]
   )
 }

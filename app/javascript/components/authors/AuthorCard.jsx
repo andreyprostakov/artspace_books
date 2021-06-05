@@ -52,18 +52,21 @@ const AuthorCard = () => {
           <span>{ renderLifetime() }</span>
           <br/>
           <span>Books: { books.length }</span>
-          <p>
-            { tags.map(tag =>
-              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
-            ) }
-          </p>
         </Card.Text>
-
 
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>
           <Button variant='outline-info' onClick={ () => openNewBookModal() }>+ Book</Button>
         </ButtonGroup>
+
+        <br/>
+        <br/>
+
+        <div>
+          { tags.map(tag =>
+            <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
+          ) }
+        </div>
       </Card.Body>
     </Card>
   )

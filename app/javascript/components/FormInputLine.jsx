@@ -11,7 +11,10 @@ const FormInputLine = (props) => {
         { label }
       </Form.Label>
       <Col sm={ 9 }>
-        <Form.Control type='text' defaultValue={ value } isInvalid={ errors.length > 0 } autoFocus={ autoFocus } readOnly={ readOnly } onChange={ onChange }/>
+        <Form.Control type='text' defaultValue={ value } isInvalid={ errors.length > 0 }
+          autoFocus={ autoFocus } readOnly={ readOnly } onChange={ onChange }
+          autoComplete='off'
+        />
         <Form.Control.Feedback type='invalid' tooltip>
           { errors.join('; ') }
         </Form.Control.Feedback>

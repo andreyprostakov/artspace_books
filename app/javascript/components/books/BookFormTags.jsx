@@ -13,7 +13,9 @@ import TagRemoveIcon from 'components/icons/TagRemoveIcon'
 
 const BookFormTags = (props) => {
   const { bookDetails, onChange } = props
-  const [localTags, setLocalTags] = useState(useSelector(selectTags(bookDetails.tagIds)))
+  const [localTags, setLocalTags] = useState(
+    bookDetails.new ? [{ name: 'Novel' }] : useSelector(selectTags(bookDetails.tagIds))
+  )
 
   useEffect(() => {
     onChange(localTags)

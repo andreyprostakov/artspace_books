@@ -188,6 +188,7 @@ export const setupStoreForTagPage = (tagId, currentBookId = null) => async (disp
 
 export const setupStoreForAuthorsPage = () => async (dispatch, getState) => {
     dispatch(fetchAllTags())
+    dispatch(fetchAuthors())
 }
 
 // PRIVATE
