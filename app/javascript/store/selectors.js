@@ -1,6 +1,8 @@
 import { compact, difference, pick } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 
+import { pickNearEntries } from 'utils/pickNearEntries'
+
 export const selectSeed = () => state => state.booksList.seed
 
 // YEARS
@@ -19,13 +21,8 @@ export const selectYearsToDisplay = () => state => {
   const topYear = currentBook?.year
   const { all } = state.booksList.years
   const allReversed = all.slice().reverse()
-  const index = allReversed.indexOf(topYear)
-  return compact(
-    [
-      topYear,
-      allReversed[index + 1]
-    ]
-  )
+
+  return pickNearEntries(allReversed, topYear, { lengthBefore: 1, lengthAfter: 1, looped: false })
 }
 
 export const selectYearsToLoad = year => state => {
@@ -33,15 +30,7 @@ export const selectYearsToLoad = year => state => {
   const { yearsToLoad, yearsInLoading, yearsLoaded } = state.booksList.books
   const allReversed = all.slice().reverse()
   const index = allReversed.indexOf(year)
-  const nearYears = compact(
-    [
-      allReversed[index - 2],
-      allReversed[index - 1],
-      year,
-      allReversed[index + 1],
-      allReversed[index + 2]
-    ]
-  )
+  const nearYears = pickNearEntries(allReversed, year, { lengthBefore: 2, lengthAfter: 2, looped: false })
   return [...yearsToLoad, ...difference(nearYears, [...yearsInLoading, ...yearsLoaded])]
 }
 

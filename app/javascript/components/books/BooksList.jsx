@@ -33,11 +33,16 @@ const BooksList = () => {
 
   return (
     <div className='books-list'>
-      <BooksListAuthorDeath/>
-      { yearsToDisplay.map(year =>
-        <BooksListYearRow year={ year } key={ year }/>
-      ) }
-      <BooksListAuthorBirth/>
+      <div className='books-list-shadow'/>
+      <div className='books-list-layer2'>
+        <div className='books-list-layer3'>
+          <BooksListAuthorDeath/>
+          { yearsToDisplay.map(year =>
+            <BooksListYearRow year={ year } key={ year }/>
+          ) }
+          <BooksListAuthorBirth/>
+        </div>
+      </div>
     </div>
   )
 }

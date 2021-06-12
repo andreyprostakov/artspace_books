@@ -19,17 +19,52 @@
 }
 
 .books-list {
-  .list-year {
-    .year-number {
-      border-left: 2px solid;
-      padding-top: 100px;
+  overflow: hidden;
+  position: relative;
+  height: calc(100vh - 56px - 10px);
 
-      .tick-sign {
-        display: block;
-        width: 10px;
-        border-bottom: 2px solid;
-        margin: -10px 0px 0px -16px;
-      }
+  .books-list-shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    left: 0;
+    right: 0;
+    box-shadow: inset 0 0 7px 7px white;
+    z-index: 2;
+  }
+
+  .books-list-layer2 {
+    position: relative;
+    right: 50%;
+    height: 100%;
+    z-index: 1;
+
+    .books-list-layer3 {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%) translateX(50%);
+    }
+  }
+
+  .list-year {
+    position: relative;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-bottom: 2px;
+    padding: 0px 0 20px;
+    min-width: 2000px;
+    text-align: center;
+
+    .year-number {
+      position: absolute;
+      right: 0;
+      left: 0px;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+      font-size: 12px;
     }
 
     &.death-year {
@@ -86,7 +121,7 @@
 
   .year-books {
     white-space: nowrap;
-    overflow-x: auto;
+    overflow: hidden;
   }
 
   .book-case {
@@ -94,13 +129,80 @@
     position: relative;
     width: 140px;
     padding: 5px;
-    min-height: 250px;
+    min-height: 200px;
     margin: 10px 20px 0 0;
     vertical-align: top;
 
     &.selected {
       box-shadow: 0px 0px 18px red inset;
       padding: 5px;
+      width: 300px;
+    }
+  }
+
+  .book-details {
+    float: right;
+    overflow: hidden;
+    position: relative;
+    width: 150px;
+    height: 200px;
+    white-space: normal;
+
+    .book-tags {
+      line-height: 12px;
+
+      .tag-container {
+        font-size: 10px;
+        margin: 0;
+        margin-right: 2px;
+      }
+    }
+
+    .book-actions {
+      white-space: normal;
+      line-height: 33px;
+      text-align: center;
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+
+      .icon-edit {
+        margin-right: 3px;
+        background-color: #fff;
+        padding: 3px 3px;
+        border-radius: 5px;
+        opacity: 0.8;
+        box-shadow: 2px 2px 4px #ced4da;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .icon-google {
+        margin-right: 3px;
+        padding: 3px 5px;
+        border-radius: 5px;
+        opacity: 0.8;
+        box-shadow: 2px 2px 4px #ced4da;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .icon-goodreads {
+        margin-right: 3px;
+        padding: 3px 7px;
+        border-radius: 5px;
+        opacity: 0.8;
+        box-shadow: 2px 2px 4px #ced4da;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
     }
   }
 
@@ -122,6 +224,7 @@
   .book-cover {
     display: block;
     position: relative;
+    float: left;
     height: 200px;
     width: 130px;
     border-radius: 3px;
@@ -129,66 +232,6 @@
     &:hover {
       .book-overlay {
         display: block;
-      }
-    }
-  }
-
-  .book-overlay {
-    display: none;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-radius: 2px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 8px;
-
-    .book-actions {
-      white-space: normal;
-      line-height: 33px;
-      text-align: center;
-
-      .icon-edit {
-        margin-right: 3px;
-        background-color: #fff;
-        padding: 3px 3px;
-        border-radius: 5px;
-        opacity: 0.8;
-
-        &:hover {
-          opacity: 0.9;
-        }
-      }
-
-      .icon-google {
-        margin-right: 3px;
-        padding: 3px 5px;
-        border-radius: 5px;
-        opacity: 0.8;
-
-        &:hover {
-          opacity: 0.9;
-        }
-      }
-
-      .icon-goodreads {
-        margin-right: 3px;
-        padding: 3px 7px;
-        border-radius: 5px;
-        opacity: 0.8;
-
-        &:hover {
-          opacity: 0.9;
-        }
-      }
-    }
-
-    .book-tags {
-      white-space: normal;
-
-      .tag-container {
-        opacity: 0.8;
       }
     }
   }

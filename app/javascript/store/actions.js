@@ -12,6 +12,8 @@ import {
   selectShuffledBooksOfYear,
   selectYearsReversed
 } from 'store/selectors'
+import { pickNearEntries } from 'utils/pickNearEntries'
+
 export const {
   setCurrentAuthorId,
   setCurrentAuthorDetails,
@@ -82,8 +84,8 @@ export const shiftBookSelection = (shift) => (dispatch, getState) => {
   const state = getState()
   const currentBook = selectCurrentBook()(state)
   const yearBookIds = selectShuffledBooksOfYear(currentBook.year)(state).map(book => book.id)
-  const index = yearBookIds.indexOf(currentBook.id)
-  const targetId = yearBookIds[index + shift]
+  const displayedBookIds = pickNearEntries(yearBookIds, currentBook.id, { lengthBefore: 1, lengthAfter: 1 })
+  const targetId = displayedBookIds[1 + shift]
   if (!targetId) { return }
 
   dispatch(setCurrentBookId(targetId))

@@ -1,26 +1,31 @@
+import { compact, first, uniq } from 'lodash'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectBookIdsByYear } from 'store/selectors'
+import { selectBookIdsByYear, selectCurrentBookId, selectCurrentBook } from 'store/selectors'
 import BooksListItem from 'components/books/BooksListItem'
+import BooksListSelectedItem from 'components/books/BooksListSelectedItem'
+import { pickNearEntries } from 'utils/pickNearEntries'
 
 const BooksListYearRow = (props) => {
-  const bookIds = useSelector(selectBookIdsByYear(props.year))
+  const { year } = props
+  const bookIds = useSelector(selectBookIdsByYear(year))
+  const currentBookId = useSelector(selectCurrentBookId())
+  const middleBookId = bookIds.includes(currentBookId) ? currentBookId : first(bookIds)
+  const displayedBookIds = pickNearEntries(bookIds, middleBookId, { lengthBefore: 3, lengthAfter: 3 })
+
   return (
-    <div className='list-year row'>
-      <div className='year-number col-1'>
-        <div className='align-bottom'>
-          { props.year }
-          <div className='tick-sign'/>
-        </div>
+    <div className='list-year'>
+      <div className='year-number'>
+        { year }
       </div>
 
-      <div className='col-11'>
-        <div className='year-books'>
-          { bookIds.map(bookId =>
-            <BooksListItem id={ bookId } key={ bookId }/>
-          ) }
-        </div>
+      <div className='year-books'>
+        { displayedBookIds.map(bookId =>
+          (bookId == currentBookId)
+          ? <BooksListSelectedItem id={ bookId } key={ bookId }/>
+          : <BooksListItem id={ bookId } key={ bookId }/>
+        ) }
       </div>
     </div>
   )
