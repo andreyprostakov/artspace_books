@@ -62,6 +62,8 @@ export const selectCurrentBook = () => state => {
 
 export const selectCurrentBookId = () => state => state.booksList.books.currentId
 
+export const selectYearCurrentBookId = (year) => state => state.booksList.books.currentByYear[year]
+
 export const selectCurrentBookDetails = () => state => state.booksList.books.currentDetails
 
 export const selectShuffledBooksOfYear = (year) => state => {

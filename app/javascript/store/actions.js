@@ -7,6 +7,7 @@ import {
   selectYearsToDisplay,
   selectBookIdsByYear,
   selectCurrentBook,
+  selectYearCurrentBookId,
   selectTargetYear,
   selectYearsToLoad,
   selectShuffledBooksOfYear,
@@ -17,8 +18,8 @@ import { pickNearEntries } from 'utils/pickNearEntries'
 export const {
   setCurrentAuthorId,
   setCurrentAuthorDetails,
-  setCurrentBookId,
   setCurrentBookDetails,
+  setCurrentBookForYear,
   setDefaultBookImageUrl,
   setSeed,
   updateAuthor,
@@ -74,9 +75,25 @@ const setCurrentBookToYear = (targetYear) => (dispatch, getState) => {
   const currentBook = selectCurrentBook()(state)
   if (currentBook?.year == targetYear) { return }
 
-  const newCurrentBookId = first(selectBookIdsByYear(targetYear)(state))
+  const bookIds = selectBookIdsByYear(targetYear)(state)
+  const yearPreselectedBookId = selectYearCurrentBookId(targetYear)(state)
+  var newCurrentBookId = null
+  if (!yearPreselectedBookId || !bookIds.includes(yearPreselectedBookId)) {
+    newCurrentBookId = first(bookIds)
+  } else {
+    newCurrentBookId = yearPreselectedBookId
+  }
+
   if (newCurrentBookId) {
     dispatch(setCurrentBookId(newCurrentBookId))
+  }
+}
+
+export const setCurrentBookId = (id) => (dispatch, getState) => {
+  dispatch(slice.actions.setCurrentBookId(id))
+  const currentBook = selectCurrentBook()(getState())
+  if (currentBook) {
+    dispatch(setCurrentBookForYear({ year: currentBook.year, id: currentBook.id }))
   }
 }
 

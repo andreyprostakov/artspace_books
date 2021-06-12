@@ -9,6 +9,7 @@ export const slice = createSlice({
     books: {
       byIds: {},
       currentId: null,
+      currentByYear: {},
       currentDetails: {},
       yearsLoaded: [],
       yearsToLoad: [],
@@ -123,6 +124,11 @@ export const slice = createSlice({
     setCurrentBookId: (state, action) => {
       const id = action.payload
       state.books.currentId = id
+    },
+
+    setCurrentBookForYear: (state, action) => {
+      const { id, year } = action.payload
+      state.books.currentByYear[year] = id
     },
 
     setCurrentBookDetails: (state, action) => {
