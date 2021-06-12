@@ -17,7 +17,7 @@ const BooksListAuthorBirth = () => {
 
   return (
     <div className='list-year row death-year'>
-      <div class='year-number'>
+      <div className='year-number'>
         <div className='death-icon'>
           <FontAwesomeIcon icon={ faDizzy }/>
         </div>
