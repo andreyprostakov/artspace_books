@@ -25,13 +25,30 @@
 
   .books-list-shadow {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    left: 0;
-    right: 0;
-    box-shadow: inset 0 0 7px 7px white;
+    height: 0;
+    width: 0;
+    box-shadow: 0 0 7px 7px white;
     z-index: 2;
+
+    &.shadow-top {
+      top: 0;
+      width: 100%;
+    }
+
+    &.shadow-bottom {
+      bottom: 0;
+      width: 100%;
+    }
+
+    &.shadow-left {
+      left: 0;
+      height: 100%;
+    }
+
+    &.shadow-right {
+      right: 0;
+      height: 100%;
+    }
   }
 
   .books-list-layer2 {
@@ -68,53 +85,24 @@
     }
 
     &.death-year {
-      .year-number {
-        padding-top: 5px;
-        padding-bottom: 35px;
-      }
+      height: 40px;
 
       .death-icon {
-        display: block;
+        display: inline-block;
         padding: 8px 0px;
-        position: absolute;
-        top: -2px;
-        left: -8px;
+        margin-right: 4px;
         background-color: #fff;
-      }
-
-      .ellipsis-icon-bottom {
-        position: absolute;
-        left: -3px;
-        bottom: 0px;
-        background-color: #fff;
-        padding: 10px 0;
-        font-weight: 100;
-        font-size: 10px;
       }
     }
 
     &.birth-year {
-      .year-number {
-        padding-top: 35px;
-      }
+      height: 40px;
 
       .birthday-icon {
-        display: block;
+        display: inline-block;
         padding: 10px 0px;
-        position: absolute;
-        bottom: -10px;
-        left: -7px;
+        margin-right: 4px;
         background-color: #fff;
-      }
-
-      .ellipsis-icon-top {
-        position: absolute;
-        left: -3px;
-        top: 0px;
-        background-color: #fff;
-        padding: 10px 0;
-        font-weight: 100;
-        font-size: 10px;
       }
     }
   }

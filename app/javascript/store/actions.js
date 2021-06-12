@@ -85,7 +85,7 @@ export const shiftBookSelection = (shift) => (dispatch, getState) => {
   const currentBook = selectCurrentBook()(state)
   const yearBookIds = selectShuffledBooksOfYear(currentBook.year)(state).map(book => book.id)
   const displayedBookIds = pickNearEntries(yearBookIds, currentBook.id, { lengthBefore: 1, lengthAfter: 1 })
-  const targetId = displayedBookIds[1 + shift]
+  const targetId = shift > 0 ? last(displayedBookIds) : first(displayedBookIds)
   if (!targetId) { return }
 
   dispatch(setCurrentBookId(targetId))

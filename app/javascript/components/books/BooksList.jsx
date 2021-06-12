@@ -33,7 +33,10 @@ const BooksList = () => {
 
   return (
     <div className='books-list'>
-      <div className='books-list-shadow'/>
+      <div className='books-list-shadow shadow-top'/>
+      <div className='books-list-shadow shadow-bottom'/>
+      <div className='books-list-shadow shadow-left'/>
+      <div className='books-list-shadow shadow-right'/>
       <div className='books-list-layer2'>
         <div className='books-list-layer3'>
           <BooksListAuthorDeath/>

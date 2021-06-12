@@ -2,7 +2,7 @@ import { first } from 'lodash'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDizzy, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import { faDizzy } from '@fortawesome/free-solid-svg-icons'
 
 import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/selectors'
 
@@ -17,16 +17,11 @@ const BooksListAuthorBirth = () => {
 
   return (
     <div className='list-year row death-year'>
-      <div className='year-number col-12'>
-        <div className='align-bottom'>
-          { deathYear }
-          <div className='death-icon'>
-            <FontAwesomeIcon icon={ faDizzy }/>
-          </div>
-          <div className='ellipsis-icon-bottom'>
-            <FontAwesomeIcon icon={ faEllipsisV }/>
-          </div>
+      <div class='year-number'>
+        <div className='death-icon'>
+          <FontAwesomeIcon icon={ faDizzy }/>
         </div>
+        <span>{ deathYear }</span>
       </div>
     </div>
   )

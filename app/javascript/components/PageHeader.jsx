@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Nav, Navbar } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import { useUrlStore } from 'store/urlStore'
 
@@ -11,9 +11,11 @@ const PageHeader = () => {
     <Navbar bg='dark' variant='dark' fixed='top' expand>
       <Nav className='mr-auto'>
         <Nav.Link onClick={ () => gotoBooks() }><b>Books</b></Nav.Link>
-        <Nav.Link onClick={ () => gotoAuthors() }><b>Authors</b></Nav.Link>
+        <NavDropdown title='Authors'>
+          <NavDropdown.Item onClick={ () => gotoAuthors() }>All</NavDropdown.Item>
+          <NavDropdown.Item onClick={ () => openNewAuthorModal() }>+Author</NavDropdown.Item>
+        </NavDropdown>
         <Nav.Link onClick={ () => gotoTags() }><b>Tags</b></Nav.Link>
-        <Nav.Link onClick={ () => openNewAuthorModal() }>+Author</Nav.Link>
       </Nav>
     </Navbar>
   )
