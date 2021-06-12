@@ -50,11 +50,12 @@ const BooksList = () => {
   )
 }
 
-const handleWheel = (dispatch, _xDirection, yDirection) => {
+const handleWheel = (dispatch, xDirection, yDirection) => {
+  const speed = Math.abs(yDirection) / 150
   if (yDirection > 0) {
-    dispatch(shiftYear(-1))
+    dispatch(shiftYear(-speed))
   } else if (yDirection < 0) {
-    dispatch(shiftYear(+1))
+    dispatch(shiftYear(+speed))
   }
 }
 
