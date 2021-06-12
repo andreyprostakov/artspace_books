@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectYearsToDisplay, selectCurrentBook, selectCurrentBookId } from 'store/selectors'
-import { fetchBooksForYears, setCurrentBookId } from 'store/actions'
+import { fetchBooksForYears, setCurrentBookId, shiftYear } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 import BooksListAuthorBirth from 'components/books/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/books/BooksListAuthorDeath'
@@ -32,7 +32,7 @@ const BooksList = () => {
   }, [currentBook])
 
   return (
-    <div className='books-list'>
+    <div className='books-list' onWheel={ (e) => handleWheel(dispatch, e.deltaX, e.deltaY) }>
       <div className='books-list-shadow shadow-top'/>
       <div className='books-list-shadow shadow-bottom'/>
       <div className='books-list-shadow shadow-left'/>
@@ -48,6 +48,14 @@ const BooksList = () => {
       </div>
     </div>
   )
+}
+
+const handleWheel = (dispatch, _xDirection, yDirection) => {
+  if (yDirection > 0) {
+    dispatch(shiftYear(-1))
+  } else if (yDirection < 0) {
+    dispatch(shiftYear(+1))
+  }
 }
 
 export default BooksList
