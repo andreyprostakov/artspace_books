@@ -126,6 +126,10 @@
       padding: 5px;
       width: 300px;
     }
+
+    &.non-selected {
+      cursor: pointer;
+    }
   }
 
   .book-details {
