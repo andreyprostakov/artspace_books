@@ -10,6 +10,7 @@ import { selectTags } from 'store/selectors'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import TagBadge from 'components/TagBadge'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'
+import TagAutocompleteInput from 'components/TagAutocompleteInput'
 
 const BookFormTags = (props) => {
   const { bookDetails, onChange } = props
@@ -28,7 +29,12 @@ const BookFormTags = (props) => {
       </Form.Label>
 
       <Col sm={ 9 }>
-        <TagsInput value={ localTags } renderTag={ renderTag } onChange={ (tags) => setLocalTags(tags) } tagDisplayProp='name'/>
+        <TagsInput value={ localTags }
+                   renderTag={ renderTag }
+                   renderInput={ renderInput }
+                   onChange={ (tags) => setLocalTags(tags) }
+                   tagDisplayProp='name'
+                   className='book-tags-input'/>
       </Col>
     </Form.Group>
   )
@@ -45,6 +51,21 @@ const renderTag = (props) => {
     <TagBadge variant='dark' key={ key } text={ getTagDisplayValue(tag) }
       renderPostfix={ () => <TagRemoveIcon className={ classNameRemove } onRemove={ () => onRemove(key) }/> }
     />
+  )
+}
+
+const renderInput = ({ addTag, ...props }) => {
+  const handleOnChange = (e, { newValue, method }) => {
+    if (method === 'enter') {
+      e.preventDefault()
+    } else {
+      props.onChange(e)
+    }
+  }
+
+  return (
+    <TagAutocompleteInput onSuggestionSelected={ (tag) => addTag(tag) }
+                          inputProps={{...props, onChange: handleOnChange}}/>
   )
 }
 

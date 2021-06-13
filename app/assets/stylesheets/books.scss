@@ -320,3 +320,68 @@
     cursor: pointer;
   }
 } 
+
+.authors-search-control {
+  width: 250px;
+  padding: 0 10px;
+
+  .react-autosuggest__suggestions-container--open {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: overlay;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+    padding-top: 5px;
+
+    li {
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.authors-nav {
+  .authors-nav-filter {
+    padding: 0px 10px 5px
+  }
+
+  .authors-nav-list {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+}
+
+.tags-nav {
+  .tags-nav-filter {
+    padding: 0px 10px 5px
+  }
+
+  .tags-nav-list {
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+}
+
+.book-tags-input {
+  font-size: 14px;
+
+  .tags-search-control {
+    margin-top: 5px;
+
+    .react-autosuggest__suggestions-list {
+      max-height: 100px;
+      overflow-y: scroll;
+      border-left: 1px solid #ced4da;
+      border-right: 1px solid #ced4da;
+      border-bottom: 1px solid #ced4da;
+
+      li {
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+  }
+}
