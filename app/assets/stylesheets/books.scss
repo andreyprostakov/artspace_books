@@ -1,5 +1,18 @@
 .author-card {
   padding-top: 15px;
+
+  .author-tags {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+    margin-top: 6px;
+
+    .tag-container {
+      margin: 0 2px 0 0;
+    }
+  }
 }
 
 .book-modal {
@@ -377,10 +390,19 @@
       border-left: 1px solid #ced4da;
       border-right: 1px solid #ced4da;
       border-bottom: 1px solid #ced4da;
+      list-style-type: none;
 
       li {
         font-size: 12px;
         cursor: pointer;
+
+        .suggestion.new-tag {
+          font-style: italic;
+        }
+
+        .suggestion.exact-match {
+          font-weight: bold;
+        }
       }
     }
   }

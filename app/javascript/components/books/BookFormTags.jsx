@@ -65,7 +65,7 @@ const renderInput = ({ addTag, ...props }) => {
 
   return (
     <TagAutocompleteInput onSuggestionSelected={ (tag) => addTag(tag) }
-                          inputProps={{...props, onChange: handleOnChange}}/>
+                          inputProps={ { ...props, onChange: handleOnChange } }/>
   )
 }
 

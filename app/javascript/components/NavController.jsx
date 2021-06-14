@@ -25,7 +25,7 @@ const keyMap = {
   TOGGLE_AUTHOR: 'a',
   BACK: 'Backspace',
   LEFT: 'Left',
-  RIGHT: 'Right'
+  RIGHT: 'Right',
 }
 
 class NavController extends React.Component {
@@ -65,7 +65,7 @@ class NavController extends React.Component {
 
       BACK: () => urlStoreActions.closeModal(),
       TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
-      TOGGLE_EDIT: () => this.handleToggleEdit()
+      TOGGLE_EDIT: () => this.handleToggleEdit(),
     }
   }
 

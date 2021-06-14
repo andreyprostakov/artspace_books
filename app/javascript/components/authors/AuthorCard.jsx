@@ -36,7 +36,7 @@ const AuthorCard = () => {
     ].join('')
   }
 
-  const sortedTags = sortBy(tags, 'name')
+  const sortedTags = sortBy(tags, tag => tag.connections_count)
 
   return (
     <Card className='author-card'>
@@ -52,21 +52,17 @@ const AuthorCard = () => {
           <span>{ renderLifetime() }</span>
           <br/>
           <span>Books: { books.length }</span>
+          <div className='author-tags'>
+            { sortedTags.map(tag =>
+              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
+            ) }
+          </div>
         </Card.Text>
 
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>
           <Button variant='outline-info' onClick={ () => openNewBookModal() }>+ Book</Button>
         </ButtonGroup>
-
-        <br/>
-        <br/>
-
-        <div>
-          { tags.map(tag =>
-            <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
-          ) }
-        </div>
       </Card.Body>
     </Card>
   )

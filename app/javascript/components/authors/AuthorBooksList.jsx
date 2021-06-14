@@ -12,10 +12,10 @@ const AuthorBooksList = () => {
 
   return (
     <>
-      <Col xs={ 4 } lg={ 3 } className='author-card'>
+      <Col xs={ 4 } lg={ 4 } className='author-card'>
         <AuthorCard/>
       </Col>
-      <Col xs={ 8 } lg={ 9 }>
+      <Col xs={ 8 } lg={ 8 }>
         <BooksList/>
       </Col>
     </>
