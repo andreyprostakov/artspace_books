@@ -26,7 +26,7 @@ const AuthorsNavList = () => {
         { authors.map(author =>
           <NavDropdown.Item onClick={ () => gotoAuthor(author.id) } key={ author.id } className='d-flex justify-content-between'>
             { author.fullname }
-            <span className='badge badge-primary badge-pill'>14</span>
+            <span className='badge badge-primary badge-pill'>{ author.booksCount }</span>
           </NavDropdown.Item>
         ) }
       </div>

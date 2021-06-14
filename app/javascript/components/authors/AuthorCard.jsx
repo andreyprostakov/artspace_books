@@ -6,12 +6,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 
-import { selectCurrentAuthorId, selectBooks, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
+import { selectCurrentAuthorId, selectCurrentAuthor, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorCard = () => {
-  const books = useSelector(selectBooks())
   const dispatch = useDispatch()
+  const author = useSelector(selectCurrentAuthor())
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const authorId = useSelector(selectCurrentAuthorId())
   const [{}, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
@@ -36,7 +36,7 @@ const AuthorCard = () => {
     ].join('')
   }
 
-  const sortedTags = sortBy(tags, tag => tag.connections_count)
+  const sortedTags = sortBy(tags, tag => tag.connectionsCount)
 
   return (
     <Card className='author-card'>
@@ -48,16 +48,17 @@ const AuthorCard = () => {
             : authorDetails.fullname
           }
         </Card.Title>
-        <Card.Text>
+        <Card.Text className='author-card-text'>
           <span>{ renderLifetime() }</span>
           <br/>
-          <span>Books: { books.length }</span>
-          <div className='author-tags'>
-            { sortedTags.map(tag =>
-              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
-            ) }
-          </div>
+          <span>Books: { author.booksCount }</span>
         </Card.Text>
+
+        <div className='author-tags'>
+          { sortedTags.map(tag =>
+            <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
+          ) }
+        </div>
 
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>

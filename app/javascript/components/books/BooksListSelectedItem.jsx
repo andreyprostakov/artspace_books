@@ -27,7 +27,7 @@ const BooksListSelectedItem = (props) => {
   const coverUrl = book.coverUrl || defaultCoverUrl
   const [{}, { gotoAuthor, openEditBookModal }] = useUrlStore()
   const tags = useSelector(selectTags(book.tagIds))
-  const sortedTags = sortBy(tags, tag => -tag.connections_count)
+  const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
 
   return (
     <div className='book-case selected' ref={ ref }>

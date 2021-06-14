@@ -1,13 +1,17 @@
 .author-card {
   padding-top: 15px;
 
+  .author-card-text {
+    margin-bottom: 6px;
+  }
+
   .author-tags {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 14px;
-    margin-top: 6px;
+    margin-bottom: 6px;
 
     .tag-container {
       margin: 0 2px 0 0;

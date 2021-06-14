@@ -167,7 +167,7 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
     dispatch(slice.actions.cleanYearsList()),
     dispatch(slice.actions.cleanBooksList()),
     dispatch(fetchAllTags()),
-    dispatch(loadAuthor(authorId)),
+    dispatch(fetchAuthors()),
     dispatch(loadAuthorDetails(authorId)),
     dispatch(fetchAuthorYears(authorId)),
     dispatch(setCurrentAuthorId(authorId)),

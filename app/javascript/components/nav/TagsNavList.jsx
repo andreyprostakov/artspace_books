@@ -26,7 +26,7 @@ const TagsNavList = () => {
         { tags.map(tag =>
           <NavDropdown.Item onClick={ () => gotoTag(tag.id) } key={ tag.id } className='d-flex justify-content-between'>
             { tag.name }
-            <span className='badge badge-primary badge-pill'>{ tag.connections_count }</span>
+            <span className='badge badge-primary badge-pill'>{ tag.connectionsCount }</span>
           </NavDropdown.Item>
         ) }
       </div>

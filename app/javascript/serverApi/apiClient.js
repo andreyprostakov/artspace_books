@@ -1,8 +1,10 @@
 import { isArray } from 'lodash'
 import { objectToParams } from 'utils/objectToParams'
+import Author from 'serverApi/Author'
 import AuthorDetails from 'serverApi/AuthorDetails'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
+import Tag from 'serverApi/Tag'
 
 class ApiClient {
   getYears({ tagId } = {}) {
@@ -18,11 +20,15 @@ class ApiClient {
   }
 
   getAuthors() {
-    return $.ajax({ url: '/authors.json'})
+    return $.ajax({
+      url: '/authors.json'
+    }).then(authors => authors.map(data => Author.parse(data)))
   }
 
   getAuthor(id) {
-    return $.ajax({ url: `/authors/${id}.json` })
+    return $.ajax({
+      url: `/authors/${id}.json`
+    }).then(data => Author.parse(data))
   }
 
   getAuthorDetails(id) {
@@ -92,7 +98,9 @@ class ApiClient {
   }
 
   getTags() {
-    return $.ajax({ url: '/tags.json' })
+    return $.ajax({
+      url: '/tags.json'
+    }).then(tags => tags.map(data => Tag.parse(data)))
   }
 }
 

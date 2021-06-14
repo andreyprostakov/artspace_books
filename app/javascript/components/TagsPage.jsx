@@ -19,7 +19,7 @@ const TagsPage = () => {
     <div className='tags-page'>
       { sortedTags.map(tag =>
         <TagBadge key={ tag.id } text={ tag.name } id={ tag.id }
-          renderPostfix={ () => (tag.connections_count > 0 && ` (${tag.connections_count})`) }
+          renderPostfix={ () => (tag.connectionsCount > 0 && ` (${tag.connectionsCount})`) }
           variant='dark'
         /> 
       ) }
