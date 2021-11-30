@@ -9,10 +9,19 @@ import ImageContainer from 'components/ImageContainer'
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
+import RefreshIcon from 'components/icons/RefreshIcon'
 import TagBadge from 'components/TagBadge'
+import PopularityBadge from 'components/small/PopularityBadge'
 
-import { selectBook, selectAuthor, selectCurrentBookId, selectBookDefaultImageUrl, selectTags } from 'store/selectors'
-import { setBookModalShown } from 'store/actions'
+import {
+  selectAuthor,
+  selectBook,
+  selectBookDefaultImageUrl,
+  selectCurrentBookId,
+  selectSyncedBookId,
+  selectTags,
+} from 'store/selectors'
+import { setBookModalShown, syncBookStats } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const BooksListSelectedItem = (props) => {
@@ -28,6 +37,7 @@ const BooksListSelectedItem = (props) => {
   const [{}, { gotoAuthor, openEditBookModal }] = useUrlStore()
   const tags = useSelector(selectTags(book.tagIds))
   const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
+  const syncedBookId = useSelector(selectSyncedBookId())
 
   return (
     <div className='book-case selected' ref={ ref }>
@@ -49,9 +59,16 @@ const BooksListSelectedItem = (props) => {
           ) }
         </div>
 
+        <div className='book-stats'>
+          <PopularityBadge points={ book.popularity }/>
+        </div>
+
         <div className='book-actions'>
           <EditIcon onClick={ (e) => openEditBookModal() }/>
           <GoodreadsIcon url={ book.goodreadsUrl }/>
+          { book.goodreadsUrl &&
+            <RefreshIcon onClick={ (e) => dispatch(syncBookStats(book.id)) } className={ { disabled: !!syncedBookId } }/>
+          }
           <GoogleIcon queryParts={ [author.fullname, book.title] }/>
         </div>
       </div>

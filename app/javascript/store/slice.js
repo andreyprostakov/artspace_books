@@ -14,7 +14,8 @@ export const slice = createSlice({
       yearsLoaded: [],
       yearsToLoad: [],
       yearsInLoading: [],
-      defaultImageUrl: null
+      defaultImageUrl: null,
+      syncedBookId: null
     },
     years: {
       all: []
@@ -134,6 +135,11 @@ export const slice = createSlice({
     setCurrentBookDetails: (state, action) => {
       const details = action.payload
       state.books.currentDetails = details
+    },
+
+    setSyncedBookId: (state, action) => {
+      const id = action.payload
+      state.books.syncedBookId = id
     },
 
     setTags: (state, action) => {

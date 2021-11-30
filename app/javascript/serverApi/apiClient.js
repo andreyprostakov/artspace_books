@@ -73,6 +73,13 @@ class ApiClient {
     }).then((data) => Book.parse(data))
   }
 
+  syncBookStats(id) {
+    return $.ajax({
+      url: `/books/${id}/sync_goodreads_stats.json`,
+      type: 'PUT'
+    }).then((data) => Book.parse(data))
+  }
+
   getBookDetails(id) {
     return $.ajax({
       url: `/books/${id}/details.json`

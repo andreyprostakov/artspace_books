@@ -189,6 +189,24 @@
         }
       }
 
+      .icon-refresh {
+        margin-right: 3px;
+        background-color: #fff;
+        padding: 3px 3px;
+        border-radius: 5px;
+        opacity: 0.8;
+        box-shadow: 2px 2px 4px #ced4da;
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        &.disabled, &.disabled:hover {
+          opacity: 0.1;
+          cursor: wait;
+        }
+      }
+
       .icon-google {
         margin-right: 3px;
         padding: 3px 5px;
@@ -336,7 +354,7 @@
     font-size: 10px;
     cursor: pointer;
   }
-} 
+}
 
 .authors-search-control {
   width: 250px;

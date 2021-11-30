@@ -11,6 +11,7 @@ import {
   gotoLastYear,
   shiftBookSelection,
   shiftYear,
+  syncCurrentBookStats,
 } from 'store/actions'
 import { connectToUrlStore } from 'store/urlStore'
 
@@ -26,6 +27,7 @@ const keyMap = {
   BACK: 'Backspace',
   LEFT: 'Left',
   RIGHT: 'Right',
+  SYNC_BOOK_STATS: 's',
 }
 
 class NavController extends React.Component {
@@ -66,6 +68,8 @@ class NavController extends React.Component {
       BACK: () => urlStoreActions.closeModal(),
       TOGGLE_AUTHOR: () => this.handleToggleAuthor(),
       TOGGLE_EDIT: () => this.handleToggleEdit(),
+
+      SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
     }
   }
 

@@ -5,13 +5,13 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
+import PopularityBadge from 'components/small/PopularityBadge'
 
-import { selectCurrentAuthorId, selectCurrentAuthor, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
+import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorCard = () => {
   const dispatch = useDispatch()
-  const author = useSelector(selectCurrentAuthor())
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const authorId = useSelector(selectCurrentAuthorId())
   const [{}, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
@@ -51,7 +51,9 @@ const AuthorCard = () => {
         <Card.Text className='author-card-text'>
           <span>{ renderLifetime() }</span>
           <br/>
-          <span>Books: { author.booksCount }</span>
+          <span>Books: { authorDetails.booksCount }</span>
+          <br/>
+          <span>Popularity: <PopularityBadge points={ authorDetails.popularity }/></span>
         </Card.Text>
 
         <div className='author-tags'>

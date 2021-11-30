@@ -2,16 +2,19 @@
 #
 # Table name: books
 #
-#  id             :integer          not null, primary key
-#  goodreads_url  :string
-#  image_url      :string
-#  original_title :string
-#  title          :string           not null
-#  wiki_url       :string
-#  year_published :integer          not null
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  author_id      :integer          not null
+#  id                   :integer          not null, primary key
+#  goodreads_popularity :integer
+#  goodreads_rating     :float
+#  goodreads_url        :string
+#  image_url            :string
+#  original_title       :string
+#  popularity           :integer          default(0)
+#  title                :string           not null
+#  wiki_url             :string
+#  year_published       :integer          not null
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  author_id            :integer          not null
 #
 # Indexes
 #
@@ -19,9 +22,11 @@
 #  index_books_on_year_published  (year_published)
 #
 class Book < ApplicationRecord
-  belongs_to :author, class_name: 'Author'
-  has_many :tag_connections, class_name: 'TagConnection', as: :entity
+  belongs_to :author, class_name: 'Author', required: false
+  has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
+
+  mount_uploader :wiki_url, BookCoverUploader
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true

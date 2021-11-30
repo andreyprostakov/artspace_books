@@ -5,7 +5,9 @@ class AuthorDetails {
       imageUrl: data.image_url,
       birthYear: data.birth_year,
       deathYear: data.death_year,
-      tagIds: data.tag_ids
+      tagIds: data.tag_ids,
+      booksCount: data.books_count,
+      popularity: data.popularity
     }
   }
 

@@ -21,8 +21,11 @@ gem 'bootstrap', '~> 5.0.1'
 gem 'annotate'
 gem 'foreman'
 gem 'react-rails'
+gem 'carrierwave'
+gem 'fog-aws'
 
 group :development, :test do
+  gem 'pry-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 

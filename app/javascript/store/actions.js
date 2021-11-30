@@ -11,6 +11,7 @@ import {
   selectTargetYear,
   selectYearsToLoad,
   selectShuffledBooksOfYear,
+  selectSyncedBookId,
   selectYearsReversed
 } from 'store/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
@@ -22,6 +23,7 @@ export const {
   setCurrentBookForYear,
   setDefaultBookImageUrl,
   setSeed,
+  setSyncedBookId,
   updateAuthor,
 } = slice.actions
 
@@ -106,6 +108,23 @@ export const shiftBookSelection = (shift) => (dispatch, getState) => {
   if (!targetId) { return }
 
   dispatch(setCurrentBookId(targetId))
+}
+
+export const syncBookStats = (id) => async (dispatch, getState) => {
+  const syncedBookId = selectSyncedBookId()(getState())
+  if (syncedBookId) { return }
+
+  dispatch(setSyncedBookId(id))
+  const response = await apiClient.syncBookStats(id)
+  dispatch(slice.actions.addBook(response))
+  dispatch(setSyncedBookId(null))
+}
+
+export const syncCurrentBookStats = () => async (dispatch, getState) => {
+  const currentBook = selectCurrentBook()(getState())
+  if (!currentBook) { return }
+
+  dispatch(syncBookStats(currentBook.id))
 }
 
 export const fetchYears = (query = {}) => async (dispatch, getState) => {

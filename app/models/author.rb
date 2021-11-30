@@ -25,6 +25,10 @@ class Author < ApplicationRecord
     TagConnection.where(entity_type: Book.name, entity_id: book_ids).pluck(:tag_id).uniq
   end
 
+  def popularity
+    books.sum(:popularity)
+  end
+
   protected
 
   def strip_name

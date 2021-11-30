@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :books, only: %i[index show] do
       post :details, to: 'book_details#create', on: :collection
       resource :details, controller: 'book_details', only: %i[show update]
+      put :sync_goodreads_stats, on: :member
     end
 
     resources :years, only: :index

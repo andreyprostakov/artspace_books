@@ -80,6 +80,8 @@ export const selectBookIdsByYear = year => state => {
 
 export const selectBookDefaultImageUrl = () => state => state.booksList.books.defaultImageUrl
 
+export const selectSyncedBookId = () => state => state.booksList.books.syncedBookId
+
 // TAGS
 
 export const selectAllTags = () => state => Object.values(state.booksList.tags.byIds)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_095227) do
+ActiveRecord::Schema.define(version: 2021_11_30_163142) do
 
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 2021_06_02_095227) do
     t.string "original_title"
     t.string "image_url"
     t.string "goodreads_url"
+    t.float "goodreads_rating"
+    t.integer "goodreads_popularity"
+    t.integer "popularity", default: 0
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["year_published"], name: "index_books_on_year_published"
   end
