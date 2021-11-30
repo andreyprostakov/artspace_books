@@ -30,8 +30,11 @@ body a {
   padding-top: 56px;
 }
 
-.popularity-points {
+.ratings-info {
   font-size: 10px;
   font-style: italic;
-  color: darkred;
+
+  .popularity-points {
+    color: darkred;
+  }
 }

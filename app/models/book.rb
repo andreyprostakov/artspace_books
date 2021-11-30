@@ -33,6 +33,8 @@ class Book < ApplicationRecord
   validates :year_published, presence: true, numericality: { only_integer: true, greater_than: 0 }
 
   before_validation :strip_title
+  before_validation :calculate_popularity
+  after_commit :update_ranking
 
   scope :with_tags, lambda { |tag_ids|
     includes(:tag_connections).references(:tag_connections).where('tag_connections.tag_id IN (?)', Array(tag_ids))
@@ -48,5 +50,17 @@ class Book < ApplicationRecord
     return if title.blank?
 
     title.strip!
+  end
+
+  def calculate_popularity
+    return if [goodreads_rating, goodreads_popularity].any?(&:blank?)
+
+    self.popularity = (goodreads_rating * goodreads_popularity).floor
+  end
+
+  def update_ranking
+    return unless saved_change_to_attribute?(:popularity)
+
+    Ranking::BooksRanker.update(self)
   end
 end

@@ -6,7 +6,8 @@ class Book {
       coverUrl: bookData.cover_url,
       goodreadsUrl: bookData.goodreads_url,
       tagIds: bookData.tag_ids,
-      popularity: bookData.popularity
+      popularity: bookData.popularity,
+      globalRank: bookData.global_rank,
     }
   }
 }

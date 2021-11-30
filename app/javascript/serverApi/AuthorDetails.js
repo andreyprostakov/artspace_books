@@ -7,7 +7,8 @@ class AuthorDetails {
       deathYear: data.death_year,
       tagIds: data.tag_ids,
       booksCount: data.books_count,
-      popularity: data.popularity
+      popularity: data.popularity,
+      rank: data.rank,
     }
   }
 

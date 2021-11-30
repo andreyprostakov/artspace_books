@@ -53,7 +53,7 @@ const AuthorCard = () => {
           <br/>
           <span>Books: { authorDetails.booksCount }</span>
           <br/>
-          <span>Popularity: <PopularityBadge points={ authorDetails.popularity }/></span>
+          <span>Popularity: <PopularityBadge rank={ authorDetails.rank } points={ authorDetails.popularity }/></span>
         </Card.Text>
 
         <div className='author-tags'>

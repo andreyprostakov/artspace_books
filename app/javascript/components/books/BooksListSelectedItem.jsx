@@ -60,7 +60,7 @@ const BooksListSelectedItem = (props) => {
         </div>
 
         <div className='book-stats'>
-          <PopularityBadge points={ book.popularity }/>
+          <PopularityBadge rank={ book.globalRank } points={ book.popularity }/>
         </div>
 
         <div className='book-actions'>
