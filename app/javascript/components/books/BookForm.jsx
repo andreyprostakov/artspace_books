@@ -34,11 +34,17 @@ class BookForm extends React.Component {
     const { onSubmit, bookDetails, author, fetchAllTags } = this.props
     const { currentTags } = this.state
 
+    window.elements = event.target.elements
     const formData = pick(
       event.target.elements,
-      'title', 'originalTitle', 'goodreadsUrl', 'wikiUrl', 'imageUrl', 'yearPublished'
+      'yearPublished',
+      'title',
+      'goodreadsUrl',
+      'imageUrl',
+      'imageFile',
+      'originalTitle',
     )
-    Object.keys(formData).forEach(key => formData[key] = formData[key].value)
+    Object.keys(formData).forEach(key => formData[key] = formInputToValue(formData[key]))
     formData.authorId = author.id
     formData.tagNames = currentTags.map(tag => tag.name)
 
@@ -59,7 +65,7 @@ class BookForm extends React.Component {
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                    onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
         <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
-        <BookFormCoverLine controlId='imageUrl' bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentTitle }/>
+        <BookFormCoverLine bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentTitle }/>
         <Row />
         <BookFormTags bookDetails={ bookDetails } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }/>
@@ -84,6 +90,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllTags: () => dispatch(fetchAllTags())
   }
+}
+
+const formInputToValue = (inputElement) => {
+  return inputElement.type === 'file' ? inputElement.files[0] : inputElement.value
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookForm)

@@ -33,12 +33,18 @@ class BookDetailsController < ApplicationController
   def book_params
     params.fetch(:book, {})
           .permit(:title,
+                  :author_id,
                   :year_published,
                   :original_title,
-                  :image_url,
-                  :wiki_url,
+                  :cover_thumb_url,
+                  :cover_file,
                   :goodreads_url,
-                  :author_id,
                   tag_names: [])
+          .tap do |attributes|
+            file = attributes.delete(:cover_file)
+            next if !file || file == 'undefined'
+
+            attributes[:covers] = file
+          end
   end
 end

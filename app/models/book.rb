@@ -26,7 +26,8 @@ class Book < ApplicationRecord
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
-  mount_uploader :wiki_url, BookCoverUploader
+  mount_base64_uploader :covers, BookCoverUploader
+  #serialize :covers, JSON
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
@@ -42,6 +43,20 @@ class Book < ApplicationRecord
 
   def tag_ids
     tag_connections.map(&:tag_id)
+  end
+
+  def cover_thumb_url
+    covers.url(:thumb) || image_url
+  end
+
+  def cover_thumb_url=(value)
+    return if value.blank?
+
+    if value =~ /^data:image/
+      self.covers = value
+    else
+      self.remote_covers_url = value
+    end
   end
 
   protected

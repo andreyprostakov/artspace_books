@@ -38,3 +38,7 @@ body a {
     color: darkred;
   }
 }
+
+::placeholder {
+  color: #aaa !important;
+}

@@ -22,6 +22,7 @@ gem 'annotate'
 gem 'foreman'
 gem 'react-rails'
 gem 'carrierwave'
+gem 'carrierwave-base64'
 gem 'fog-aws'
 gem 'redis'
 

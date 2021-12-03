@@ -43,11 +43,11 @@ export const reloadBook = (id) => async (dispatch, getState) => {
 }
 
 export const shiftYear = (shift) => changeSelectedYear(state => {
-  const { all } = state.booksList.years
+  const { all: allYears } = state.booksList.years
   const currentYear = selectCurrentBook()(state)?.year
-  const index = all.indexOf(currentYear)
-  const targetIndex = max([0, min([all.length - 1, index + shift])])
-  return all[targetIndex]
+  const index = allYears.indexOf(currentYear)
+  const targetIndex = max([0, min([allYears.length - 1, index + shift])])
+  return allYears[targetIndex]
 })
 
 export const gotoFirstYear = () => changeSelectedYear(state => first(state.booksList.years.all))
