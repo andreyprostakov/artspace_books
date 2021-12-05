@@ -13,7 +13,7 @@ import { useUrlStore } from 'store/urlStore'
 import { setupStoreForAuthorCard } from 'store/authorsList/actions'
 
 const AuthorCard = (props) => {
-  const [{ authorId }, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
+  const [{ authorId }, { gotoAuthorBooks, openEditAuthorModal, openNewBookModal }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
@@ -34,7 +34,7 @@ const AuthorCard = (props) => {
     const age = authorDetails.deathYear
                 ? authorDetails.deathYear - authorDetails.birthYear
                 : new Date().getFullYear() - authorDetails.birthYear
-    const ageLabel = `(age ${age})`
+    const ageLabel = ` (age ${age})`
 
     return [
       birthLabel,
@@ -59,11 +59,9 @@ const AuthorCard = (props) => {
           }
         </Card.Title>
         <Card.Text className='author-card-text'>
-          <span>{ renderLifetime() }</span>
+          <span>Years: { renderLifetime() }</span>
           <br/>
-          <span>Books: { authorDetails.booksCount }</span>
-          <br/>
-          <span>Popularity: <PopularityBadge rank={ authorDetails.rank } points={ authorDetails.popularity }/></span>
+          <span>Popularity: { authorDetails.popularity.toLocaleString() } pts (#{ authorDetails.rank })</span>
         </Card.Text>
 
         <div className='author-tags'>
@@ -74,6 +72,7 @@ const AuthorCard = (props) => {
 
         <ButtonGroup>
           <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>
+          <Button variant='outline-info' onClick={ () => gotoAuthorBooks(authorDetails.id) }>Books ({authorDetails.booksCount})</Button>
           <Button variant='outline-info' onClick={ () => openNewBookModal() }>+ Book</Button>
         </ButtonGroup>
       </Card.Body>

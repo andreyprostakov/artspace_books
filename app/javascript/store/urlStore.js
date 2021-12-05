@@ -55,7 +55,7 @@ export const useUrlStore = () => {
     gotoBook: (id) => goto(`${location.pathname}?book_id=${id}`),
     gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),
     gotoTag: (id) => goto(`/tags/${id}?${objectToParams({ book_id: bookId })}`),
-    gotoAuthor: (id) => goto(`/authors/${id}?${objectToParams({ book_id: bookId })}`),
+    gotoAuthorBooks: (id) => goto(`/authors/${id}?${objectToParams({ book_id: bookId })}`),
     gotoAuthors: () => goto(`/authors?${objectToParams({ author_id: authorId, sort_order: sortOrder })}`),
     gotoTags: () => goto('/tags'),
     gotoNewAuthor: (id) => goto(`/authors/${id}`),

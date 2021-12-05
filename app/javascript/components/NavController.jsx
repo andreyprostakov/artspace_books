@@ -48,7 +48,7 @@ class NavController extends React.Component {
     if (currentAuthor) {
       urlStoreActions.gotoBooks()
     } else {
-      urlStoreActions.gotoAuthor(currentBook.authorId)
+      urlStoreActions.gotoAuthorBooks(currentBook.authorId)
     }
   }
 
