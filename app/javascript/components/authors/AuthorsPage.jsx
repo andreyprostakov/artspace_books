@@ -1,42 +1,43 @@
-import { sortBy } from 'lodash'
 import React, { useEffect } from 'react'
-import { useTable } from 'react-table'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
-import { setupStoreForAuthorsPage } from 'store/actions'
-import { selectAuthors } from 'store/selectors'
+import { setupStoreForPage } from 'store/authorsList/actions'
+import { selectLeftSidebarShown, selectSortedAuthors } from 'store/authorsList/selectors'
+import { setCurrentAuthorId } from 'store/axis/actions'
 import { useUrlStore } from 'store/urlStore'
+
+import AuthorsListItem from 'components/authors/AuthorsListItem'
+import AuthorsListControls from 'components/authors/AuthorsListControls'
+import AuthorCard from 'components/authors/AuthorCard'
 
 const AuthorsPage = () => {
   const dispatch = useDispatch()
-  const authors = useSelector(selectAuthors())
-  const sortedAuthors = sortBy(authors, 'fullname')
-  const [{}, { gotoAuthor }] = useUrlStore()
+  const authors = useSelector(selectSortedAuthors())
+  const leftSidebarShown = useSelector(selectLeftSidebarShown())
+  const [{ authorId: queryAuthorId }, { dropAuthorFromParams }] = useUrlStore()
 
-  useEffect(() => {
-    dispatch(setupStoreForAuthorsPage())
-  }, [])
+  useEffect(() => dispatch(setupStoreForPage()), [])
+  useEffect(() => dispatch(setCurrentAuthorId(queryAuthorId)), [queryAuthorId])
 
   return (
-    <Table striped bordered hover size='sm'>
-      <thead>
-        <tr>
-          <th>NAME</th>
-          <th/>
-        </tr>
-      </thead>
-      <tbody>
-        { sortedAuthors.map(author =>
-          <tr key={ author.id }>
-            <td>{ author.fullname }</td>
-            <td>
-              <Button size='sm' variant='secondary' onClick={ (e) => { gotoAuthor(author.id) } }>BOOKS</Button>
-            </td>
-          </tr>
-        )}
-      </tbody>
-    </Table>
+    <Row className='authors-list-page'>
+      { leftSidebarShown &&
+        <Col sm={4}>
+          <AuthorCard onClose={ () => dropAuthorFromParams() }/>
+        </Col>
+      }
+
+      <Col sm={ leftSidebarShown ? 8 : 12 }>
+        <AuthorsListControls/>
+
+        <Row className='authors-list'>
+          { authors.map(author =>
+            <AuthorsListItem key={ author.id } author={ author }/>
+          ) }
+        </Row>
+      </Col>
+    </Row>
   )
 }
 

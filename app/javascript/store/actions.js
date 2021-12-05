@@ -2,6 +2,8 @@ import { first, last, max, min } from 'lodash'
 
 import { slice } from 'store/slice'
 import apiClient from 'serverApi/apiClient'
+import { setCurrentAuthorId } from 'store/axis/actions'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 
 import {
   selectYearsToDisplay,
@@ -17,7 +19,6 @@ import {
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 export const {
-  setCurrentAuthorId,
   setCurrentAuthorDetails,
   setCurrentBookDetails,
   setCurrentBookForYear,
@@ -224,11 +225,6 @@ export const setupStoreForTagPage = (tagId, currentBookId = null) => async (disp
   })
 }
 
-export const setupStoreForAuthorsPage = () => async (dispatch, getState) => {
-    dispatch(fetchAllTags())
-    dispatch(fetchAuthors())
-}
-
 // PRIVATE
 
 const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
@@ -238,7 +234,7 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
   }
   return setTimeout(() => {
     const { yearsToLoad, yearsInLoading } = getState().booksList.books
-    const { currentId: currentAuthorId } = getState().booksList.authors
+    const currentAuthorId = selectCurrentAuthorId()(getState())
     if (yearsToLoad.length < 1) {
       resolve([])
     } else if (yearsInLoading.length > 0) {

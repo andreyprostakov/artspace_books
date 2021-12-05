@@ -1,21 +1,28 @@
 import { isEmpty, sortBy } from 'lodash'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, ButtonGroup, Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/small/PopularityBadge'
+import CloseIcon from 'components/icons/CloseIcon'
 
-import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectTags } from 'store/selectors'
+import { selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
+import { setupStoreForAuthorCard } from 'store/authorsList/actions'
 
-const AuthorCard = () => {
+const AuthorCard = (props) => {
+  const [{ authorId }, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
+  const { onClose } = props
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
-  const authorId = useSelector(selectCurrentAuthorId())
-  const [{}, { openEditAuthorModal, openNewBookModal }] = useUrlStore()
   const tags = useSelector(selectTags(authorDetails.tagIds))
+  useEffect(() => {
+    if (!authorId) { return }
+
+    dispatch(setupStoreForAuthorCard(authorId))
+  }, [authorId])
   if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
     return null
   }
@@ -40,7 +47,10 @@ const AuthorCard = () => {
 
   return (
     <Card className='author-card'>
+      <CloseIcon onClick={ () => onClose && onClose() }/>
+
       { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
+
       <Card.Body>
         <Card.Title>
           { authorDetails.wikiUrl

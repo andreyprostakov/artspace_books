@@ -8,6 +8,8 @@ export const objectToParams = (object, initialParams = '') => {
       value.forEach(entry => params.append(`${key}[]`, entry))
     } else if (value) {
       params.set(key, value)
+    } else {
+      params.delete(key)
     }
   })
   return params.toString()

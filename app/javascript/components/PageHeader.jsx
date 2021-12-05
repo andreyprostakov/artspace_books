@@ -7,7 +7,8 @@ import TagsNavList from 'components/nav/TagsNavList'
 import { useUrlStore } from 'store/urlStore'
 
 const PageHeader = () => {
-  const [{}, { gotoBooks, openNewAuthorModal }] = useUrlStore()
+  const [{},
+         { gotoBooks, gotoAuthorsList, openNewAuthorModal }] = useUrlStore()
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand>
       <Nav className='mr-auto'>
@@ -15,6 +16,7 @@ const PageHeader = () => {
         <NavDropdown title='Authors'>
           <AuthorsNavList/>
           <NavDropdown.Divider />
+          <NavDropdown.Item onClick={ () => gotoAuthorsList() }>List all</NavDropdown.Item>
           <NavDropdown.Item onClick={ () => openNewAuthorModal() }>+Author</NavDropdown.Item>
         </NavDropdown>
         <NavDropdown title='Tags'>

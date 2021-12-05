@@ -1,3 +1,1 @@
-author = @author
-json.id author.id
-json.fullname author.fullname
+json.partial! 'authors/author', author: @author, counts_by_author: { @author.id => @author.books.count }

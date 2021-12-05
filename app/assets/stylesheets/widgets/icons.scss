@@ -1,0 +1,23 @@
+.icon-google {
+  opacity: 0.7;
+  box-shadow: 2px 2px 4px #ced4da;
+  color: #ea4335;
+  background-color: #fff;
+
+  &:hover {
+    opacity: 1.0;
+    color: #ea4335;
+    background-color: #fff;
+  }
+}
+
+.icon-goodreads {
+  &, &:hover {
+    color: #382110;
+    background-color: #f4f2e9;
+  }
+}
+
+.icon-wiki {
+  background-color: #f8f9fa;
+}

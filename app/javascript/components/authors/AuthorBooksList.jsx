@@ -4,7 +4,7 @@ import { Col } from 'react-bootstrap'
 
 import AuthorCard from 'components/authors/AuthorCard'
 import BooksList from 'components/books/BooksList'
-import { selectCurrentAuthorId } from 'store/selectors'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 
 const AuthorBooksList = () => {
   const currentAuthorId = useSelector(selectCurrentAuthorId)

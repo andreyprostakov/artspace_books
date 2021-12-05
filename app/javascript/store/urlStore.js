@@ -15,9 +15,10 @@ export const useUrlStore = () => {
   const query = new URLSearchParams(location.search)
   const hash = location.hash
 
-  const authorId = parseInt(params.authorId) || null
+  const authorId = parseInt(params.authorId) || parseInt(query.get('author_id')) || null
   const bookId = parseInt(query.get('book_id')) || null
   const tagId = parseInt(params.tagId) || null
+  const sortOrder = params.sortOrder || null
 
   const calculateState = () => ({
     authorId,
@@ -30,7 +31,15 @@ export const useUrlStore = () => {
   })
 
   const goto = (path) => history.push(path)
-  const showModal = (hash) => goto([location.path, location.search, hash].join(''))
+  const replaceParam = (name, value) => {
+    const url = `${LOCATION.pathname}?${objectToParams({ [name]: value }, LOCATION.search)}${LOCATION.hash}`
+    history.replace(url)
+  }
+  const replaceHash = (value) => {
+    const url = `${LOCATION.pathname}${!!LOCATION.search ? LOCATION.search : ''}${value || ''}`
+    history.replace(url)
+  }
+  const showModal = (hash) => replaceHash(hash)
   const [state, setInfo] = useState(calculateState())
 
   window.PARAMS = params
@@ -44,18 +53,22 @@ export const useUrlStore = () => {
 
   const actions = {
     gotoBook: (id) => goto(`${location.pathname}?book_id=${id}`),
-    gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),    
+    gotoBooks: () => goto(`/books?${objectToParams({ book_id: bookId })}`),
     gotoTag: (id) => goto(`/tags/${id}?${objectToParams({ book_id: bookId })}`),
     gotoAuthor: (id) => goto(`/authors/${id}?${objectToParams({ book_id: bookId })}`),
-    gotoAuthors: () => goto('/authors'),
+    gotoAuthors: () => goto(`/authors?${objectToParams({ author_id: authorId, sort_order: sortOrder })}`),
     gotoTags: () => goto('/tags'),
     gotoNewAuthor: (id) => goto(`/authors/${id}`),
+    gotoAuthorsList: () => goto('/authors'),
+
+    addAuthorToParams: (id) => replaceParam('author_id', id),
+    dropAuthorFromParams: () => replaceParam('author_id', null),
 
     openNewAuthorModal: () => showModal(NEW_AUTHOR_HASH),
     openEditAuthorModal: () => showModal(EDIT_AUTHOR_HASH),
     openNewBookModal: () => showModal(NEW_BOOK_HASH),
     openEditBookModal: () => showModal(EDIT_BOOK_HASH),
-    closeModal: () => goto([location.path, location.search].join('')),
+    closeModal: () => showModal(''),
   }
 
   return [state, actions]

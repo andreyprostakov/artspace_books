@@ -1,6 +1,7 @@
 import { compact, difference, pick } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 export const selectSeed = () => state => state.booksList.seed
@@ -40,13 +41,12 @@ export const selectAuthors = () => state => Object.values(state.booksList.author
 
 export const selectAuthor = id => state => state.booksList.authors.byIds[id]
 
-export const selectCurrentAuthorId = () => state => state.booksList.authors.currentId
-
 export const selectCurrentAuthorDetails = () => state => state.booksList.authors.currentDetails
 
 export const selectCurrentAuthor = () => state => {
-  const { byIds: all, currentId } = state.booksList.authors
-  return all[currentId]
+  const { byIds: all } = state.booksList.authors
+  const id = selectCurrentAuthorId()(state)
+  return all[id]
 }
 
 // BOOKS

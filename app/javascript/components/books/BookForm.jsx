@@ -59,7 +59,7 @@ class BookForm extends React.Component {
     if (!author || isEmpty(bookDetails)) { return null }
 
     return (
-      <Form id='book_form' onSubmit={ (e) => this.handleSubmit(e) }>
+      <Form id='book_form' className='book-form' onSubmit={ (e) => this.handleSubmit(e) }>
         <InputLine controlId='authorId' label='Author' value={ author?.fullname } readOnly/>
         <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published } autoFocus/>
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }

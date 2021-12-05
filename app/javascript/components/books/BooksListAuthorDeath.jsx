@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDizzy } from '@fortawesome/free-solid-svg-icons'
 
-import { selectCurrentAuthorId, selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/selectors'
+import { selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/selectors'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 
 const BooksListAuthorBirth = () => {
   const currentId = useSelector(selectCurrentAuthorId())

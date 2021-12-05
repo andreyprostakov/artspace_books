@@ -1,7 +1,13 @@
 @import 'bootstrap';
 
-@import 'books';
+@import 'author-card';
+@import 'authors-list';
+@import 'book-form';
+@import 'books-list';
+@import 'navbar';
 @import 'scaffolds';
+@import 'widgets/icons';
+@import 'widgets/tag-container';
 
 body {
   min-width: 900px;

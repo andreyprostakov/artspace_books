@@ -1,0 +1,18 @@
+.tag-container {
+  margin-left: 5px;
+
+  .tag-name {
+    font-weight: 400;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .tag-remove-icon {
+    margin-left: 3px;
+    font-size: 10px;
+    cursor: pointer;
+  }
+}

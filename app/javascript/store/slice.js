@@ -22,7 +22,6 @@ export const slice = createSlice({
     },
     authors: {
       byIds: {},
-      currentId: null,
       currentDetails: {}
     },
     tags: {
@@ -58,11 +57,6 @@ export const slice = createSlice({
       const authors = action.payload
       state.authors.byIds = {}
       authors.forEach(author => state.authors.byIds[author.id] = author)
-    },
-
-    setCurrentAuthorId: (state, action) => {
-      const id = action.payload
-      state.authors.currentId = id
     },
 
     setCurrentAuthorDetails: (state, action) => {

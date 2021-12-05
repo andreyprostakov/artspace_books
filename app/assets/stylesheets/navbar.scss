@@ -1,0 +1,23 @@
+.navbar {
+  .authors-nav {
+    .authors-nav-filter {
+      padding: 0px 10px 5px
+    }
+
+    .authors-nav-list {
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+  }
+
+  .tags-nav {
+    .tags-nav-filter {
+      padding: 0px 10px 5px
+    }
+
+    .tags-nav-list {
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+  }
+}
