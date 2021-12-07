@@ -1,8 +1,9 @@
 import { sortBy, upperCase } from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import TagBadge from 'components/TagBadge'
 
+import Layout from 'components/Layout'
+import TagBadge from 'components/TagBadge'
 import { setupStoreForTagsPage } from 'store/actions'
 import { selectAllTags } from 'store/selectors'
 
@@ -16,14 +17,14 @@ const TagsPage = () => {
   }, [])
 
   return (
-    <div className='tags-page'>
+    <Layout className='tags-page'>
       { sortedTags.map(tag =>
         <TagBadge key={ tag.id } text={ tag.name } id={ tag.id }
           renderPostfix={ () => (tag.connectionsCount > 0 && ` (${tag.connectionsCount})`) }
           variant='dark'
-        /> 
+        />
       ) }
-    </div>
+    </Layout>
   )
 }
 

@@ -7,6 +7,7 @@ import { selectLeftSidebarShown, selectSortedAuthors } from 'store/authorsList/s
 import { setCurrentAuthorId } from 'store/axis/actions'
 import { useUrlStore } from 'store/urlStore'
 
+import Layout from 'components/Layout'
 import AuthorsListItem from 'components/authors/AuthorsListItem'
 import AuthorsListControls from 'components/authors/AuthorsListControls'
 import AuthorCard from 'components/authors/AuthorCard'
@@ -21,7 +22,7 @@ const AuthorsPage = () => {
   useEffect(() => dispatch(setCurrentAuthorId(queryAuthorId)), [queryAuthorId])
 
   return (
-    <Row className='authors-list-page'>
+    <Layout className='authors-list-page'>
       { leftSidebarShown &&
         <Col sm={4}>
           <AuthorCard onClose={ () => dropAuthorFromParams() }/>
@@ -37,7 +38,7 @@ const AuthorsPage = () => {
           ) }
         </Row>
       </Col>
-    </Row>
+    </Layout>
   )
 }
 

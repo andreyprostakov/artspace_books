@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import Layout from 'components/Layout'
 import AuthorBooksList from 'components/authors/AuthorBooksList'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { setupStoreForAuthorPage } from 'store/actions'
@@ -20,7 +21,9 @@ const AuthorPage = () => {
   if (!currentAuthorId) { return null }
 
   return (
-    <AuthorBooksList/>
+    <Layout>
+      <AuthorBooksList/>
+    </Layout>
   )
 }
 

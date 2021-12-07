@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+import Layout from 'components/Layout'
 import BooksList from 'components/books/BooksList'
 import { setupStoreForBooksPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
@@ -12,7 +13,9 @@ const BooksPage = () => {
   useEffect(() => dispatch(setupStoreForBooksPage(bookId)), [])
 
   return (
-    <BooksList/>
+    <Layout>
+      <BooksList/>
+    </Layout>
   )
 }
 

@@ -88,13 +88,15 @@ class ApiClient {
 
   putBookDetails(id, details) {
     const body = BookDetails.objectToServerData(details)
+    console.log(body)
     var formData = new FormData()
     Object.keys(body).forEach(key => formData.append(`book[${key}]`, body[key]))
+    console.log(formData)
     return $.ajax({
       url: `/books/${id}/details.json`,
       type: 'PUT',
-      data: formData,
-      contentType: false, cache: false, processData: false
+      data: { book: body },
+      //contentType: false, cache: false, processData: false
     })
   }
 

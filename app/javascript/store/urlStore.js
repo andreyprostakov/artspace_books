@@ -25,7 +25,7 @@ export const useUrlStore = () => {
     bookId,
     tagId,
     newAuthorModalShown: hash == NEW_AUTHOR_HASH,
-    editAuthorModalShown: authorId && (hash == EDIT_AUTHOR_HASH),
+    editAuthorModalShown: !!authorId && (hash == EDIT_AUTHOR_HASH),
     newBookModalShown: hash == NEW_BOOK_HASH,
     editBookModalShown: bookId && (hash == EDIT_BOOK_HASH),
   })

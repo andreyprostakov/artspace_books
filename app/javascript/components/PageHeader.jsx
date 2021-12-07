@@ -17,6 +17,7 @@ const PageHeader = () => {
           <AuthorsNavList/>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={ () => gotoAuthorsList() }>List all</NavDropdown.Item>
+          <NavDropdown.Divider />
           <NavDropdown.Item onClick={ () => openNewAuthorModal() }>+Author</NavDropdown.Item>
         </NavDropdown>
         <NavDropdown title='Tags'>

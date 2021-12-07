@@ -214,8 +214,8 @@ export const setupStoreForTagPage = (tagId, currentBookId = null) => async (disp
     dispatch(fetchAllTags()),
     dispatch(fetchYears({ tagId })),
     dispatch(fetchAuthors()),
-    dispatch(fetchTagBooks(tagId)),
   ]).then(() => {
+    dispatch(fetchTagBooks(tagId))
     if (currentBookId) {
       dispatch(reloadBook(currentBookId))
       dispatch(setCurrentBookId(currentBookId))

@@ -2,6 +2,7 @@ import { sortBy, upperCase } from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import Layout from 'components/Layout'
 import TagBadge from 'components/TagBadge'
 import BooksList from 'components/books/BooksList'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'
@@ -22,10 +23,10 @@ const TagPage = () => {
   if (!tag) { return null }
 
   return (
-    <div className='tag-page'>
+    <Layout className='tag-page'>
       <TagBadge text={ tag.name } variant='dark' renderPostfix={ () => <TagRemoveIcon onRemove={ () => gotoBooks() }/> }/>
       <BooksList/>
-    </div>
+    </Layout>
   )
 }
 
