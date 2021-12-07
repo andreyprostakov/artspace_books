@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Layout from 'components/Layout'
-import AuthorBooksList from 'components/authors/AuthorBooksList'
+import Layout from 'pages/Layout'
+import AuthorBooksList from 'pages/authorPage/components/AuthorBooksList'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { setupStoreForAuthorPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
+import usePageUrlStore from 'pages/authorPage/usePageUrlStore'
 
 const AuthorPage = () => {
-  const [{ authorId, bookId }] = useUrlStore()
+  const [{ authorId, bookId }] = usePageUrlStore()
   const dispatch = useDispatch()
   const currentAuthorId = useSelector(selectCurrentAuthorId())
 

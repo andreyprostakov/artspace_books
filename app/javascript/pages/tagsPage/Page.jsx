@@ -2,7 +2,7 @@ import { sortBy, upperCase } from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Layout from 'components/Layout'
+import Layout from 'pages/Layout'
 import TagBadge from 'components/TagBadge'
 import { setupStoreForTagsPage } from 'store/actions'
 import { selectAllTags } from 'store/selectors'

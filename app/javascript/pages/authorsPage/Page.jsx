@@ -7,7 +7,7 @@ import { selectLeftSidebarShown, selectSortedAuthors } from 'pages/authorsPage/s
 import { setCurrentAuthorId } from 'store/axis/actions'
 
 import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
-import Layout from 'components/Layout'
+import Layout from 'pages/Layout'
 import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
 import AuthorsListControls from 'pages/authorsPage/components/AuthorsListControls'
 import AuthorCard from 'components/authors/AuthorCard'

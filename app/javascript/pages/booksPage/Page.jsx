@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import Layout from 'components/Layout'
+import Layout from 'pages/Layout'
 import BooksList from 'components/books/BooksList'
 import { setupStoreForBooksPage } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'

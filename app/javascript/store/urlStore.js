@@ -30,13 +30,11 @@ export const useUrlStore = (calculatePageState = null) => {
 
   const authorId = parseInt(params.authorId) || parseInt(query.get('author_id')) || null
   const bookId = parseInt(query.get('book_id')) || null
-  const tagId = parseInt(params.tagId) || null
   const { ...pageState } = calculatePageState ? calculatePageState(params, query) : {}
 
   const calculateState = () => ({
     authorId,
     bookId,
-    tagId,
     newAuthorModalShown: hash == NEW_AUTHOR_HASH,
     editAuthorModalShown: !!authorId && (hash == EDIT_AUTHOR_HASH),
     newBookModalShown: hash == NEW_BOOK_HASH,
@@ -67,7 +65,7 @@ export const useUrlStore = (calculatePageState = null) => {
 
   useEffect(() => {
     setInfo(calculateState())
-  }, [authorId, bookId, tagId, location.hash, ...Object.values(pageState)])
+  }, [authorId, bookId, location.hash, ...Object.values(pageState)])
 
   const actions = {
     goto,
