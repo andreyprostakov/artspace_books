@@ -3,11 +3,8 @@ import { selectAuthors } from 'store/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import orders from 'store/authorsList/sortOrders'
 
-export const selectSortOrder = () => state => state.authorsList.sortOrder
-
-export const selectSortedAuthors = () => state => {
-  const order = selectSortOrder()(state)
-  const attribute = selectSortAttribute()(state)
+export const selectSortedAuthors = (order) => state => {
+  const attribute = selectSortAttribute(order)(state)
   var authors = sortBy(selectAuthors()(state), attribute)
   if ([orders.BY_NAME_DESCENDING, orders.BY_RANK_DESCENDING, orders.BY_YEAR_DESCENDING].includes(order)) {
     return authors.reverse()
@@ -15,8 +12,7 @@ export const selectSortedAuthors = () => state => {
   return authors
 }
 
-export const selectSortAttribute = () => state => {
-  const order = selectSortOrder()(state)
+export const selectSortAttribute = (order) => state => {
   switch (order) {
     case orders.BY_NAME_ASCENDING: case orders.BY_NAME_DESCENDING: return 'fullname'; break;
     case orders.BY_RANK_ASCENDING: case orders.BY_RANK_DESCENDING: return 'rank'; break;

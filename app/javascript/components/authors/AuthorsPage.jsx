@@ -5,7 +5,7 @@ import { Row, Col } from 'react-bootstrap'
 import { setupStoreForPage } from 'store/authorsList/actions'
 import { selectLeftSidebarShown, selectSortedAuthors } from 'store/authorsList/selectors'
 import { setCurrentAuthorId } from 'store/axis/actions'
-import { useUrlStore } from 'store/urlStore'
+import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 
 import Layout from 'components/Layout'
 import AuthorsListItem from 'components/authors/AuthorsListItem'
@@ -14,9 +14,9 @@ import AuthorCard from 'components/authors/AuthorCard'
 
 const AuthorsPage = () => {
   const dispatch = useDispatch()
-  const authors = useSelector(selectSortedAuthors())
   const leftSidebarShown = useSelector(selectLeftSidebarShown())
-  const [{ authorId: queryAuthorId }, { removeAuthorWidget }] = useUrlStore()
+  const [{ authorId: queryAuthorId, sortOrder }, { removeAuthorWidget }] = usePageUrlStore()
+  const authors = useSelector(selectSortedAuthors(sortOrder))
 
   useEffect(() => dispatch(setupStoreForPage()), [])
   useEffect(() => dispatch(setCurrentAuthorId(queryAuthorId)), [queryAuthorId])

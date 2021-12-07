@@ -16,7 +16,7 @@ const absolutePaths = {
   tagBooksPath: (tagId, { bookId } = {}) => `/tags/${tagId}${ objectToParams({ book_id: bookId }) }`,
 }
 
-export const useUrlStore = () => {
+export const useUrlStore = (calculatePageState = null) => {
   const history = useHistory()
   const location = useLocation()
   const params = useParams()
@@ -31,7 +31,7 @@ export const useUrlStore = () => {
   const authorId = parseInt(params.authorId) || parseInt(query.get('author_id')) || null
   const bookId = parseInt(query.get('book_id')) || null
   const tagId = parseInt(params.tagId) || null
-  const sortOrder = params.sortOrder || null
+  const { ...pageState } = calculatePageState ? calculatePageState(params, query) : {}
 
   const calculateState = () => ({
     authorId,
@@ -41,6 +41,7 @@ export const useUrlStore = () => {
     editAuthorModalShown: !!authorId && (hash == EDIT_AUTHOR_HASH),
     newBookModalShown: hash == NEW_BOOK_HASH,
     editBookModalShown: bookId && (hash == EDIT_BOOK_HASH),
+    ...pageState,
   })
 
   const goto = (path) => history.push(path)
@@ -66,9 +67,14 @@ export const useUrlStore = () => {
 
   useEffect(() => {
     setInfo(calculateState())
-  }, [authorId, bookId, tagId, location.hash])
+  }, [authorId, bookId, tagId, location.hash, ...Object.values(pageState)])
 
   const actions = {
+    goto,
+    patch,
+    buildPath,
+    showModal,
+
     gotoBook: (id) => goto(paths.booksPath({ bookId: id })),
     gotoBooks: () => goto(paths.booksPath()),
     gotoAuthorBooks: (id) => goto(paths.authorBooksPath(id)),
@@ -76,8 +82,6 @@ export const useUrlStore = () => {
     gotoTagBooks: (id) => goto(paths.tagBooksPath(id)),
     gotoTags: () => goto(paths.tagsPath()),
 
-    addAuthorWidget: (id) => patch(buildPath({ params: { author_id: id } })),
-    removeAuthorWidget: () => patch(buildPath({ params: { author_id: null } })),
     addBookWidget: (id) => patch(buildPath({ params: { book_id: id } })),
 
     openNewAuthorModal: () => showModal(NEW_AUTHOR_HASH),

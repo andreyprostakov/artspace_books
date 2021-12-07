@@ -9,17 +9,18 @@ import {
 } from 'store/authorsList/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import ImageContainer from 'components/ImageContainer'
-import { useUrlStore } from 'store/urlStore'
+import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 
 const AuthorsListItem = (props) => {
   const { author } = props
   const dispatch = useDispatch()
   const selectedAuthorId = useSelector(selectCurrentAuthorId())
-  const sortAttribute = useSelector(selectSortAttribute())
   const leftSidebarShown = useSelector(selectLeftSidebarShown())
   const isSelected = author.id == selectedAuthorId
-  const [{}, { addAuthorWidget }] = useUrlStore()
   const ref = useRef(null)
+
+  const [{ sortOrder }, { addAuthorWidget }] = usePageUrlStore()
+  const sortAttribute = useSelector(selectSortAttribute(sortOrder))
 
   useEffect(() => {
     if (isSelected) {
