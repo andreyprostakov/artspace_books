@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 
-import { setupStoreForPage } from 'store/authorsList/actions'
-import { selectLeftSidebarShown, selectSortedAuthors } from 'store/authorsList/selectors'
+import { setupStoreForPage } from 'pages/authorsPage/actions'
+import { selectLeftSidebarShown, selectSortedAuthors } from 'pages/authorsPage/selectors'
 import { setCurrentAuthorId } from 'store/axis/actions'
-import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 
+import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 import Layout from 'components/Layout'
-import AuthorsListItem from 'components/authors/AuthorsListItem'
-import AuthorsListControls from 'components/authors/AuthorsListControls'
+import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
+import AuthorsListControls from 'pages/authorsPage/components/AuthorsListControls'
 import AuthorCard from 'components/authors/AuthorCard'
 
 const AuthorsPage = () => {

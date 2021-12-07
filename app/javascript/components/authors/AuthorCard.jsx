@@ -8,10 +8,10 @@ import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/small/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
 
-import orders from 'store/authorsList/sortOrders'
+import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
-import { setupStoreForAuthorCard } from 'store/authorsList/actions'
+import { setupStoreForAuthorCard } from 'store/actions'
 
 const AuthorCard = (props) => {
   const [{ authorId },

@@ -2,8 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Form } from 'react-bootstrap'
 
-import { setSortOrder } from 'store/authorsList/actions'
-import orders from 'store/authorsList/sortOrders'
+import orders from 'pages/authorsPage/sortOrders'
+import { setSortOrder } from 'pages/authorsPage/actions'
 import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 
 const AuthorsListControls = () => {

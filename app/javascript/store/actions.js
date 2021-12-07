@@ -164,6 +164,10 @@ const pickCurrentBookFromLatestYear = () => (dispatch, getState) => {
   )
 }
 
+export const setupStoreForAuthorCard = (authorId) => async (dispatch) => {
+  dispatch(loadAuthorDetails(authorId))
+}
+
 export const setupStoreForBooksPage = (currentBookId = null) => async (dispatch, getState) => {
   Promise.all([
     dispatch(slice.actions.cleanYearsList()),

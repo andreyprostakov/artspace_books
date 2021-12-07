@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import {
   selectLeftSidebarShown,
   selectSortAttribute,
-} from 'store/authorsList/selectors'
+} from 'pages/authorsPage/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import ImageContainer from 'components/ImageContainer'
 import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'

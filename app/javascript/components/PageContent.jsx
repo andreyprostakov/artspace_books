@@ -5,7 +5,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import BooksPage from 'components/books/BooksPage'
 import AuthorPage from 'components/authors/AuthorPage'
-import AuthorsPage from 'components/authors/AuthorsPage'
+import AuthorsPage from 'pages/authorsPage/components/Page'
 import TagPage from 'components/TagPage'
 import TagsPage from 'components/TagsPage'
 import { selectSeed } from 'store/selectors'
