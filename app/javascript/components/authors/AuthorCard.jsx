@@ -8,12 +8,15 @@ import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/small/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
 
+import orders from 'store/authorsList/sortOrders'
 import { selectCurrentAuthorDetails, selectTags } from 'store/selectors'
 import { useUrlStore } from 'store/urlStore'
 import { setupStoreForAuthorCard } from 'store/authorsList/actions'
 
 const AuthorCard = (props) => {
-  const [{ authorId }, { gotoAuthorBooks, openEditAuthorModal, openNewBookModal }] = useUrlStore()
+  const [{ authorId },
+         { gotoAuthorBooks, openEditAuthorModal, openNewBookModal },
+         { editAuthorModalPath, authorBooksPath, authorsPath, newBookModalPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
@@ -34,13 +37,17 @@ const AuthorCard = (props) => {
     const age = authorDetails.deathYear
                 ? authorDetails.deathYear - authorDetails.birthYear
                 : new Date().getFullYear() - authorDetails.birthYear
-    const ageLabel = ` (age ${age})`
-
-    return [
-      birthLabel,
-      authorDetails.deathYear,
-      ageLabel
-    ].join('')
+    return(
+      <>
+        { birthLabel }
+        { authorDetails.deathYear }
+        &nbsp;(
+          <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_YEAR_ASCENDING }) }>
+            age { age }
+          </a>
+        )
+      </>
+    )
   }
 
   const sortedTags = sortBy(tags, tag => tag.connectionsCount)
@@ -61,7 +68,9 @@ const AuthorCard = (props) => {
         <Card.Text className='author-card-text'>
           <span>Years: { renderLifetime() }</span>
           <br/>
-          <span>Popularity: { authorDetails.popularity.toLocaleString() } pts (#{ authorDetails.rank })</span>
+          <span>Popularity: { authorDetails.popularity.toLocaleString() } pts (
+            <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_RANK_ASCENDING }) }>#{ authorDetails.rank }</a>
+          )</span>
         </Card.Text>
 
         <div className='author-tags'>
@@ -71,9 +80,9 @@ const AuthorCard = (props) => {
         </div>
 
         <ButtonGroup>
-          <Button variant='outline-warning' onClick={ () => openEditAuthorModal() }>Edit</Button>
-          <Button variant='outline-info' onClick={ () => gotoAuthorBooks(authorDetails.id) }>Books ({authorDetails.booksCount})</Button>
-          <Button variant='outline-info' onClick={ () => openNewBookModal() }>+ Book</Button>
+          <Button variant='outline-warning' href={ editAuthorModalPath(authorDetails.id) } onClick={ (e) => { e.preventDefault(); openEditAuthorModal() } }>Edit</Button>
+          <Button variant='outline-info' href={ authorBooksPath(authorDetails.id) } onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorDetails.id) } }>Books ({authorDetails.booksCount})</Button>
+          <Button variant='outline-info' href={ newBookModalPath() } onClick={ (e) => { e.preventDefault(); openNewBookModal() } }>+ Book</Button>
         </ButtonGroup>
       </Card.Body>
     </Card>

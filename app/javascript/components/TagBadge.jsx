@@ -7,13 +7,13 @@ import { useUrlStore } from 'store/urlStore'
 const TagBadge = (props) => {
   const { text, id, variant, renderPostfix } = props
   const label = `#${text}`
-  const [{ tagId }, { gotoTag }] = useUrlStore()
+  const [{ tagId }, { gotoTagBooks }, { tagBooksPath }] = useUrlStore()
 
   return (
     <Badge pill variant={ variant } className='tag-container'>
-      <span className='tag-name' onClick={ (e) => id && gotoTag(id) }>
+      <a className='tag-name' href={ tagBooksPath(id) } onClick={ (e) => { e.preventDefault(); gotoTagBooks(id) } }>
         { label }
-      </span>
+      </a>
       { renderPostfix && renderPostfix() }
     </Badge>
   )

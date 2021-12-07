@@ -12,5 +12,6 @@ export const objectToParams = (object, initialParams = '') => {
       params.delete(key)
     }
   })
-  return params.toString()
+  const query = params.toString()
+  return query ? `?${query}` : ''
 }

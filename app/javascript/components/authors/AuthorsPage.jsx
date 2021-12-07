@@ -16,7 +16,7 @@ const AuthorsPage = () => {
   const dispatch = useDispatch()
   const authors = useSelector(selectSortedAuthors())
   const leftSidebarShown = useSelector(selectLeftSidebarShown())
-  const [{ authorId: queryAuthorId }, { dropAuthorFromParams }] = useUrlStore()
+  const [{ authorId: queryAuthorId }, { removeAuthorWidget }] = useUrlStore()
 
   useEffect(() => dispatch(setupStoreForPage()), [])
   useEffect(() => dispatch(setCurrentAuthorId(queryAuthorId)), [queryAuthorId])
@@ -25,7 +25,7 @@ const AuthorsPage = () => {
     <Layout className='authors-list-page'>
       { leftSidebarShown &&
         <Col sm={4}>
-          <AuthorCard onClose={ () => dropAuthorFromParams() }/>
+          <AuthorCard onClose={ () => removeAuthorWidget() }/>
         </Col>
       }
 

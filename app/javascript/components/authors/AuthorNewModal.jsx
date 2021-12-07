@@ -7,13 +7,13 @@ import AuthorForm from 'components/authors/AuthorForm'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorNewModal = () => {
-  const [{ newAuthorModalShown }, { closeModal, gotoNewAuthor }] = useUrlStore()
+  const [{ newAuthorModalShown }, { closeModal, gotoAuthorBooks }] = useUrlStore()
   const dispatch = useDispatch()
 
   const handleSuccess = (data) => {
     const { id: newAuthorId } = data
     closeModal()
-    gotoNewAuthor(newAuthorId)
+    gotoAuthorBooks(newAuthorId)
   }
 
   return (

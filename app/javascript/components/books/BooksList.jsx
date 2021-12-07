@@ -13,7 +13,7 @@ const BooksList = () => {
   const yearsToDisplay = useSelector(selectYearsToDisplay())
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-  const [{ bookId: currentUrlBookId }, { gotoBook }] = useUrlStore()
+  const [{ bookId: currentUrlBookId }, { addBookWidget }] = useUrlStore()
 
   useEffect(() => {
     if (currentUrlBookId && currentUrlBookId !== currentBookId) {
@@ -23,7 +23,7 @@ const BooksList = () => {
 
   useEffect(() => {
     if (currentBookId && currentUrlBookId !== currentBookId) {
-      gotoBook(currentBookId)
+      addBookWidget(currentBookId)
     }
   }, [currentBookId])
 

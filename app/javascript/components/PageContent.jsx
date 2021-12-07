@@ -4,10 +4,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import BooksPage from 'components/books/BooksPage'
-import BookNewModal from 'components/books/BookNewModal'
-import BookEditModal from 'components/books/BookEditModal'
-import AuthorNewModal from 'components/authors/AuthorNewModal'
-import AuthorEditModal from 'components/authors/AuthorEditModal'
 import AuthorPage from 'components/authors/AuthorPage'
 import AuthorsPage from 'components/authors/AuthorsPage'
 import TagPage from 'components/TagPage'
@@ -26,44 +22,35 @@ const PageContent = () => {
   }, [seed])
 
   return (
-    <>
-      <Row>
-        <Switch>
-          <Route exact path='/'>
-            <Redirect to='/books'/>
-          </Route>
+    <Switch>
+      <Route exact path='/'>
+        <Redirect to='/books'/>
+      </Route>
 
-          <Route path='/books'>
-            <BooksPage/>
-          </Route>
+      <Route path='/books'>
+        <BooksPage/>
+      </Route>
 
-          <Route path='/authors/:authorId'>
-            <AuthorPage/>
-          </Route>
+      <Route path='/authors/:authorId'>
+        <AuthorPage/>
+      </Route>
 
-          <Route path='/authors'>
-            <AuthorsPage/>
-          </Route>
+      <Route path='/authors'>
+        <AuthorsPage/>
+      </Route>
 
-          <Route path='/tags/:tagId'>
-            <TagPage/>
-          </Route>
+      <Route path='/tags/:tagId'>
+        <TagPage/>
+      </Route>
 
-          <Route path='/tags'>
-            <TagsPage/>
-          </Route>
+      <Route path='/tags'>
+        <TagsPage/>
+      </Route>
 
-          <Route path='/:foobar'>
-            UNKNOWN ROUTE
-          </Route>
-        </Switch>
-
-        <AuthorNewModal/>
-        <AuthorEditModal/>
-        <BookNewModal/>
-        <BookEditModal/>
-      </Row>
-    </>
+      <Route path='/:foobar'>
+        UNKNOWN ROUTE
+      </Route>
+    </Switch>
   );
 }
 

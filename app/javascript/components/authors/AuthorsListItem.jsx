@@ -18,7 +18,7 @@ const AuthorsListItem = (props) => {
   const sortAttribute = useSelector(selectSortAttribute())
   const leftSidebarShown = useSelector(selectLeftSidebarShown())
   const isSelected = author.id == selectedAuthorId
-  const [{}, { addAuthorToParams }] = useUrlStore()
+  const [{}, { addAuthorWidget }] = useUrlStore()
   const ref = useRef(null)
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const AuthorsListItem = (props) => {
   })
 
   const onItemClick = (author) => {
-    addAuthorToParams(author.id)
+    addAuthorWidget(author.id)
   }
 
   return (

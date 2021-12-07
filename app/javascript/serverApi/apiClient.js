@@ -9,13 +9,13 @@ import Tag from 'serverApi/Tag'
 class ApiClient {
   getYears({ tagId } = {}) {
     return $.ajax({
-      url: `/years.json?${ objectToParams({ tag_id: tagId }) }`
+      url: `/years.json${ objectToParams({ tag_id: tagId }) }`
     })
   }
 
   getAuthorYears(authorId) {
     return $.ajax({
-      url: `/years.json?${ objectToParams({ author_id: authorId }) }`
+      url: `/years.json${ objectToParams({ author_id: authorId }) }`
     })
   }
 
@@ -57,13 +57,13 @@ class ApiClient {
 
   getBooks({ years, authorId, tagId }) {
     return $.ajax({
-      url: `/books.json?${objectToParams({ years, author_id: authorId, tag_id: tagId })}`
+      url: `/books.json${ objectToParams({ years, author_id: authorId, tag_id: tagId }) }`
     }).then((books) => books.map(bookData => Book.parse(bookData)))
   }
 
   getAuthorBooks(authorId) {
     return $.ajax({
-      url: `/books.json?${ objectToParams({ author_id: authorId }) }`
+      url: `/books.json${ objectToParams({ author_id: authorId }) }`
     }).then((books) => books.map(bookData => Book.parse(bookData)))
   }
 

@@ -34,7 +34,7 @@ const BooksListSelectedItem = (props) => {
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
-  const [{}, { gotoAuthorBooks, openEditBookModal }] = useUrlStore()
+  const [{}, { gotoAuthorBooks, openEditBookModal }, paths] = useUrlStore()
   const tags = useSelector(selectTags(book.tagIds))
   const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
   const syncedBookId = useSelector(selectSyncedBookId())
@@ -44,7 +44,9 @@ const BooksListSelectedItem = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl }/>
 
       <div className='book-details'>
-        <div href='#' className='book-author' title={ author.fullname } onClick={ () => gotoAuthorBooks(author.id) }>{ author.fullname }</div>
+        <a href={ paths.authorBooksPath(author.id) } className='book-author' title={ author.fullname } onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id) } }>
+          { author.fullname }
+        </a>
 
         <div className='book-title' title={ book.title }>
           { book.goodreadsUrl
