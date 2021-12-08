@@ -2,6 +2,7 @@ import { isEmpty, sortBy } from 'lodash'
 import React, { useEffect } from 'react'
 import { Button, ButtonGroup, Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
@@ -14,43 +15,25 @@ import { useUrlStore } from 'store/urlStore'
 import { setupStoreForAuthorCard } from 'store/actions'
 
 const AuthorCard = (props) => {
-  const [{ authorId },
+  const { authorId } = props
+  const [{},
          { gotoAuthorBooks, openEditAuthorModal, openNewBookModal },
          { editAuthorModalPath, authorBooksPath, authorsPath, newBookModalPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const tags = useSelector(selectTags(authorDetails.tagIds))
+  const sortedTags = sortBy(tags, tag => tag.connectionsCount)
+
   useEffect(() => {
     if (!authorId) { return }
 
     dispatch(setupStoreForAuthorCard(authorId))
   }, [authorId])
+
   if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
     return null
   }
-
-  const renderLifetime = () => {
-    if (!authorDetails.birthYear) { return null }
-
-    const birthLabel = `${authorDetails.birthYear}--`
-    const age = authorDetails.deathYear
-                ? authorDetails.deathYear - authorDetails.birthYear
-                : new Date().getFullYear() - authorDetails.birthYear
-    return(
-      <>
-        { birthLabel }
-        { authorDetails.deathYear }
-        &nbsp;(
-          <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_YEAR_ASCENDING }) }>
-            age { age }
-          </a>
-        )
-      </>
-    )
-  }
-
-  const sortedTags = sortBy(tags, tag => tag.connectionsCount)
 
   return (
     <Card className='author-card'>
@@ -66,7 +49,7 @@ const AuthorCard = (props) => {
           }
         </Card.Title>
         <Card.Text className='author-card-text'>
-          <span>Years: { renderLifetime() }</span>
+          <span>Years: { renderLifetime(authorDetails, authorsPath) }</span>
           <br/>
           <span>Popularity: { authorDetails.popularity.toLocaleString() } pts (
             <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_RANK_ASCENDING }) }>#{ authorDetails.rank }</a>
@@ -86,6 +69,30 @@ const AuthorCard = (props) => {
         </ButtonGroup>
       </Card.Body>
     </Card>
+  )
+}
+
+AuthorCard.propTypes = {
+  authorId: PropTypes.number.isRequired
+}
+
+const renderLifetime = (authorDetails, authorsPath) => {
+  if (!authorDetails.birthYear) { return null }
+
+  const birthLabel = `${authorDetails.birthYear}--`
+  const age = authorDetails.deathYear
+              ? authorDetails.deathYear - authorDetails.birthYear
+              : new Date().getFullYear() - authorDetails.birthYear
+  return(
+    <>
+      { birthLabel }
+      { authorDetails.deathYear }
+      &nbsp;(
+        <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_YEAR_ASCENDING }) }>
+          age { age }
+        </a>
+      )
+    </>
   )
 }
 

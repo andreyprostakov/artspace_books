@@ -7,7 +7,7 @@ import { useUrlStore } from 'store/urlStore'
 const TagBadge = (props) => {
   const { text, id, variant, renderPostfix } = props
   const label = `#${text}`
-  const [{ tagId }, { gotoTagBooks }, { tagBooksPath }] = useUrlStore()
+  const [{}, { gotoTagBooks }, { tagBooksPath }] = useUrlStore()
 
   return (
     <Badge pill variant={ variant } className='tag-container'>

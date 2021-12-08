@@ -5,12 +5,17 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'axis',
   initialState: {
-    currentAuthorId: null
+    currentAuthorId: null,
+    currentBookId: null,
   },
   reducers: {
     setCurrentAuthorId: (state, action) => {
       const id = action.payload
       state.currentAuthorId = id
+    },
+    setCurrentBookId: (state, action) => {
+      const id = action.payload
+      state.currentBookId = id
     },
   }
 })

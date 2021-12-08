@@ -19,6 +19,8 @@ import {
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 export const {
+  cleanBooksList,
+  cleanYearsList,
   setCurrentAuthorDetails,
   setCurrentBookDetails,
   setCurrentBookForYear,
@@ -155,7 +157,7 @@ export const fetchBooksForYears = (years) => async (dispatch, getState) => {
   dispatch(slice.actions.addBooks(loadedBooks))
 }
 
-const pickCurrentBookFromLatestYear = () => (dispatch, getState) => {
+export const pickCurrentBookFromLatestYear = () => (dispatch, getState) => {
   const state = getState()
   const years = selectYearsReversed()(state)
   const currentYear = first(years)
@@ -166,67 +168,6 @@ const pickCurrentBookFromLatestYear = () => (dispatch, getState) => {
 
 export const setupStoreForAuthorCard = (authorId) => async (dispatch) => {
   dispatch(loadAuthorDetails(authorId))
-}
-
-export const setupStoreForBooksPage = (currentBookId = null) => async (dispatch, getState) => {
-  Promise.all([
-    dispatch(slice.actions.cleanYearsList()),
-    dispatch(slice.actions.cleanBooksList()),
-    dispatch(setCurrentAuthorId(null)),
-    dispatch(fetchAllTags()),
-    dispatch(fetchYears()),
-    dispatch(fetchAuthors())
-  ]).then(() => {
-    if (currentBookId) {
-      dispatch(reloadBook(currentBookId))
-      dispatch(setCurrentBookId(currentBookId))
-    } else {
-      dispatch(pickCurrentBookFromLatestYear())
-    }
-  })
-}
-
-export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async (dispatch, getState) => {
-  Promise.all([
-    dispatch(slice.actions.cleanYearsList()),
-    dispatch(slice.actions.cleanBooksList()),
-    dispatch(fetchAllTags()),
-    dispatch(fetchAuthors()),
-    dispatch(loadAuthorDetails(authorId)),
-    dispatch(fetchAuthorYears(authorId)),
-    dispatch(setCurrentAuthorId(authorId)),
-  ]).then(() => {
-    dispatch(fetchAuthorBooks(authorId))
-    const authorBookIds = Object.values(getState().booksList.books.byIds).filter(book => book.authorId == authorId).map(book => book.id)
-    if (currentBookId && authorBookIds.includes(currentBookId)) {
-      dispatch(reloadBook(currentBookId))
-      dispatch(setCurrentBookId(currentBookId))
-    } else {
-      dispatch(pickCurrentBookFromLatestYear())
-    }
-  })
-}
-
-export const setupStoreForTagsPage = () => async (dispatch, getState) => {
-    dispatch(fetchAllTags())
-}
-
-export const setupStoreForTagPage = (tagId, currentBookId = null) => async (dispatch, getState) => {
-  Promise.all([
-    dispatch(slice.actions.cleanYearsList()),
-    dispatch(slice.actions.cleanBooksList()),
-    dispatch(fetchAllTags()),
-    dispatch(fetchYears({ tagId })),
-    dispatch(fetchAuthors()),
-  ]).then(() => {
-    dispatch(fetchTagBooks(tagId))
-    if (currentBookId) {
-      dispatch(reloadBook(currentBookId))
-      dispatch(setCurrentBookId(currentBookId))
-    } else {
-      dispatch(pickCurrentBookFromLatestYear())
-    }
-  })
 }
 
 // PRIVATE

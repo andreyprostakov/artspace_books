@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { selectYearsToDisplay, selectCurrentBook, selectCurrentBookId } from 'store/selectors'
 import { fetchBooksForYears, setCurrentBookId, shiftYear } from 'store/actions'
-import { useUrlStore } from 'store/urlStore'
+import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 import BooksListAuthorBirth from 'components/books/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/books/BooksListAuthorDeath'
 import BooksListYearRow from 'components/books/BooksListYearRow'
@@ -13,7 +13,7 @@ const BooksList = () => {
   const yearsToDisplay = useSelector(selectYearsToDisplay())
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-  const [{ bookId: currentUrlBookId }, { addBookWidget }] = useUrlStore()
+  const [{ bookId: currentUrlBookId }, { addBookWidget }] = usePageUrlStore()
 
   useEffect(() => {
     if (currentUrlBookId && currentUrlBookId !== currentBookId) {

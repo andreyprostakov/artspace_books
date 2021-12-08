@@ -7,7 +7,7 @@ import TagBadge from 'components/TagBadge'
 import BooksList from 'components/books/BooksList'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'
 
-import { setupStoreForTagPage } from 'store/actions'
+import { setupStoreForTagPage } from 'pages/tagPage/actions'
 import { selectTag } from 'store/selectors'
 import usePageUrlStore from 'pages/tagPage/usePageUrlStore'
 

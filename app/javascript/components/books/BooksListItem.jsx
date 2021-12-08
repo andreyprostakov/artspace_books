@@ -6,7 +6,6 @@ import classnames from 'classnames'
 import ImageContainer from 'components/ImageContainer'
 import { setCurrentBookId } from 'store/actions'
 import { selectBook, selectBookDefaultImageUrl } from 'store/selectors'
-import { useUrlStore } from 'store/urlStore'
 
 const BooksListItem = (props) => {
   const { id } = props

@@ -15,17 +15,17 @@ import AuthorCard from 'components/authors/AuthorCard'
 const AuthorsPage = () => {
   const dispatch = useDispatch()
   const leftSidebarShown = useSelector(selectLeftSidebarShown())
-  const [{ authorId: queryAuthorId, sortOrder }, { removeAuthorWidget }] = usePageUrlStore()
+  const [{ authorId, sortOrder }, { removeAuthorWidget }] = usePageUrlStore()
   const authors = useSelector(selectSortedAuthors(sortOrder))
 
   useEffect(() => dispatch(setupStoreForPage()), [])
-  useEffect(() => dispatch(setCurrentAuthorId(queryAuthorId)), [queryAuthorId])
+  useEffect(() => dispatch(setCurrentAuthorId(authorId)), [authorId])
 
   return (
     <Layout className='authors-list-page'>
       { leftSidebarShown &&
         <Col sm={4}>
-          <AuthorCard onClose={ () => removeAuthorWidget() }/>
+          <AuthorCard authorId={ authorId } onClose={ () => removeAuthorWidget() }/>
         </Col>
       }
 

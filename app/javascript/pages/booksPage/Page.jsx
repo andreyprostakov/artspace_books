@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { setupStoreForBooksPage } from 'pages/booksPage/actions'
 import Layout from 'pages/Layout'
 import BooksList from 'components/books/BooksList'
-import { setupStoreForBooksPage } from 'store/actions'
-import { useUrlStore } from 'store/urlStore'
+import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 
 const BooksPage = () => {
   const dispatch = useDispatch()
-  const [{ bookId }] = useUrlStore()
+  const [{ bookId }] = usePageUrlStore()
 
   useEffect(() => dispatch(setupStoreForBooksPage(bookId)), [])
 

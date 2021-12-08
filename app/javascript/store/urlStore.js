@@ -33,7 +33,6 @@ export const useUrlStore = (calculatePageState = null) => {
   const { ...pageState } = calculatePageState ? calculatePageState(params, query) : {}
 
   const calculateState = () => ({
-    authorId,
     bookId,
     newAuthorModalShown: hash == NEW_AUTHOR_HASH,
     editAuthorModalShown: !!authorId && (hash == EDIT_AUTHOR_HASH),
@@ -65,7 +64,7 @@ export const useUrlStore = (calculatePageState = null) => {
 
   useEffect(() => {
     setInfo(calculateState())
-  }, [authorId, bookId, location.hash, ...Object.values(pageState)])
+  }, [bookId, location.hash, ...Object.values(pageState)])
 
   const actions = {
     goto,
@@ -79,8 +78,6 @@ export const useUrlStore = (calculatePageState = null) => {
     gotoAuthors: () => goto(paths.authorsPath()),
     gotoTagBooks: (id) => goto(paths.tagBooksPath(id)),
     gotoTags: () => goto(paths.tagsPath()),
-
-    addBookWidget: (id) => patch(buildPath({ params: { book_id: id } })),
 
     openNewAuthorModal: () => showModal(NEW_AUTHOR_HASH),
     openEditAuthorModal: () => showModal(EDIT_AUTHOR_HASH),
