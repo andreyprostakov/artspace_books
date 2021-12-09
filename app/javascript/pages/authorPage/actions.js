@@ -8,9 +8,11 @@ import {
   loadAuthorDetails,
   pickCurrentBookFromLatestYear,
   reloadBook,
-  setCurrentBookId,
 } from 'store/actions'
-import { setCurrentAuthorId } from 'store/axis/actions'
+import {
+  setCurrentAuthorId,
+  setCurrentBookId,
+} from 'store/axis/actions'
 import { selectBooks } from 'store/selectors'
 
 export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async (dispatch, getState) => {

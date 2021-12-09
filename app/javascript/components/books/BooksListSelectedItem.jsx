@@ -17,10 +17,10 @@ import {
   selectAuthor,
   selectBook,
   selectBookDefaultImageUrl,
-  selectCurrentBookId,
   selectSyncedBookId,
   selectTags,
 } from 'store/selectors'
+import { selectCurrentBookId } from 'store/axis/selectors'
 import { setBookModalShown, syncBookStats } from 'store/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -62,7 +62,9 @@ const BooksListSelectedItem = (props) => {
         </div>
 
         <div className='book-stats'>
-          <PopularityBadge rank={ book.globalRank } points={ book.popularity }/>
+          { book.popularity && book.globalRank &&
+            <PopularityBadge rank={ book.globalRank } points={ book.popularity }/>
+          }
         </div>
 
         <div className='book-actions'>

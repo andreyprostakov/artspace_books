@@ -1,8 +1,10 @@
 import { compact, first, uniq } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { selectBookIdsByYear, selectCurrentBookId, selectCurrentBook, selectYearCurrentBookId } from 'store/selectors'
+import { selectBookIdsByYear, selectCurrentBook, selectYearCurrentBookId } from 'store/selectors'
+import { selectCurrentBookId } from 'store/axis/selectors'
 import BooksListItem from 'components/books/BooksListItem'
 import BooksListSelectedItem from 'components/books/BooksListSelectedItem'
 import { pickNearEntries } from 'utils/pickNearEntries'
@@ -30,6 +32,10 @@ const BooksListYearRow = (props) => {
       </div>
     </div>
   )
+}
+
+BooksListYearRow.propTypes = {
+  year: PropTypes.number.isRequired,
 }
 
 export default BooksListYearRow

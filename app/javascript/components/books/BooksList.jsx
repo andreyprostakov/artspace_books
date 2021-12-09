@@ -1,8 +1,17 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { selectYearsToDisplay, selectCurrentBook, selectCurrentBookId } from 'store/selectors'
-import { fetchBooksForYears, setCurrentBookId, shiftYear } from 'store/actions'
+import {
+  selectYearsToDisplay,
+  selectCurrentBook,
+} from 'store/selectors'
+import {
+  fetchBooksForYears,
+  setCurrentBookForYear,
+  shiftYear,
+} from 'store/actions'
+import { selectCurrentBookId } from 'store/axis/selectors'
 import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 import BooksListAuthorBirth from 'components/books/BooksListAuthorBirth'
 import BooksListAuthorDeath from 'components/books/BooksListAuthorDeath'
@@ -16,14 +25,8 @@ const BooksList = () => {
   const [{ bookId: currentUrlBookId }, { addBookWidget }] = usePageUrlStore()
 
   useEffect(() => {
-    if (currentUrlBookId && currentUrlBookId !== currentBookId) {
-      dispatch(setCurrentBookId(currentUrlBookId))
-    }
-  }, [currentUrlBookId])
-
-  useEffect(() => {
-    if (currentBookId && currentUrlBookId !== currentBookId) {
-      addBookWidget(currentBookId)
+    if (currentBookId && currentBook) {
+      dispatch(setCurrentBookForYear({ year: currentBook.year, id: currentBook.id }))
     }
   }, [currentBookId])
 

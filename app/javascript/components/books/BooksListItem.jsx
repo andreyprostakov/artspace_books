@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 
+import { setNextBookId } from 'widgets/booksList/actions'
 import ImageContainer from 'components/ImageContainer'
-import { setCurrentBookId } from 'store/actions'
 import { selectBook, selectBookDefaultImageUrl } from 'store/selectors'
 
 const BooksListItem = (props) => {
@@ -14,7 +14,7 @@ const BooksListItem = (props) => {
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
   return (
-    <div className='book-case non-selected' onClick={ () => dispatch(setCurrentBookId(id)) } title={ book.title }>
+    <div className='book-case non-selected' onClick={ () => dispatch(setNextBookId(id)) } title={ book.title }>
       <ImageContainer className='book-cover' url={ coverUrl }>
       </ImageContainer>
     </div>
@@ -22,7 +22,7 @@ const BooksListItem = (props) => {
 }
 
 BooksListItem.propTypes = {
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
 };
 
 export default BooksListItem

@@ -2,7 +2,7 @@ import { useUrlStore } from 'store/urlStore'
 
 export const usePageUrlStore = () => {
   const [state, actions, paths] = useUrlStore((params, query) => ({
-    bookId: parseInt(query.get('author_id')) || null,
+    bookId: parseInt(query.get('book_id')) || null,
   }))
   const { patch, buildPath } = actions
   return [

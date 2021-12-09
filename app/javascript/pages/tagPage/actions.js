@@ -7,8 +7,10 @@ import {
   fetchYears,
   pickCurrentBookFromLatestYear,
   reloadBook,
-  setCurrentBookId,
 } from 'store/actions'
+import {
+  setCurrentBookId,
+} from 'store/axis/actions'
 
 export const setupStoreForTagPage = (tagId, currentBookId = null) => async (dispatch, getState) => {
   Promise.all([

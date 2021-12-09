@@ -8,7 +8,6 @@ export const slice = createSlice({
     seed: null,
     books: {
       byIds: {},
-      currentId: null,
       currentByYear: {},
       currentDetails: {},
       yearsLoaded: [],
@@ -114,11 +113,6 @@ export const slice = createSlice({
     setDefaultBookImageUrl: (state, action) => {
       const url = action.payload
       state.books.defaultImageUrl = url
-    },
-
-    setCurrentBookId: (state, action) => {
-      const id = action.payload
-      state.books.currentId = id
     },
 
     setCurrentBookForYear: (state, action) => {

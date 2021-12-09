@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
-import { selectCurrentBookId, selectCurrentBookDetails } from 'store/selectors'
+import { selectCurrentBookDetails } from 'store/selectors'
 import { reloadBook, loadCurrentBookDetails, setCurrentBookDetails } from 'store/actions'
+import { selectCurrentBookId } from 'store/axis/selectors'
 import BookForm from 'components/books/BookForm'
 import { useUrlStore } from 'store/urlStore'
 

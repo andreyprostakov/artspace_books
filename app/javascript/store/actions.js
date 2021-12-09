@@ -2,8 +2,16 @@ import { first, last, max, min } from 'lodash'
 
 import { slice } from 'store/slice'
 import apiClient from 'serverApi/apiClient'
-import { setCurrentAuthorId } from 'store/axis/actions'
-import { selectCurrentAuthorId } from 'store/axis/selectors'
+import {
+  setCurrentAuthorId,
+} from 'store/axis/actions'
+import {
+  setNextBookId,
+} from 'widgets/booksList/actions'
+import {
+  selectCurrentAuthorId,
+  selectCurrentBookId,
+} from 'store/axis/selectors'
 
 import {
   selectYearsToDisplay,
@@ -68,7 +76,7 @@ export const loadAuthor = (id) => async (dispatch, getState) => {
 }
 
 export const loadCurrentBookDetails = () => async (dispatch, getState) => {
-  const { currentId } = getState().booksList.books
+  const currentId = selectCurrentBookId()(getState())
   if (!currentId) { return }
 
   const details = await apiClient.getBookDetails(currentId)
@@ -90,15 +98,7 @@ const setCurrentBookToYear = (targetYear) => (dispatch, getState) => {
   }
 
   if (newCurrentBookId) {
-    dispatch(setCurrentBookId(newCurrentBookId))
-  }
-}
-
-export const setCurrentBookId = (id) => (dispatch, getState) => {
-  dispatch(slice.actions.setCurrentBookId(id))
-  const currentBook = selectCurrentBook()(getState())
-  if (currentBook) {
-    dispatch(setCurrentBookForYear({ year: currentBook.year, id: currentBook.id }))
+    dispatch(setNextBookId(newCurrentBookId))
   }
 }
 
@@ -110,7 +110,7 @@ export const shiftBookSelection = (shift) => (dispatch, getState) => {
   const targetId = shift > 0 ? last(displayedBookIds) : first(displayedBookIds)
   if (!targetId) { return }
 
-  dispatch(setCurrentBookId(targetId))
+  dispatch(setNextBookId(targetId))
 }
 
 export const syncBookStats = (id) => async (dispatch, getState) => {

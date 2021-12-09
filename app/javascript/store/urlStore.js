@@ -37,7 +37,7 @@ export const useUrlStore = (calculatePageState = null) => {
     newAuthorModalShown: hash == NEW_AUTHOR_HASH,
     editAuthorModalShown: !!authorId && (hash == EDIT_AUTHOR_HASH),
     newBookModalShown: hash == NEW_BOOK_HASH,
-    editBookModalShown: bookId && (hash == EDIT_BOOK_HASH),
+    editBookModalShown: !!bookId && (hash == EDIT_BOOK_HASH),
     ...pageState,
   })
 
@@ -72,7 +72,6 @@ export const useUrlStore = (calculatePageState = null) => {
     buildPath,
     showModal,
 
-    gotoBook: (id) => goto(paths.booksPath({ bookId: id })),
     gotoBooks: () => goto(paths.booksPath()),
     gotoAuthorBooks: (id) => goto(paths.authorBooksPath(id)),
     gotoAuthors: () => goto(paths.authorsPath()),
