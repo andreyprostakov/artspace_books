@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Col } from 'react-bootstrap'
 
 import { setupStoreForAuthorPage } from 'pages/authorPage/actions'
 import { selectNextBookId } from 'widgets/booksList/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import Layout from 'pages/Layout'
-import AuthorBooksList from 'pages/authorPage/components/AuthorBooksList'
+import AuthorCard from 'widgets/authorCard/AuthorCard'
+import BooksList from 'widgets/booksList/BooksList'
 import usePageUrlStore from 'pages/authorPage/usePageUrlStore'
 
 const AuthorPage = () => {
@@ -13,20 +15,18 @@ const AuthorPage = () => {
   const nextBookId = useSelector(selectNextBookId())
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    if (!authorId) { return }
-
-    dispatch(setupStoreForAuthorPage(authorId, bookId))
-  }, [authorId])
-
-  if (!authorId) { return null }
-
   useEffect(() => dispatch(setCurrentBookId(bookId)), [bookId])
+  useEffect(() => dispatch(setupStoreForAuthorPage(authorId, bookId)), [authorId])
   useEffect(() => nextBookId && addBookWidget(nextBookId), [nextBookId])
 
   return (
     <Layout>
-      <AuthorBooksList/>
+      <Col xs={ 4 }>
+        <AuthorCard authorId={ authorId }/>
+      </Col>
+      <Col xs={ 8 }>
+        <BooksList/>
+      </Col>
     </Layout>
   )
 }
