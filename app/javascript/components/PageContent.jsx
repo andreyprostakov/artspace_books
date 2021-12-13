@@ -8,18 +8,9 @@ import AuthorsPage from 'pages/authorsPage/Page'
 import BooksPage from 'pages/booksPage/Page'
 import TagPage from 'pages/tagPage/Page'
 import TagsPage from 'pages/tagsPage/Page'
-import { selectSeed } from 'store/selectors'
-import { setSeed } from 'store/actions'
 
 const PageContent = () => {
   const dispatch = useDispatch()
-  const seed = useSelector(selectSeed())
-
-  useEffect(() => {
-    if (seed) { return }
-
-    dispatch(setSeed())
-  }, [seed])
 
   return (
     <Switch>

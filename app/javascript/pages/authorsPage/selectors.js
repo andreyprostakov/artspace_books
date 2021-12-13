@@ -1,7 +1,7 @@
 import { sortBy } from 'lodash'
 
-import { selectAuthors } from 'store/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
+import { selectAuthors } from 'store/metadata/selectors'
 import orders from 'pages/authorsPage/sortOrders'
 
 export const selectSortedAuthors = (order) => state => {

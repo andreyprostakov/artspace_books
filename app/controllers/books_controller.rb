@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: %i[show sync_goodreads_stats]
 
   def index
-    @books = Book.includes(:tag_connections)
+    @books = Book.all
     @books = @books.where(year_published: params[:years]) if params[:years].present?
     @books = @books.where(author_id: params[:author_id]) if params[:author_id].present?
     @books = @books.with_tags(params[:tag_id]) if params[:tag_id].present?

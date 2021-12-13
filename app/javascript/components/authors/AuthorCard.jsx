@@ -6,13 +6,13 @@ import PropTypes from 'prop-types'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
-import PopularityBadge from 'components/small/PopularityBadge'
+import PopularityBadge from 'components/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
-import { selectCurrentAuthorDetails, selectTags } from 'store/selectors'
+import { selectCurrentAuthorDetails, selectTags } from 'store/metadata/selectors'
+import { setupStoreForAuthorCard } from 'widgets/authorCard/actions'
 import { useUrlStore } from 'store/urlStore'
-import { setupStoreForAuthorCard } from 'store/actions'
 
 const AuthorCard = (props) => {
   const { authorId } = props

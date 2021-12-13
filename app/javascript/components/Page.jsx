@@ -4,10 +4,9 @@ import store from 'store/store'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter } from 'react-router-dom'
 
-import NavController from 'components/NavController'
 import PageHeader from 'components/PageHeader'
 import PageContent from 'components/PageContent'
-import { setDefaultBookImageUrl } from 'store/actions'
+import { setDefaultBookImageUrl } from 'widgets/booksList/actions'
 
 const Page = (props) => {
   window.STORE = store
@@ -16,12 +15,10 @@ const Page = (props) => {
   return (
     <Provider store={ store }>
       <BrowserRouter>
-        <NavController>
-          <Container className='page'>
-            <PageHeader/>
-            <PageContent/>
-          </Container>
-        </NavController>
+        <Container className='page'>
+          <PageHeader/>
+          <PageContent/>
+        </Container>
       </BrowserRouter>
     </Provider>
   );

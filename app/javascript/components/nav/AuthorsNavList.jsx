@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FormControl, NavDropdown } from 'react-bootstrap'
 
-import { selectAuthors } from 'store/selectors'
+import { selectAuthors } from 'store/metadata/selectors'
 import { useUrlStore } from 'store/urlStore'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'

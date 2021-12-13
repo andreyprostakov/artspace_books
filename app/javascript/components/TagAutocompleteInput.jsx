@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames'
 
-import { selectAllTags } from 'store/selectors'
+import { selectAllTags } from 'store/metadata/selectors'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
 

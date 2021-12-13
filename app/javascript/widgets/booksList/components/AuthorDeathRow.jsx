@@ -1,13 +1,14 @@
 import { first } from 'lodash'
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDizzy } from '@fortawesome/free-solid-svg-icons'
 
-import { selectCurrentAuthorDetails, selectYearsReversed, selectCurrentYear } from 'store/selectors'
+import { selectCurrentAuthorDetails } from 'store/metadata/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
+import { selectYearsReversed, selectCurrentYear } from 'widgets/booksList/selectors'
 
-const BooksListAuthorBirth = () => {
+const AuthorBirthRow = () => {
   const currentId = useSelector(selectCurrentAuthorId())
   const { id, deathYear } = useSelector(selectCurrentAuthorDetails())
   const currentYear = useSelector(selectCurrentYear())
@@ -28,4 +29,4 @@ const BooksListAuthorBirth = () => {
   )
 }
 
-export default BooksListAuthorBirth
+export default AuthorBirthRow

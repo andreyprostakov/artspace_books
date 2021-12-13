@@ -8,15 +8,20 @@ import InputLine from 'components/FormInputLine'
 import BookFormCoverLine from 'components/books/BookFormCoverLine'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import BookFormTags from 'components/books/BookFormTags'
-import { fetchAllTags } from 'store/actions'
-import { selectAuthor } from 'store/selectors'
+import { fetchAllTags } from 'store/metadata/actions'
+import { selectAuthor } from 'store/metadata/selectors'
 import apiClient from 'serverApi/apiClient'
 
 class BookForm extends React.Component {
   constructor(props) {
     super(props)
     const { bookDetails } = this.props
-    this.state = { errors: {}, currentTitle: bookDetails.title, currentTags: [] }
+    this.state = {
+      errors: {},
+      currentOriginalTitle: bookDetails.originalTitle,
+      currentTitle: bookDetails.title,
+      currentTags: [],
+    }
   }
 
   sendRequest(bookDetails, formData) {
@@ -55,7 +60,7 @@ class BookForm extends React.Component {
 
   render() {
     const { bookDetails, author } = this.props
-    const { currentTags, currentTitle, errors } = this.state
+    const { currentTags, currentTitle, currentOriginalTitle, errors } = this.state
     if (!author || isEmpty(bookDetails)) { return null }
 
     return (
@@ -65,10 +70,11 @@ class BookForm extends React.Component {
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                    onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
         <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
-        <BookFormCoverLine bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentTitle }/>
+        <BookFormCoverLine bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentOriginalTitle || currentTitle }/>
         <Row />
         <BookFormTags bookDetails={ bookDetails } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
-        <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }/>
+        <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }
+                   onChange={ (e) => this.setState({ currentOriginalTitle: e.target.value }) }/>
       </Form>
     )
   }

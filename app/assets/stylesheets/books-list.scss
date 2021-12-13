@@ -101,6 +101,10 @@
     margin: 10px 20px 0 0;
     vertical-align: top;
 
+    &:focus {
+      background-color: green;
+    }
+
     &.selected {
       box-shadow: 0px 0px 18px red inset;
       padding: 5px;

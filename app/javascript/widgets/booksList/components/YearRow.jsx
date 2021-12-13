@@ -3,13 +3,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 
-import { selectBookIdsByYear, selectCurrentBook, selectYearCurrentBookId } from 'store/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import BooksListItem from 'components/books/BooksListItem'
-import BooksListSelectedItem from 'components/books/BooksListSelectedItem'
 import { pickNearEntries } from 'utils/pickNearEntries'
+import { selectBookIdsByYear, selectCurrentBook, selectYearCurrentBookId } from 'widgets/booksList/selectors'
 
-const BooksListYearRow = (props) => {
+import Book from 'widgets/booksList/components/Book'
+import BookSelected from 'widgets/booksList/components/BookSelected'
+
+const YearRow = (props) => {
   const { year } = props
   const bookIds = useSelector(selectBookIdsByYear(year))
   const currentBookId = useSelector(selectCurrentBookId())
@@ -26,16 +27,16 @@ const BooksListYearRow = (props) => {
       <div className='year-books'>
         { displayedBookIds.map(bookId =>
           (bookId == currentBookId)
-          ? <BooksListSelectedItem id={ bookId } key={ bookId }/>
-          : <BooksListItem id={ bookId } key={ bookId }/>
+          ? <BookSelected id={ bookId } key={ bookId }/>
+          : <Book id={ bookId } key={ bookId }/>
         ) }
       </div>
     </div>
   )
 }
 
-BooksListYearRow.propTypes = {
+YearRow.propTypes = {
   year: PropTypes.number.isRequired,
 }
 
-export default BooksListYearRow
+export default YearRow

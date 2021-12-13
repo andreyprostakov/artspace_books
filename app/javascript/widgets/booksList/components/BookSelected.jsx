@@ -6,29 +6,29 @@ import classnames from 'classnames'
 import { Container, Row } from 'react-bootstrap'
 
 import ImageContainer from 'components/ImageContainer'
+import TagBadge from 'components/TagBadge'
+import PopularityBadge from 'components/PopularityBadge'
+
 import EditIcon from 'components/icons/EditIcon'
 import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import RefreshIcon from 'components/icons/RefreshIcon'
-import TagBadge from 'components/TagBadge'
-import PopularityBadge from 'components/small/PopularityBadge'
 
+import { selectCurrentBookId } from 'store/axis/selectors'
+import { selectAuthor, selectTags } from 'store/metadata/selectors'
 import {
-  selectAuthor,
   selectBook,
   selectBookDefaultImageUrl,
+  selectNextBookId,
   selectSyncedBookId,
-  selectTags,
-} from 'store/selectors'
-import { selectCurrentBookId } from 'store/axis/selectors'
-import { setBookModalShown, syncBookStats } from 'store/actions'
+} from 'widgets/booksList/selectors'
+import { syncBookStats } from 'widgets/booksList/actions'
 import { useUrlStore } from 'store/urlStore'
 
-const BooksListSelectedItem = (props) => {
+const BookSelected = (props) => {
   const { id } = props
   const book = useSelector(selectBook(id))
   const author = useSelector(selectAuthor(book.authorId))
-  const ref = useRef(null)
   const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id
   const dispatch = useDispatch()
@@ -38,6 +38,10 @@ const BooksListSelectedItem = (props) => {
   const tags = useSelector(selectTags(book.tagIds))
   const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
   const syncedBookId = useSelector(selectSyncedBookId())
+  const ref = useRef(null)
+  const nextBookId = useSelector(selectNextBookId())
+
+  useEffect(() => ref.current.focus(), [nextBookId])
 
   return (
     <div className='book-case selected' ref={ ref }>
@@ -80,8 +84,8 @@ const BooksListSelectedItem = (props) => {
   );
 }
 
-BooksListSelectedItem.propTypes = {
+BookSelected.propTypes = {
   id: PropTypes.number.isRequired
 };
 
-export default BooksListSelectedItem
+export default BookSelected

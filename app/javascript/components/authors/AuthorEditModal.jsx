@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
-import { selectCurrentAuthorDetails } from 'store/selectors'
+import { selectCurrentAuthorDetails } from 'store/metadata/selectors'
+import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
-import { loadAuthorDetails, loadAuthor } from 'store/actions'
 import AuthorForm from 'components/authors/AuthorForm'
 import { useUrlStore } from 'store/urlStore'
 

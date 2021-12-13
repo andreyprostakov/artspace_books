@@ -1,32 +1,30 @@
 import {
-  cleanBooksList,
-  cleanYearsList,
   fetchAllTags,
   fetchAuthors,
-  fetchTagBooks,
-  fetchYears,
-  pickCurrentBookFromLatestYear,
-  reloadBook,
-} from 'store/actions'
+} from 'store/metadata/actions'
+
 import {
   setCurrentBookId,
 } from 'store/axis/actions'
 
-export const setupStoreForTagPage = (tagId, currentBookId = null) => async (dispatch, getState) => {
+import {
+  cleanBooksList,
+  fetchTagBooks,
+  fetchYears,
+  pickCurrentBookFromLatestYear,
+  setupBooksListSelection,
+} from 'widgets/booksList/actions'
+
+export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, getState) => {
   Promise.all([
-    dispatch(cleanYearsList()),
     dispatch(cleanBooksList()),
 
     dispatch(fetchAllTags()),
     dispatch(fetchYears({ tagId })),
     dispatch(fetchAuthors()),
-  ]).then(() => {
+  ]).then(() =>
     dispatch(fetchTagBooks(tagId))
-    if (currentBookId) {
-      dispatch(reloadBook(currentBookId))
-      dispatch(setCurrentBookId(currentBookId))
-    } else {
-      dispatch(pickCurrentBookFromLatestYear())
-    }
-  })
+  ).then(() =>
+    dispatch(setupBooksListSelection(bookId))
+  )
 }

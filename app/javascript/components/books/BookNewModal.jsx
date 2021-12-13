@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
-import { selectCurrentAuthor } from 'store/selectors'
-import { reloadBook } from 'store/actions'
+import { selectCurrentAuthor } from 'store/metadata/selectors'
+import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
+import { reloadBook } from 'widgets/booksList/actions'
 import BookForm from 'components/books/BookForm'
 import { useUrlStore } from 'store/urlStore'
 
@@ -16,6 +17,8 @@ const BookNewModal = () => {
 
   const handleSuccess = (data) => {
     dispatch(reloadBook(data.id))
+    dispatch(loadAuthorDetails(author.id))
+    dispatch(loadAuthor(author.id))
     closeModal()
   }
 

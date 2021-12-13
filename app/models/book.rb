@@ -38,7 +38,7 @@ class Book < ApplicationRecord
   after_commit :update_ranking
 
   scope :with_tags, lambda { |tag_ids|
-    includes(:tag_connections).references(:tag_connections).where('tag_connections.tag_id IN (?)', Array(tag_ids))
+    includes(:tags).references(:tags).where('tags.id IN (?)', Array(tag_ids))
   }
 
   def tag_ids

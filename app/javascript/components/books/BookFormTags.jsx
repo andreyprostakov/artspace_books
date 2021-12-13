@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 import 'react-tagsinput/react-tagsinput.css'
 
-import { selectTags } from 'store/selectors'
+import { selectTags } from 'store/metadata/selectors'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import TagBadge from 'components/TagBadge'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'

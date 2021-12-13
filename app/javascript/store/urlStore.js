@@ -72,11 +72,11 @@ export const useUrlStore = (calculatePageState = null) => {
     buildPath,
     showModal,
 
-    gotoBooks: () => goto(paths.booksPath()),
-    gotoAuthorBooks: (id) => goto(paths.authorBooksPath(id)),
-    gotoAuthors: () => goto(paths.authorsPath()),
-    gotoTagBooks: (id) => goto(paths.tagBooksPath(id)),
-    gotoTags: () => goto(paths.tagsPath()),
+    gotoBooks: (options = {}) => goto(paths.booksPath(options)),
+    gotoAuthorBooks: (id, options = {}) => goto(paths.authorBooksPath(id, options)),
+    gotoAuthors: (options = {}) => goto(paths.authorsPath(options)),
+    gotoTagBooks: (id, options = {}) => goto(paths.tagBooksPath(id, options)),
+    gotoTags: (options = {}) => goto(paths.tagsPath(options)),
 
     openNewAuthorModal: () => showModal(NEW_AUTHOR_HASH),
     openEditAuthorModal: () => showModal(EDIT_AUTHOR_HASH),

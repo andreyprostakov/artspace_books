@@ -1,23 +1,28 @@
 import {
-  cleanBooksList,
-  cleanYearsList,
   fetchAllTags,
   fetchAuthors,
+  loadAuthorDetails,
+} from 'store/metadata/actions'
+
+import {
+  selectBook,
+  selectBooks,
+} from 'widgets/booksList/selectors'
+import {
+  cleanBooksList,
   fetchAuthorBooks,
   fetchAuthorYears,
-  loadAuthorDetails,
   pickCurrentBookFromLatestYear,
-  reloadBook,
-} from 'store/actions'
+  setupBooksListSelection,
+} from 'widgets/booksList/actions'
+
 import {
   setCurrentAuthorId,
   setCurrentBookId,
 } from 'store/axis/actions'
-import { selectBooks } from 'store/selectors'
 
-export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async (dispatch, getState) => {
+export const setupStoreForAuthorPage = (authorId, bookId = null) => async (dispatch, getState) => {
   Promise.all([
-    dispatch(cleanYearsList()),
     dispatch(cleanBooksList()),
 
     dispatch(fetchAllTags()),
@@ -25,14 +30,9 @@ export const setupStoreForAuthorPage = (authorId, currentBookId = null) => async
     dispatch(loadAuthorDetails(authorId)),
     dispatch(fetchAuthorYears(authorId)),
     dispatch(setCurrentAuthorId(authorId)),
-  ]).then(() => {
+  ]).then(() =>
     dispatch(fetchAuthorBooks(authorId))
-    const authorBookIds = selectBooks()(getState()).filter(book => book.authorId == authorId).map(book => book.id)
-    if (currentBookId && authorBookIds.includes(currentBookId)) {
-      dispatch(reloadBook(currentBookId))
-      dispatch(setCurrentBookId(currentBookId))
-    } else {
-      dispatch(pickCurrentBookFromLatestYear())
-    }
-  })
+  ).then(() =>
+    dispatch(setupBooksListSelection(bookId))
+  )
 }
