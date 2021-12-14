@@ -18,7 +18,8 @@ class AuthorDetails {
       image_url: details.imageUrl,
       reference: details.reference,
       birth_year: details.birthYear,
-      death_year: details.deathYear
+      death_year: details.deathYear,
+      tag_names: details.tagNames,
     }
   }
 }

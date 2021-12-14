@@ -4,12 +4,11 @@ class BookDetailsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def show
-    Forms::BookForm.new(@book)
   end
 
   def create
     @book = Book.new
-    if Forms::BookForm.new(@book).update(book_params)
+    if form.update(book_params)
       render json: { id: @book.id }
     else
       render json: @book.errors, status: :unprocessable_entity
@@ -17,7 +16,7 @@ class BookDetailsController < ApplicationController
   end
 
   def update
-    if Forms::BookForm.new(@book).update(book_params)
+    if form.update(book_params)
       render json: {}
     else
       render json: @book.errors, status: :unprocessable_entity
@@ -28,6 +27,10 @@ class BookDetailsController < ApplicationController
 
   def set_book
     @book = Book.find(params[:book_id])
+  end
+
+  def form
+    Forms::BookForm.new(@book)
   end
 
   def book_params

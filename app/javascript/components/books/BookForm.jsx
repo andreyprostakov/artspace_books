@@ -7,9 +7,9 @@ import PropTypes from 'prop-types'
 import InputLine from 'components/FormInputLine'
 import BookFormCoverLine from 'components/books/BookFormCoverLine'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
-import BookFormTags from 'components/books/BookFormTags'
+import FormInputTags from 'components/FormInputTags'
 import { fetchAllTags } from 'store/metadata/actions'
-import { selectAuthor } from 'store/metadata/selectors'
+import { selectAuthor, selectTags } from 'store/metadata/selectors'
 import apiClient from 'serverApi/apiClient'
 
 class BookForm extends React.Component {
@@ -39,7 +39,6 @@ class BookForm extends React.Component {
     const { onSubmit, bookDetails, author, fetchAllTags } = this.props
     const { currentTags } = this.state
 
-    window.elements = event.target.elements
     const formData = pick(
       event.target.elements,
       'yearPublished',
@@ -59,9 +58,11 @@ class BookForm extends React.Component {
   }
 
   render() {
-    const { bookDetails, author } = this.props
+    const { bookDetails, author, tags } = this.props
     const { currentTags, currentTitle, currentOriginalTitle, errors } = this.state
     if (!author || isEmpty(bookDetails)) { return null }
+
+    const initialTags = bookDetails.new ? [{ name: 'Novel' }] : tags
 
     return (
       <Form id='book_form' className='book-form' onSubmit={ (e) => this.handleSubmit(e) }>
@@ -72,7 +73,7 @@ class BookForm extends React.Component {
         <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
         <BookFormCoverLine bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentOriginalTitle || currentTitle }/>
         <Row />
-        <BookFormTags bookDetails={ bookDetails } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
+        <FormInputTags initialTags={ initialTags } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }
                    onChange={ (e) => this.setState({ currentOriginalTitle: e.target.value }) }/>
       </Form>
@@ -86,9 +87,10 @@ BookForm.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const { authorId } = props.bookDetails
+  const { authorId, tagIds } = props.bookDetails
   return {
-    author: selectAuthor(authorId)(state)
+    author: selectAuthor(authorId)(state),
+    tags: selectTags(tagIds)(state),
   }
 }
 

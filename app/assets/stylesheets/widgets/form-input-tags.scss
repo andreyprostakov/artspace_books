@@ -1,0 +1,29 @@
+.form-tags-input {
+  font-size: 14px;
+
+  .tags-search-control {
+    margin-top: 5px;
+
+    .react-autosuggest__suggestions-list {
+      max-height: 100px;
+      overflow-y: scroll;
+      border-left: 1px solid #ced4da;
+      border-right: 1px solid #ced4da;
+      border-bottom: 1px solid #ced4da;
+      list-style-type: none;
+
+      li {
+        font-size: 12px;
+        cursor: pointer;
+
+        .suggestion.new-tag {
+          font-style: italic;
+        }
+
+        .suggestion.exact-match {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

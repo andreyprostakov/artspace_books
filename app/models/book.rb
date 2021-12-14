@@ -27,7 +27,6 @@ class Book < ApplicationRecord
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
   mount_base64_uploader :covers, BookCoverUploader
-  #serialize :covers, JSON
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true

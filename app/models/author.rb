@@ -14,6 +14,8 @@
 #
 class Author < ApplicationRecord
   has_many :books, class_name: 'Book', dependent: :restrict_with_error
+  has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
+  has_many :tags, through: :tag_connections, class_name: 'Tag'
 
   before_validation :strip_name
 
@@ -22,7 +24,7 @@ class Author < ApplicationRecord
   validates :death_year, numericality: { only_integer: true, allow_nil: true }
 
   def tag_ids
-    TagConnection.where(entity_type: Book.name, entity_id: book_ids).pluck(:tag_id).uniq
+    tag_connections.map(&:tag_id)
   end
 
   def popularity

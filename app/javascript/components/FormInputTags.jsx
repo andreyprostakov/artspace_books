@@ -6,27 +6,20 @@ import { useSelector } from 'react-redux'
 
 import 'react-tagsinput/react-tagsinput.css'
 
-import { selectTags } from 'store/metadata/selectors'
 import GoogleIcon from 'components/icons/GoogleIcon'
 import TagBadge from 'components/TagBadge'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'
 import TagAutocompleteInput from 'components/TagAutocompleteInput'
 
-const BookFormTags = (props) => {
-  const { bookDetails, onChange } = props
-  const [localTags, setLocalTags] = useState(
-    bookDetails.new ? [{ name: 'Novel' }] : useSelector(selectTags(bookDetails.tagIds))
-  )
+const FormInputTags = (props) => {
+  const { initialTags, onChange } = props
+  const [localTags, setLocalTags] = useState(initialTags || [])
 
-  useEffect(() => {
-    onChange(localTags)
-  }, [localTags])
+  useEffect(() => onChange(localTags), [localTags])
 
   return (
     <Form.Group as={ Row } className='book-form-tags'>
-      <Form.Label column sm={ 3 }>
-        Tags
-      </Form.Label>
+      <Form.Label column sm={ 3 }>Tags</Form.Label>
 
       <Col sm={ 9 }>
         <TagsInput value={ localTags }
@@ -34,14 +27,14 @@ const BookFormTags = (props) => {
                    renderInput={ renderInput }
                    onChange={ (tags) => setLocalTags(tags) }
                    tagDisplayProp='name'
-                   className='book-tags-input'/>
+                   className='form-tags-input'/>
       </Col>
     </Form.Group>
   )
 }
 
-BookFormTags.propTypes = {
-  bookDetails: PropTypes.object.isRequired,
+FormInputTags.propTypes = {
+  initialTags: PropTypes.array,
   onChange: PropTypes.func
 }
 
@@ -69,4 +62,4 @@ const renderInput = ({ addTag, ...props }) => {
   )
 }
 
-export default BookFormTags
+export default FormInputTags

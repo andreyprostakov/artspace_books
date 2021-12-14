@@ -7,8 +7,8 @@ class AuthorDetailsController < ApplicationController
   end
 
   def create
-    @author = Author.new(author_params)
-    if @author.save
+    @author = Author.new
+    if form.update(author_params)
       render json: { id: @author.id }
     else
       render json: @author.errors, status: :unprocessable_entity
@@ -16,7 +16,7 @@ class AuthorDetailsController < ApplicationController
   end
 
   def update
-    if @author.update(author_params)
+    if form.update(author_params)
       render json: {}
     else
       render json: @author.errors, status: :unprocessable_entity
@@ -29,7 +29,17 @@ class AuthorDetailsController < ApplicationController
     @author = Author.find(params[:author_id])
   end
 
+  def form
+    Forms::AuthorForm.new(@author)
+  end
+
   def author_params
-    params.fetch(:author, {}).permit(:fullname, :image_url, :reference, :birth_year, :death_year)
+    params.fetch(:author, {})
+          .permit(:fullname,
+                  :image_url,
+                  :reference,
+                  :birth_year,
+                  :death_year,
+                  tag_names: [])
   end
 end
