@@ -48,7 +48,8 @@ const BookSelected = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl }/>
 
       <div className='book-details'>
-        <a href={ paths.authorBooksPath(author.id) } className='book-author' title={ author.fullname } onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id) } }>
+        <a href={ paths.authorBooksPath(author.id, { bookId: id }) } className='book-author' title={ author.fullname }
+           onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id, { bookId: id }) } }>
           { author.fullname }
         </a>
 

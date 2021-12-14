@@ -1,26 +1,32 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { FormControl, NavDropdown } from 'react-bootstrap'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Form, FormControl, NavDropdown } from 'react-bootstrap'
 
 import { selectAuthors } from 'store/metadata/selectors'
+import { selectAuthorsSearchKey } from 'widgets/navbar/selectors'
+import { setAuthorsSearchKey } from 'widgets/navbar/actions'
 import { useUrlStore } from 'store/urlStore'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
 
 const AuthorsNavList = () => {
   const allAuthors = useSelector(selectAuthors())
-  const [query, setQuery] = useState('')
+  const query = useSelector(selectAuthorsSearchKey())
   const [{}, { gotoAuthorBooks }, paths] = useUrlStore()
+  const dispatch = useDispatch()
+  const searchRef = useRef()
 
   const authors = sortByString(
     filterByString(allAuthors, 'fullname', query),
     'fullname'
   )
 
+  useEffect(() => searchRef.current.focus(), [query])
+
   return (
     <div className='authors-nav'>
       <div className='authors-nav-filter'>
-        <FormControl type='text' autoComplete='off' onChange={ (e) => setQuery(e.target.value) }/>
+        <Form.Control type='text' autoComplete='off' value={ query } onChange={ (e) => dispatch(setAuthorsSearchKey(e.target.value)) } ref={ searchRef }/>
       </div>
       <div className='authors-nav-list'>
         { authors.map(author =>

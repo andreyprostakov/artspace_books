@@ -20,7 +20,7 @@ const TagsNavList = () => {
   return (
     <div className='tags-nav'>
       <div className='tags-nav-filter'>
-        <FormControl type='text' autoComplete='off' onChange={ (e) => setQuery(e.target.value) }/>
+        <FormControl type='text' autoComplete='off' onChange={ (e) => setQuery(e.target.value) } autoFocus/>
       </div>
       <div className='tags-nav-list'>
         { tags.map(tag =>

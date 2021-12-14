@@ -4,6 +4,7 @@ import { Col } from 'react-bootstrap'
 
 import { setupStoreForAuthorPage } from 'pages/authorPage/actions'
 import { selectNextBookId } from 'widgets/booksList/selectors'
+import { setNextBookId } from 'widgets/booksList/actions'
 import { setCurrentBookId } from 'store/axis/actions'
 import Layout from 'pages/Layout'
 import AuthorCard from 'widgets/authorCard/AuthorCard'
@@ -17,7 +18,12 @@ const AuthorPage = () => {
 
   useEffect(() => dispatch(setCurrentBookId(bookId)), [bookId])
   useEffect(() => dispatch(setupStoreForAuthorPage(authorId, bookId)), [authorId])
-  useEffect(() => nextBookId && addBookWidget(nextBookId), [nextBookId])
+  useEffect(() => {
+    if (!nextBookId) { return }
+
+    addBookWidget(nextBookId)
+    dispatch(setNextBookId(null))
+  }, [nextBookId])
 
   return (
     <Layout>

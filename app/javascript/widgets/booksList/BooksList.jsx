@@ -16,6 +16,7 @@ import {
   fetchBooksForYears,
   jumpToFirstYear,
   jumpToLastYear,
+  jumpToLatestYear,
   setSeed,
   shiftSelection,
   shiftYear,
@@ -54,6 +55,8 @@ const BooksList = () => {
   }, [currentAuthorId, currentBookId, currentBook?.id])
 
   useEffect(() => ref.current.focus(), [])
+
+  useEffect(() => !currentBookId && dispatch(jumpToLatestYear()), [currentBookId])
 
   useEffect(() => dispatch(fetchBooksForYears(yearsToDisplay)), [currentBook])
 

@@ -4,14 +4,9 @@ import {
 } from 'store/metadata/actions'
 
 import {
-  setCurrentBookId,
-} from 'store/axis/actions'
-
-import {
   cleanBooksList,
   fetchTagBooks,
   fetchYears,
-  pickCurrentBookFromLatestYear,
   setupBooksListSelection,
 } from 'widgets/booksList/actions'
 

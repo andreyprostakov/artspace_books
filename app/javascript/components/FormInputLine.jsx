@@ -6,15 +6,16 @@ const FormInputLine = (props) => {
   const { controlId, label, value, autoFocus, ...other } = props
   const errors = props.errors || []
   const ref = useRef(null)
+  const withLabel = !!label
 
   useEffect(() => autoFocus && ref.current.focus(), [])
 
   return (
     <Form.Group as={ Row } controlId={ controlId }>
-      <Form.Label column sm={ 3 }>
-        { label }
-      </Form.Label>
-      <Col sm={ 9 }>
+      { withLabel &&
+        <Form.Label column sm={ 3 }>{ label }</Form.Label>
+      }
+      <Col sm={ withLabel ? 9 : 12 }>
         <Form.Control type='text' defaultValue={ value } isInvalid={ errors.length > 0 } ref={ ref }
           { ...{ ...other } }
           autoComplete='off'
@@ -29,7 +30,7 @@ const FormInputLine = (props) => {
 
 FormInputLine.propTypes = {
   controlId: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   value: PropTypes.any,
   errors: PropTypes.array,
   onChange: PropTypes.func

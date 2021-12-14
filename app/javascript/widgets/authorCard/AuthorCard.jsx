@@ -37,7 +37,9 @@ const AuthorCard = (props) => {
 
   return (
     <Card className='author-card'>
-      <CloseIcon onClick={ () => onClose && onClose() }/>
+      { onClose &&
+        <CloseIcon onClick={ () => onClose() }/>
+      }
 
       { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
 

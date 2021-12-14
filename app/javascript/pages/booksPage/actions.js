@@ -1,6 +1,5 @@
 import {
   setCurrentAuthorId,
-  setCurrentBookId,
 } from 'store/axis/actions'
 
 import {
@@ -11,7 +10,7 @@ import {
 import {
   cleanBooksList,
   fetchYears,
-  pickCurrentBookFromLatestYear,
+  reloadBook,
   setupBooksListSelection,
 } from 'widgets/booksList/actions'
 
@@ -24,6 +23,6 @@ export const setupStoreForBooksPage = (bookId = null) => async (dispatch, getSta
     dispatch(fetchYears()),
     dispatch(fetchAuthors()),
   ]).then(() =>
-    dispatch(setupBooksListSelection(bookId))
+    bookId && dispatch(reloadBook(bookId))
   )
 }
