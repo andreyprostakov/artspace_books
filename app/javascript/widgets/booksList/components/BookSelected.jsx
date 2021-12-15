@@ -3,16 +3,11 @@ import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { Container, Row } from 'react-bootstrap'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
-
-import EditIcon from 'components/icons/EditIcon'
-import GoodreadsIcon from 'components/icons/GoodreadsIcon'
-import GoogleIcon from 'components/icons/GoogleIcon'
-import RefreshIcon from 'components/icons/RefreshIcon'
+import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthor, selectTags } from 'store/metadata/selectors'
@@ -20,9 +15,7 @@ import {
   selectBook,
   selectBookDefaultImageUrl,
   selectNextBookId,
-  selectSyncedBookId,
 } from 'widgets/booksList/selectors'
-import { syncBookStats } from 'widgets/booksList/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const BookSelected = (props) => {
@@ -34,10 +27,9 @@ const BookSelected = (props) => {
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
-  const [{}, { gotoAuthorBooks, openEditBookModal }, paths] = useUrlStore()
+  const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
   const tags = useSelector(selectTags(book.tagIds))
   const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
-  const syncedBookId = useSelector(selectSyncedBookId())
   const ref = useRef(null)
   const nextBookId = useSelector(selectNextBookId())
 
@@ -48,7 +40,7 @@ const BookSelected = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl }/>
 
       <div className='book-details'>
-        <a href={ paths.authorBooksPath(author.id, { bookId: id }) } className='book-author' title={ author.fullname }
+        <a href={ authorBooksPath(author.id, { bookId: id }) } className='book-author' title={ author.fullname }
            onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id, { bookId: id }) } }>
           { author.fullname }
         </a>
@@ -72,14 +64,7 @@ const BookSelected = (props) => {
           }
         </div>
 
-        <div className='book-actions'>
-          <EditIcon onClick={ (e) => openEditBookModal() }/>
-          <GoodreadsIcon url={ book.goodreadsUrl }/>
-          { book.goodreadsUrl &&
-            <RefreshIcon onClick={ (e) => dispatch(syncBookStats(book.id)) } className={ { disabled: !!syncedBookId } }/>
-          }
-          <GoogleIcon queryParts={ [author.fullname, book.title] }/>
-        </div>
+        <BookToolbar book={ book }/>
       </div>
     </div>
   );
