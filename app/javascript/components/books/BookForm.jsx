@@ -5,9 +5,9 @@ import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
-import BookFormCoverLine from 'components/books/BookFormCoverLine'
-import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
+import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
+import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { fetchAllTags } from 'store/metadata/actions'
 import { selectAuthor, selectTags } from 'store/metadata/selectors'
 import apiClient from 'serverApi/apiClient'
@@ -71,7 +71,11 @@ class BookForm extends React.Component {
         <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                    onChange={ (e) => this.setState({ currentTitle: e.target.value }) }/>
         <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
-        <BookFormCoverLine bookDetails={ bookDetails } errors={ errors.image_url } author={ author } currentTitle={ currentOriginalTitle || currentTitle }/>
+        <FormInputImage label='Cover'
+                        imageUrl={ bookDetails.imageUrl }
+                        errors={ errors.image_url }
+                        searchPrefix={ `book cover ${ author.fullname }` }
+                        searchKey={ currentOriginalTitle || currentTitle }/>
         <Row />
         <FormInputTags initialTags={ initialTags } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
         <InputLine controlId='originalTitle' label='Title (original)' value={ bookDetails.originalTitle } errors={ errors.original_title }

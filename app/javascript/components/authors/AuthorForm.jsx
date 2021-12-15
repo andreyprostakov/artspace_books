@@ -5,6 +5,7 @@ import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import InputLine from 'components/FormInputLine'
+import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
 import apiClient from 'serverApi/apiClient'
 
@@ -49,7 +50,11 @@ class AuthorForm extends React.Component {
     return (
       <Form id={ id } onSubmit={ (e) => this.handleSubmit(e) }>
         <InputLine controlId='fullname' label='Name' value={ authorDetails.fullname } errors={ errors.fullname } autoFocus/>
-        <InputLine controlId='imageUrl' label='Photo URL' value={ authorDetails.imageUrl } errors={ errors.image_url }/>
+        <FormInputImage label='Photo'
+                        imageUrl={ authorDetails.imageUrl }
+                        errors={ errors.image_url }
+                        searchPrefix='author photo'
+                        searchKey={ authorDetails.fullname }/>
         <InputLine controlId='reference' label='WIKI URL' value={ authorDetails.reference } errors={ errors.reference }/>
         <Row />
         <InputLine controlId='birthYear' label='Year of birth' value={ authorDetails.birthYear } errors={ errors.birth_year }/>

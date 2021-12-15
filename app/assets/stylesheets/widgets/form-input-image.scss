@@ -1,0 +1,25 @@
+.form-input-image {
+  .search-controls {
+    .icon-google {
+      padding: 8px 10px;
+      vertical-align: -webkit-baseline-middle;
+      border-radius: 10px;
+      box-shadow: 2px 2px 4px #ced4da;
+      color: #ea4335;
+    }
+
+    .icon-relation {
+      font-size: 18px;
+      position: absolute;
+      right: -5px;
+      color: #ced4da;
+      top: 6px;
+    }
+  }
+
+  .file-controls {
+    input {
+      padding: 4px 0;
+    }
+  }
+}
