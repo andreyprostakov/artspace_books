@@ -137,9 +137,13 @@
     .book-toolbar {
       display: block;
       position: absolute;
-      bottom: 8px;
+      bottom: 40px;
       left: 0;
       right: 0;
+
+      &:nth-child(2) {
+        bottom: 8px;
+      }
 
       a, a:visited {
         padding: 4px 8px;

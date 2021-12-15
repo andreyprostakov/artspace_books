@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookmark, faBookReader, faEdit, faSync } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faPen, faSync, faTrash, faUserNinja } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark as faBookmarkEmpty, faSquare as faSquareEmpty, faUser } from '@fortawesome/free-regular-svg-icons'
 import { faGoodreadsG } from '@fortawesome/free-brands-svg-icons'
 import PropTypes from 'prop-types'
 
@@ -18,7 +19,7 @@ const BookToolbar = (props) => {
   const [{}, { openEditBookModal }, { editBookModalPath }] = useUrlStore()
   const syncedBookId = useSelector(selectSyncedBookId())
   return (
-    <>
+    <div>
       <ButtonGroup className='book-toolbar'>
         { book.goodreadsUrl &&
           <Button variant='outline-info' title='See info...' href={ book.goodreadsUrl } target='_blank'>
@@ -26,18 +27,20 @@ const BookToolbar = (props) => {
           </Button>
         }
 
-        <Button variant='outline-warning' title='Edit info'
-                href={ editBookModalPath(book.id) }
-                onClick={ (e) => { e.preventDefault(); openEditBookModal() } }>
-          <FontAwesomeIcon icon={ faEdit }/>
-        </Button>
-
         <Button variant='outline-warning' title='Bookmark' href='#' onClick={ (e) => e.preventDefault() }>
-          <FontAwesomeIcon icon={ faBookmark }/>
+          <FontAwesomeIcon icon={ faBookmarkEmpty }/>
         </Button>
 
         <Button variant='outline-warning' title='Mark as read' href='#' onClick={ (e) => e.preventDefault() }>
-          <FontAwesomeIcon icon={ faBookReader }/>
+          <FontAwesomeIcon icon={ faUser }/>
+        </Button>
+      </ButtonGroup>
+
+      <ButtonGroup className='book-toolbar'>
+        <Button variant='outline-warning' title='Edit info'
+                href={ editBookModalPath(book.id) }
+                onClick={ (e) => { e.preventDefault(); openEditBookModal() } }>
+          <FontAwesomeIcon icon={ faPen }/>
         </Button>
 
         { book.goodreadsUrl &&
@@ -47,8 +50,16 @@ const BookToolbar = (props) => {
             <FontAwesomeIcon icon={ faSync }/>
           </Button>
         }
+
+        <Button variant='outline-warning' title='Select' href='#' onClick={ (e) => e.preventDefault() }>
+          <FontAwesomeIcon icon={ faSquareEmpty }/>
+        </Button>
+
+        <Button variant='outline-danger' title='Delete' href='#' onClick={ (e) => e.preventDefault() }>
+          <FontAwesomeIcon icon={ faTrash }/>
+        </Button>
       </ButtonGroup>
-    </>
+    </div>
   )
 }
 

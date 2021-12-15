@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faBookmark, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faBookmark, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faBookmark as faBookmarkEmpty } from '@fortawesome/free-regular-svg-icons'
 import { faWikipediaW } from '@fortawesome/free-brands-svg-icons'
 import PropTypes from 'prop-types'
 
@@ -34,11 +35,15 @@ const Toolbar = (props) => {
         <Button variant='outline-warning' title='Edit info'
                 href={ editAuthorModalPath(author.id) }
                 onClick={ (e) => { e.preventDefault(); openEditAuthorModal() } }>
-          <FontAwesomeIcon icon={ faEdit }/>
+          <FontAwesomeIcon icon={ faPen }/>
         </Button>
 
         <Button variant='outline-warning' title='Bookmark' href='#' onClick={ (e) => e.preventDefault() }>
-          <FontAwesomeIcon icon={ faBookmark }/>
+          <FontAwesomeIcon icon={ faBookmarkEmpty }/>
+        </Button>
+
+        <Button variant='outline-danger' title='Delete' href='#' onClick={ (e) => e.preventDefault() }>
+          <FontAwesomeIcon icon={ faTrash }/>
         </Button>
 
         <Button variant='outline-warning' title='Add a book'
