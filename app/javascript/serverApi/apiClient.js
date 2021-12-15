@@ -1,4 +1,4 @@
-import { isArray } from 'lodash'
+import { isArray, pull } from 'lodash'
 import { objectToParams } from 'utils/objectToParams'
 import Author from 'serverApi/Author'
 import AuthorDetails from 'serverApi/AuthorDetails'
@@ -98,6 +98,30 @@ class ApiClient {
       data: { book: body },
       //contentType: false, cache: false, processData: false
     })
+  }
+
+  markBookAsRead(id, bookTags) {
+    var tagNames = bookTags.map(tag => tag.name)
+    tagNames.push('ReadByA')
+    return this.putBookDetails(id, { tagNames })
+  }
+
+  unmarkBookAsRead(id, bookTags) {
+    var tagNames = bookTags.map(tag => tag.name)
+    pull(tagNames, 'ReadByA')
+    return this.putBookDetails(id, { tagNames })
+  }
+
+  markBookAsBookmarked(id, bookTags) {
+    var tagNames = bookTags.map(tag => tag.name)
+    tagNames.push('BookmarkedByA')
+    return this.putBookDetails(id, { tagNames })
+  }
+
+  unmarkBookAsBookmarked(id, bookTags) {
+    var tagNames = bookTags.map(tag => tag.name)
+    pull(tagNames, 'BookmarkedByA')
+    return this.putBookDetails(id, { tagNames })
   }
 
   postBookDetails(details) {
