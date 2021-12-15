@@ -13,6 +13,18 @@ export const selectAllTags = () => state => Object.values(state.metadata.tagsInd
 
 export const selectPageIsLoading = () => state => state.metadata.pageIsLoading
 
+export const selectTag  = (id) => state => state.metadata.tagsIndexed[id]
+
+export const selectTagBookmark = () => state => 'BookmarkedByA'
+
+export const selectTagRead = () => state => 'ReadByA'
+
+export const selectTagNames = (ids) => state => selectTags(ids)(state).map(tag => tag.name)
+
 export const selectTags = (ids) => state => Object.values(pick(state.metadata.tagsIndexed, ids))
 
-export const selectTag  = (id) => state => state.metadata.tagsIndexed[id]
+export const selectVisibleTags = (tags) => state => {
+  const tagBookmark = selectTagBookmark()(state)
+  const tagRead = selectTagRead()(state)
+  return tags.filter((tag) => ![tagBookmark, tagRead].includes(tag.name))
+}

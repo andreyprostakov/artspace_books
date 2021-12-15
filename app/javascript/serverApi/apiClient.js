@@ -100,30 +100,6 @@ class ApiClient {
     })
   }
 
-  markBookAsRead(id, bookTags) {
-    var tagNames = bookTags.map(tag => tag.name)
-    tagNames.push('ReadByA')
-    return this.putBookDetails(id, { tagNames })
-  }
-
-  unmarkBookAsRead(id, bookTags) {
-    var tagNames = bookTags.map(tag => tag.name)
-    pull(tagNames, 'ReadByA')
-    return this.putBookDetails(id, { tagNames })
-  }
-
-  markBookAsBookmarked(id, bookTags) {
-    var tagNames = bookTags.map(tag => tag.name)
-    tagNames.push('BookmarkedByA')
-    return this.putBookDetails(id, { tagNames })
-  }
-
-  unmarkBookAsBookmarked(id, bookTags) {
-    var tagNames = bookTags.map(tag => tag.name)
-    pull(tagNames, 'BookmarkedByA')
-    return this.putBookDetails(id, { tagNames })
-  }
-
   postBookDetails(details) {
     const body = BookDetails.objectToServerData(details)
     return $.ajax({

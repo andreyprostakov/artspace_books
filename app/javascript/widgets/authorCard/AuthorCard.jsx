@@ -11,7 +11,7 @@ import PopularityBadge from 'components/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
-import { selectCurrentAuthorDetails, selectTags } from 'store/metadata/selectors'
+import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import { setupStoreForAuthorCard } from 'widgets/authorCard/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -22,7 +22,8 @@ const AuthorCard = (props) => {
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
   const tags = useSelector(selectTags(authorDetails.tagIds))
-  const sortedTags = sortBy(tags, tag => tag.connectionsCount)
+  const visibleTags = useSelector(selectVisibleTags(tags))
+  const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
 
   useEffect(() => {
     if (!authorId) { return }

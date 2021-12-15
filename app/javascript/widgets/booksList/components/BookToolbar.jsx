@@ -10,29 +10,29 @@ import PropTypes from 'prop-types'
 import {
   selectSyncedBookId,
 } from 'widgets/booksList/selectors'
-import { selectTags } from 'store/metadata/selectors'
-import { reloadBook, syncBookStats } from 'widgets/booksList/actions'
+import {
+  selectTagBookmark,
+  selectTagRead,
+  selectTagNames,
+} from 'store/metadata/selectors'
+import {
+  addTagToBook,
+  removeTagFromBook,
+  syncBookStats,
+} from 'widgets/booksList/actions'
 import { useUrlStore } from 'store/urlStore'
-import apiClient from 'serverApi/apiClient'
 
 const BookToolbar = (props) => {
   const { book } = props
   const dispatch = useDispatch()
   const [{}, { openEditBookModal }, { editBookModalPath }] = useUrlStore()
   const syncedBookId = useSelector(selectSyncedBookId())
-  const tags = useSelector(selectTags(book.tagIds))
+  const tagNames = useSelector(selectTagNames(book.tagIds))
 
-  const tagNames = tags.map(tag => tag.name)
-  const isRead = tagNames.includes('ReadByA')
-  const isBookmarked = tagNames.includes('BookmarkedByA')
-
-  const setRead = () => apiClient.markBookAsRead(book.id, tags).then(() => dispatch(reloadBook(book.id)))
-
-  const resetRead = () => apiClient.unmarkBookAsRead(book.id, tags).then(() => dispatch(reloadBook(book.id)))
-
-  const setBookmarked = () => apiClient.markBookAsBookmarked(book.id, tags).then(() => dispatch(reloadBook(book.id)))
-
-  const resetBookmarked = () => apiClient.unmarkBookAsBookmarked(book.id, tags).then(() => dispatch(reloadBook(book.id)))
+  const tagBookmark = useSelector(selectTagBookmark())
+  const isBookmarked = tagNames.includes(tagBookmark)
+  const tagRead = useSelector(selectTagRead())
+  const isRead = tagNames.includes(tagRead)
 
   return (
     <div>
@@ -44,21 +44,25 @@ const BookToolbar = (props) => {
         }
 
         { isBookmarked ?
-          <Button variant='outline-warning' title='Remove bookmark' href='#' onClick={ (e) => resetBookmarked() }>
+          <Button variant='outline-warning' title='Remove bookmark' href='#'
+                  onClick={ () => dispatch(removeTagFromBook(book.id, tagBookmark)) }>
             <FontAwesomeIcon icon={ faBookmark }/>
           </Button>
           :
-          <Button variant='outline-warning' title='Bookmark' href='#' onClick={ (e) => setBookmarked() }>
+          <Button variant='outline-warning' title='Bookmark' href='#'
+                  onClick={ () => dispatch(addTagToBook(book.id, tagBookmark)) }>
             <FontAwesomeIcon icon={ faBookmarkEmpty }/>
           </Button>
         }
 
         { isRead ?
-            <Button variant='outline-warning' title='Mark as not read' href='#' onClick={ (e) => resetRead() }>
+            <Button variant='outline-warning' title='Mark as not read' href='#'
+                    onClick={ () => dispatch(removeTagFromBook(book.id, tagRead)) }>
               <FontAwesomeIcon icon={ faUserNinja }/>
             </Button>
           :
-            <Button variant='outline-warning' title='Mark as read' href='#' onClick={ (e) => setRead() }>
+            <Button variant='outline-warning' title='Mark as read' href='#'
+                    onClick={ () => dispatch(addTagToBook(book.id, tagRead)) }>
               <FontAwesomeIcon icon={ faUser }/>
             </Button>
         }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faBookmark, faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -6,6 +7,8 @@ import { faBookmark as faBookmarkEmpty } from '@fortawesome/free-regular-svg-ico
 import { faWikipediaW } from '@fortawesome/free-brands-svg-icons'
 import PropTypes from 'prop-types'
 
+import { selectTagBookmark, selectTagNames } from 'store/metadata/selectors'
+import { markAuthorAsBookmarked, unmarkAuthorAsBookmarked } from 'widgets/authorCard/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const Toolbar = (props) => {
@@ -13,6 +16,12 @@ const Toolbar = (props) => {
   const [{},
          { gotoAuthorBooks, openEditAuthorModal, openNewBookModal },
          { editAuthorModalPath, authorBooksPath, newBookModalPath }] = useUrlStore()
+
+  const dispatch = useDispatch()
+  const tagNames = useSelector(selectTagNames(author.tagIds))
+  const tagBookmark = useSelector(selectTagBookmark())
+  const isBookmarked = tagNames.includes(tagBookmark)
+
   return (
     <>
       <ButtonGroup className='author-toolbar'>
@@ -38,9 +47,17 @@ const Toolbar = (props) => {
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 
-        <Button variant='outline-warning' title='Bookmark' href='#' onClick={ (e) => e.preventDefault() }>
-          <FontAwesomeIcon icon={ faBookmarkEmpty }/>
-        </Button>
+        { isBookmarked ?
+          <Button variant='outline-warning' title='Remove bookmark' href='#'
+                  onClick={ () => dispatch(unmarkAuthorAsBookmarked(author.id, author.tagIds)) }>
+            <FontAwesomeIcon icon={ faBookmark }/>
+          </Button>
+          :
+          <Button variant='outline-warning' title='Bookmark' href='#'
+                  onClick={ () => dispatch(markAuthorAsBookmarked(author.id, author.tagIds)) }>
+            <FontAwesomeIcon icon={ faBookmarkEmpty }/>
+          </Button>
+        }
 
         <Button variant='outline-danger' title='Delete' href='#' onClick={ (e) => e.preventDefault() }>
           <FontAwesomeIcon icon={ faTrash }/>

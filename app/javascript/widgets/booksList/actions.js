@@ -1,4 +1,4 @@
-import { clamp, first, last, max, min } from 'lodash'
+import { clamp, first, last, max, min, pull } from 'lodash'
 import { slice } from 'widgets/booksList/slice'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import apiClient from 'serverApi/apiClient'
@@ -10,6 +10,10 @@ import {
 import {
   setCurrentBookId,
 } from 'store/axis/actions'
+
+import {
+  selectTagNames,
+} from 'store/metadata/selectors'
 
 import {
   selectBook,
@@ -174,6 +178,27 @@ const reloadBookWithSync = (id) => async (dispatch, getState) => {
   const book = await apiClient.syncBookStats(id)
   dispatch(upsertBook(book))
   dispatch(showBook(id))
+}
+
+export const addTagToBook = (id, tagName) => async (dispatch, getState) => {
+  const state = getState()
+  const book = selectBook(id)(state)
+  var tagNames = selectTagNames(book.tagIds)(state)
+  tagNames.push(tagName)
+  apiClient.putBookDetails(id, { tagNames }).then(() =>
+    dispatch(reloadBook(id))
+  )
+}
+
+export const removeTagFromBook = (id, tagName) => async (dispatch, getState) => {
+  const state = getState()
+  const book = selectBook(id)(state)
+  var tagNames = selectTagNames(book.tagIds)(state)
+  pull(tagNames, tagName)
+  tagNames.push('')
+  apiClient.putBookDetails(id, { tagNames }).then(() =>
+    dispatch(reloadBook(id))
+  )
 }
 
 // PRIVATES

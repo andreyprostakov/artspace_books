@@ -13,6 +13,7 @@ module Forms::Taggable
     end
 
     def map_names_onto_tags(names)
+      names = names.reject(&:blank?)
       existing_tags = Tag.where(name: names)
       non_existent_tags = (names - existing_tags.map(&:name)).map { |name| Tag.new(name: name) }
       existing_tags + non_existent_tags

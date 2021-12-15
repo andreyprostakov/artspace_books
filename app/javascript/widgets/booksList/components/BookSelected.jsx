@@ -10,7 +10,7 @@ import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectAuthor, selectTags } from 'store/metadata/selectors'
+import { selectAuthor, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import {
   selectBook,
   selectBookDefaultImageUrl,
@@ -29,7 +29,8 @@ const BookSelected = (props) => {
   const coverUrl = book.coverUrl || defaultCoverUrl
   const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
   const tags = useSelector(selectTags(book.tagIds))
-  const sortedTags = sortBy(tags, tag => -tag.connectionsCount)
+  const visibleTags = useSelector(selectVisibleTags(tags))
+  const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)
   const nextBookId = useSelector(selectNextBookId())
 
