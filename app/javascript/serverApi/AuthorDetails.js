@@ -8,7 +8,7 @@ class AuthorDetails {
       tagIds: data.tag_ids,
       booksCount: data.books_count,
       popularity: data.popularity,
-      rank: data.rank,
+      rank: data.rank
     }
   }
 

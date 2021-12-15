@@ -23,3 +23,7 @@ export const selectSortAttribute = (order) => state => {
 }
 
 export const selectLeftSidebarShown = () => state => !!selectCurrentAuthorId()(state)
+
+export const selectBatchMode = () => state => state.authorsBatch.batchMode
+
+export const selectBatchIds = () => state => state.authorsBatch.selectedIds

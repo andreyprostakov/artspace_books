@@ -1,9 +1,10 @@
 import { isEmpty, sortBy } from 'lodash'
 import React, { useEffect } from 'react'
-import { Button, ButtonGroup, Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import Toolbar from 'widgets/authorCard/Toolbar'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
@@ -16,9 +17,7 @@ import { useUrlStore } from 'store/urlStore'
 
 const AuthorCard = (props) => {
   const { authorId } = props
-  const [{},
-         { gotoAuthorBooks, openEditAuthorModal, openNewBookModal },
-         { editAuthorModalPath, authorBooksPath, authorsPath, newBookModalPath }] = useUrlStore()
+  const [{}, {}, { authorsPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
   const authorDetails = useSelector(selectCurrentAuthorDetails())
@@ -44,12 +43,7 @@ const AuthorCard = (props) => {
       { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
 
       <Card.Body>
-        <Card.Title>
-          { authorDetails.wikiUrl
-            ? <a href={ authorDetails.wikiUrl } target='_blank'>{ authorDetails.fullname }</a>
-            : authorDetails.fullname
-          }
-        </Card.Title>
+        <Card.Title>{ authorDetails.fullname }</Card.Title>
         <Card.Text className='author-card-text'>
           <span>Years: { renderLifetime(authorDetails, authorsPath) }</span>
           <br/>
@@ -64,11 +58,7 @@ const AuthorCard = (props) => {
           ) }
         </div>
 
-        <ButtonGroup>
-          <Button variant='outline-warning' href={ editAuthorModalPath(authorDetails.id) } onClick={ (e) => { e.preventDefault(); openEditAuthorModal() } }>Edit</Button>
-          <Button variant='outline-info' href={ authorBooksPath(authorDetails.id) } onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorDetails.id) } }>Books ({authorDetails.booksCount})</Button>
-          <Button variant='outline-info' href={ newBookModalPath() } onClick={ (e) => { e.preventDefault(); openNewBookModal() } }>+ Book</Button>
-        </ButtonGroup>
+        <Toolbar author={ authorDetails }/>
       </Card.Body>
     </Card>
   )
