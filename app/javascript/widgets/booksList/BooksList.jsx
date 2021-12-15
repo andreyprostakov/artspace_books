@@ -56,7 +56,9 @@ const BooksList = () => {
 
   useEffect(() => ref.current.focus(), [])
 
-  useEffect(() => !currentBookId && dispatch(jumpToLatestYear()), [currentBookId])
+  useEffect(() => {
+    !currentBookId && dispatch(jumpToLatestYear())
+  }, [currentBookId])
 
   useEffect(() => dispatch(fetchBooksForYears(yearsToDisplay)), [currentBook])
 

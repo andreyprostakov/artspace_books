@@ -5,6 +5,7 @@ import {
 import {
   fetchAllTags,
   fetchAuthors,
+  setPageIsLoading,
 } from 'store/metadata/actions'
 
 import {
@@ -15,6 +16,7 @@ import {
 } from 'widgets/booksList/actions'
 
 export const setupStoreForBooksPage = (bookId = null) => async (dispatch, getState) => {
+  dispatch(setPageIsLoading(true))
   Promise.all([
     dispatch(cleanBooksList()),
     dispatch(setCurrentAuthorId(null)),
@@ -24,5 +26,7 @@ export const setupStoreForBooksPage = (bookId = null) => async (dispatch, getSta
     dispatch(fetchAuthors()),
   ]).then(() =>
     bookId && dispatch(reloadBook(bookId))
+  ).then(() =>
+    dispatch(setPageIsLoading(false))
   )
 }

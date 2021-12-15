@@ -11,6 +11,8 @@ export const selectCurrentAuthor = () => state => selectAuthor(selectCurrentAuth
 
 export const selectAllTags = () => state => Object.values(state.metadata.tagsIndexed)
 
+export const selectPageIsLoading = () => state => state.metadata.pageIsLoading
+
 export const selectTags = (ids) => state => Object.values(pick(state.metadata.tagsIndexed, ids))
 
 export const selectTag  = (id) => state => state.metadata.tagsIndexed[id]

@@ -1,6 +1,7 @@
 import {
   fetchAllTags,
   fetchAuthors,
+  setPageIsLoading,
 } from 'store/metadata/actions'
 
 import {
@@ -11,6 +12,7 @@ import {
 } from 'widgets/booksList/actions'
 
 export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, getState) => {
+  dispatch(setPageIsLoading(true))
   Promise.all([
     dispatch(cleanBooksList()),
 
@@ -19,7 +21,8 @@ export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, g
     dispatch(fetchAuthors()),
   ]).then(() =>
     dispatch(fetchTagBooks(tagId))
-  ).then(() =>
+  ).then(() => {
+    dispatch(setPageIsLoading(false))
     dispatch(setupBooksListSelection(bookId))
-  )
+  })
 }

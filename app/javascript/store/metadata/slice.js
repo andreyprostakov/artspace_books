@@ -5,6 +5,7 @@ export const slice = createSlice({
   initialState: {
     authorDetailsCurrent: {},
     authorsIndexed: {},
+    pageIsLoading: false,
     tagsIndexed: {},
   },
   reducers: {
@@ -21,6 +22,10 @@ export const slice = createSlice({
 
     setCurrentAuthorDetails: (state, action) => {
       state.authorDetailsCurrent = action.payload
+    },
+
+    setPageIsLoading: (state, action) => {
+      state.pageIsLoading = !!action.payload
     },
 
     setTags: (state, action) => {

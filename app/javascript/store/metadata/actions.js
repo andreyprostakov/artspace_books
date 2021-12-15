@@ -7,6 +7,7 @@ export const {
   addAuthor,
   setAuthors,
   setCurrentAuthorDetails,
+  setPageIsLoading,
   setTags,
 } = slice.actions
 
