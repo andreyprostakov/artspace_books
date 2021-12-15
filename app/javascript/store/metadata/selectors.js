@@ -17,7 +17,11 @@ export const selectTag  = (id) => state => state.metadata.tagsIndexed[id]
 
 export const selectTagBookmark = () => state => 'BookmarkedByA'
 
+export const selectTagIdBookmark = () => state => selectAllTags()(state).find(tag => tag.name == 'BookmarkedByA')?.id
+
 export const selectTagRead = () => state => 'ReadByA'
+
+export const selectTagIdRead = () => state => selectAllTags()(state).find(tag => tag.name == 'ReadByA')?.id
 
 export const selectTagNames = (ids) => state => selectTags(ids)(state).map(tag => tag.name)
 

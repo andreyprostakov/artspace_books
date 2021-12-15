@@ -8,7 +8,7 @@ import {
   selectCurrentBookId,
 } from 'store/axis/selectors'
 import {
-  setCurrentBookId,
+  setCurrentBookId as setCurrentBookIdOriginal,
 } from 'store/axis/actions'
 
 import {
@@ -47,11 +47,17 @@ export const {
 
 export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
   const currentBook = bookId && selectBook(bookId)(getState())
+  console.log(`setupBooksListSelection: book present? #{!!currentBook}`)
   if (currentBook) {
     dispatch(showBook(bookId))
   } else {
     dispatch(jumpToLatestYear())
   }
+}
+
+export const setCurrentBookId = (bookId) => (dispatch, getState) => {
+  dispatch(setCurrentBookIdOriginal(bookId))
+  dispatch(setNextBookId(null))
 }
 
 export const showBook = (bookId) => (dispatch, getState) => {

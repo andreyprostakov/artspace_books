@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { setupStoreForBooksPage } from 'pages/booksPage/actions'
 import { selectNextBookId } from 'widgets/booksList/selectors'
-import { setCurrentBookId } from 'store/axis/actions'
+import { setCurrentBookId } from 'widgets/booksList/actions'
 import Layout from 'pages/Layout'
 import BooksList from 'widgets/booksList/BooksList'
 import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
