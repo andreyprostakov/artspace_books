@@ -3,36 +3,43 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark, faPen, faSync, faTrash, faUserNinja } from '@fortawesome/free-solid-svg-icons'
-import { faBookmark as faBookmarkEmpty, faSquare as faSquareEmpty, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faBookmark as faBookmarkEmpty, faCalendarAlt, faCheckSquare, faSquare, faUser } from '@fortawesome/free-regular-svg-icons'
 import { faGoodreadsG } from '@fortawesome/free-brands-svg-icons'
 import PropTypes from 'prop-types'
 
-import {
-  selectSyncedBookId,
-} from 'widgets/booksList/selectors'
 import {
   selectTagBookmark,
   selectTagRead,
   selectTagNames,
 } from 'store/metadata/selectors'
+
 import {
+  selectBookIsSelected,
+  selectSyncedBookId,
+} from 'widgets/booksList/selectors'
+import {
+  addBookIdToSelected,
   addTagToBook,
+  removeBookIdFromSelected,
   removeTagFromBook,
   syncBookStats,
 } from 'widgets/booksList/actions'
+
 import { useUrlStore } from 'store/urlStore'
 
 const BookToolbar = (props) => {
   const { book } = props
   const dispatch = useDispatch()
-  const [{}, { openEditBookModal }, { editBookModalPath }] = useUrlStore()
+  const [{}, { openEditBookModal }, { booksPath, editBookModalPath }] = useUrlStore()
   const syncedBookId = useSelector(selectSyncedBookId())
+  console.log(syncedBookId)
   const tagNames = useSelector(selectTagNames(book.tagIds))
 
   const tagBookmark = useSelector(selectTagBookmark())
   const isBookmarked = tagNames.includes(tagBookmark)
   const tagRead = useSelector(selectTagRead())
   const isRead = tagNames.includes(tagRead)
+  const isSelected = useSelector(selectBookIsSelected(book.id))
 
   return (
     <div>
@@ -42,6 +49,10 @@ const BookToolbar = (props) => {
             <FontAwesomeIcon icon={ faGoodreadsG }/>
           </Button>
         }
+
+        <Button variant='outline-info' title='See what was then...' href={ booksPath({ bookId: book.id }) }>
+          <FontAwesomeIcon icon={ faCalendarAlt }/>
+        </Button>
 
         { isBookmarked ?
           <Button variant='outline-warning' title='Remove bookmark' href='#'
@@ -79,14 +90,20 @@ const BookToolbar = (props) => {
         { book.goodreadsUrl &&
           <Button variant='outline-warning' title='Sync latest ratings' href='#'
                   onClick={ () => dispatch(syncBookStats(book.id)) }
-                  className={ { disabled: !!syncedBookId } }>
+                  disabled={ !!syncedBookId }>
             <FontAwesomeIcon icon={ faSync }/>
           </Button>
         }
 
-        <Button variant='outline-warning' title='Select' href='#' onClick={ (e) => e.preventDefault() }>
-          <FontAwesomeIcon icon={ faSquareEmpty }/>
-        </Button>
+        { isSelected ?
+            <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(removeBookIdFromSelected(book.id)) }>
+              <FontAwesomeIcon icon={ faCheckSquare }/>
+            </Button>
+          :
+            <Button variant='outline-warning' title='Select' href='#' onClick={ () => dispatch(addBookIdToSelected(book.id)) }>
+              <FontAwesomeIcon icon={ faSquare }/>
+            </Button>
+        }
 
         <Button variant='outline-danger' title='Delete' href='#' onClick={ (e) => e.preventDefault() }>
           <FontAwesomeIcon icon={ faTrash }/>

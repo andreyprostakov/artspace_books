@@ -30,12 +30,16 @@ import {
 
 export const {
   addBook,
+  addBookIdToSelected,
   addBooks,
   addYears,
   addYearsToLoad,
+  clearBooksIndexed,
   cleanBooksList,
+  clearBooksSelection,
   markYearsAsLoaded,
   markYearsAsLoading,
+  removeBookIdFromSelected,
   setCurrentBookDetails,
   setCurrentBookForYear,
   setDefaultBookImageUrl,
@@ -47,7 +51,6 @@ export const {
 
 export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
   const currentBook = bookId && selectBook(bookId)(getState())
-  console.log(`setupBooksListSelection: book present? #{!!currentBook}`)
   if (currentBook) {
     dispatch(showBook(bookId))
   } else {
@@ -184,6 +187,12 @@ const reloadBookWithSync = (id) => async (dispatch, getState) => {
   const book = await apiClient.syncBookStats(id)
   dispatch(upsertBook(book))
   dispatch(showBook(id))
+}
+
+export const reloadBooks = () => (dispatch, getState) => {
+  const currentBookId = selectCurrentBookId()(getState())
+  dispatch(clearBooksIndexed())
+  currentBookId && dispatch(reloadBook(currentBookId))
 }
 
 export const addTagToBook = (id, tagName) => async (dispatch, getState) => {

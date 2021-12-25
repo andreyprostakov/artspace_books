@@ -13,6 +13,10 @@ Rails.application.routes.draw do
       put :sync_goodreads_stats, on: :member
     end
 
+    namespace :books_batch do
+      post :assign_tags
+    end
+
     resources :years, only: :index
 
     resources :tags, only: :index

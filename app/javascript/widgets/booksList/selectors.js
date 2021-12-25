@@ -3,13 +3,19 @@ import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectCurrentBookId } from 'store/axis/selectors'
 
+export const selectBatchModeOn = () => state => selectBookIdsSelected()(state).length > 0
+
 export const selectBook = id => state => state.booksList.booksIndexed[id]
 
 export const selectBookIdsByYear = year => state => selectShuffledBooksOfYear(year)(state).map(book => book.id)
 
+export const selectBookIsSelected = id => state => selectBookIdsSelected()(state).includes(id)
+
 export const selectBookDefaultImageUrl = () => state => state.booksList.defaultCoverUrl
 
 export const selectBooks = () => state => Object.values(state.booksList.booksIndexed)
+
+export const selectBookIdsSelected = () => state => state.booksList.bookIdsSelected
 
 export const selectCurrentBook = () => state => selectBook(selectCurrentBookId()(state))(state)
 

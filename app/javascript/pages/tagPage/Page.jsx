@@ -1,11 +1,12 @@
 import { sortBy, upperCase } from 'lodash'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Col } from 'react-bootstrap'
 
 import Layout from 'pages/Layout'
-import TagBadge from 'components/TagBadge'
+import TagCard from 'pages/tagPage/TagCard'
 import BooksList from 'widgets/booksList/BooksList'
-import TagRemoveIcon from 'components/icons/TagRemoveIcon'
+import BatchControls from 'widgets/booksList/components/BatchControls'
 
 import { selectTag } from 'store/metadata/selectors'
 import { setupStoreForTagPage } from 'pages/tagPage/actions'
@@ -15,7 +16,7 @@ import usePageUrlStore from 'pages/tagPage/usePageUrlStore'
 
 const TagPage = () => {
   const dispatch = useDispatch()
-  const [{ bookId, tagId }, { addBookWidget, gotoBooks }] = usePageUrlStore()
+  const [{ bookId, tagId }, { addBookWidget }] = usePageUrlStore()
   const nextBookId = useSelector(selectNextBookId())
   const tag = useSelector(selectTag(tagId))
 
@@ -27,8 +28,13 @@ const TagPage = () => {
 
   return (
     <Layout className='tag-page'>
-      <TagBadge text={ tag.name } variant='dark' renderPostfix={ () => <TagRemoveIcon onRemove={ () => gotoBooks() }/> }/>
-      <BooksList/>
+      <Col xs={ 4 }>
+        <BatchControls/>
+        <TagCard tag={ tag }/>
+      </Col>
+      <Col xs={ 8 }>
+        <BooksList/>
+      </Col>
     </Layout>
   )
 }

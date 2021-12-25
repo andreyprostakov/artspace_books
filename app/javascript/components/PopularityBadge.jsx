@@ -8,7 +8,9 @@ const PopularityBadge = (props) => {
   return (
     <span className='ratings-info'>
       <span className='popularity-points'>{ `${points.toLocaleString()} pts` }</span>
-      <span className='rank'>{ ` (#${rank})` }</span>
+      { rank <= 100 &&
+        <span className='rank'>{ ` (#${rank})` }</span>
+      }
     </span>
   )
 }

@@ -37,6 +37,7 @@ const AuthorCard = (props) => {
 
   return (
     <Card className='author-card'>
+      <Card.Header className='widget-title'>Author</Card.Header>
       { onClose &&
         <CloseIcon onClick={ () => onClose() }/>
       }

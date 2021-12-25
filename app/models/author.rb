@@ -31,6 +31,12 @@ class Author < ApplicationRecord
     books.sum(:popularity)
   end
 
+  def image_url=(value)
+    return if value.blank?
+
+    super
+  end
+
   protected
 
   def strip_name

@@ -1,4 +1,4 @@
-import { difference, find, sort, uniq } from 'lodash'
+import { difference, find, pull, sort, uniq } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 import { createSlice } from '@reduxjs/toolkit'
 
@@ -7,6 +7,7 @@ export const slice = createSlice({
   initialState: {
     bookDetailsCurrent: {},
     bookIdsCurrentInYear: {},
+    bookIdsSelected: [],
     bookInSyncId: null,
     bookNextId: null,
     booksIndexed: {},
@@ -21,6 +22,11 @@ export const slice = createSlice({
     addBook: (state, action) => {
       const book = action.payload
       state.booksIndexed[book.id] = book
+    },
+
+    addBookIdToSelected: (state, action) => {
+      const id = action.payload
+      state.bookIdsSelected.push(id)
     },
 
     addBooks: (state, action) => {
@@ -47,6 +53,17 @@ export const slice = createSlice({
       state.yearsLoaded = []
       state.booksIndexed = {}
       state.bookIdsCurrentInYear = {}
+      state.bookIdsSelected = []
+    },
+
+    clearBooksSelection: (state, actions) => {
+      state.bookIdsSelected = []
+    },
+
+    clearBooksIndexed: (state, actions) => {
+      state.yearsLoaded = []
+      state.booksIndexed = {}
+      state.bookIdsSelected = []
     },
 
     markYearsAsLoading: (state, action) => {
@@ -59,6 +76,11 @@ export const slice = createSlice({
       const years = action.payload
       state.yearsLoaded = uniq([...state.yearsLoaded, ...years])
       state.yearsInLoading = difference(state.yearsInLoading, years)
+    },
+
+    removeBookIdFromSelected: (state, action) => {
+      const id = action.payload
+      state.bookIdsSelected = pull(state.bookIdsSelected, id)
     },
 
     setCurrentBookDetails: (state, action) => {

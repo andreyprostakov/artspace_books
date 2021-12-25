@@ -109,6 +109,14 @@ class ApiClient {
     })
   }
 
+  postTagsForBooksBatch(ids, tagNames) {
+    return $.ajax({
+      url: '/books_batch/assign_tags.json',
+      type: 'POST',
+      data: { book_ids: ids, tag_names: tagNames }
+    })
+  }
+
   getTags() {
     return $.ajax({
       url: '/tags.json'
