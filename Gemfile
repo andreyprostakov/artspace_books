@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.9'
+ruby '3.0.2'
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'sqlite3', '~> 1.4'
@@ -35,6 +35,8 @@ group :development do
   gem 'web-console', '>= 4.1.0'
   gem 'listen', '~> 3.3'
   gem 'spring'
+  gem 'capistrano', require: false
+  gem 'capistrano-rails', require: false
 end
 
 group :test do
