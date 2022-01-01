@@ -1,10 +1,13 @@
 defaults: &defaults
   namespace: infospace_books
+  db: 0
 
 development:
   <<: *defaults
-  db: 0
 
 test:
   <<: *defaults
   db: 1
+
+production:
+  <<: *defaults
