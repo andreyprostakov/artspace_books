@@ -29,6 +29,7 @@ gem 'redis'
 group :development, :test do
   gem 'pry-rails'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
 end
 
 group :development do
