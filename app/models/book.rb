@@ -3,6 +3,8 @@
 # Table name: books
 #
 #  id                   :integer          not null, primary key
+#  aws_covers           :json
+#  covers               :json
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
@@ -27,6 +29,7 @@ class Book < ApplicationRecord
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
   mount_base64_uploader :covers, BookCoverUploader
+  mount_base64_uploader :aws_covers, AwsBookCoverUploader
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
@@ -45,16 +48,16 @@ class Book < ApplicationRecord
   end
 
   def cover_thumb_url
-    covers.url(:thumb) || image_url
+    aws_covers.url(:thumb) || covers.url(:thumb) || image_url
   end
 
   def cover_thumb_url=(value)
     return if value.blank?
 
     if value =~ /^data:image/
-      self.covers = value
+      self.aws_covers = value
     else
-      self.remote_covers_url = value
+      self.remote_aws_covers_url = value
     end
   end
 

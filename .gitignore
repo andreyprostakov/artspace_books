@@ -41,6 +41,4 @@
 yarn-debug.log*
 .yarn-integrity
 
-.fog
-
 .env
