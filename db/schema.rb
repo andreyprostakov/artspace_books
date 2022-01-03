@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_02_183130) do
+ActiveRecord::Schema.define(version: 2022_01_03_032215) do
 
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2022_01_02_183130) do
     t.float "goodreads_rating"
     t.integer "goodreads_popularity"
     t.integer "popularity", default: 0
-    t.json "covers"
     t.json "aws_covers"
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["year_published"], name: "index_books_on_year_published"

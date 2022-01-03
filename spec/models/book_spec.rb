@@ -4,7 +4,6 @@
 #
 #  id                   :integer          not null, primary key
 #  aws_covers           :json
-#  covers               :json
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string

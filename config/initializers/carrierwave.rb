@@ -9,4 +9,6 @@ CarrierWave.configure do |config|
   }
   config.fog_directory = 'infospace-books-app'
   config.fog_public = false
+
+  Fog::Storage.new(config.fog_credentials).sync_clock
 end

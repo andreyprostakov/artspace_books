@@ -47,7 +47,7 @@ class BookDetailsController < ApplicationController
             file = attributes.delete(:cover_file)
             next if !file || file == 'undefined'
 
-            attributes[:covers] = file
+            attributes[:aws_covers] = file
           end
   end
 end
