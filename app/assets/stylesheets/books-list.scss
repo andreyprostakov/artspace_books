@@ -28,7 +28,18 @@
     &.shadow-right {
       right: 0;
       height: 100%;
+      width: 45px;
+      background-color: #fff;
     }
+  }
+
+  .side-scroll {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    height: calc(100% - 70px);
+    width: 40px;
+    z-index: 3;
   }
 
   .books-list-layer2 {

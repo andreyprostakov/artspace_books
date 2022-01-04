@@ -1,0 +1,18 @@
+.years-slider {
+  height: 100%;
+
+  .rs-slider {
+    .slider-handle {
+      height: 0px;
+      width: 38px;
+      text-align: right;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+
+      &:focus, &:active {
+        border: none;
+      }
+    }
+  }
+}

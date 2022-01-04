@@ -32,7 +32,6 @@ const BookToolbar = (props) => {
   const dispatch = useDispatch()
   const [{}, { openEditBookModal }, { booksPath, editBookModalPath }] = useUrlStore()
   const syncedBookId = useSelector(selectSyncedBookId())
-  console.log(syncedBookId)
   const tagNames = useSelector(selectTagNames(book.tagIds))
 
   const tagBookmark = useSelector(selectTagBookmark())

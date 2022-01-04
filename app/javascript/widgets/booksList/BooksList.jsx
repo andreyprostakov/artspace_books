@@ -27,6 +27,7 @@ import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 import AuthorBirthRow from 'widgets/booksList/components/AuthorBirthRow'
 import AuthorDeathRow from 'widgets/booksList/components/AuthorDeathRow'
 import YearRow from 'widgets/booksList/components/YearRow'
+import YearsSlider from 'widgets/booksList/components/YearsSlider'
 
 const BooksList = () => {
   const dispatch = useDispatch()
@@ -102,10 +103,16 @@ const BooksList = () => {
       <div className='books-list'
         onWheel={ (e) => handleWheel(dispatch, e.deltaX, e.deltaY) }
         tabIndex="-1" ref={ ref }>
+
         <div className='books-list-shadow shadow-top'/>
         <div className='books-list-shadow shadow-bottom'/>
         <div className='books-list-shadow shadow-left'/>
         <div className='books-list-shadow shadow-right'/>
+
+        <div className='side-scroll'>
+          <YearsSlider/>
+        </div>
+
         <div className='books-list-layer2'>
           <div className='books-list-layer3'>
             <AuthorDeathRow/>

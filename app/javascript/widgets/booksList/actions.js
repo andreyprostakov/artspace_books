@@ -216,6 +216,18 @@ export const removeTagFromBook = (id, tagName) => async (dispatch, getState) => 
   )
 }
 
+export const jumpToYear = (year) => (dispatch, getState) => {
+  if (!year) { return }
+
+  dispatch(switchToBookByYear(year))
+  const yearsToLoad = selectYearsToLoad(year)(getState())
+  if (yearsToLoad.length < 1) { return }
+
+  dispatch(fetchBooksForYears(yearsToLoad)).then(() =>
+    dispatch(switchToBookByYear(year))
+  )
+}
+
 // PRIVATES
 
 const loadBooksLazily = (dispatch, getState) =>{
@@ -247,18 +259,6 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
       })
     }
   }, 100 + Math.floor(Math.random() * 100))
-}
-
-const jumpToYear = (year) => (dispatch, getState) => {
-  if (!year) { return }
-
-  dispatch(switchToBookByYear(year))
-  const yearsToLoad = selectYearsToLoad(year)(getState())
-  if (yearsToLoad.length < 1) { return }
-
-  dispatch(fetchBooksForYears(yearsToLoad)).then(() =>
-    dispatch(switchToBookByYear(year))
-  )
 }
 
 const changeSelectedYear = (selectTargetYear) => async (dispatch, getState) => {
