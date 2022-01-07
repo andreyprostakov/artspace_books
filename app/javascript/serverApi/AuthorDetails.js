@@ -2,7 +2,9 @@ class AuthorDetails {
   static serverDataToObject(data) {
     return {
       ...data,
-      imageUrl: data.image_url,
+      imageThumbUrl: data.photo_thumb_url,
+      imageCardUrl: data.photo_card_url,
+      imageUrl: data.photo_full_url,
       birthYear: data.birth_year,
       deathYear: data.death_year,
       tagIds: data.tag_ids,
@@ -15,7 +17,7 @@ class AuthorDetails {
   static objectToServerData(details) {
     return {
       fullname: details.fullname,
-      image_url: details.imageUrl,
+      photo_url: details.imageUrl,
       reference: details.reference,
       birth_year: details.birthYear,
       death_year: details.deathYear,

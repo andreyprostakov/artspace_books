@@ -39,7 +39,7 @@ class BookDetailsController < ApplicationController
                   :author_id,
                   :year_published,
                   :original_title,
-                  :cover_thumb_url,
+                  :cover_url,
                   :cover_file,
                   :goodreads_url,
                   tag_names: [])

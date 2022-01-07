@@ -46,10 +46,14 @@ class Book < ApplicationRecord
   end
 
   def cover_thumb_url
-    aws_covers.url(:thumb) || image_url
+    aws_covers.url(:thumb)
   end
 
-  def cover_thumb_url=(value)
+  def cover_url
+    aws_covers.url
+  end
+
+  def cover_url=(value)
     return if value.blank?
 
     if value =~ /^data:image/

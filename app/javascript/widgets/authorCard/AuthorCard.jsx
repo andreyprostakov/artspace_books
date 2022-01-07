@@ -45,7 +45,7 @@ const AuthorCard = (props) => {
 
       { authorDetails.imageUrl &&
         <ImageContainer className='author-image'
-                        url={ authorDetails.imageUrl }
+                        url={ authorDetails.imageCardUrl }
                         onClick={ () => dispatch(setImageSrc(authorDetails.imageUrl)) }/>
       }
 

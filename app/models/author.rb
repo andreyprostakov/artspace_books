@@ -3,6 +3,7 @@
 # Table name: authors
 #
 #  id         :integer          not null, primary key
+#  aws_photos :json
 #  birth_year :integer
 #  death_year :integer
 #  fullname   :string           not null
@@ -16,6 +17,8 @@ class Author < ApplicationRecord
   has_many :books, class_name: 'Book', dependent: :restrict_with_error
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
+
+  mount_base64_uploader :aws_photos, AwsAuthorPhotoUploader
 
   before_validation :strip_name
 
@@ -35,6 +38,28 @@ class Author < ApplicationRecord
     return if value.blank?
 
     super
+  end
+
+  def photo_thumb_url
+    aws_photos.url(:thumb)
+  end
+
+  def photo_card_url
+    aws_photos.url(:card)
+  end
+
+  def photo_url
+    aws_photos.url
+  end
+
+  def photo_url=(value)
+    return if value.blank?
+
+    if value =~ /^data:image/
+      self.aws_photos = value
+    else
+      self.remote_aws_photos_url = value
+    end
   end
 
   protected

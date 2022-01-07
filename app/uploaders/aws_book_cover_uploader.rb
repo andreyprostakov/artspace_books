@@ -3,8 +3,10 @@ class AwsBookCoverUploader < CarrierWave::Uploader::Base
 
   storage :fog
 
+  process resize_to_limit: [600, 800]
+
   version :thumb do
-    process resize_to_fill: [130, 200]
+    process resize_to_fill: [160, 240]
   end
 
   def store_dir

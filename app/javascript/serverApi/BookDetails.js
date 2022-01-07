@@ -19,7 +19,7 @@ class BookDetails {
       original_title: details.originalTitle,
       goodreads_url: details.goodreadsUrl,
       wiki_url: details.wikiUrl,
-      cover_thumb_url: details.imageUrl,
+      cover_url: details.imageUrl,
       cover_file: details.imageFile,
       author_id: details.authorId,
       year_published: details.yearPublished,

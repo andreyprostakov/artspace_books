@@ -36,7 +36,7 @@ class AuthorDetailsController < ApplicationController
   def author_params
     params.fetch(:author, {})
           .permit(:fullname,
-                  :image_url,
+                  :photo_url,
                   :reference,
                   :birth_year,
                   :death_year,
