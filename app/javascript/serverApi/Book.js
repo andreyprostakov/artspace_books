@@ -4,6 +4,7 @@ class Book {
       ...bookData,
       authorId: bookData.author_id,
       coverUrl: bookData.cover_thumb_url,
+      coverFullUrl: bookData.cover_full_url,
       goodreadsUrl: bookData.goodreads_url,
       tagIds: bookData.tag_ids,
       popularity: bookData.popularity,

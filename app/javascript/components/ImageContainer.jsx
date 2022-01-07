@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 const ImageContainer = (props) => {
-  const { children, className, url } = props
+  const { children, className, url, ...options } = props
   const styles = {
     backgroundImage: `url(${url})`,
     backgroundSize: 'contain',
@@ -10,7 +10,7 @@ const ImageContainer = (props) => {
     backgroundPosition: 'center'
   }
   return (
-    <div className={ classNames('image-container', className) } style={ styles }>
+    <div className={ classNames('image-container', className) } style={ styles } { ...options }>
       { children }
     </div>
   )

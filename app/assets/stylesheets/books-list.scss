@@ -120,6 +120,10 @@
       box-shadow: 0px 0px 18px red inset;
       padding: 5px;
       width: 300px;
+
+      .book-cover {
+        cursor: zoom-in;
+      }
     }
 
     &.non-selected {

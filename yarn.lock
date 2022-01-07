@@ -6004,6 +6004,11 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-simple-image-viewer@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-simple-image-viewer/-/react-simple-image-viewer-1.1.1.tgz#8cf2d40b168f295148c8daaf4f03c4bf9b6c0572"
+  integrity sha512-xqAWUXfgllvahqIP2K4nmofZ1Y1Fml2mZqysTCzhEm0CtihTI1K9Hcf2fJYFyzE0qCplDmiYP6l4n8XtCimwPA==
+
 react-table@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.7.0.tgz#e2ce14d7fe3a559f7444e9ecfe8231ea8373f912"

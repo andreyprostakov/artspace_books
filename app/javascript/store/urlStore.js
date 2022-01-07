@@ -82,6 +82,7 @@ export const useUrlStore = (calculatePageState = null) => {
     openEditAuthorModal: () => showModal(EDIT_AUTHOR_HASH),
     openNewBookModal: () => showModal(NEW_BOOK_HASH),
     openEditBookModal: () => showModal(EDIT_BOOK_HASH),
+
     closeModal: () => showModal(''),
   }
 

@@ -16,6 +16,7 @@ import {
   selectBookDefaultImageUrl,
   selectNextBookId,
 } from 'widgets/booksList/selectors'
+import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const BookSelected = (props) => {
@@ -38,7 +39,7 @@ const BookSelected = (props) => {
 
   return (
     <div className='book-case selected' ref={ ref }>
-      <ImageContainer className='book-cover' url={ coverUrl }/>
+      <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>
 
       <div className='book-details'>
         <a href={ authorBooksPath(author.id, { bookId: id }) } className='book-author' title={ author.fullname }
