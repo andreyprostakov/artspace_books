@@ -13,6 +13,7 @@ import CloseIcon from 'components/icons/CloseIcon'
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import { setupStoreForAuthorCard } from 'widgets/authorCard/actions'
+import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 
 const AuthorCard = (props) => {
@@ -42,7 +43,11 @@ const AuthorCard = (props) => {
         <CloseIcon onClick={ () => onClose() }/>
       }
 
-      { authorDetails.imageUrl && <ImageContainer className='author-image' url={ authorDetails.imageUrl }/> }
+      { authorDetails.imageUrl &&
+        <ImageContainer className='author-image'
+                        url={ authorDetails.imageUrl }
+                        onClick={ () => dispatch(setImageSrc(authorDetails.imageUrl)) }/>
+      }
 
       <Card.Body>
         <Card.Title>{ authorDetails.fullname }</Card.Title>
