@@ -7,7 +7,6 @@
 #  goodreads_popularity :integer
 #  goodreads_rating     :float
 #  goodreads_url        :string
-#  image_url            :string
 #  original_title       :string
 #  popularity           :integer          default(0)
 #  title                :string           not null

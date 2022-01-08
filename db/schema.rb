@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_07_210609) do
+ActiveRecord::Schema.define(version: 2022_01_08_000016) do
 
   create_table "authors", force: :cascade do |t|
     t.string "fullname", null: false
     t.string "reference"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "image_url"
     t.string "wiki_url"
     t.integer "birth_year"
     t.integer "death_year"
@@ -32,7 +31,6 @@ ActiveRecord::Schema.define(version: 2022_01_07_210609) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "original_title"
-    t.string "image_url"
     t.string "goodreads_url"
     t.float "goodreads_rating"
     t.integer "goodreads_popularity"

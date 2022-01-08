@@ -7,7 +7,6 @@
 #  birth_year :integer
 #  death_year :integer
 #  fullname   :string           not null
-#  image_url  :string
 #  reference  :string
 #  wiki_url   :string
 #  created_at :datetime         not null
@@ -32,12 +31,6 @@ class Author < ApplicationRecord
 
   def popularity
     books.sum(:popularity)
-  end
-
-  def image_url=(value)
-    return if value.blank?
-
-    super
   end
 
   def photo_thumb_url
