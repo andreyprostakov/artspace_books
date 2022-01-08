@@ -45,7 +45,7 @@ export const slice = createSlice({
 
     addYearsToLoad: (state, action) => {
       const years = action.payload
-      state.yearsToLoad = [...state.yearsToLoad, ...difference(years, state.yearsLoaded)]
+      state.yearsToLoad = uniq([...state.yearsToLoad, ...difference(years, state.yearsLoaded)])
     },
 
     cleanBooksList: (state, actions) => {

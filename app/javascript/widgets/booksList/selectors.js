@@ -49,13 +49,15 @@ export const selectYearsToDisplay = () => state => {
 
 export const selectYearsToLoad = year => state => {
   const { yearsToLoad, yearsInLoading, yearsLoaded } = state.booksList
-  const nearYears = pickNearEntries(
-    selectYearsReversed()(state),
-    year,
-    { lengthBefore: 2, lengthAfter: 2, looped: false }
-  )
+  const allYears = selectYearsReversed()(state)
+  const yearsNearer = pickNearEntries(allYears, year, { lengthBefore: 2, lengthAfter: 2, looped: false })
+  const yearsFarther = pickNearEntries(allYears, year, { lengthBefore: 5, lengthAfter: 5, looped: false })
+
+  const yearsNearerNotLoaded = difference(yearsNearer, [...yearsInLoading, ...yearsLoaded])
+  if (yearsNearerNotLoaded.length === 0) { return [...yearsToLoad] }
+
   return [
     ...yearsToLoad,
-    ...difference(nearYears, [...yearsInLoading, ...yearsLoaded])
+    ...difference(yearsFarther, [...yearsInLoading, ...yearsLoaded])
   ]
 }
