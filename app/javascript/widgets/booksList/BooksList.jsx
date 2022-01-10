@@ -17,6 +17,7 @@ import {
   jumpToFirstYear,
   jumpToLastYear,
   jumpToLatestYear,
+  setBookShiftDirectionHorizontal,
   setSeed,
   shiftSelection,
   shiftYear,
@@ -71,8 +72,14 @@ const BooksList = () => {
     PAGE_UP: () => dispatch(shiftYear(+2)),
     START: () => dispatch(jumpToLastYear()),
 
-    RIGHT: () => dispatch(shiftSelection(+1)),
-    LEFT: () => dispatch(shiftSelection(-1)),
+    RIGHT: () => {
+      dispatch(setBookShiftDirectionHorizontal('right'))
+      dispatch(shiftSelection(+1))
+    },
+    LEFT: () => {
+      dispatch(setBookShiftDirectionHorizontal('left'))
+      dispatch(shiftSelection(-1))
+    },
 
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
     TOGGLE_AUTHOR: () => {

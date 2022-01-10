@@ -40,6 +40,7 @@ export const {
   markYearsAsLoaded,
   markYearsAsLoading,
   removeBookIdFromSelected,
+  setBookShiftDirectionHorizontal,
   setCurrentBookDetails,
   setCurrentBookForYear,
   setDefaultBookImageUrl,

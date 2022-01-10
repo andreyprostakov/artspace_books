@@ -72,8 +72,4 @@ const BookSelected = (props) => {
   );
 }
 
-BookSelected.propTypes = {
-  id: PropTypes.number.isRequired
-};
-
 export default BookSelected

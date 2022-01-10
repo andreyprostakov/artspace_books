@@ -17,6 +17,10 @@ export const selectBooks = () => state => Object.values(state.booksList.booksInd
 
 export const selectBookIdsSelected = () => state => state.booksList.bookIdsSelected
 
+export const selectBookShiftDirectionHorizontal = () => state => state.booksList.bookShiftDirectionHorizontal
+
+export const selectBookShiftDirectionTimestamp = () => state => state.booksList.bookShiftDirectionTimestamp
+
 export const selectCurrentBook = () => state => selectBook(selectCurrentBookId()(state))(state)
 
 export const selectCurrentBookDetails = () => state => state.booksList.bookDetailsCurrent
@@ -32,6 +36,8 @@ export const selectShuffledBooksOfYear = (year) => state => {
 }
 
 export const selectSyncedBookId = () => state => state.booksList.bookInSyncId
+
+export const selectYearCurrentBookIds = () => state => state.booksList.bookIdsCurrentInYear
 
 export const selectYearCurrentBookId = (year) => state => state.booksList.bookIdsCurrentInYear[year]
 

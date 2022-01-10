@@ -10,6 +10,8 @@ export const slice = createSlice({
     bookIdsSelected: [],
     bookInSyncId: null,
     bookNextId: null,
+    bookShiftDirectionHorizontal: null,
+    bookShiftDirectionTimestamp: 0,
     booksIndexed: {},
     defaultCoverUrl: null,
     seed: null,
@@ -81,6 +83,11 @@ export const slice = createSlice({
     removeBookIdFromSelected: (state, action) => {
       const id = action.payload
       state.bookIdsSelected = pull(state.bookIdsSelected, id)
+    },
+
+    setBookShiftDirectionHorizontal: (state, action) => {
+      state.bookShiftDirectionHorizontal = action.payload
+      state.bookShiftDirectionTimestamp = Date.now()
     },
 
     setCurrentBookDetails: (state, action) => {
