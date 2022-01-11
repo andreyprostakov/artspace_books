@@ -144,7 +144,8 @@
 
     &.shifted-left, &.shifted-right {
       .book-details {
-        animation: appear 0.3s ease-out;
+        animation: none;
+        opacity: 0;
       }
     }
   }
@@ -184,6 +185,7 @@
     width: 150px;
     height: 200px;
     white-space: normal;
+    animation: appear 0.3s ease-out;
 
     .book-tags {
       line-height: 12px;
