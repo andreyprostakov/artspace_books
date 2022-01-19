@@ -9,6 +9,7 @@ import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
+import AuthorTagsCloud from 'widgets/authorCard/AuthorTagsCloud'
 
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
@@ -66,6 +67,8 @@ const AuthorCard = (props) => {
         </div>
 
         <Toolbar author={ authorDetails }/>
+
+        <AuthorTagsCloud author={ authorDetails }/>
       </Card.Body>
     </Card>
   )

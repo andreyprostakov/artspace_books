@@ -8,6 +8,7 @@ json.reference author.reference
 json.birth_year author.birth_year
 json.death_year author.death_year
 json.tag_ids author.tag_ids
+json.books_tags_stats author.books_tags_stats
 json.books_count author.books.count
 json.popularity author.popularity
 json.rank Ranking::BooksRanker.rank_author(author)

@@ -1,0 +1,16 @@
+.author-tags-cloud {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,.125);
+  overflow: auto;
+
+  .cloud-entry {
+    text-transform: uppercase;
+    font-weight: 100;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}

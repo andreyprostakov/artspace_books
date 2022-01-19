@@ -55,6 +55,10 @@ class Author < ApplicationRecord
     end
   end
 
+  def books_tags_stats
+    books.includes(:tag_connections).references(:tag_connections).group('tag_connections.tag_id').count
+  end
+
   protected
 
   def strip_name
