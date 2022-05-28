@@ -1,4 +1,4 @@
-lock '~> 3.16.0'
+lock '~> 3.17.0'
 
 set :application, 'infospace_books'
 set :repo_url, 'git@github.com:andreyprostakov/infospace_books.git'
