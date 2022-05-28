@@ -1,10 +1,11 @@
+# frozen_string_literal: true
+
 class AuthorDetailsController < ApplicationController
   before_action :set_author, only: %i[show update]
 
   protect_from_forgery with: :null_session
 
-  def show
-  end
+  def show; end
 
   def create
     @author = Author.new

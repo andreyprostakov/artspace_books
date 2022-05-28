@@ -1,10 +1,22 @@
+# frozen_string_literal: true
+
 class BookDetailsController < ApplicationController
+  PERMITTED_ATTRIBUTES = [
+    :title,
+    :author_id,
+    :year_published,
+    :original_title,
+    :cover_url,
+    :cover_file,
+    :goodreads_url,
+    { tag_names: [] }
+  ].freeze
+
   before_action :set_book, only: %i[show update]
 
   protect_from_forgery with: :null_session
 
-  def show
-  end
+  def show; end
 
   def create
     @book = Book.new
@@ -35,14 +47,7 @@ class BookDetailsController < ApplicationController
 
   def book_params
     params.fetch(:book, {})
-          .permit(:title,
-                  :author_id,
-                  :year_published,
-                  :original_title,
-                  :cover_url,
-                  :cover_file,
-                  :goodreads_url,
-                  tag_names: [])
+          .permit(*PERMITTED_ATTRIBUTES)
           .tap do |attributes|
             file = attributes.delete(:cover_file)
             next if !file || file == 'undefined'

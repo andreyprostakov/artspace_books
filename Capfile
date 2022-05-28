@@ -1,9 +1,9 @@
-require "capistrano/setup"
-require "capistrano/deploy"
-require "capistrano/passenger"
-require "capistrano/rails"
-require "capistrano/rvm"
-require "capistrano/scm/git"
+require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/passenger'
+require 'capistrano/rails'
+require 'capistrano/rvm'
+require 'capistrano/scm/git'
 install_plugin Capistrano::SCM::Git
 
 # Include tasks from other gems included in your Gemfile
@@ -25,6 +25,6 @@ install_plugin Capistrano::SCM::Git
 # require "capistrano/rails/migrations"
 # require "capistrano/passenger"
 
-Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
 
 set :rvm_ruby_version, '3.0.2'

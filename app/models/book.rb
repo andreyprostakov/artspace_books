@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: books
@@ -22,6 +24,8 @@
 #  index_books_on_year_published  (year_published)
 #
 class Book < ApplicationRecord
+  include CarrierwaveUrlAssign
+
   belongs_to :author, class_name: 'Author', required: false
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
@@ -53,13 +57,7 @@ class Book < ApplicationRecord
   end
 
   def cover_url=(value)
-    return if value.blank?
-
-    if value =~ /^data:image/
-      self.aws_covers = value
-    else
-      self.remote_aws_covers_url = value
-    end
+    assign_remote_url_or_data(:aws_covers, value)
   end
 
   protected

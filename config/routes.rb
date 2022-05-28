@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: 'home#index'
 
-  scope constraints: lambda { |req| req.format == :json } do
+  scope constraints: ->(req) { req.format == :json } do
     resources :authors, only: %i[index show] do
       post :details, to: 'author_details#create', on: :collection
       resource :details, controller: 'author_details', only: %i[show update]

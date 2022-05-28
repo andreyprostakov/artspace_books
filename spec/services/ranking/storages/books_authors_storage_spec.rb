@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Ranking::Storages::BooksAuthorsStorage do
@@ -69,8 +71,5 @@ RSpec.describe Ranking::Storages::BooksAuthorsStorage do
         end
       end
     end
-  end
-
-  describe '.rank_author' do
   end
 end

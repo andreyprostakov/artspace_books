@@ -1,29 +1,21 @@
+# frozen_string_literal: true
+
 module Ranking
   module Storages
-    class BooksAuthorsStorage
-      KEY = 'books_authors_ranking'.freeze
-
+    class BooksAuthorsStorage < Ranking::Storages::BooksGroupRankStorage
       class << self
-        def update(book)
-          author_id = book.author_id
-          if book.author_id_previously_changed? && author_id != book.author_id_previously_was
-            redis.zrem(key(book.author_id_previously_was), book.id)
-          end
-          redis.zadd(key(book.author_id), book.popularity, book.id)
-        end
-
-        def rank(book)
-          redis.zrevrank(key(book.author_id), book.id)&.next
-        end
-
         private
 
-        def key(author_id)
-          "#{KEY}_#{author_id}"
+        def current_group(book)
+          book.author_id
         end
 
-        def redis
-          Rails.redis
+        def previous_group(book)
+          book.author_id_previously_was
+        end
+
+        def key(ref)
+          "books_authors_ranking_#{ref}"
         end
       end
     end

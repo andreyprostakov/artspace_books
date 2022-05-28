@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 book = @book
 json.id book.id
 json.title book.title

@@ -1,11 +1,17 @@
+# frozen_string_literal: true
+
 class BooksController < ApplicationController
+  PERMITTED_ATTRIBUTES = %i[
+    title year_published original_title image_url wiki_url goodreads_url
+  ].freeze
+
   before_action :set_book, only: %i[show sync_goodreads_stats]
 
   def index
     @books = Book.preload(:tag_connections)
-    @books = @books.where(year_published: params[:years]) if params[:years].present?
-    @books = @books.where(author_id: params[:author_id]) if params[:author_id].present?
-    @books = @books.with_tags(params[:tag_id]) if params[:tag_id].present?
+    @books = apply_year_filter(@books)
+    @books = apply_author_filter(@books)
+    @books = apply_tag_filter(@books)
   end
 
   def sync_goodreads_stats
@@ -20,6 +26,18 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.fetch(:book, {}).permit(:title, :year_published, :original_title, :image_url, :wiki_url, :goodreads_url)
+    params.fetch(:book, {}).permit(*PERMITTED_ATTRIBUTES)
+  end
+
+  def apply_year_filter(books_scope)
+    params[:years].present? ? books_scope.where(year_published: params[:years]) : books_scope
+  end
+
+  def apply_author_filter(books_scope)
+    params[:author_id].present? ? books_scope.where(author_id: params[:author_id]) : books_scope
+  end
+
+  def apply_tag_filter(books_scope)
+    params[:tag_id].present? ? books_scope.with_tags(params[:tag_id]) : books_scope
   end
 end

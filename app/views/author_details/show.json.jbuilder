@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 author = @author
 json.id author.id
 json.fullname author.fullname
