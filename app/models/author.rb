@@ -13,6 +13,8 @@
 #  updated_at :datetime         not null
 #
 class Author < ApplicationRecord
+  include CarrierwaveUrlAssign
+
   has_many :books, class_name: 'Book', dependent: :restrict_with_error
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
@@ -46,13 +48,7 @@ class Author < ApplicationRecord
   end
 
   def photo_url=(value)
-    return if value.blank?
-
-    if value =~ /^data:image/
-      self.aws_photos = value
-    else
-      self.remote_aws_photos_url = value
-    end
+    assign_remote_url_or_data(:aws_photos, value)
   end
 
   protected

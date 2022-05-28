@@ -1,29 +1,20 @@
 module Ranking
   module Storages
-    class BooksYearsStorage
-      KEY = 'books_years_ranking'.freeze
-
+    # Upsert/read book's popularity for ranking purposes per YEAR
+    class BooksYearsStorage < Ranking::Storages::BooksGroupRankStorage
       class << self
-        def update(book)
-          year = book.year_published
-          if book.year_published_previously_changed? && year != book.year_published_previously_was
-            redis.zrem(key(book.year_published_previously_was), book.id)
-          end
-          redis.zadd(key(book.year_published), book.popularity, book.id)
-        end
-
-        def rank(book)
-          redis.zrevrank(key(book.year_published), book.id)&.next
-        end
-
         private
 
-        def key(year)
-          "#{KEY}_#{year}"
+        def current_group(book)
+          book.year_published
         end
 
-        def redis
-          Rails.redis
+        def previous_group(book)
+          book.year_published_previously_was
+        end
+
+        def key(year)
+          "books_years_ranking_#{year}"
         end
       end
     end
