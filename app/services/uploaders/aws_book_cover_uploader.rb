@@ -1,4 +1,4 @@
-class AwsBookCoverUploader < CarrierWave::Uploader::Base
+class Uploaders::AwsBookCoverUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :fog

@@ -17,7 +17,7 @@ class Author < ApplicationRecord
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
-  mount_base64_uploader :aws_photos, AwsAuthorPhotoUploader
+  mount_base64_uploader :aws_photos, Uploaders::AwsAuthorPhotoUploader
 
   before_validation :strip_name
 

@@ -1,4 +1,4 @@
-class AwsAuthorPhotoUploader < CarrierWave::Uploader::Base
+class Uploaders::AwsAuthorPhotoUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :fog

@@ -26,7 +26,7 @@ class Book < ApplicationRecord
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
-  mount_base64_uploader :aws_covers, AwsBookCoverUploader
+  mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader
 
   validates :title, presence: true, uniqueness: { scope: :author_id }
   validates :author_id, presence: true
