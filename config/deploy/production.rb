@@ -1,4 +1,4 @@
-server '18.218.69.246', user: 'deploy', roles: %w[app db web]
+server '3.144.75.143', user: 'deploy', roles: %w[app db web]
 
 append :linked_files,
        'db/production.sqlite3'
