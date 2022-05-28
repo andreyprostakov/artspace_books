@@ -2,7 +2,6 @@
 
 module Ranking
   module Storages
-    # Upsert/read book's popularity for ranking purposes per SOME GROUP CRITERION
     class BooksGroupRankStorage
       class << self
         def update(book)

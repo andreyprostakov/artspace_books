@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: tag_connections
@@ -15,6 +17,5 @@
 #  index_tag_connections_on_tag_id                                (tag_id)
 #
 FactoryBot.define do
-  factory :tag_connection, class: 'TagConnection' do
-  end
+  factory :tag_connection, class: 'TagConnection'
 end

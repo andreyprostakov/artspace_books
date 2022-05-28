@@ -5,7 +5,6 @@ module Ranking
 
       class << self
         def update(book)
-          author_id = book.author_id
           if book.author_id_previously_changed? && book.author_id_previously_was
             previous_author = Author.find(book.author_id_previously_was)
             redis.zadd(KEY, previous_author.popularity, previous_author.id)

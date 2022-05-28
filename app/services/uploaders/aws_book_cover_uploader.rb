@@ -1,15 +1,19 @@
-class Uploaders::AwsBookCoverUploader < CarrierWave::Uploader::Base
-  include CarrierWave::MiniMagick
+# frozen_string_literal: true
 
-  storage :fog
+module Uploaders
+  class AwsBookCoverUploader < CarrierWave::Uploader::Base
+    include CarrierWave::MiniMagick
 
-  process resize_to_limit: [600, 800]
+    storage :fog
 
-  version :thumb do
-    process resize_to_fill: [160, 240]
-  end
+    process resize_to_limit: [600, 800]
 
-  def store_dir
-    "#{Rails.env}/book-covers/#{model.id}"
+    version :thumb do
+      process resize_to_fill: [160, 240]
+    end
+
+    def store_dir
+      "#{Rails.env}/book-covers/#{model.id}"
+    end
   end
 end

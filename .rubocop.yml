@@ -1,0 +1,17 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - bin/bundle
+    - db/schema.rb
+    - tmp/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - lib/tasks/**/*
+    - spec/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

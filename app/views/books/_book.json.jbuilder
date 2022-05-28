@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id book.id
 json.title book.title
 json.goodreads_url book.goodreads_url

@@ -1,19 +1,23 @@
-class Uploaders::AwsAuthorPhotoUploader < CarrierWave::Uploader::Base
-  include CarrierWave::MiniMagick
+# frozen_string_literal: true
 
-  storage :fog
+module Uploaders
+  class AwsAuthorPhotoUploader < CarrierWave::Uploader::Base
+    include CarrierWave::MiniMagick
 
-  process resize_to_limit: [1000, 600]
+    storage :fog
 
-  version :thumb do
-    process resize_to_fill: [160, 160]
-  end
+    process resize_to_limit: [1000, 600]
 
-  version :card do
-    process resize_to_limit: [320, 320]
-  end
+    version :thumb do
+      process resize_to_fill: [160, 160]
+    end
 
-  def store_dir
-    "#{Rails.env}/author-photos/#{model.id}"
+    version :card do
+      process resize_to_limit: [320, 320]
+    end
+
+    def store_dir
+      "#{Rails.env}/author-photos/#{model.id}"
+    end
   end
 end

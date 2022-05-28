@@ -1,19 +1,23 @@
-class Forms::FormBase
-  def initialize(record)
-    @record = record
-  end
+# frozen_string_literal: true
 
-  def update(record_params)
-    ApplicationRecord.transaction do
-      record.update(normalize_params(record_params)) || raise(ActiveRecord::Rollback)
-    end || false
-  end
+module Forms
+  class FormBase
+    def initialize(record)
+      @record = record
+    end
 
-  protected
+    def update(record_params)
+      ApplicationRecord.transaction do
+        record.update(normalize_params(record_params)) || raise(ActiveRecord::Rollback)
+      end || false
+    end
 
-  attr_reader :record
+    protected
 
-  def normalize_params(params)
-    params
+    attr_reader :record
+
+    def normalize_params(params)
+      params
+    end
   end
 end

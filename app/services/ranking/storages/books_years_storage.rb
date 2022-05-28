@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Ranking
   module Storages
-    # Upsert/read book's popularity for ranking purposes per YEAR
     class BooksYearsStorage < Ranking::Storages::BooksGroupRankStorage
       class << self
         private

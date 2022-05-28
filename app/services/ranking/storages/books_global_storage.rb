@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Ranking
   module Storages
     class BooksGlobalStorage
-      KEY = 'books_global_ranking'.freeze
+      KEY = 'books_global_ranking'
 
       class << self
         def update(book)

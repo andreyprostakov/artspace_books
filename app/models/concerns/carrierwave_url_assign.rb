@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# A concern that allows takign data:image strings as URLs for carrierwave. Also, document comments suck ass.
 module CarrierwaveUrlAssign
   protected
 

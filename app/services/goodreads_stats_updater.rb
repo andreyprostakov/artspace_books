@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GoodreadsStatsUpdater
   def update(book)
     return false if book.goodreads_url.blank?

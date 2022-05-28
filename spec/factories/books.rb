@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: books
@@ -25,6 +27,6 @@ FactoryBot.define do
   factory :book, class: 'Book' do
     sequence(:title) { |i| "Book #{i}" }
     association(:author, factory: :author, strategy: :create)
-    year_published { 1992 + rand(0..29) }
+    year_published { rand(1992..2021) }
   end
 end
