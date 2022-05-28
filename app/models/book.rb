@@ -26,8 +26,8 @@
 class Book < ApplicationRecord
   include CarrierwaveUrlAssign
 
-  belongs_to :author, class_name: 'Author', required: false
-  has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
+  belongs_to :author, class_name: "Author", required: false
+  has_many :tag_connections, class_name: "TagConnection", as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 
   mount_base64_uploader :aws_covers, Uploaders::AwsBookCoverUploader

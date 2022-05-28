@@ -18,8 +18,8 @@ class Author < ApplicationRecord
   include CarrierwaveUrlAssign
 
   has_many :books, class_name: 'Book', dependent: :restrict_with_error
-  has_many :tag_connections, class_name: "TagConnection", as: :entity, dependent: :destroy
-  has_many :tags, through: :tag_connections, class_name: "Tag"
+  has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
+  has_many :tags, through: :tag_connections, class_name: 'Tag'
 
   mount_base64_uploader :aws_photos, Uploaders::AwsAuthorPhotoUploader
 
