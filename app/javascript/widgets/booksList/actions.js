@@ -28,7 +28,7 @@ import {
   selectYearsToLoad,
 } from 'widgets/booksList/selectors'
 
-import { addMessage } from 'widgets/notifications/actions'
+import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 export const {
   addBook,
@@ -127,9 +127,12 @@ export const syncBookStats = (id) => async (dispatch, getState) => {
   const syncedBookId = selectSyncedBookId()(getState())
   if (syncedBookId) { return }
 
-  dispatch(setSyncedBookId(id))
-  dispatch(reloadBookWithSync(id))
-  dispatch(setSyncedBookId(null))
+  Promise.all([
+    dispatch(setSyncedBookId(id)),
+    dispatch(reloadBookWithSync(id))
+  ]).then(() =>
+    dispatch(setSyncedBookId(null))
+  )
 }
 
 export const syncCurrentBookStats = () => async (dispatch, getState) => {
@@ -187,11 +190,26 @@ export const reloadBook = (id) => async (dispatch, getState) => {
 }
 
 const reloadBookWithSync = (id) => async (dispatch, getState) => {
-  const book = await apiClient.syncBookStats(id)
-    .fail(response => { dispatch(addMessage({ type: 'danger', message: `Book #${id} not synced. <RESTART?>` })); console.log(response); return response; })
-    .then(response => { dispatch(addMessage({ type: 'success', message: `Book #${id} synced` })); return response; })
-  dispatch(upsertBook(book))
-  dispatch(showBook(id))
+  const apiCall = apiClient.syncBookStats(id)
+    .fail(response => {
+      dispatch(addErrorMessage(`Book #${id} not synced due to some failure`))
+      return response
+    })
+    .then(response => {
+      const book = response
+      dispatch(addSuccessMessage(`Book #${id} synced`))
+      dispatch(upsertBook(book))
+      return book
+    })
+  const result = await Promise.race(
+    [
+      apiCall,
+      new Promise((resolve) => setTimeout(() => resolve(null), 10000))
+    ]
+  )
+  if (result === null) {
+    dispatch(addErrorMessage(`Book #${id} not synced due to timeout failure`))
+  }
 }
 
 export const reloadBooks = () => (dispatch, getState) => {

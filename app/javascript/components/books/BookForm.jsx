@@ -9,7 +9,7 @@ import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { fetchAllTags } from 'store/metadata/actions'
-import { addMessage } from 'widgets/notifications/actions'
+import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 import { selectAuthor, selectTags } from 'store/metadata/selectors'
 import apiClient from 'serverApi/apiClient'
 
@@ -38,7 +38,7 @@ const BookForm = (props) => {
   }
 
   const onServerSuccess = (responseData) => {
-    dispatch(addMessage({ type: 'success', headline: 'Success', message: 'Book updated' }))
+    dispatch(addSuccessMessage('Book updated'))
     dispatch(fetchAllTags())
     onSubmit(responseData)
   }
@@ -47,7 +47,7 @@ const BookForm = (props) => {
     const errors = responseData.responseJSON
     console.log(errors)
     const description = map(errors, (messages, attribute) => `${attribute} ${messages.join(', ')}`).join('; ')
-    dispatch(addMessage({ type: 'danger', headline: 'Error', message: description }))
+    dispatch(addErrorMessage(`Errors: ${description}`))
     setState({ ...state, errors: responseData.responseJSON })
   }
 
