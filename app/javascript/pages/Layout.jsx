@@ -9,6 +9,7 @@ import BookEditModal from 'components/books/BookEditModal'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
 import AuthorEditModal from 'components/authors/AuthorEditModal'
 import ImageModal from 'widgets/imageModal/ImageModal'
+import Notifications from 'widgets/notifications/Notifications'
 
 const Layout = (props) => {
   const { children, ...options } = props
@@ -26,6 +27,7 @@ const Layout = (props) => {
       <BookNewModal/>
       <BookEditModal/>
       <ImageModal/>
+      <Notifications/>
     </Row>
   );
 }

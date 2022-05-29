@@ -1,6 +1,6 @@
-import { pick } from 'lodash'
+import { map, pick } from 'lodash'
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, Row } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
@@ -10,15 +10,30 @@ import FormInputTags from 'components/FormInputTags'
 import apiClient from 'serverApi/apiClient'
 
 import { selectTags  } from 'store/metadata/selectors'
+import { addMessage } from 'widgets/notifications/actions'
 
-class AuthorForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { currentTags: [], errors: {} }
+const AuthorForm = (props) => {
+  const { authorDetails, id, onSubmit } = props
+  const [state, setState] = useState({ currentTags: [], errors: {} })
+  const { currentTags, errors } = state
+  const tags = useSelector(selectTags(authorDetails.tagIds))
+  const initialTags = authorDetails.new ? [] : tags
+  const dispatch = useDispatch()
+
+  const onServerSuccess = (responseData) => {
+    dispatch(addMessage({ type: 'success', headline: 'Success', message: 'Author updated' }))
+    onSubmit(responseData)
   }
 
-  sendRequest(formData) {
-    const { authorDetails } = this.props
+  const onServerFailure = (responseData) => {
+    const errors = responseData.responseJSON
+    console.log(errors)
+    const description = map(errors, (messages, attribute) => `${attribute} ${messages.join(', ')}`).join('; ')
+    dispatch(addMessage({ type: 'danger', headline: 'Error', message: description }))
+    setState({ ...state, errors: responseData.responseJSON })
+  }
+
+  const sendRequest = (formData) => {
     if (authorDetails.new) {
       return apiClient.postAuthorDetails(formData)
     } else {
@@ -26,10 +41,9 @@ class AuthorForm extends React.Component {
     }
   }
 
-  handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    const { onSubmit, authorDetails } = this.props
-    const { currentTags } = this.state
+    const { currentTags } = state
     const formData = pick(
       event.target.elements,
       'fullname', 'imageUrl', 'reference', 'birthYear', 'deathYear'
@@ -38,32 +52,25 @@ class AuthorForm extends React.Component {
 
     formData.tagNames = currentTags.map(tag => tag.name)
 
-    this.sendRequest(formData).fail((response) => this.setState({ errors: response.responseJSON }))
-                              .then((data) => onSubmit(data))
+    sendRequest(formData).fail(onServerFailure).then(onServerSuccess)
   }
 
-  render() {
-    const { id, authorDetails, tags } = this.props
-    const { currentTags, errors } = this.state
-    const initialTags = authorDetails.new ? [] : tags
-
-    return (
-      <Form id={ id } onSubmit={ (e) => this.handleSubmit(e) }>
-        <InputLine controlId='fullname' label='Name' value={ authorDetails.fullname } errors={ errors.fullname } autoFocus/>
-        <FormInputImage label='Photo'
-                        imageUrl={ authorDetails.imageUrl }
-                        errors={ errors.image_url }
-                        searchPrefix='author photo'
-                        searchKey={ authorDetails.fullname }/>
-        <InputLine controlId='reference' label='WIKI URL' value={ authorDetails.reference } errors={ errors.reference }/>
-        <Row />
-        <InputLine controlId='birthYear' label='Year of birth' value={ authorDetails.birthYear } errors={ errors.birth_year }/>
-        <InputLine controlId='deathYear' label='Year of death' value={ authorDetails.deathYear } errors={ errors.death_year }/>
-        <Row />
-        <FormInputTags initialTags={ initialTags } onChange={ (tags) => this.setState({ currentTags: tags }) }/>
-      </Form>
-    )
-  }
+  return (
+    <Form id={ id } onSubmit={ handleSubmit }>
+      <InputLine controlId='fullname' label='Name' value={ authorDetails.fullname } errors={ errors.fullname } autoFocus/>
+      <FormInputImage label='Photo'
+                      imageUrl={ authorDetails.imageUrl }
+                      errors={ errors.image_url }
+                      searchPrefix='author photo'
+                      searchKey={ authorDetails.fullname }/>
+      <InputLine controlId='reference' label='WIKI URL' value={ authorDetails.reference } errors={ errors.reference }/>
+      <Row />
+      <InputLine controlId='birthYear' label='Year of birth' value={ authorDetails.birthYear } errors={ errors.birth_year }/>
+      <InputLine controlId='deathYear' label='Year of death' value={ authorDetails.deathYear } errors={ errors.death_year }/>
+      <Row />
+      <FormInputTags initialTags={ initialTags } onChange={ (tags) => setState({ ...state, currentTags: tags }) }/>
+    </Form>
+  )
 }
 
 AuthorForm.propTypes = {
@@ -72,9 +79,4 @@ AuthorForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state, props) => {
-  const { tagIds } = props.authorDetails
-  return { tags: selectTags(tagIds)(state) }
-}
-
-export default connect(mapStateToProps, null)(AuthorForm)
+export default AuthorForm
