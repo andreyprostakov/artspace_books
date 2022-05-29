@@ -15,7 +15,7 @@ import {
 
 import {
   selectBookIsSelected,
-  selectSyncedBookId,
+  selectBookIdsInProcessing,
 } from 'widgets/booksList/selectors'
 import {
   addBookIdToSelected,
@@ -31,7 +31,7 @@ const BookToolbar = (props) => {
   const { book } = props
   const dispatch = useDispatch()
   const [{}, { openEditBookModal }, { booksPath, editBookModalPath }] = useUrlStore()
-  const syncedBookId = useSelector(selectSyncedBookId())
+  const bookIdsInProcess = useSelector(selectBookIdsInProcessing())
   const tagNames = useSelector(selectTagNames(book.tagIds))
 
   const tagBookmark = useSelector(selectTagBookmark())
@@ -89,7 +89,7 @@ const BookToolbar = (props) => {
         { book.goodreadsUrl &&
           <Button variant='outline-warning' title='Sync latest ratings' href='#'
                   onClick={ () => dispatch(syncBookStats(book.id)) }
-                  disabled={ !!syncedBookId }>
+                  disabled={ bookIdsInProcess.includes(book.id) }>
             <FontAwesomeIcon icon={ faSync }/>
           </Button>
         }

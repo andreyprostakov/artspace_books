@@ -19,9 +19,9 @@ import {
   selectBook,
   selectBooks,
   selectBookIdsByYear,
+  selectBookIdsInProcessing,
   selectCurrentBook,
   selectShuffledBooksOfYear,
-  selectSyncedBookId,
   selectTargetYear,
   selectYears,
   selectYearCurrentBookId,
@@ -39,6 +39,8 @@ export const {
   clearBooksIndexed,
   cleanBooksList,
   clearBooksSelection,
+  markBookAsInProcess,
+  unmarkBookAsInProcess,
   markYearsAsLoaded,
   markYearsAsLoading,
   removeBookIdFromSelected,
@@ -48,7 +50,6 @@ export const {
   setDefaultBookImageUrl,
   setNextBookId,
   setSeed,
-  setSyncedBookId,
   setYears,
 } = slice.actions
 
@@ -124,14 +125,14 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
 }
 
 export const syncBookStats = (id) => async (dispatch, getState) => {
-  const syncedBookId = selectSyncedBookId()(getState())
-  if (syncedBookId) { return }
+  const ids = selectBookIdsInProcessing()(getState())
+  if (ids.includes(id)) { return }
 
   Promise.all([
-    dispatch(setSyncedBookId(id)),
+    dispatch(markBookAsInProcess(id)),
     dispatch(reloadBookWithSync(id))
   ]).then(() =>
-    dispatch(setSyncedBookId(null))
+    dispatch(unmarkBookAsInProcess(id))
   )
 }
 
