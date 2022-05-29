@@ -28,6 +28,8 @@ import {
   selectYearsToLoad,
 } from 'widgets/booksList/selectors'
 
+import { addMessage } from 'widgets/notifications/actions'
+
 export const {
   addBook,
   addBookIdToSelected,
@@ -186,6 +188,8 @@ export const reloadBook = (id) => async (dispatch, getState) => {
 
 const reloadBookWithSync = (id) => async (dispatch, getState) => {
   const book = await apiClient.syncBookStats(id)
+    .fail(response => { dispatch(addMessage({ type: 'danger', message: `Book #${id} not synced. <RESTART?>` })); console.log(response); return response; })
+    .then(response => { dispatch(addMessage({ type: 'success', message: `Book #${id} synced` })); return response; })
   dispatch(upsertBook(book))
   dispatch(showBook(id))
 }

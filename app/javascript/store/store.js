@@ -5,6 +5,7 @@ import booksListReducer from 'widgets/booksList/slice'
 import imageModalReducer from 'widgets/imageModal/slice'
 import metadataReducer from 'store/metadata/slice'
 import navbarReducer from 'widgets/navbar/slice'
+import notificationsReducer from 'widgets/notifications/slice'
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     imageModal: imageModalReducer,
     metadata: metadataReducer,
     navbar: navbarReducer,
+    notifications: notificationsReducer,
   }
 })
