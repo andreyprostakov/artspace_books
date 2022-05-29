@@ -10,7 +10,7 @@ import FormInputTags from 'components/FormInputTags'
 import apiClient from 'serverApi/apiClient'
 
 import { selectTags  } from 'store/metadata/selectors'
-import { addMessage } from 'widgets/notifications/actions'
+import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 const AuthorForm = (props) => {
   const { authorDetails, id, onSubmit } = props
@@ -21,7 +21,7 @@ const AuthorForm = (props) => {
   const dispatch = useDispatch()
 
   const onServerSuccess = (responseData) => {
-    dispatch(addMessage({ type: 'success', headline: 'Success', message: 'Author updated' }))
+    dispatch(addSuccessMessage('Author updated'))
     onSubmit(responseData)
   }
 
@@ -29,7 +29,7 @@ const AuthorForm = (props) => {
     const errors = responseData.responseJSON
     console.log(errors)
     const description = map(errors, (messages, attribute) => `${attribute} ${messages.join(', ')}`).join('; ')
-    dispatch(addMessage({ type: 'danger', headline: 'Error', message: description }))
+    dispatch(addErrorMessage(`Errors: ${description}`))
     setState({ ...state, errors: responseData.responseJSON })
   }
 

@@ -8,7 +8,7 @@ export const slice = createSlice({
     bookDetailsCurrent: {},
     bookIdsCurrentInYear: {},
     bookIdsSelected: [],
-    bookInSyncId: null,
+    bookIdsInProcessing: [],
     bookNextId: null,
     bookShiftDirectionHorizontal: null,
     bookShiftDirectionTimestamp: 0,
@@ -38,6 +38,16 @@ export const slice = createSlice({
         state.booksIndexed[book.id] = book
         state.yearsLoaded.push(book.year)
       })
+    },
+
+    markBookAsInProcess: (state, action) => {
+      const id = action.payload
+      state.bookIdsInProcessing.push(id)
+    },
+
+    unmarkBookAsInProcess: (state, action) => {
+      const id = action.payload
+      state.bookIdsInProcessing = pull(state.bookIdsInProcessing, id)
     },
 
     addYears: (state, action) => {
@@ -110,11 +120,6 @@ export const slice = createSlice({
     },
 
     setSeed: (state) => { state.seed = Date.now() },
-
-    setSyncedBookId: (state, action) => {
-      const id = action.payload
-      state.bookInSyncId = id
-    },
 
     setYears: (state, action) => state.years = action.payload.slice(),
   }

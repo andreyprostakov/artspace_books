@@ -29,13 +29,13 @@ export const selectCurrentYear = () => state => selectCurrentBook()(state)?.year
 
 export const selectNextBookId = () => state => state.booksList.bookNextId
 
+export const selectBookIdsInProcessing = () => state => state.booksList.bookIdsInProcessing
+
 export const selectSeed = () => state => state.booksList.seed
 
 export const selectShuffledBooksOfYear = (year) => state => {
   return shuffle(selectBooks()(state).filter(book => book.year == year), selectSeed()(state))
 }
-
-export const selectSyncedBookId = () => state => state.booksList.bookInSyncId
 
 export const selectYearCurrentBookIds = () => state => state.booksList.bookIdsCurrentInYear
 
