@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
 
+import PopularityChart from 'widgets/booksList/components/PopularityChart'
+
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import {
@@ -50,6 +52,10 @@ const YearRow = (props) => {
 
   return (
     <div className='list-year'>
+      { yearIsCurrent && displayedBookIds.length > 1 &&
+        <PopularityChart displayedBookIds={ displayedBookIds } currentBookId={ currentBookId }/>
+      }
+
       <div className='year-number'>
         { year }
       </div>

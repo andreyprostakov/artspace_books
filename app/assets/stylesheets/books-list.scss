@@ -175,6 +175,7 @@
 
     &.non-selected {
       cursor: pointer;
+      opacity: 0.8;
     }
   }
 
@@ -247,6 +248,20 @@
       .book-overlay {
         display: block;
       }
+    }
+  }
+
+  .popularities-chart {
+    opacity: 0.2;
+
+    canvas {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 20px;
+      transform: translateX(20px);
+      margin: auto;
+      max-height: 188px;
     }
   }
 }

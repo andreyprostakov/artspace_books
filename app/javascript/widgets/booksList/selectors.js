@@ -31,6 +31,8 @@ export const selectNextBookId = () => state => state.booksList.bookNextId
 
 export const selectBookIdsInProcessing = () => state => state.booksList.bookIdsInProcessing
 
+export const selectBookPopularities = (ids) => state => ids.map(id => selectBook(id)(state)?.popularity)
+
 export const selectSeed = () => state => state.booksList.seed
 
 export const selectShuffledBooksOfYear = (year) => state => {
