@@ -5,8 +5,10 @@ export const slice = createSlice({
   initialState: {
     authorDetailsCurrent: {},
     authorsIndexed: {},
+    bookDetailsCurrent: {},
     pageIsLoading: false,
     tagsIndexed: {},
+    defaultCoverUrl: null,
   },
   reducers: {
     addAuthor: (state, action) => {
@@ -32,7 +34,16 @@ export const slice = createSlice({
       const tags = action.payload
       state.tagsIndexed = {}
       tags.forEach(tag => state.tagsIndexed[tag.id] = tag)
-    }
+    },
+
+    setDefaultBookImageUrl: (state, action) => {
+      const url = action.payload
+      state.defaultCoverUrl = url
+    },
+
+    setCurrentBookDetails: (state, action) => {
+      state.bookDetailsCurrent = action.payload
+    },
   }
 })
 

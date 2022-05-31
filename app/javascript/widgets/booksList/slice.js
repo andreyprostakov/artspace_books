@@ -5,15 +5,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'booksList',
   initialState: {
-    bookDetailsCurrent: {},
-    bookIdsCurrentInYear: {},
-    bookIdsSelected: [],
+    booksIndexed: {},
+
     bookIdsInProcessing: [],
+
     bookNextId: null,
     bookShiftDirectionHorizontal: null,
-    bookShiftDirectionTimestamp: 0,
-    booksIndexed: {},
-    defaultCoverUrl: null,
+
+    bookIdsCurrentInYear: {},
     seed: null,
     years: [],
     yearsInLoading: [],
@@ -24,11 +23,6 @@ export const slice = createSlice({
     addBook: (state, action) => {
       const book = action.payload
       state.booksIndexed[book.id] = book
-    },
-
-    addBookIdToSelected: (state, action) => {
-      const id = action.payload
-      state.bookIdsSelected.push(id)
     },
 
     addBooks: (state, action) => {
@@ -65,17 +59,11 @@ export const slice = createSlice({
       state.yearsLoaded = []
       state.booksIndexed = {}
       state.bookIdsCurrentInYear = {}
-      state.bookIdsSelected = []
-    },
-
-    clearBooksSelection: (state, actions) => {
-      state.bookIdsSelected = []
     },
 
     clearBooksIndexed: (state, actions) => {
       state.yearsLoaded = []
       state.booksIndexed = {}
-      state.bookIdsSelected = []
     },
 
     markYearsAsLoading: (state, action) => {
@@ -90,28 +78,13 @@ export const slice = createSlice({
       state.yearsInLoading = difference(state.yearsInLoading, years)
     },
 
-    removeBookIdFromSelected: (state, action) => {
-      const id = action.payload
-      state.bookIdsSelected = pull(state.bookIdsSelected, id)
-    },
-
     setBookShiftDirectionHorizontal: (state, action) => {
       state.bookShiftDirectionHorizontal = action.payload
-      state.bookShiftDirectionTimestamp = Date.now()
-    },
-
-    setCurrentBookDetails: (state, action) => {
-      state.bookDetailsCurrent = action.payload
     },
 
     setCurrentBookForYear: (state, action) => {
       const { id, year } = action.payload
       state.bookIdsCurrentInYear[year] = id
-    },
-
-    setDefaultBookImageUrl: (state, action) => {
-      const url = action.payload
-      state.defaultCoverUrl = url
     },
 
     setNextBookId: (state, action) => {

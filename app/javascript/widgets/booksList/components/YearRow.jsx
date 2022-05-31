@@ -11,7 +11,6 @@ import { pickNearEntries } from 'utils/pickNearEntries'
 import {
   selectBookIdsByYear,
   selectBookShiftDirectionHorizontal,
-  selectBookShiftDirectionTimestamp,
   selectCurrentBook,
   selectYearCurrentBookId,
 } from 'widgets/booksList/selectors'
@@ -32,7 +31,6 @@ const YearRow = (props) => {
   const displayedBookIds = pickNearEntries(bookIds, middleBookId, { lengthBefore: 3, lengthAfter: 3 })
   const yearIsCurrent = year === currentBook.year
   const direction = useSelector(selectBookShiftDirectionHorizontal())
-  const directionTimestamp = useSelector(selectBookShiftDirectionTimestamp())
   const dispatch = useDispatch()
 
   const classNames = classnames(

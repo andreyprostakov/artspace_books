@@ -11,9 +11,8 @@ import {
   setCurrentBookId as setCurrentBookIdOriginal,
 } from 'store/axis/actions'
 
-import {
-  selectTagNames,
-} from 'store/metadata/selectors'
+import { selectTagNames } from 'store/metadata/selectors'
+import { setCurrentBookDetails } from 'store/metadata/actions'
 
 import {
   selectBook,
@@ -30,24 +29,25 @@ import {
 
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
+import {
+  clearSelection,
+  selectId,
+  unselectId,
+} from 'store/selectables/actions'
+
 export const {
   addBook,
-  addBookIdToSelected,
   addBooks,
   addYears,
   addYearsToLoad,
   clearBooksIndexed,
-  cleanBooksList,
-  clearBooksSelection,
+  cleanBooksList: clearListStore,
   markBookAsInProcess,
   unmarkBookAsInProcess,
   markYearsAsLoaded,
   markYearsAsLoading,
-  removeBookIdFromSelected,
   setBookShiftDirectionHorizontal,
-  setCurrentBookDetails,
   setCurrentBookForYear,
-  setDefaultBookImageUrl,
   setNextBookId,
   setSeed,
   setYears,
@@ -216,6 +216,7 @@ const reloadBookWithSync = (id) => async (dispatch, getState) => {
 export const reloadBooks = () => (dispatch, getState) => {
   const currentBookId = selectCurrentBookId()(getState())
   dispatch(clearBooksIndexed())
+  dispatch(clearSelection())
   currentBookId && dispatch(reloadBook(currentBookId))
 }
 
@@ -301,4 +302,13 @@ const switchToBookByYear = (targetYear) => (dispatch, getState) => {
       dispatch(showBook(bookId))
     }
   }
+}
+
+export const addBookIdToSelected = selectId
+export const removeBookIdFromSelected = unselectId
+export const clearBooksSelection = clearSelection
+
+export const cleanBooksList = () => (dispatch) => {
+  dispatch(clearListStore())
+  dispatch(clearSelection())
 }

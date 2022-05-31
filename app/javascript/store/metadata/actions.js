@@ -9,6 +9,8 @@ export const {
   setCurrentAuthorDetails,
   setPageIsLoading,
   setTags,
+  setDefaultBookImageUrl,
+  setCurrentBookDetails,
 } = slice.actions
 
 export const fetchAllTags = () => async (dispatch) => {

@@ -10,12 +10,8 @@ import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectAuthor, selectTags, selectVisibleTags } from 'store/metadata/selectors'
-import {
-  selectBook,
-  selectBookDefaultImageUrl,
-  selectNextBookId,
-} from 'widgets/booksList/selectors'
+import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectBook, selectNextBookId } from 'widgets/booksList/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { showBook } from 'widgets/booksList/actions'
-import { selectBook, selectBookDefaultImageUrl } from 'widgets/booksList/selectors'
+import { selectBook } from 'widgets/booksList/selectors'
+import { selectBookDefaultImageUrl } from 'store/metadata/selectors'
 
 import ImageContainer from 'components/ImageContainer'
 
