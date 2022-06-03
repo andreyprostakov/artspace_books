@@ -7,6 +7,7 @@ import metadataReducer from 'store/metadata/slice'
 import selectablesReducer from 'store/selectables/slice'
 
 import booksListReducer from 'widgets/booksList/slice'
+import booksListLinearReducer from 'widgets/booksListLinear/slice'
 import imageModalReducer from 'widgets/imageModal/slice'
 import navbarReducer from 'widgets/navbar/slice'
 import notificationsReducer from 'widgets/notifications/slice'
@@ -16,6 +17,7 @@ export default configureStore({
     authorsBatch: authorsBatchReducer,
     axis: axisReducer,
     booksList: booksListReducer,
+    booksListLinear: booksListLinearReducer,
     imageModal: imageModalReducer,
     metadata: metadataReducer,
     navbar: navbarReducer,

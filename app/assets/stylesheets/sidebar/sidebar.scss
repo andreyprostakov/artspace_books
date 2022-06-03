@@ -1,0 +1,22 @@
+.page-sidebar {
+  padding-top: 10px;
+}
+
+.sidebar-card-widget {
+  margin-bottom: 10px;
+  position: relative;
+
+  .widget-title {
+    text-transform: uppercase;
+    font-size: 21px;
+    font-weight: 400;
+  }
+
+  .icon-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 18px;
+    color: #777;
+  }
+}

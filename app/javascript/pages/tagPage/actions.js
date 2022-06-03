@@ -8,8 +8,12 @@ import {
   cleanBooksList,
   fetchTagBooks,
   fetchYears,
-  setupBooksListSelection,
 } from 'widgets/booksList/actions'
+
+import {
+  fetchBooks,
+  setupBooksListSelection,
+} from 'widgets/booksListLinear/actions'
 
 export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, getState) => {
   dispatch(setPageIsLoading(true))
@@ -17,10 +21,9 @@ export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, g
     dispatch(cleanBooksList()),
 
     dispatch(fetchAllTags()),
-    dispatch(fetchYears({ tagId })),
     dispatch(fetchAuthors()),
   ]).then(() =>
-    dispatch(fetchTagBooks(tagId))
+    dispatch(fetchBooks({ tagId }))
   ).then(() => {
     dispatch(setPageIsLoading(false))
     dispatch(setupBooksListSelection(bookId))

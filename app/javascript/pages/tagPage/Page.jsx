@@ -5,7 +5,8 @@ import { Col } from 'react-bootstrap'
 
 import Layout from 'pages/Layout'
 import TagCard from 'pages/tagPage/TagCard'
-import BooksList from 'widgets/booksList/BooksList'
+import CurrentBookCard from 'pages/tagPage/CurrentBookCard'
+import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
 import BatchControls from 'widgets/booksList/components/BatchControls'
 
 import { selectTag } from 'store/metadata/selectors'
@@ -29,11 +30,14 @@ const TagPage = () => {
   return (
     <Layout className='tag-page'>
       <Col xs={ 4 }>
-        <BatchControls/>
-        <TagCard tag={ tag }/>
+        <div className='page-sidebar'>
+          <TagCard tag={ tag }/>
+          <BatchControls/>
+          <CurrentBookCard/>
+        </div>
       </Col>
       <Col xs={ 8 }>
-        <BooksList/>
+        <BooksListLinear/>
       </Col>
     </Layout>
   )

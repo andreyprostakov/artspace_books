@@ -6,11 +6,8 @@ const TagCard = (props) => {
   const { tag } = props
 
   return (
-    <Card className='books-batch-controls'>
-      <Card.Header className='widget-title'>Tag</Card.Header>
-      <Card.Body>
-        { tag.name }
-      </Card.Body>
+    <Card className='books-batch-controls sidebar-card-widget'>
+      <Card.Header className='widget-title'>Tag: #{ tag.name }</Card.Header>
     </Card>
   )
 }

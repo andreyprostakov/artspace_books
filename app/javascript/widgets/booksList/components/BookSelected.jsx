@@ -64,6 +64,8 @@ const BookSelected = (props) => {
 
         <BookToolbar book={ book }/>
       </div>
+
+      <div className='year'>{ book.year }</div>
     </div>
   );
 }

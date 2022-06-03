@@ -1,0 +1,7 @@
+#books_list_linear {
+  .book-case {
+    &.selected {
+      box-shadow: 0px 0px 18px red inset;
+    }
+  }
+}

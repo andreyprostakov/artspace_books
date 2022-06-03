@@ -60,7 +60,7 @@ const PopularityChart = (props) => {
       autoPadding: false,
     },
     animation: {
-      duration: 4000,
+      duration: 2000,
     },
   }
 

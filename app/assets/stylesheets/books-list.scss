@@ -61,6 +61,7 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
     margin-bottom: 2px;
+    margin-right: 25px;
     padding: 0px 0 20px;
     min-width: 2000px;
     text-align: center;
@@ -158,6 +159,14 @@
     min-height: 200px;
     margin: 10px 20px 0 0;
     vertical-align: top;
+
+    .year {
+      float: left;
+      width: 100%;
+      padding-left: 52px;
+      text-align: left;
+      font-size: 12px;
+    }
 
     &:focus {
       background-color: green;
