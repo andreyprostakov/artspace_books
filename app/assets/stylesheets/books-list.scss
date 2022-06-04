@@ -182,7 +182,7 @@
       }
     }
 
-    &.non-selected {
+    &:not(.selected) {
       cursor: pointer;
       opacity: 0.8;
     }

@@ -20,7 +20,7 @@ const Book = (props) => {
 
   const isCurrent = id == currentBookId
   const coverUrl = book?.coverUrl || defaultCoverUrl
-  const classNames = classnames('book-case', { 'non-selected': !isCurrent, 'selected': isCurrent })
+  const classNames = classnames('book-case', { 'selected': isCurrent })
 
   useEffect(() => {
     if (isCurrent) { ref.current?.scrollIntoViewIfNeeded() }

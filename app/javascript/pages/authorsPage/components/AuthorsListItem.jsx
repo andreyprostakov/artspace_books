@@ -34,7 +34,7 @@ const AuthorsListItem = (props) => {
 
   return (
     <Col key={ author.id } sm={ leftSidebarShown ? 3 : 2 } ref={ ref }>
-      <div className={ classNames('authors-list-item', { 'non-selected': !isSelected, 'selected': isSelected })}
+      <div className={ classNames('authors-list-item', { 'selected': isSelected })}
            onClick={ () => onItemClick(author) }
            title={ author.fullname }>
         { author.thumbUrl && <ImageContainer className='thumb' url={ author.thumbUrl }/> }
