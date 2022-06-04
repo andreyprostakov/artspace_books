@@ -1,8 +1,9 @@
 import { first, last } from 'lodash'
 import apiClient from 'serverApi/apiClient'
 import { addBooks } from 'widgets/booksList/actions'
+import { setCurrentBookId } from 'store/axis/actions'
 import { selectBook, selectCurrentBook } from 'widgets/booksList/selectors'
-import { setNextBookId, showBook } from 'widgets/booksList/actions'
+import { showBook } from 'widgets/booksList/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
@@ -11,9 +12,9 @@ export const {
   assignBooks,
   assignBooksTotal,
   assignFilter,
-  changeSortBy,
-  changePage,
-  changePerPage,
+  assignSortBy,
+  assignPage,
+  assignPerPage,
 } = slice.actions
 
 export const fetchBooks = () => (dispatch, getState) => {
@@ -40,13 +41,12 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
   if (targetIndex < 0) { targetIndex = allBookIds.length - 1 }
   if (targetIndex >= allBookIds.length) { targetIndex = 0 }
 
-  dispatch(setNextBookId(allBookIds[targetIndex]))
+  dispatch(setCurrentBookId(allBookIds[targetIndex]))
 }
 
 export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
   const state = getState()
   const currentBook = bookId && selectBook(bookId)(state)
-  console.log([bookId, currentBook])
   if (currentBook) {
     dispatch(showBook(bookId))
   } else {
@@ -56,20 +56,19 @@ export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
 
 const switchToFirstBook = () => (dispatch, getState) => {
   const id = selectBookIds()(getState())[0]
-  console.log(`First book: ${id}`)
-  dispatch(setNextBookId(id))
+  dispatch(setCurrentBookId(id))
 }
 
 export const switchToPage = (page) => (dispatch) => {
-  dispatch(changePage(page))
+  dispatch(assignPage(page))
   dispatch(fetchBooks()).then(() =>
     dispatch(switchToFirstBook())
   )
 }
 
 export const switchToSortType = (value) => (dispatch) => {
-  dispatch(changePage(1))
-  dispatch(changeSortBy(value))
+  dispatch(assignPage(1))
+  dispatch(assignSortBy(value))
   dispatch(fetchBooks()).then(() =>
     dispatch(switchToFirstBook())
   )

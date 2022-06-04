@@ -1,19 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import { Card } from 'react-bootstrap'
 
-const TagCard = (props) => {
-  const { tag } = props
+import { selectCurrentTagId } from 'store/axis/selectors'
+import { selectTag } from 'store/metadata/selectors'
 
+const TagCard = (props) => {
+  const tagId = useSelector(selectCurrentTagId())
+  const tag = useSelector(selectTag(tagId))
+
+  if (!tag) { return null }
   return (
     <Card className='books-batch-controls sidebar-card-widget'>
       <Card.Header className='widget-title'>Tag: #{ tag.name }</Card.Header>
     </Card>
   )
-}
-
-TagCard.propTypes = {
-  tag: PropTypes.object.isRequired,
 }
 
 export default TagCard

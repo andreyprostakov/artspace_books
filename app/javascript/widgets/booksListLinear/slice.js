@@ -1,14 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const DEFAULT_SORT_BY = 'name'
+const DEFAULT_PAGE = 1
+const DEFAULT_PER_PAGE = 16
+
 export const slice = createSlice({
   name: 'booksListLinear',
   initialState: {
     bookIds: [],
     booksTotal: 0,
     listFilter: {},
-    sortBy: 'name',
-    page: 1,
-    perPage: 16,
+    sortBy: DEFAULT_SORT_BY,
+    page: DEFAULT_PAGE,
+    perPage: DEFAULT_PER_PAGE,
   },
   reducers: {
     assignBooks: (state, action) => {
@@ -26,18 +30,18 @@ export const slice = createSlice({
       state.listFilter = filterQuery
     },
 
-    changeSortBy: (state, action) => {
-      const newSortBy = action.payload
+    assignSortBy: (state, action) => {
+      const newSortBy = action.payload || DEFAULT_SORT_BY
       state.sortBy = newSortBy
     },
 
-    changePage: (state, action) => {
-      const page = action.payload
+    assignPage: (state, action) => {
+      const page = action.payload || DEFAULT_PAGE
       state.page = page
     },
 
-    changePerPage: (state, action) => {
-      const perPage = action.payload
+    assignPerPage: (state, action) => {
+      const perPage = action.payload || DEFAULT_PER_PAGE
       state.perPage = perPage
     },
   }

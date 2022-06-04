@@ -20,8 +20,8 @@ const BooksListControls = () => {
     <Card id='sidebar_books_list_controls' className='sidebar-card-widget'>
       <Card.Header className='widget-title'>Books: { totalCount }</Card.Header>
       <Card.Body>
-        <Pagination/>
         <SortingDropdown/>
+        <Pagination/>
       </Card.Body>
     </Card>
   )

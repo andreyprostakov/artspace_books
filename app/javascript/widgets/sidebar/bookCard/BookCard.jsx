@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
 import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectCurrentBook } from 'widgets/booksList/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -13,16 +14,24 @@ import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
+const BookCardWrap = () => {
+  const book = useSelector(selectCurrentBook())
+  if (!book) return null
+
+  return (<BookCard book={ book }/>)
+}
+
 const BookCard = (props) => {
   const { book } = props
   const dispatch = useDispatch()
   const author = useSelector(selectAuthor(book.authorId))
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
-  const coverUrl = book.coverUrl || defaultCoverUrl
   const tags = useSelector(selectTags(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
-  const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
+
+  const coverUrl = book.coverUrl || defaultCoverUrl
+  const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
 
   if (!book) { return null }
   return (
@@ -71,4 +80,4 @@ BookCard.propTypes = {
   book: PropTypes.object.isRequired,
 }
 
-export default BookCard
+export default BookCardWrap
