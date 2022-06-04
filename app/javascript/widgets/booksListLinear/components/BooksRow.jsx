@@ -8,10 +8,10 @@ const BooksRow = (props) => {
   const { ids: bookIds } = props
 
   return (
-    <div className='list-year'>
+    <div className='books-list-row'>
       <PopularityChart bookIds={ bookIds }/>
 
-      <div className='year-books'>
+      <div>
         { bookIds.map((bookId, i) =>
             <Book id={ bookId } key={ i }/>
         ) }
