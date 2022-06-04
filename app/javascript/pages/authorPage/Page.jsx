@@ -10,8 +10,8 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import usePageUrlStore from 'pages/authorPage/usePageUrlStore'
 
 import Layout from 'pages/Layout'
-import AuthorCard from 'widgets/authorCard/AuthorCard'
-import BatchControls from 'widgets/booksList/components/BatchControls'
+import AuthorCard from 'widgets/sidebar/authorCard/AuthorCard'
+import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
 import BooksList from 'widgets/booksList/BooksList'
 
 const AuthorPage = () => {

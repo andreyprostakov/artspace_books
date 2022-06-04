@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
-import { selectCurrentBook } from 'widgets/booksList/selectors'
 import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
@@ -14,9 +13,9 @@ import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
-const CurrentBookCard = () => {
+const BookCard = (props) => {
+  const { book } = props
   const dispatch = useDispatch()
-  const book = useSelector(selectCurrentBook())
   const author = useSelector(selectAuthor(book.authorId))
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
@@ -68,4 +67,8 @@ const CurrentBookCard = () => {
   )
 }
 
-export default CurrentBookCard
+BookCard.propTypes = {
+  book: PropTypes.object.isRequired,
+}
+
+export default BookCard

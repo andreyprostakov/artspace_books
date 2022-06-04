@@ -3,6 +3,7 @@
 @import 'authors-list';
 @import 'book-form';
 @import 'books-list';
+@import 'books-list-linear';
 @import 'navbar';
 @import 'scaffolds';
 @import 'widgets/form-input-image';
@@ -17,6 +18,7 @@
 @import 'sidebar/author-card';
 @import 'sidebar/batch-controls';
 @import 'sidebar/book-card';
+@import 'sidebar/books-list-linear-controls';
 
 body {
   min-width: 900px;

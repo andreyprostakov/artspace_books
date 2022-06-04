@@ -27,7 +27,7 @@ export const slice = createSlice({
 
     addBooks: (state, action) => {
       const { seed } = state
-      const books = shuffle(action.payload, seed)
+      const books = shuffle([...action.payload], seed)
       books.forEach(book => {
         state.booksIndexed[book.id] = book
         state.yearsLoaded.push(book.year)

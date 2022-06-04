@@ -55,10 +55,10 @@ class ApiClient {
     })
   }
 
-  getBooks({ years, authorId, tagId }) {
+  getBooks({ years, authorId, tagId, page, perPage, sortBy }) {
     return $.ajax({
-      url: `/books.json${ objectToParams({ years, author_id: authorId, tag_id: tagId }) }`
-    }).then((books) => books.map(bookData => Book.parse(bookData)))
+      url: `/books.json${ objectToParams({ years, author_id: authorId, tag_id: tagId, page, per_page: perPage, sort_by: sortBy }) }`
+    }).then(({ list, total }) => ({ books: list.map(bookData => Book.parse(bookData)), total }))
   }
 
   getAuthorBooks(authorId) {

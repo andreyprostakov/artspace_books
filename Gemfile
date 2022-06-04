@@ -24,6 +24,7 @@ gem 'sass-rails', '>= 6'
 gem 'slim'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
+gem 'kaminari'
 
 # media storage
 gem 'carrierwave'

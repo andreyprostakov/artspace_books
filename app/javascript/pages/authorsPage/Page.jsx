@@ -11,7 +11,7 @@ import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 import Layout from 'pages/Layout'
 import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
 import AuthorsListControls from 'pages/authorsPage/components/AuthorsListControls'
-import AuthorCard from 'widgets/authorCard/AuthorCard'
+import AuthorCard from 'widgets/sidebar/authorCard/AuthorCard'
 
 const AuthorsPage = () => {
   const dispatch = useDispatch()

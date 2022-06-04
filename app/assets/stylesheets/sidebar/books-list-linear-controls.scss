@@ -1,0 +1,40 @@
+#sidebar_books_list_controls {
+  .pagination {
+    float: right;
+    margin: 0;
+
+    .page-item {
+      .page-link {
+        padding: 4px 9px;
+        font-size: 12px;
+      }
+    }
+
+    .page-item:not(.disabled) {
+      .page-link {
+        color: #212529;
+      }
+    }
+  }
+
+  #sorting_dropdown {
+    float: left;
+    width: 140px;
+
+    button {
+      padding: 3px 15px 2px;
+      vertical-align: top;
+      width: 100%;
+      font-size: 12px;
+    }
+
+    .dropdown-menu {
+      max-width: 100%;
+      min-width: 100%;
+
+      .dropdown-item {
+        font-size: 12px;
+      }
+    }
+  }
+}

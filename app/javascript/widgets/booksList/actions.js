@@ -167,12 +167,12 @@ export const fetchAuthorYears = (authorId) => async (dispatch, getState) => {
 }
 
 export const fetchAuthorBooks = (authorId) => async (dispatch, getState) => {
-  const books = await apiClient.getBooks({ authorId })
+  const books = await apiClient.getBooks({ authorId }).books
   dispatch(addBooks(books))
 }
 
 export const fetchTagBooks = (tagId) => async (dispatch, getState) => {
-  const books = await apiClient.getBooks({ tagId })
+  const books = await apiClient.getBooks({ tagId }).books
   dispatch(addBooks(books))
 }
 
@@ -278,7 +278,7 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
       lazyBookLoadIteration(dispatch, getState, resolve, index + 1)
     } else {
       dispatch(markYearsAsLoading())
-      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId }).then((books) => {
+      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId }).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)
       })

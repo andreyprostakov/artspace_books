@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
@@ -16,13 +16,18 @@ const Book = (props) => {
   const book = useSelector(selectBook(id))
   const currentBookId = useSelector(selectCurrentBookId())
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
+  const ref = useRef(null)
 
-  console.log([currentBookId, id, book])
   const isCurrent = id == currentBookId
   const coverUrl = book?.coverUrl || defaultCoverUrl
   const classNames = classnames('book-case', { 'non-selected': !isCurrent, 'selected': isCurrent })
+
+  useEffect(() => {
+    if (isCurrent) { ref.current?.scrollIntoViewIfNeeded() }
+  })
+
   return (
-    <div className={ classNames } onClick={ () => dispatch(showBook(id)) } title={ book.id } { ...options }>
+    <div className={ classNames } onClick={ () => dispatch(showBook(id)) } title={ book.id } ref={ ref } { ...options }>
       <ImageContainer className='book-cover' url={ coverUrl }/>
       <div className='year'>{ book.year }</div>
     </div>

@@ -7,7 +7,7 @@ import { selectBatchModeOn, selectNextBookId } from 'widgets/booksList/selectors
 import { setCurrentBookId } from 'widgets/booksList/actions'
 import Layout from 'pages/Layout'
 import BooksList from 'widgets/booksList/BooksList'
-import BatchControls from 'widgets/booksList/components/BatchControls'
+import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
 import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 
 const BooksPage = () => {

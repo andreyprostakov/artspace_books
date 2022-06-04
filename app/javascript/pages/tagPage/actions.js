@@ -11,6 +11,7 @@ import {
 } from 'widgets/booksList/actions'
 
 import {
+  assignFilter,
   fetchBooks,
   setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
@@ -22,10 +23,11 @@ export const setupStoreForTagPage = (tagId, bookId = null) => async (dispatch, g
 
     dispatch(fetchAllTags()),
     dispatch(fetchAuthors()),
-  ]).then(() =>
-    dispatch(fetchBooks({ tagId }))
-  ).then(() => {
-    dispatch(setPageIsLoading(false))
-    dispatch(setupBooksListSelection(bookId))
+  ]).then(() => {
+    dispatch(assignFilter({ tagId }))
+    dispatch(fetchBooks()).then(() => {
+      dispatch(setPageIsLoading(false))
+      dispatch(setupBooksListSelection(bookId))
+    })
   })
 }

@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Toolbar from 'widgets/authorCard/Toolbar'
+import Toolbar from 'widgets/sidebar/authorCard/Toolbar'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
@@ -12,7 +12,7 @@ import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
-import { setupStoreForAuthorCard } from 'widgets/authorCard/actions'
+import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 

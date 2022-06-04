@@ -4,8 +4,6 @@ import { useDispatch } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import {
-  setBookShiftDirectionHorizontal,
-  shiftYear,
   syncCurrentBookStats,
 } from 'widgets/booksList/actions'
 import { shiftSelection } from 'widgets/booksListLinear/actions'
@@ -25,14 +23,12 @@ const HotKeysWrap = (props) => {
   useEffect(() => ref.current.focus(), [])
 
   const hotKeysHandlers = () => ({
-    DOWN: () => dispatch(shiftYear(-1)),
-    UP: () => dispatch(shiftYear(+1)),
+    DOWN: () => dispatch(shiftSelection(+4)),
+    UP: () => dispatch(shiftSelection(-4)),
     RIGHT: () => {
-      dispatch(setBookShiftDirectionHorizontal('right'))
       dispatch(shiftSelection(+1))
     },
     LEFT: () => {
-      dispatch(setBookShiftDirectionHorizontal('left'))
       dispatch(shiftSelection(-1))
     },
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
