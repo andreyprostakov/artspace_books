@@ -39,7 +39,9 @@ const AuthorsPage = () => {
       <Layout className='authors-list-page'>
         { leftSidebarShown &&
           <Col sm={4}>
-            <AuthorCard authorId={ authorId } onClose={ () => removeAuthorWidget() }/>
+            <div className='page-sidebar'>
+              <AuthorCard onClose={ () => removeAuthorWidget() }/>
+            </div>
           </Col>
         }
 

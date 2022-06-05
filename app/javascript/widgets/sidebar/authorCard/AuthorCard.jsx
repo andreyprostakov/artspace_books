@@ -11,10 +11,17 @@ import PopularityBadge from 'components/PopularityBadge'
 import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
+
+const AuthorCardWrap = () => {
+  const authorId = useSelector(selectCurrentAuthorId())
+  if (!authorId) { return null }
+  return (<AuthorCard authorId={ authorId }/>)
+}
 
 const AuthorCard = (props) => {
   const { authorId } = props
@@ -36,8 +43,9 @@ const AuthorCard = (props) => {
     return null
   }
 
+  console.log([authorDetails, authorDetails.imageUrl])
   return (
-    <Card className='author-card'>
+    <Card id='sidebar_author_card' className='sidebar-card-widget'>
       <Card.Header className='widget-title'>Author</Card.Header>
       { onClose &&
         <CloseIcon onClick={ () => onClose() }/>
@@ -95,4 +103,4 @@ const renderLifetime = (authorDetails, authorsPath) => {
   )
 }
 
-export default AuthorCard
+export default AuthorCardWrap

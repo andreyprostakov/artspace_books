@@ -1,4 +1,7 @@
 .page-sidebar {
+  overflow-y: auto;
+  position: relative;
+  height: calc(100vh - 56px - 10px);
   padding-top: 10px;
 }
 

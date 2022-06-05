@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 
 import Layout from 'pages/Layout'
@@ -12,13 +11,12 @@ import PageUrlStore from 'pages/tagPage/PageUrlStore'
 import PageStoreConfigurer from 'pages/tagPage/PageStoreConfigurer'
 
 const TagPage = () => {
-  const dispatch = useDispatch()
   return (
     <>
       <PageUrlStore/>
       <PageStoreConfigurer/>
 
-      <Layout className='tag-page'>
+      <Layout>
         <Col xs={ 4 }>
           <div className='page-sidebar'>
             <TagCard/>
