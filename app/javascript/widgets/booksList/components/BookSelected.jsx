@@ -11,7 +11,7 @@ import BookToolbar from 'widgets/booksList/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
-import { selectBook, selectNextBookId } from 'widgets/booksList/selectors'
+import { selectBook } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 
@@ -29,9 +29,8 @@ const BookSelected = (props) => {
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)
-  const nextBookId = useSelector(selectNextBookId())
 
-  useEffect(() => ref.current.focus(), [nextBookId])
+  useEffect(() => ref.current.focus(), [])
 
   return (
     <div className='book-case selected' ref={ ref }>

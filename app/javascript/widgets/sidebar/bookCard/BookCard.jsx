@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
-import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
-import { selectCurrentBook } from 'widgets/booksList/selectors'
+import { selectAuthor, selectCurrentBook, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import { useUrlStore } from 'store/urlStore'
 

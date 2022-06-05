@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authorsBatchReducer from 'pages/authorsPage/slice'
 
 import axisReducer from 'store/axis/slice'
+import bookSyncReducer from 'store/bookSync/slice'
 import metadataReducer from 'store/metadata/slice'
 import selectablesReducer from 'store/selectables/slice'
 
@@ -18,6 +19,7 @@ export default configureStore({
     axis: axisReducer,
     booksList: booksListReducer,
     booksListLinear: booksListLinearReducer,
+    bookSync: bookSyncReducer,
     imageModal: imageModalReducer,
     metadata: metadataReducer,
     navbar: navbarReducer,

@@ -4,17 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
-import { selectAuthor } from 'store/metadata/selectors'
+import { selectAuthor, selectBook } from 'store/metadata/selectors'
+import { showBook } from 'store/metadata/actions'
 import {
   selectBatchModeOn,
-  selectBook,
   selectBookIdsSelected,
 } from 'widgets/booksList/selectors'
 import {
   clearBooksSelection,
   reloadBooks,
   removeBookIdFromSelected,
-  showBook,
 } from 'widgets/booksList/actions'
 import apiClient from 'serverApi/apiClient'
 

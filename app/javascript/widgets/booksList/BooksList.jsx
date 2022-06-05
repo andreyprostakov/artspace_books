@@ -5,24 +5,22 @@ import { HotKeys } from 'react-hotkeys'
 
 import {
   selectCurrentAuthor,
+  selectCurrentBook,
 } from 'store/metadata/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
+import { setSeed } from 'store/axis/actions'
 
-import {
-  selectCurrentBook,
-  selectYearsToDisplay,
-} from 'widgets/booksList/selectors'
+import { selectYearsToDisplay } from 'widgets/booksList/selectors'
 import {
   fetchBooksForYears,
   jumpToFirstYear,
   jumpToLastYear,
   jumpToLatestYear,
   setBookShiftDirectionHorizontal,
-  setSeed,
   shiftSelection,
   shiftYear,
-  syncCurrentBookStats,
 } from 'widgets/booksList/actions'
+import { syncCurrentBookStats } from 'store/bookSync/actions'
 
 import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
 import AuthorBirthRow from 'widgets/booksList/components/AuthorBirthRow'

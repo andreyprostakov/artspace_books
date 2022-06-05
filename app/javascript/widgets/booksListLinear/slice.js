@@ -44,6 +44,13 @@ export const slice = createSlice({
       const perPage = action.payload || DEFAULT_PER_PAGE
       state.perPage = perPage
     },
+
+    clearState: (state, actions) => {
+      state.bookIds = []
+      state.booksTotal = 0
+      state.listFilter = {}
+      state.page = DEFAULT_PAGE
+    },
   }
 })
 

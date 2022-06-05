@@ -6,6 +6,7 @@ export const slice = createSlice({
     authorDetailsCurrent: {},
     authorsIndexed: {},
     bookDetailsCurrent: {},
+    booksIndexed: {},
     pageIsLoading: false,
     tagsIndexed: {},
     defaultCoverUrl: null,
@@ -24,6 +25,22 @@ export const slice = createSlice({
 
     setCurrentAuthorDetails: (state, action) => {
       state.authorDetailsCurrent = action.payload
+    },
+
+    addBook: (state, action) => {
+      const book = action.payload
+      state.booksIndexed[book.id] = book
+    },
+
+    addBooks: (state, action) => {
+      const books = action.payload
+      books.forEach(book => {
+        state.booksIndexed[book.id] = book
+      })
+    },
+
+    clearBooks: (state, action) => {
+      state.booksIndexed = {}
     },
 
     setPageIsLoading: (state, action) => {

@@ -8,6 +8,7 @@ export const slice = createSlice({
     currentAuthorId: null,
     currentBookId: null,
     currentTagId: null,
+    seed: null,
   },
   reducers: {
     setCurrentAuthorId: (state, action) => {
@@ -24,6 +25,8 @@ export const slice = createSlice({
       const id = action.payload
       state.currentTagId = id
     },
+
+    setSeed: (state) => { state.seed = Date.now() },
   }
 })
 

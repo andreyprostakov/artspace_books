@@ -19,7 +19,6 @@ const buildBookRowConfigs = (bookIds) => {
 const BooksListLinear = () => {
   const dispatch = useDispatch()
   const bookIds = useSelector(selectBookIds())
-
   const rows = buildBookRowConfigs(bookIds)
 
   return (

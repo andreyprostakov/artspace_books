@@ -6,7 +6,7 @@ import {
 } from 'store/metadata/actions'
 
 import {
-  cleanBooksList,
+  clearListState,
   fetchAuthorBooks,
   fetchAuthorYears,
   setupBooksListSelection,
@@ -19,7 +19,7 @@ import {
 export const setupStoreForAuthorPage = (authorId, bookId = null) => async (dispatch, getState) => {
   dispatch(setPageIsLoading(true))
   Promise.all([
-    dispatch(cleanBooksList()),
+    dispatch(clearListState()),
 
     dispatch(fetchAllTags()),
     dispatch(fetchAuthors()),

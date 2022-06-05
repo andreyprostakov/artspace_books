@@ -19,7 +19,7 @@ const UrlStore = () => {
   useEffect(() => {
     dispatch(setPageIsLoading(true))
     dispatch(setCurrentTagId(tagId))
-  }, [])
+  }, [tagId])
 
   return (
     <>

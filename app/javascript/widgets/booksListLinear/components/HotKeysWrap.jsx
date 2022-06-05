@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
-import {
-  syncCurrentBookStats,
-} from 'widgets/booksList/actions'
+import { syncCurrentBookStats } from 'store/bookSync/actions'
 import { shiftSelection } from 'widgets/booksListLinear/actions'
 
 const keyMap = {

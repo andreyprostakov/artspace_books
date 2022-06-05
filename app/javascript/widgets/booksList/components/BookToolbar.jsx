@@ -15,15 +15,15 @@ import {
 
 import {
   selectBookIsSelected,
-  selectBookIdsInProcessing,
 } from 'widgets/booksList/selectors'
 import {
   addBookIdToSelected,
   addTagToBook,
   removeBookIdFromSelected,
   removeTagFromBook,
-  syncBookStats,
 } from 'widgets/booksList/actions'
+import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
+import { syncBookStats } from 'store/bookSync/actions'
 
 import { useUrlStore } from 'store/urlStore'
 

@@ -4,4 +4,5 @@ export const {
   setCurrentAuthorId,
   setCurrentBookId,
   setCurrentTagId,
+  setSeed,
 } = slice.actions

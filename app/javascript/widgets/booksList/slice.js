@@ -1,47 +1,22 @@
 import { difference, find, pull, sort, uniq } from 'lodash'
-import shuffle from 'knuth-shuffle-seeded'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const slice = createSlice({
   name: 'booksList',
   initialState: {
-    booksIndexed: {},
-
-    bookIdsInProcessing: [],
-
-    bookNextId: null,
     bookShiftDirectionHorizontal: null,
-
     bookIdsCurrentInYear: {},
-    seed: null,
     years: [],
     yearsInLoading: [],
     yearsLoaded: [],
     yearsToLoad: [],
   },
   reducers: {
-    addBook: (state, action) => {
-      const book = action.payload
-      state.booksIndexed[book.id] = book
-    },
-
-    addBooks: (state, action) => {
-      const { seed } = state
-      const books = shuffle([...action.payload], seed)
+    markBooksYearsAsLoaded: (state, action) => {
+      const books = action.payload
       books.forEach(book => {
-        state.booksIndexed[book.id] = book
         state.yearsLoaded.push(book.year)
       })
-    },
-
-    markBookAsInProcess: (state, action) => {
-      const id = action.payload
-      state.bookIdsInProcessing.push(id)
-    },
-
-    unmarkBookAsInProcess: (state, action) => {
-      const id = action.payload
-      state.bookIdsInProcessing = pull(state.bookIdsInProcessing, id)
     },
 
     addYears: (state, action) => {
@@ -54,16 +29,13 @@ export const slice = createSlice({
       state.yearsToLoad = uniq([...state.yearsToLoad, ...difference(years, state.yearsLoaded)])
     },
 
-    cleanBooksList: (state, actions) => {
+    clearState: (state, actions) => {
+      state.bookShiftDirectionHorizontal = null
+      state.bookIdsCurrentInYear = {}
       state.years = []
       state.yearsLoaded = []
-      state.booksIndexed = {}
-      state.bookIdsCurrentInYear = {}
-    },
-
-    clearBooksIndexed: (state, actions) => {
-      state.yearsLoaded = []
-      state.booksIndexed = {}
+      state.yearsInLoading = []
+      state.yearsToLoad = []
     },
 
     markYearsAsLoading: (state, action) => {
@@ -86,13 +58,6 @@ export const slice = createSlice({
       const { id, year } = action.payload
       state.bookIdsCurrentInYear[year] = id
     },
-
-    setNextBookId: (state, action) => {
-      const id = action.payload
-      state.bookNextId = id
-    },
-
-    setSeed: (state) => { state.seed = Date.now() },
 
     setYears: (state, action) => state.years = action.payload.slice(),
   }

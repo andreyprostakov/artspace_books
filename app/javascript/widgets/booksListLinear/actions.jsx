@@ -1,11 +1,10 @@
 import { first, last } from 'lodash'
 import apiClient from 'serverApi/apiClient'
-import { addBooks } from 'widgets/booksList/actions'
 import { setCurrentBookId } from 'store/axis/actions'
-import { selectBook, selectCurrentBook } from 'widgets/booksList/selectors'
-import { showBook } from 'widgets/booksList/actions'
+import { clearSelection } from 'store/selectables/actions'
+import { selectBook, selectCurrentBook } from 'store/metadata/selectors'
+import { addBooks, showBook } from 'store/metadata/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
-
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
 import { slice } from 'widgets/booksListLinear/slice'
 export const {
@@ -15,6 +14,7 @@ export const {
   assignSortBy,
   assignPage,
   assignPerPage,
+  clearState: clearListInnerState,
 } = slice.actions
 
 export const fetchBooks = () => (dispatch, getState) => {
@@ -72,4 +72,9 @@ export const switchToSortType = (value) => (dispatch) => {
   dispatch(fetchBooks()).then(() =>
     dispatch(switchToFirstBook())
   )
+}
+
+export const clearListState = () => (dispatch) => {
+  dispatch(clearListInnerState())
+  dispatch(clearSelection())
 }

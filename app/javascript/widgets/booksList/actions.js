@@ -7,27 +7,30 @@ import {
   selectCurrentAuthorId,
   selectCurrentBookId,
 } from 'store/axis/selectors'
-import {
-  setCurrentBookId as setCurrentBookIdOriginal,
-} from 'store/axis/actions'
-
-import { selectTagNames } from 'store/metadata/selectors'
-import { setCurrentBookDetails } from 'store/metadata/actions'
+import { setCurrentBookId } from 'store/axis/actions'
 
 import {
   selectBook,
   selectBooks,
-  selectBookIdsByYear,
-  selectBookIdsInProcessing,
   selectCurrentBook,
+  selectTagNames,
+} from 'store/metadata/selectors'
+import {
+  addBook,
+  addBooks,
+  clearBooks,
+  setCurrentBookDetails,
+  showBook,
+} from 'store/metadata/actions'
+
+import {
+  selectBookIdsByYear,
   selectShuffledBooksOfYear,
   selectTargetYear,
   selectYears,
   selectYearCurrentBookId,
   selectYearsToLoad,
 } from 'widgets/booksList/selectors'
-
-import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 import {
   clearSelection,
@@ -36,20 +39,16 @@ import {
 } from 'store/selectables/actions'
 
 export const {
-  addBook,
-  addBooks,
   addYears,
   addYearsToLoad,
-  clearBooksIndexed,
-  cleanBooksList: clearListStore,
+  clearState: clearListInnerState,
   markBookAsInProcess,
+  markBooksYearsAsLoaded,
   unmarkBookAsInProcess,
   markYearsAsLoaded,
   markYearsAsLoading,
   setBookShiftDirectionHorizontal,
   setCurrentBookForYear,
-  setNextBookId,
-  setSeed,
   setYears,
 } = slice.actions
 
@@ -62,28 +61,16 @@ export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
   }
 }
 
-export const setCurrentBookId = (bookId) => (dispatch, getState) => {
-  dispatch(setCurrentBookIdOriginal(bookId))
-  dispatch(setNextBookId(null))
-}
-
-export const showBook = (bookId) => (dispatch, getState) => {
-  if (!bookId) { throw('Trying to show nothing!') }
+export const setBookAsCurrentInYear = (bookId) => (dispatch, getState) => {
   const state = getState()
-  const currentBookId = selectCurrentBookId()(state)
   const book = selectBook(bookId)(state)
-  if (!book) { throw(`Book #${bookId} is missing! Cannot show it.`) }
-
-  if (bookId != currentBookId) {
-    dispatch(setNextBookId(bookId))
-  }
   const currentYearsBookId = selectYearCurrentBookId(book.year)(state)
   if (bookId != currentYearsBookId) {
     dispatch(setCurrentBookForYear({ id: bookId, year: book.year }))
   }
 }
 
-export const upsertBook = (book) => (dispatch, getState) => {
+export const updateBookInYears = (book) => (dispatch, getState) => {
   const state = getState()
   const years = selectYears()(state)
   const previousYear = selectCurrentBook()(state)?.year
@@ -121,26 +108,7 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
   const targetId = shift > 0 ? last(displayedBookIds) : first(displayedBookIds)
   if (!targetId) { return }
 
-  dispatch(setNextBookId(targetId))
-}
-
-export const syncBookStats = (id) => async (dispatch, getState) => {
-  const ids = selectBookIdsInProcessing()(getState())
-  if (ids.includes(id)) { return }
-
-  Promise.all([
-    dispatch(markBookAsInProcess(id)),
-    dispatch(reloadBookWithSync(id))
-  ]).then(() =>
-    dispatch(unmarkBookAsInProcess(id))
-  )
-}
-
-export const syncCurrentBookStats = () => async (dispatch, getState) => {
-  const id = selectCurrentBookId()(getState())
-  if (!id) { return }
-
-  dispatch(syncBookStats(id))
+  dispatch(setCurrentBookId(targetId))
 }
 
 export const jumpToLatestYear = () => (dispatch, getState) => {
@@ -169,11 +137,13 @@ export const fetchAuthorYears = (authorId) => async (dispatch, getState) => {
 export const fetchAuthorBooks = (authorId) => async (dispatch, getState) => {
   const books = await apiClient.getBooks({ authorId }).books
   dispatch(addBooks(books))
+  dispatch(markBooksYearsAsLoaded(books))
 }
 
 export const fetchTagBooks = (tagId) => async (dispatch, getState) => {
   const books = await apiClient.getBooks({ tagId }).books
   dispatch(addBooks(books))
+  dispatch(markBooksYearsAsLoaded(books))
 }
 
 export const fetchBooksForYears = (years) => async (dispatch, getState) => {
@@ -182,41 +152,19 @@ export const fetchBooksForYears = (years) => async (dispatch, getState) => {
   dispatch(addYearsToLoad(years))
   const loadedBooks = await loadBooksLazily(dispatch, getState)
   dispatch(addBooks(loadedBooks))
+  dispatch(markBooksYearsAsLoaded(books))
 }
 
 export const reloadBook = (id) => async (dispatch, getState) => {
   const book = await apiClient.getBook(id)
-  dispatch(upsertBook(book))
+  dispatch(addBook(book))
+  dispatch(updateBookInYears(book))
   dispatch(showBook(id))
-}
-
-const reloadBookWithSync = (id) => async (dispatch, getState) => {
-  const apiCall = apiClient.syncBookStats(id)
-    .fail(response => {
-      dispatch(addErrorMessage(`Book #${id} not synced due to some failure`))
-      return response
-    })
-    .then(response => {
-      const book = response
-      dispatch(addSuccessMessage(`Book #${id} synced`))
-      dispatch(upsertBook(book))
-      return book
-    })
-  const result = await Promise.race(
-    [
-      apiCall,
-      new Promise((resolve) => setTimeout(() => resolve(null), 10000))
-    ]
-  )
-  if (result === null) {
-    dispatch(addErrorMessage(`Book #${id} not synced due to timeout failure`))
-  }
 }
 
 export const reloadBooks = () => (dispatch, getState) => {
   const currentBookId = selectCurrentBookId()(getState())
-  dispatch(clearBooksIndexed())
-  dispatch(clearSelection())
+  dispatch(clearListState())
   currentBookId && dispatch(reloadBook(currentBookId))
 }
 
@@ -308,7 +256,8 @@ export const addBookIdToSelected = selectId
 export const removeBookIdFromSelected = unselectId
 export const clearBooksSelection = clearSelection
 
-export const cleanBooksList = () => (dispatch) => {
-  dispatch(clearListStore())
+export const clearListState = () => (dispatch) => {
+  dispatch(clearBooks())
+  dispatch(clearListInnerState())
   dispatch(clearSelection())
 }

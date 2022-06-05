@@ -6,19 +6,18 @@ import classnames from 'classnames'
 
 import { mapPopularityChart, widthOfPopularityChart } from 'widgets/booksList/mapPopularityChart'
 import { selectCurrentBookId } from 'store/axis/selectors'
+import { selectBookPopularities, selectCurrentBook } from 'store/metadata/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import {
   selectBookIdsByYear,
-  selectBookPopularities,
   selectBookShiftDirectionHorizontal,
-  selectCurrentBook,
   selectYearCurrentBookId,
 } from 'widgets/booksList/selectors'
 import {
   setBookShiftDirectionHorizontal,
 } from 'widgets/booksList/actions'
 
-import PopularityChart from 'widgets/booksList/components/PopularityChart'
+import PopularityChart from 'components/PopularityChart'
 import Book from 'widgets/booksList/components/Book'
 import BookSelected from 'widgets/booksList/components/BookSelected'
 

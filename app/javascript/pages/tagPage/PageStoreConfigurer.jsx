@@ -7,9 +7,10 @@ import {
   fetchAuthors,
   setPageIsLoading,
 } from 'store/metadata/actions'
-import { cleanBooksList } from 'widgets/booksList/actions'
+import { clearListState } from 'widgets/booksListLinear/actions'
 import {
   assignFilter,
+  assignSortBy,
   fetchBooks,
   setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
@@ -22,7 +23,8 @@ const Configurer = () => {
   useEffect(() => {
     if (!tagId) { return }
     dispatch(setPageIsLoading(true))
-    dispatch(cleanBooksList())
+    dispatch(clearListState())
+    dispatch(assignSortBy('popularity'))
     Promise.all([
       dispatch(fetchAllTags()),
       dispatch(fetchAuthors()),

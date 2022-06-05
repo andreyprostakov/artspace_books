@@ -2,33 +2,19 @@ import { difference, pick } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
-import { selectCurrentBookId } from 'store/axis/selectors'
+import { selectCurrentBookId, selectSeed } from 'store/axis/selectors'
+import { selectBooks, selectCurrentBook } from 'store/metadata/selectors'
 import { selectIdsSelected, selectBatchModeOn, selectIdIsSelected } from 'store/selectables/selectors'
 
 export const selectBookIdsSelected = selectIdsSelected
 export const selectBookIsSelected = selectIdIsSelected
 export { selectBatchModeOn }
 
-export const selectBook = id => state => state.booksList.booksIndexed[id]
-
 export const selectBookIdsByYear = year => state => selectShuffledBooksOfYear(year)(state).map(book => book.id)
-
-export const selectBooks = () => state => Object.values(state.booksList.booksIndexed)
-
 
 export const selectBookShiftDirectionHorizontal = () => state => state.booksList.bookShiftDirectionHorizontal
 
-export const selectCurrentBook = () => state => selectBook(selectCurrentBookId()(state))(state)
-
 export const selectCurrentYear = () => state => selectCurrentBook()(state)?.year
-
-export const selectNextBookId = () => state => state.booksList.bookNextId
-
-export const selectBookIdsInProcessing = () => state => state.booksList.bookIdsInProcessing
-
-export const selectBookPopularities = (ids) => state => ids.map(id => selectBook(id)(state)?.popularity)
-
-export const selectSeed = () => state => state.booksList.seed
 
 export const selectShuffledBooksOfYear = (year) => state => {
   return shuffle(selectBooks()(state).filter(book => book.year == year), selectSeed()(state))
