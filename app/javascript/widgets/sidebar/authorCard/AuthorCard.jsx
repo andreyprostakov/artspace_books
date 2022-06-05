@@ -43,7 +43,6 @@ const AuthorCard = (props) => {
     return null
   }
 
-  console.log([authorDetails, authorDetails.imageUrl])
   return (
     <Card id='sidebar_author_card' className='sidebar-card-widget'>
       <Card.Header className='widget-title'>Author</Card.Header>

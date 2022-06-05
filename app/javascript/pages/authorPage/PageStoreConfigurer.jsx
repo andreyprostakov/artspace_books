@@ -14,7 +14,6 @@ import {
   assignPerPage,
   assignSortBy,
   fetchBooks,
-  setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
 
 const Configurer = () => {
@@ -36,7 +35,6 @@ const Configurer = () => {
       dispatch(assignFilter({ authorId }))
       dispatch(fetchBooks()).then(() => {
         dispatch(setPageIsLoading(false))
-        //dispatch(setupBooksListSelection(bookId))
       })
     })
   }, [authorId])

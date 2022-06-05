@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
 
-import { mapPopularityChart, widthOfPopularityChart } from 'widgets/booksList/mapPopularityChart'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectBookPopularities, selectCurrentBook } from 'store/metadata/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
@@ -17,7 +16,7 @@ import {
   setBookShiftDirectionHorizontal,
 } from 'widgets/booksList/actions'
 
-import PopularityChart from 'components/PopularityChart'
+import PopularityChart from 'widgets/booksList/components/PopularityChart'
 import Book from 'widgets/booksList/components/Book'
 import BookSelected from 'widgets/booksList/components/BookSelected'
 
@@ -32,10 +31,6 @@ const YearRow = (props) => {
   const yearIsCurrent = year === currentBook.year
   const direction = useSelector(selectBookShiftDirectionHorizontal())
   const dispatch = useDispatch()
-
-  const bookPopularities = useSelector(selectBookPopularities(displayedBookIds))
-  const indexOfCurrent = displayedBookIds.indexOf(currentBookId)
-  const chartWidth = widthForBooksRow(displayedBookIds.length)
 
   const classNames = classnames(
     'year-books',
@@ -54,8 +49,8 @@ const YearRow = (props) => {
 
   return (
     <div className='list-year'>
-      { yearIsCurrent && displayedBookIds.length > 1 &&
-        <PopularityChart displayedBookIds={ displayedBookIds } currentBookId={ currentBookId }/>
+      { yearIsCurrent &&
+        <PopularityChart bookIds={ displayedBookIds }/>
       }
 
       <div className='year-number'>

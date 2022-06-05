@@ -22,9 +22,7 @@ import {
 } from 'widgets/booksList/actions'
 import { syncCurrentBookStats } from 'store/bookSync/actions'
 
-import usePageUrlStore from 'pages/booksPage/usePageUrlStore'
-import AuthorBirthRow from 'widgets/booksList/components/AuthorBirthRow'
-import AuthorDeathRow from 'widgets/booksList/components/AuthorDeathRow'
+import { useUrlStore } from 'store/urlStore'
 import YearRow from 'widgets/booksList/components/YearRow'
 import YearsSlider from 'widgets/booksList/components/YearsSlider'
 
@@ -36,16 +34,14 @@ const BooksList = () => {
   const currentBook = useSelector(selectCurrentBook())
   const currentAuthor = useSelector(selectCurrentAuthor())
   const [{
-           bookId: currentUrlBookId,
            editBookModalShown
          },
          {
-           addBookWidget,
            closeModal,
            gotoAuthorBooks,
            gotoBooks,
            openEditBookModal,
-         }] = usePageUrlStore()
+         }] = useUrlStore()
   const ref = useRef(null)
 
   const [state, setState] = useState({})
@@ -120,11 +116,9 @@ const BooksList = () => {
 
         <div className='books-list-layer2'>
           <div className='books-list-layer3'>
-            <AuthorDeathRow/>
             { yearsToDisplay.map(year =>
               <YearRow year={ year } key={ year }/>
             ) }
-            <AuthorBirthRow/>
           </div>
         </div>
       </div>

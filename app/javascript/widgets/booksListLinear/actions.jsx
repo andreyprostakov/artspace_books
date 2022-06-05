@@ -44,11 +44,10 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
   dispatch(setCurrentBookId(allBookIds[targetIndex]))
 }
 
-export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
-  const state = getState()
-  const currentBook = bookId && selectBook(bookId)(state)
+export const setupBooksListSelection = () => (dispatch, getState) => {
+  const currentBook = selectCurrentBook()(getState())
   if (currentBook) {
-    dispatch(showBook(bookId))
+    dispatch(showBook(currentBook.id))
   } else {
     dispatch(switchToFirstBook())
   }

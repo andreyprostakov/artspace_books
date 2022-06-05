@@ -18,7 +18,6 @@ import {
 const Configurer = () => {
   const dispatch = useDispatch()
   const tagId = useSelector(selectCurrentTagId())
-  const bookId = useSelector(selectCurrentBookId())
 
   useEffect(() => {
     if (!tagId) { return }
@@ -32,7 +31,7 @@ const Configurer = () => {
       dispatch(assignFilter({ tagId }))
       dispatch(fetchBooks()).then(() => {
         dispatch(setPageIsLoading(false))
-        dispatch(setupBooksListSelection(bookId))
+        dispatch(setupBooksListSelection())
       })
     })
   }, [tagId])

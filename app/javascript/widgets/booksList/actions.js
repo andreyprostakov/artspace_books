@@ -52,10 +52,10 @@ export const {
   setYears,
 } = slice.actions
 
-export const setupBooksListSelection = (bookId) => (dispatch, getState) => {
-  const currentBook = bookId && selectBook(bookId)(getState())
-  if (currentBook) {
-    dispatch(showBook(bookId))
+export const setupBooksListSelection = () => (dispatch, getState) => {
+  const bookId = selectCurrentBookId()(getState())
+  if (bookId) {
+    dispatch(reloadBook(bookId))
   } else {
     dispatch(jumpToLatestYear())
   }
@@ -67,22 +67,6 @@ export const setBookAsCurrentInYear = (bookId) => (dispatch, getState) => {
   const currentYearsBookId = selectYearCurrentBookId(book.year)(state)
   if (bookId != currentYearsBookId) {
     dispatch(setCurrentBookForYear({ id: bookId, year: book.year }))
-  }
-}
-
-export const updateBookInYears = (book) => (dispatch, getState) => {
-  const state = getState()
-  const years = selectYears()(state)
-  const previousYear = selectCurrentBook()(state)?.year
-
-  dispatch(addBook(book))
-  if (!years.includes(book.year)) { dispatch(addYears([book.year])) }
-
-  if (previousYear && previousYear !== book.year) {
-    const yearBook = selectBooks()(state).find(book => book.year == previousYear)
-    if (!yearBook) {
-      setYears(years.filter(year => year != previousYear))
-    }
   }
 }
 
@@ -152,7 +136,7 @@ export const fetchBooksForYears = (years) => async (dispatch, getState) => {
   dispatch(addYearsToLoad(years))
   const loadedBooks = await loadBooksLazily(dispatch, getState)
   dispatch(addBooks(loadedBooks))
-  dispatch(markBooksYearsAsLoaded(books))
+  dispatch(markBooksYearsAsLoaded(loadedBooks))
 }
 
 export const reloadBook = (id) => async (dispatch, getState) => {
@@ -160,6 +144,21 @@ export const reloadBook = (id) => async (dispatch, getState) => {
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
   dispatch(showBook(id))
+}
+
+const updateBookInYears = (book) => (dispatch, getState) => {
+  const state = getState()
+  const years = selectYears()(state)
+  const previousYear = selectCurrentBook()(state)?.year
+
+  if (!years.includes(book.year)) { dispatch(addYears([book.year])) }
+
+  if (previousYear && previousYear !== book.year) {
+    const yearBook = selectBooks()(state).find(book => book.year == previousYear)
+    if (!yearBook) {
+      setYears(years.filter(year => year != previousYear))
+    }
+  }
 }
 
 export const reloadBooks = () => (dispatch, getState) => {
