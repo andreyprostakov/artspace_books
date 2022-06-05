@@ -1,5 +1,5 @@
 import { clamp, first, last, max, min, pull } from 'lodash'
-import { slice } from 'widgets/booksList/slice'
+import { slice } from 'widgets/booksListYearly/slice'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import apiClient from 'serverApi/apiClient'
 
@@ -24,13 +24,15 @@ import {
 } from 'store/metadata/actions'
 
 import {
+  pickYearsToLoad,
   selectBookIdsByYear,
   selectShuffledBooksOfYear,
   selectTargetYear,
   selectYears,
   selectYearCurrentBookId,
+  selectYearsInLoading,
   selectYearsToLoad,
-} from 'widgets/booksList/selectors'
+} from 'widgets/booksListYearly/selectors'
 
 import {
   clearSelection,
@@ -192,7 +194,7 @@ export const jumpToYear = (year) => (dispatch, getState) => {
   if (!year) { return }
 
   dispatch(switchToBookByYear(year))
-  const yearsToLoad = selectYearsToLoad(year)(getState())
+  const yearsToLoad = pickYearsToLoad(year)(getState())
   if (yearsToLoad.length < 1) { return }
 
   dispatch(fetchBooksForYears(yearsToLoad)).then(() =>
@@ -203,7 +205,7 @@ export const jumpToYear = (year) => (dispatch, getState) => {
 // PRIVATES
 
 const loadBooksLazily = (dispatch, getState) =>{
-  const { yearsToLoad } = getState().booksList
+  const yearsToLoad = selectYearsToLoad()(getState())
   if (yearsToLoad.length < 1) {
     return []
   } else {
@@ -217,8 +219,10 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
     return
   }
   return setTimeout(() => {
-    const { yearsToLoad, yearsInLoading } = getState().booksList
-    const currentAuthorId = selectCurrentAuthorId()(getState())
+    const state = getState()
+    const yearsToLoad = selectYearsToLoad()(state)
+    const yearsInLoading = selectYearsInLoading()(state)
+    const currentAuthorId = selectCurrentAuthorId()(state)
     if (yearsToLoad.length < 1) {
       resolve([])
     } else if (yearsInLoading.length > 0) {

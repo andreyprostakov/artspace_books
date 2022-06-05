@@ -7,8 +7,8 @@ import bookSyncReducer from 'store/bookSync/slice'
 import metadataReducer from 'store/metadata/slice'
 import selectablesReducer from 'store/selectables/slice'
 
-import booksListReducer from 'widgets/booksList/slice'
 import booksListLinearReducer from 'widgets/booksListLinear/slice'
+import booksListYearlyReducer from 'widgets/booksListYearly/slice'
 import imageModalReducer from 'widgets/imageModal/slice'
 import navbarReducer from 'widgets/navbar/slice'
 import notificationsReducer from 'widgets/notifications/slice'
@@ -17,8 +17,8 @@ export default configureStore({
   reducer: {
     authorsBatch: authorsBatchReducer,
     axis: axisReducer,
-    booksList: booksListReducer,
     booksListLinear: booksListLinearReducer,
+    booksListYearly: booksListYearlyReducer,
     bookSync: bookSyncReducer,
     imageModal: imageModalReducer,
     metadata: metadataReducer,

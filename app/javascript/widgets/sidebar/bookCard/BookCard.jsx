@@ -11,7 +11,7 @@ import { useUrlStore } from 'store/urlStore'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
-import BookToolbar from 'widgets/booksList/components/BookToolbar'
+import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
 
 const BookCardWrap = () => {
   const book = useSelector(selectCurrentBook())

@@ -2,7 +2,7 @@ import { difference, find, pull, sort, uniq } from 'lodash'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const slice = createSlice({
-  name: 'booksList',
+  name: 'booksListYearly',
   initialState: {
     bookShiftDirectionHorizontal: null,
     bookIdsCurrentInYear: {},

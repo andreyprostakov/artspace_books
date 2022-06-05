@@ -10,7 +10,7 @@ import {
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import { setSeed } from 'store/axis/actions'
 
-import { selectYearsToDisplay } from 'widgets/booksList/selectors'
+import { selectYearsToDisplay } from 'widgets/booksListYearly/selectors'
 import {
   fetchBooksForYears,
   jumpToFirstYear,
@@ -19,14 +19,14 @@ import {
   setBookShiftDirectionHorizontal,
   shiftSelection,
   shiftYear,
-} from 'widgets/booksList/actions'
+} from 'widgets/booksListYearly/actions'
 import { syncCurrentBookStats } from 'store/bookSync/actions'
 
 import { useUrlStore } from 'store/urlStore'
-import YearRow from 'widgets/booksList/components/YearRow'
-import YearsSlider from 'widgets/booksList/components/YearsSlider'
+import YearRow from 'widgets/booksListYearly/components/YearRow'
+import YearsSlider from 'widgets/booksListYearly/components/YearsSlider'
 
-const BooksList = () => {
+const BooksListYearly = () => {
   const dispatch = useDispatch()
   const yearsToDisplay = useSelector(selectYearsToDisplay())
   const currentAuthorId = useSelector(selectCurrentAuthorId())
@@ -149,4 +149,4 @@ const handleWheel = (dispatch, xDirection, yDirection) => {
   }
 }
 
-export default BooksList
+export default BooksListYearly

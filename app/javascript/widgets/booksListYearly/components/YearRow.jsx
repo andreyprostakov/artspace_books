@@ -11,14 +11,14 @@ import {
   selectBookIdsByYear,
   selectBookShiftDirectionHorizontal,
   selectYearCurrentBookId,
-} from 'widgets/booksList/selectors'
+} from 'widgets/booksListYearly/selectors'
 import {
   setBookShiftDirectionHorizontal,
-} from 'widgets/booksList/actions'
+} from 'widgets/booksListYearly/actions'
 
-import PopularityChart from 'widgets/booksList/components/PopularityChart'
-import Book from 'widgets/booksList/components/Book'
-import BookSelected from 'widgets/booksList/components/BookSelected'
+import PopularityChart from 'widgets/booksListYearly/components/PopularityChart'
+import Book from 'widgets/booksListYearly/components/Book'
+import BookSelected from 'widgets/booksListYearly/components/BookSelected'
 
 const YearRow = (props) => {
   const { year } = props

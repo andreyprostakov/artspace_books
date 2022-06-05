@@ -2,12 +2,12 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 
-import { selectBatchModeOn } from 'widgets/booksList/selectors'
+import { selectBatchModeOn } from 'widgets/booksListYearly/selectors'
 
-import ListUrlStore from 'widgets/booksList/components/UrlStore'
+import ListUrlStore from 'widgets/booksListYearly/components/UrlStore'
 import PageStoreConfigurer from 'pages/booksPage/PageStoreConfigurer'
 import Layout from 'pages/Layout'
-import BooksList from 'widgets/booksList/BooksList'
+import BooksListYearly from 'widgets/booksListYearly/BooksListYearly'
 import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
 
 const BooksPage = () => {
@@ -27,7 +27,7 @@ const BooksPage = () => {
           </Col>
         }
         <Col xs={ sidebarShown ? 8 : 12 }>
-          <BooksList/>
+          <BooksListYearly/>
         </Col>
       </Layout>
     </>

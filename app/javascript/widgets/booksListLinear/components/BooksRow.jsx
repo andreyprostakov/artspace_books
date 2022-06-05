@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import PopularityChart from 'widgets/booksListLinear/components/PopularityChart'
-import Book from 'widgets/booksList/components/Book'
+import Book from 'widgets/booksListYearly/components/Book'
 
 const BooksRow = (props) => {
   const { ids: bookIds } = props

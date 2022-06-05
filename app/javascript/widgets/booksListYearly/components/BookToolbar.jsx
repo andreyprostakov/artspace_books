@@ -15,13 +15,13 @@ import {
 
 import {
   selectBookIsSelected,
-} from 'widgets/booksList/selectors'
+} from 'widgets/booksListYearly/selectors'
 import {
   addBookIdToSelected,
   addTagToBook,
   removeBookIdFromSelected,
   removeTagFromBook,
-} from 'widgets/booksList/actions'
+} from 'widgets/booksListYearly/actions'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { syncBookStats } from 'store/bookSync/actions'
 

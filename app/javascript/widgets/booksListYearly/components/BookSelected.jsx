@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
-import BookToolbar from 'widgets/booksList/components/BookToolbar'
+import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'

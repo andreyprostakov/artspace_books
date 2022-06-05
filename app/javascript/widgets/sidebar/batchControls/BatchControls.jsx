@@ -9,12 +9,12 @@ import { showBook } from 'store/metadata/actions'
 import {
   selectBatchModeOn,
   selectBookIdsSelected,
-} from 'widgets/booksList/selectors'
+} from 'widgets/booksListYearly/selectors'
 import {
   clearBooksSelection,
   reloadBooks,
   removeBookIdFromSelected,
-} from 'widgets/booksList/actions'
+} from 'widgets/booksListYearly/actions'
 import apiClient from 'serverApi/apiClient'
 
 const BatchControls = () => {

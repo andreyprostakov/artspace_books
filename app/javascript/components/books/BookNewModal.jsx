@@ -6,7 +6,7 @@ import { Button, Modal } from 'react-bootstrap'
 
 import { selectCurrentAuthor } from 'store/metadata/selectors'
 import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
-import { reloadBook } from 'widgets/booksList/actions'
+import { reloadBook } from 'widgets/booksListYearly/actions'
 import BookForm from 'components/books/BookForm'
 import { useUrlStore } from 'store/urlStore'
 

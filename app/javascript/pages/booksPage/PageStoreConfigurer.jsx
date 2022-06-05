@@ -12,7 +12,7 @@ import {
   fetchYears,
   reloadBook,
   setupBooksListSelection,
-} from 'widgets/booksList/actions'
+} from 'widgets/booksListYearly/actions'
 
 const Configurer = () => {
   const dispatch = useDispatch()

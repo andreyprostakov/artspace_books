@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Slider } from 'rsuite'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { selectCurrentYear, selectYears } from 'widgets/booksList/selectors'
-import { jumpToYear } from 'widgets/booksList/actions'
+import { selectCurrentYear, selectYears } from 'widgets/booksListYearly/selectors'
+import { jumpToYear } from 'widgets/booksListYearly/actions'
 
 const YearsSlider = (props) => {
   const [state, setState] = useState({ value: 0 })
