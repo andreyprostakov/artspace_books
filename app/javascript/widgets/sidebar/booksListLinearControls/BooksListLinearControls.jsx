@@ -17,7 +17,7 @@ const BooksListControls = () => {
   const perPage = useSelector(selectPerPage())
 
   return (
-    <Card id='sidebar_books_list_controls' className='sidebar-card-widget'>
+    <Card className='sidebar-books-list-linear-controls-widget sidebar-card-widget'>
       <Card.Header className='widget-title'>Books: { totalCount }</Card.Header>
       <Card.Body>
         <SortingDropdown/>

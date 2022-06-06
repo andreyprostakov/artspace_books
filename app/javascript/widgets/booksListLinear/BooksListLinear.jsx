@@ -23,7 +23,7 @@ const BooksListLinear = () => {
 
   return (
     <HotKeysWrap>
-      <div id='books_list_linear'>
+      <div className='books-list-linear'>
         <div className='books-list-shadow shadow-top'/>
         <div className='books-list-shadow shadow-bottom'/>
         <div className='books-list-shadow shadow-left'/>

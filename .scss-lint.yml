@@ -1,0 +1,9 @@
+css_files:
+  - 'app/assets/stylesheets/**/*.scss'
+
+exclude:
+  - 'node_modules/**'
+
+linters:
+  SelectorDepth:
+    max_depth: 5

@@ -34,7 +34,7 @@ const BookCard = (props) => {
 
   if (!book) { return null }
   return (
-    <Card id='book_card' className='sidebar-card-widget'>
+    <Card className='sidebar-book-card-widget sidebar-card-widget'>
       <Card.Header className='widget-title'>Book</Card.Header>
       <Card.Body>
         <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>

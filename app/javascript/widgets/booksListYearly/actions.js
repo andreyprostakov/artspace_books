@@ -99,6 +99,7 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
 
 export const jumpToLatestYear = () => (dispatch, getState) => {
   const targetYear = last(selectYears()(getState()))
+  console.log('jumpToLatestYear ' + targetYear)
   dispatch(jumpToYear(targetYear))
 }
 

@@ -12,7 +12,7 @@ const SortingDropdown = () => {
   const currentValue = useSelector(selectSortBy())
 
   return (
-    <Dropdown id='sorting_dropdown'>
+    <Dropdown className='list-sort-dropdown'>
       <Dropdown.Toggle variant='secondary'>
         Sort by: { currentValue }
       </Dropdown.Toggle>

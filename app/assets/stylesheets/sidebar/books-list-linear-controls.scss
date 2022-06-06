@@ -1,40 +1,34 @@
-#sidebar_books_list_controls {
-  .pagination {
-    float: right;
-    margin: 0;
+.sidebar-books-list-linear-controls-widget .pagination {
+  float: right;
+  margin: 0;
 
-    .page-item {
-      .page-link {
-        padding: 4px 9px;
-        font-size: 12px;
-      }
-    }
-
-    .page-item:not(.disabled) {
-      .page-link {
-        color: #212529;
-      }
-    }
+  .page-item .page-link {
+    font-size: 12px;
+    padding: 4px 9px;
   }
 
-  #sorting_dropdown {
-    float: left;
-    width: 140px;
+  .page-item:not(.disabled) .page-link {
+    color: #212529;
+  }
+}
 
-    button {
-      padding: 3px 15px 2px;
-      vertical-align: top;
-      width: 100%;
+.sidebar-books-list-linear-controls-widget  .list-sort-dropdown {
+  float: left;
+  width: 140px;
+
+  button {
+    font-size: 12px;
+    padding: 3px 15px 2px;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  .dropdown-menu {
+    max-width: 100%;
+    min-width: 100%;
+
+    .dropdown-item {
       font-size: 12px;
-    }
-
-    .dropdown-menu {
-      max-width: 100%;
-      min-width: 100%;
-
-      .dropdown-item {
-        font-size: 12px;
-      }
     }
   }
 }

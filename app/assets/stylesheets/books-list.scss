@@ -62,14 +62,14 @@
     border-bottom: 1px solid;
     margin-bottom: 2px;
     margin-right: 25px;
-    padding: 0px 0 20px;
+    padding: 0 0 20px;
     min-width: 2000px;
     text-align: center;
 
     .year-number {
       position: absolute;
       right: 0;
-      left: 0px;
+      left: 0;
       bottom: 0;
       margin: auto;
       text-align: center;
@@ -81,7 +81,7 @@
 
       .death-icon {
         display: inline-block;
-        padding: 8px 0px;
+        padding: 8px 0;
         margin-right: 4px;
         background-color: #fff;
       }
@@ -92,7 +92,7 @@
 
       .birthday-icon {
         display: inline-block;
-        padding: 10px 0px;
+        padding: 10px 0;
         margin-right: 4px;
         background-color: #fff;
       }
@@ -101,19 +101,19 @@
 
   @keyframes move-left {
     from {
-      transform : translate(160px, 0px);
+      transform : translate(160px, 0);
     }
     to {
-      transform : translate(0px, 0px);
+      transform : translate(0px, 0);
     }
   }
 
   @keyframes move-right {
     from {
-      transform : translate(-160px, 0px);
+      transform : translate(-160px, 0);
     }
     to {
-      transform : translate(0px, 0px);
+      transform : translate(0px, 0);
     }
   }
 
@@ -162,10 +162,10 @@
 
     .year {
       float: left;
-      width: 100%;
+      font-size: 12px;
       padding-left: 52px;
       text-align: left;
-      font-size: 12px;
+      width: 100%;
     }
 
     &:focus {
@@ -173,7 +173,7 @@
     }
 
     &.selected {
-      box-shadow: 0px 0px 18px red inset;
+      box-shadow: 0 0 18px red inset;
       padding: 5px;
       width: 300px;
 

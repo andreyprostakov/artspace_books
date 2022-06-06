@@ -35,7 +35,7 @@ const BatchControls = () => {
   if (!widgetShown) { return null }
 
   return (
-    <Card className='sidebar-card-widget' id='sidebar_batch_controls'>
+    <Card className='sidebar-widget-batch-controls sidebar-card-widget'>
       <CloseIcon onClick={ () => dispatch(clearBooksSelection()) }/>
       <Card.Header className='widget-title'>Selection</Card.Header>
       <ListGroup variant="flush">

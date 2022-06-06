@@ -19,12 +19,12 @@ gem 'httparty'
 # views
 gem 'bootstrap', '~> 5.0.1'
 gem 'jbuilder', '~> 2.7'
+gem 'kaminari'
 gem 'react-rails'
 gem 'sass-rails', '>= 6'
 gem 'slim'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.0'
-gem 'kaminari'
 
 # media storage
 gem 'carrierwave'
@@ -53,6 +53,7 @@ group :development do
   gem 'pronto'
   gem 'pronto-flay', require: false
   gem 'pronto-rubocop', require: false
+  gem 'pronto-scss', require: false
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
 end
