@@ -1,110 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { HotKeys } from 'react-hotkeys'
 
-import {
-  selectCurrentAuthor,
-  selectCurrentBook,
-} from 'store/metadata/selectors'
-import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
+import { selectCurrentBookId } from 'store/axis/selectors'
 import { setSeed } from 'store/axis/actions'
-
+import { selectCurrentBook } from 'store/metadata/selectors'
 import { selectYearsToDisplay } from 'widgets/booksListYearly/selectors'
-import {
-  fetchBooksForYears,
-  jumpToFirstYear,
-  jumpToLastYear,
-  jumpToLatestYear,
-  setBookShiftDirectionHorizontal,
-  shiftSelection,
-  shiftYear,
-} from 'widgets/booksListYearly/actions'
-import { syncCurrentBookStats } from 'store/bookSync/actions'
+import { fetchBooksForYears, jumpToLatestYear } from 'widgets/booksListYearly/actions'
 
-import { useUrlStore } from 'store/urlStore'
+import HotKeysWrap from 'widgets/booksListYearly/components/HotKeysWrap'
 import YearRow from 'widgets/booksListYearly/components/YearRow'
 import YearsSlider from 'widgets/booksListYearly/components/YearsSlider'
 
 const BooksListYearly = () => {
   const dispatch = useDispatch()
   const yearsToDisplay = useSelector(selectYearsToDisplay())
-  const currentAuthorId = useSelector(selectCurrentAuthorId())
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-  const currentAuthor = useSelector(selectCurrentAuthor())
-  const [{
-           editBookModalShown
-         },
-         {
-           closeModal,
-           gotoAuthorBooks,
-           gotoBooks,
-           openEditBookModal,
-         }] = useUrlStore()
-  const ref = useRef(null)
-
-  const [state, setState] = useState({})
-
-  useEffect(() => {
-    setState({ currentAuthorId, currentBookId, currentBook })
-  }, [currentAuthorId, currentBookId, currentBook?.id])
-
-  useEffect(() => ref.current.focus(), [])
 
   useEffect(() => !currentBookId && dispatch(jumpToLatestYear()), [currentBookId])
-
   useEffect(() => dispatch(fetchBooksForYears(yearsToDisplay)), [currentBook])
-
   useEffect(() => dispatch(setSeed()), [])
 
-  const hotKeysHandlers = () => ({
-    DOWN: () => dispatch(shiftYear(-1)),
-    PAGE_DOWN: () => dispatch(shiftYear(-2)),
-    END: () => dispatch(jumpToFirstYear()),
-    UP: () => dispatch(shiftYear(+1)),
-    PAGE_UP: () => dispatch(shiftYear(+2)),
-    START: () => dispatch(jumpToLastYear()),
-
-    RIGHT: () => {
-      dispatch(setBookShiftDirectionHorizontal('right'))
-      dispatch(shiftSelection(+1))
-    },
-    LEFT: () => {
-      dispatch(setBookShiftDirectionHorizontal('left'))
-      dispatch(shiftSelection(-1))
-    },
-
-    SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
-    TOGGLE_AUTHOR: () => {
-      const { currentAuthorId, currentBookId, currentBook } = state
-      console.log(`TOGGLE_AUTHOR get State: ${currentAuthorId}, ${currentBookId}`)
-      console.log(`TOGGLE! AuthorID: ${currentAuthorId}, BookID: ${currentBookId}, Book: ${currentBook?.id}`)
-      if (!currentBook) {
-        return
-      } else if (currentAuthorId) {
-        gotoBooks({ bookId: currentBookId })
-      } else {
-        gotoAuthorBooks(currentBook.authorId, { bookId: currentBook.id })
-      }
-    },
-    TOGGLE_EDIT: () => {
-      if (!currentBook) { return }
-
-      if (editBookModalShown) {
-        closeModal()
-      } else {
-        openEditBookModal()
-      }
-    }
-  })
-
   return (
-    <HotKeys keyMap={ keyMap } handlers={ hotKeysHandlers() }>
-      <div className='books-list'
-        onWheel={ (e) => handleWheel(dispatch, e.deltaX, e.deltaY) }
-        tabIndex="-1" ref={ ref }>
-
+    <HotKeysWrap>
+      <div className='books-list'>
         <div className='books-list-shadow shadow-top'/>
         <div className='books-list-shadow shadow-bottom'/>
         <div className='books-list-shadow shadow-left'/>
@@ -122,31 +41,8 @@ const BooksListYearly = () => {
           </div>
         </div>
       </div>
-    </HotKeys>
+    </HotKeysWrap>
   )
-}
-
-const keyMap = {
-  DOWN: 'Down',
-  PAGE_DOWN: 'PageDown',
-  END: 'End',
-  UP: 'Up',
-  PAGE_UP: 'PageUp',
-  START: 'Home',
-  TOGGLE_EDIT: 'e',
-  TOGGLE_AUTHOR: 'a',
-  LEFT: 'Left',
-  RIGHT: 'Right',
-  SYNC_BOOK_STATS: 's',
-}
-
-const handleWheel = (dispatch, xDirection, yDirection) => {
-  const speed = Math.abs(yDirection) / 150
-  if (yDirection > 0) {
-    dispatch(shiftYear(-speed))
-  } else if (yDirection < 0) {
-    dispatch(shiftYear(+speed))
-  }
 }
 
 export default BooksListYearly
