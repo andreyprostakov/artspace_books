@@ -54,6 +54,6 @@ class BooksController < ApplicationController
   end
 
   def paginate(books_scope)
-    books_scope.page(params.fetch(:page, 1)).per(params.fetch(:per_page, 100))
+    books_scope.page(params.fetch(:page, 1)).per(params.fetch(:per_page, 1000))
   end
 end
