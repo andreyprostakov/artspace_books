@@ -1,3 +1,5 @@
+@import './palette';
+
 .books-list-linear {
   height: calc(100vh - 56px - 10px);
   overflow-y: auto;
@@ -29,7 +31,7 @@
     }
 
     &.selected {
-      box-shadow: 0 0 18px #f00 inset;
+      box-shadow: 0 0 18px $color-selection-inner-shadow inset;
     }
 
     &:not(.selected) {

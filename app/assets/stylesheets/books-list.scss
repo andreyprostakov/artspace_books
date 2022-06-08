@@ -1,3 +1,5 @@
+@import './palette';
+
 .books-list {
   overflow: hidden;
   position: relative;
@@ -101,19 +103,19 @@
 
   @keyframes move-left {
     from {
-      transform : translate(160px, 0);
+      transform: translate(160px, 0);
     }
     to {
-      transform : translate(0px, 0);
+      transform: translate(0, 0);
     }
   }
 
   @keyframes move-right {
     from {
-      transform : translate(-160px, 0);
+      transform: translate(-160px, 0);
     }
     to {
-      transform : translate(0px, 0);
+      transform: translate(0, 0);
     }
   }
 
@@ -173,7 +175,7 @@
     }
 
     &.selected {
-      box-shadow: 0 0 18px red inset;
+      box-shadow: 0 0 18px $color-selection-inner-shadow inset;
       padding: 5px;
       width: 300px;
 
