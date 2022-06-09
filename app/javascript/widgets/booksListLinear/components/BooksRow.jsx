@@ -13,7 +13,7 @@ const BooksRow = (props) => {
 
       <div>
         { bookIds.map((bookId, i) =>
-            <Book id={ bookId } key={ i }/>
+            <Book id={ bookId } key={ i } showYear={ true }/>
         ) }
       </div>
     </div>

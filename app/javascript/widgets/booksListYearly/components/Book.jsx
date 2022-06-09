@@ -11,7 +11,7 @@ import { selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import ImageContainer from 'components/ImageContainer'
 
 const Book = (props) => {
-  const { id, ...options } = props
+  const { id, showYear, ...options } = props
   const dispatch = useDispatch()
   const book = useSelector(selectBook(id))
   const currentBookId = useSelector(selectCurrentBookId())
@@ -27,15 +27,18 @@ const Book = (props) => {
   })
 
   return (
-    <div className={ classNames } onClick={ () => dispatch(showBook(id)) } title={ book.id } ref={ ref } { ...options }>
+    <div className={ classNames } onClick={ () => dispatch(showBook(id)) } title={ book.title } ref={ ref } { ...options }>
       <ImageContainer className='book-cover' url={ coverUrl }/>
-      <div className='year'>{ book.year }</div>
+      { showYear &&
+        <div className='year'>{ book.year }</div>
+      }
     </div>
   );
 }
 
 Book.propTypes = {
   id: PropTypes.number.isRequired,
+  showYear: PropTypes.bool,
 }
 
 export default Book
