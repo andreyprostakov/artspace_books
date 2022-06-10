@@ -12,15 +12,14 @@ export { selectBatchModeOn }
 
 const localState = state => state.booksListYearly
 
+export const selectShuffledBooksOfYear = year => state =>
+  shuffle(selectBooks()(state).filter(book => book.year === year), selectSeed()(state))
+
 export const selectBookIdsByYear = year => state => selectShuffledBooksOfYear(year)(state).map(book => book.id)
 
 export const selectBookShiftDirectionHorizontal = () => state => localState(state).bookShiftDirectionHorizontal
 
 export const selectCurrentYear = () => state => selectCurrentBook()(state)?.year
-
-export const selectShuffledBooksOfYear = year => state => {
-  return shuffle(selectBooks()(state).filter(book => book.year == year), selectSeed()(state))
-}
 
 export const selectYearCurrentBookIds = () => state => localState(state).bookIdsCurrentInYear
 
@@ -32,7 +31,7 @@ export const selectYearsReversed = () => state => selectYears()(state).reverse()
 
 export const selectYearsToDisplay = () => state => {
   const currentBook = selectCurrentBook()(state)
-  if (!currentBook) { return [] }
+  if (!currentBook) return []
 
   const topYear = currentBook?.year
   return pickNearEntries(selectYearsReversed()(state), topYear, { lengthBefore: 1, lengthAfter: 1, looped: false })
@@ -49,7 +48,7 @@ export const pickYearsToLoad = year => state => {
   const yearsFarther = pickNearEntries(allYears, year, { lengthBefore: 5, lengthAfter: 5, looped: false })
 
   const yearsNearerNotLoaded = difference(yearsNearer, [...yearsInLoading, ...yearsLoaded])
-  if (yearsNearerNotLoaded.length === 0) { return [...yearsToLoad] }
+  if (yearsNearerNotLoaded.length === 0) return [...yearsToLoad]
 
   return [
     ...yearsToLoad,

@@ -9,7 +9,7 @@ import { setCurrentBookDetails } from 'store/metadata/actions'
 import { selectCurrentBookDetails } from 'store/metadata/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import BookForm from 'components/books/BookForm'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const BookEditModal = () => {
   const bookId = useSelector(selectCurrentBookId())

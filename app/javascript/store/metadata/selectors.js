@@ -15,15 +15,15 @@ export const selectAllTags = () => state => Object.values(localState(state).tags
 
 export const selectPageIsLoading = () => state => localState(state).pageIsLoading
 
-export const selectTag  = id => state => localState(state).tagsIndexed[id]
+export const selectTag = id => state => localState(state).tagsIndexed[id]
 
 export const selectTagBookmark = () => () => 'BookmarkedByA'
 
-export const selectTagIdBookmark = () => state => selectAllTags()(state).find(tag => tag.name == 'BookmarkedByA')?.id
+export const selectTagIdBookmark = () => state => selectAllTags()(state).find(tag => tag.name === 'BookmarkedByA')?.id
 
 export const selectTagRead = () => () => 'ReadByA'
 
-export const selectTagIdRead = () => state => selectAllTags()(state).find(tag => tag.name == 'ReadByA')?.id
+export const selectTagIdRead = () => state => selectAllTags()(state).find(tag => tag.name === 'ReadByA')?.id
 
 export const selectTagNames = ids => state => selectTags(ids)(state).map(tag => tag.name)
 

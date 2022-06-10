@@ -26,7 +26,9 @@ export const slice = createSlice({
       state.currentTagId = id
     },
 
-    setSeed: state => { state.seed = Date.now() },
+    setSeed: state => {
+      state.seed = Date.now()
+    },
   }
 })
 

@@ -1,5 +1,3 @@
 import { sortBy } from 'lodash'
 
-export const sortByString = (entries, attributeName) => {
-  return sortBy(entries, entry => entry[attributeName].toUpperCase())
-}
+export const sortByString = (entries, attributeName) => sortBy(entries, entry => entry[attributeName].toUpperCase())

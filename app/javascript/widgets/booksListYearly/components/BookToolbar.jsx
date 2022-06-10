@@ -25,7 +25,7 @@ import {
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { syncBookStats } from 'store/bookSync/actions'
 
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const BookToolbar = (props) => {
   const { book } = props

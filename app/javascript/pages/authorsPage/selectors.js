@@ -6,10 +6,9 @@ import orders from 'pages/authorsPage/sortOrders'
 
 export const selectSortedAuthors = order => state => {
   const attribute = selectSortAttribute(order)(state)
-  let authors = sortBy(selectAuthors()(state), attribute)
-  if ([orders.BY_NAME_DESCENDING, orders.BY_RANK_DESCENDING, orders.BY_YEAR_DESCENDING].includes(order)) {
+  const authors = sortBy(selectAuthors()(state), attribute)
+  if ([orders.BY_NAME_DESCENDING, orders.BY_RANK_DESCENDING, orders.BY_YEAR_DESCENDING].includes(order))
     return authors.reverse()
-  }
   return authors
 }
 
@@ -22,7 +21,7 @@ export const selectSortAttribute = order => () => {
   }
 }
 
-export const selectLeftSidebarShown = () => state => !!selectCurrentAuthorId()(state)
+export const selectLeftSidebarShown = () => state => Boolean(selectCurrentAuthorId()(state))
 
 export const selectBatchMode = () => state => state.authorsBatch.batchMode
 

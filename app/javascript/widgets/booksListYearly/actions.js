@@ -55,27 +55,25 @@ export const {
 
 export const setupBooksListSelection = () => (dispatch, getState) => {
   const bookId = selectCurrentBookId()(getState())
-  if (bookId) {
+  if (bookId)
     dispatch(reloadBook(bookId))
-  } else {
+  else
     dispatch(jumpToLatestYear())
-  }
 }
 
 export const setBookAsCurrentInYear = bookId => (dispatch, getState) => {
   const state = getState()
   const book = selectBook(bookId)(state)
   const currentYearsBookId = selectYearCurrentBookId(book.year)(state)
-  if (bookId != currentYearsBookId) {
+  if (bookId !== currentYearsBookId)
     dispatch(setCurrentBookForYear({ id: bookId, year: book.year }))
-  }
 }
 
 export const shiftYear = shift => changeSelectedYear(state => {
   const years = selectYears()(state)
   const currentYear = selectCurrentBook()(state)?.year
   const index = years.indexOf(currentYear)
-  if (index < 0) { return null }
+  if (index < 0) return null
 
   const targetIndex = clamp(index + shift, 0, years.length - 1)
   return years[targetIndex]
@@ -91,20 +89,19 @@ export const shiftSelection = shift => (dispatch, getState) => {
   const yearBookIds = selectShuffledBooksOfYear(currentBook.year)(state).map(book => book.id)
   const displayedBookIds = pickNearEntries(yearBookIds, currentBook.id, { lengthBefore: 1, lengthAfter: 1 })
   const targetId = shift > 0 ? last(displayedBookIds) : first(displayedBookIds)
-  if (!targetId) { return }
+  if (!targetId) return
 
   dispatch(setCurrentBookId(targetId))
 }
 
 export const jumpToLatestYear = () => (dispatch, getState) => {
   const targetYear = last(selectYears()(getState()))
-  console.log('jumpToLatestYear ' + targetYear)
   dispatch(jumpToYear(targetYear))
 }
 
 export const loadCurrentBookDetails = () => async(dispatch, getState) => {
   const currentId = selectCurrentBookId()(getState())
-  if (!currentId) { return }
+  if (!currentId) return
 
   const details = await apiClient.getBookDetails(currentId)
   dispatch(setCurrentBookDetails(details))
@@ -133,7 +130,7 @@ export const fetchTagBooks = tagId => async dispatch => {
 }
 
 export const fetchBooksForYears = years => async(dispatch, getState) => {
-  if (!years.length) { return }
+  if (!years.length) return
 
   dispatch(addYearsToLoad(years))
   const loadedBooks = await loadBooksLazily(dispatch, getState)
@@ -153,36 +150,35 @@ const updateBookInYears = book => (dispatch, getState) => {
   const years = selectYears()(state)
   const previousYear = selectCurrentBook()(state)?.year
 
-  if (!years.includes(book.year)) { dispatch(addYears([book.year])) }
+  if (!years.includes(book.year)) dispatch(addYears([book.year]))
 
   if (previousYear && previousYear !== book.year) {
-    const yearBook = selectBooks()(state).find(book => book.year == previousYear)
-    if (!yearBook) {
-      setYears(years.filter(year => year != previousYear))
-    }
+    const yearBook = selectBooks()(state).find(b => b.year === previousYear)
+    if (!yearBook)
+      setYears(years.filter(year => year !== previousYear))
   }
 }
 
 export const reloadBooks = () => (dispatch, getState) => {
   const currentBookId = selectCurrentBookId()(getState())
   dispatch(clearListState())
-  currentBookId && dispatch(reloadBook(currentBookId))
+  if (currentBookId) dispatch(reloadBook(currentBookId))
 }
 
-export const addTagToBook = (id, tagName) => async(dispatch, getState) => {
+export const addTagToBook = (id, tagName) => (dispatch, getState) => {
   const state = getState()
   const book = selectBook(id)(state)
-  let tagNames = selectTagNames(book.tagIds)(state)
+  const tagNames = selectTagNames(book.tagIds)(state)
   tagNames.push(tagName)
   apiClient.putBookDetails(id, { tagNames }).then(() =>
     dispatch(reloadBook(id))
   )
 }
 
-export const removeTagFromBook = (id, tagName) => async(dispatch, getState) => {
+export const removeTagFromBook = (id, tagName) => (dispatch, getState) => {
   const state = getState()
   const book = selectBook(id)(state)
-  let tagNames = selectTagNames(book.tagIds)(state)
+  const tagNames = selectTagNames(book.tagIds)(state)
   pull(tagNames, tagName)
   tagNames.push('')
   apiClient.putBookDetails(id, { tagNames }).then(() =>
@@ -191,11 +187,11 @@ export const removeTagFromBook = (id, tagName) => async(dispatch, getState) => {
 }
 
 export const jumpToYear = year => (dispatch, getState) => {
-  if (!year) { return }
+  if (!year) return
 
   dispatch(switchToBookByYear(year))
   const yearsToLoad = pickYearsToLoad(year)(getState())
-  if (yearsToLoad.length < 1) { return }
+  if (yearsToLoad.length < 1) return
 
   dispatch(fetchBooksForYears(yearsToLoad)).then(() =>
     dispatch(switchToBookByYear(year))
@@ -204,30 +200,30 @@ export const jumpToYear = year => (dispatch, getState) => {
 
 // PRIVATES
 
-const loadBooksLazily = (dispatch, getState) =>{
+const loadBooksLazily = (dispatch, getState) => {
   const yearsToLoad = selectYearsToLoad()(getState())
-  if (yearsToLoad.length < 1) {
-    return []
-  } else {
-    return new Promise(resolve => lazyBookLoadIteration(dispatch, getState, resolve))
-  }
+  if (yearsToLoad.length < 1) return []
+
+  return new Promise(resolve => {
+    lazyBookLoadIteration(dispatch, getState, resolve)
+  })
 }
 
 const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
   if (index > 100) {
     resolve([])
-    return
+    return null
   }
   return setTimeout(() => {
     const state = getState()
     const yearsToLoad = selectYearsToLoad()(state)
     const yearsInLoading = selectYearsInLoading()(state)
     const currentAuthorId = selectCurrentAuthorId()(state)
-    if (yearsToLoad.length < 1) {
+    if (yearsToLoad.length < 1)
       resolve([])
-    } else if (yearsInLoading.length > 0) {
+    else if (yearsInLoading.length > 0)
       lazyBookLoadIteration(dispatch, getState, resolve, index + 1)
-    } else {
+    else {
       dispatch(markYearsAsLoading())
       apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId }).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
@@ -237,7 +233,7 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
   }, 100 + Math.floor(Math.random() * 100))
 }
 
-const changeSelectedYear = selectTargetYear => async(dispatch, getState) => {
+const changeSelectedYear = selectTargetYear => (dispatch, getState) => {
   const targetYear = selectTargetYear(getState())
   dispatch(jumpToYear(targetYear))
 }
@@ -245,13 +241,11 @@ const changeSelectedYear = selectTargetYear => async(dispatch, getState) => {
 const switchToBookByYear = targetYear => (dispatch, getState) => {
   const state = getState()
   const bookIdPreselected = selectYearCurrentBookId(targetYear)(state)
-  if (bookIdPreselected) {
+  if (bookIdPreselected)
     dispatch(showBook(bookIdPreselected))
-  } else {
+  else {
     const bookId = first(selectBookIdsByYear(targetYear)(state))
-    if (bookId) {
-      dispatch(showBook(bookId))
-    }
+    if (bookId) dispatch(showBook(bookId))
   }
 }
 

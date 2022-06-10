@@ -20,7 +20,9 @@ export const slice = createSlice({
     setAuthors: (state, action) => {
       const authors = action.payload
       state.authorsIndexed = {}
-      authors.forEach(author => state.authorsIndexed[author.id] = author)
+      authors.forEach(author => {
+        state.authorsIndexed[author.id] = author
+      })
     },
 
     setCurrentAuthorDetails: (state, action) => {
@@ -44,13 +46,15 @@ export const slice = createSlice({
     },
 
     setPageIsLoading: (state, action) => {
-      state.pageIsLoading = !!action.payload
+      state.pageIsLoading = Boolean(action.payload)
     },
 
     setTags: (state, action) => {
       const tags = action.payload
       state.tagsIndexed = {}
-      tags.forEach(tag => state.tagsIndexed[tag.id] = tag)
+      tags.forEach(tag => {
+        state.tagsIndexed[tag.id] = tag
+      })
     },
 
     setDefaultBookImageUrl: (state, action) => {

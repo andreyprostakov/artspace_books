@@ -11,6 +11,6 @@ import 'lodash'
 Rails.start()
 Turbolinks.start()
 
-let componentRequireContext = require.context('components', true)
-let ReactRailsUJS = require('react_ujs')
+const componentRequireContext = require.context('components', true)
+const ReactRailsUJS = require('react_ujs')
 ReactRailsUJS.useContext(componentRequireContext)

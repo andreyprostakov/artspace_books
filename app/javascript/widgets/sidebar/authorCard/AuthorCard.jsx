@@ -15,7 +15,7 @@ import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const AuthorCardWrap = () => {
   const authorId = useSelector(selectCurrentAuthorId())

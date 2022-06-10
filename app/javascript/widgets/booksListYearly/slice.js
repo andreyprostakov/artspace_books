@@ -59,7 +59,9 @@ export const slice = createSlice({
       state.bookIdsCurrentInYear[year] = id
     },
 
-    setYears: (state, action) => state.years = action.payload.slice(),
+    setYears: (state, action) => {
+      state.years = action.payload.slice()
+    },
   }
 })
 

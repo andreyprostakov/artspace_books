@@ -23,6 +23,7 @@ const Configurer = () => {
 
   useEffect(() => {
     if (!authorId) { return }
+    console.log('AuthorPage/Configurer.useEffect')
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('year'))

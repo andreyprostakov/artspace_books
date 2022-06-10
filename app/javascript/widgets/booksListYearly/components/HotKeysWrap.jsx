@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 import { selectCurrentAuthor, selectCurrentBook } from 'store/metadata/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import {

@@ -9,7 +9,7 @@ export const slice = createSlice({
   },
   reducers: {
     setBatchMode: (state, action) => {
-      state.batchMode = !!action.payload
+      state.batchMode = Boolean(action.payload)
     },
 
     addId: (state, action) => {

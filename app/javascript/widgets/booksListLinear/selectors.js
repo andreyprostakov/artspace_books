@@ -6,8 +6,8 @@ export const selectBooksTotal = () => state => localState(state).booksTotal
 
 export const selectFilter = () => state => localState(state).listFilter
 
-export const selectSortBy  = () => state => localState(state).sortBy
+export const selectSortBy = () => state => localState(state).sortBy
 
-export const selectPage  = () => state => localState(state).page
+export const selectPage = () => state => localState(state).page
 
-export const selectPerPage  = () => state => localState(state).perPage
+export const selectPerPage = () => state => localState(state).perPage

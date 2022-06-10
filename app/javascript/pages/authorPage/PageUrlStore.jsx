@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 import { setCurrentAuthorId } from 'store/axis/actions'
 import { setPageIsLoading } from 'store/metadata/actions'

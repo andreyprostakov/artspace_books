@@ -8,7 +8,7 @@ import { selectCurrentAuthor } from 'store/metadata/selectors'
 import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
 import { reloadBook } from 'widgets/booksListYearly/actions'
 import BookForm from 'components/books/BookForm'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const BookNewModal = () => {
   const author = useSelector(selectCurrentAuthor())

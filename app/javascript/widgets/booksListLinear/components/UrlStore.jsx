@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
@@ -31,6 +31,7 @@ const UrlStore = () => {
   }
 
   useEffect(() => {
+    console.log('BooksListLinear/UrlStore.useEffect')
     dispatch(setCurrentBookId(bookId))
     dispatch(assignPage(page))
     dispatch(assignPerPage(perPage))

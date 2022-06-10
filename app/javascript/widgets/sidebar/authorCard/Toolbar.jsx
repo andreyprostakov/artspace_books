@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import { selectTagBookmark, selectTagNames } from 'store/metadata/selectors'
 import { markAuthorAsBookmarked, unmarkAuthorAsBookmarked } from 'widgets/sidebar/authorCard/actions'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const Toolbar = (props) => {
   const { author } = props

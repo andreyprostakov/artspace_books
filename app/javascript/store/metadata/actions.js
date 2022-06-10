@@ -38,14 +38,12 @@ export const loadAuthorDetails = id => async dispatch => {
 }
 
 export const showBook = bookId => (dispatch, getState) => {
-  if (!bookId) { throw('Trying to show nothing!') }
+  if (!bookId) throw new Error('Trying to show nothing!')
 
   const state = getState()
   const currentBookId = selectCurrentBookId()(state)
   const book = selectBook(bookId)(state)
-  if (!book) { throw(`Book #${bookId} is missing! Cannot show it.`) }
+  if (!book) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
 
-  if (bookId != currentBookId) {
-    dispatch(setCurrentBookId(bookId))
-  }
+  if (bookId !== currentBookId) dispatch(setCurrentBookId(bookId))
 }

@@ -6,7 +6,7 @@ import { Card } from 'react-bootstrap'
 
 import { selectAuthor, selectCurrentBook, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
