@@ -24,6 +24,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 17
+      - name: Check Node
+        run: node --version
+      - name: Try Yarn install
+        run: yarn
       - name: Run ESLint
         uses: stefanoeb/eslint-action@1.0.2
         with:
