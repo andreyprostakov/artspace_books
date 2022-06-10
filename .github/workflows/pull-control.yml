@@ -24,9 +24,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 17
-      - name: Check Node
-        run: node --version
-      - name: Try Yarn install
+      - name: Yarn setup
         run: yarn
       - name: Run ESLint
         run: yarn run eslint app/javascript/
+      - name: Run Stylelint
+        run: yarn run stylelint app/assets/stylesheets/
