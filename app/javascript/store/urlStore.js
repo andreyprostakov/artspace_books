@@ -61,10 +61,10 @@ export const useUrlStore = (calculatePageState = null) => {
     editBookModalPath: bookId => buildPath({ params: { bookId }, hash: EDIT_BOOK_HASH }),
   }
 
-  const [state, setInfo] = useState(calculateState())
+  const [state, setState] = useState(calculateState())
 
   useEffect(() => {
-    setInfo(calculateState())
+    setState(calculateState())
   }, [bookId, location.hash, ...Object.values(pageState)])
 
   const actions = {
