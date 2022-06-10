@@ -19,3 +19,7 @@ jobs:
         env:
           PRONTO_PULL_REQUEST_ID: ${{ github.event.pull_request.number }}
           PRONTO_GITHUB_ACCESS_TOKEN: "${{ github.token }}"
+      - name: ESLint
+        uses: stefanoeb/eslint-action@1.0.2
+        with:
+          files: app/javascript/
