@@ -18,13 +18,13 @@ export const selectBookShiftDirectionHorizontal = () => state => localState(stat
 
 export const selectCurrentYear = () => state => selectCurrentBook()(state)?.year
 
-export const selectShuffledBooksOfYear = (year) => state => {
+export const selectShuffledBooksOfYear = year => state => {
   return shuffle(selectBooks()(state).filter(book => book.year == year), selectSeed()(state))
 }
 
 export const selectYearCurrentBookIds = () => state => localState(state).bookIdsCurrentInYear
 
-export const selectYearCurrentBookId = (year) => state => localState(state).bookIdsCurrentInYear[year]
+export const selectYearCurrentBookId = year => state => localState(state).bookIdsCurrentInYear[year]
 
 export const selectYears = () => state => localState(state).years.slice()
 

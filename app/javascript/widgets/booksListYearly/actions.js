@@ -62,7 +62,7 @@ export const setupBooksListSelection = () => (dispatch, getState) => {
   }
 }
 
-export const setBookAsCurrentInYear = (bookId) => (dispatch, getState) => {
+export const setBookAsCurrentInYear = bookId => (dispatch, getState) => {
   const state = getState()
   const book = selectBook(bookId)(state)
   const currentYearsBookId = selectYearCurrentBookId(book.year)(state)
@@ -71,7 +71,7 @@ export const setBookAsCurrentInYear = (bookId) => (dispatch, getState) => {
   }
 }
 
-export const shiftYear = (shift) => changeSelectedYear(state => {
+export const shiftYear = shift => changeSelectedYear(state => {
   const years = selectYears()(state)
   const currentYear = selectCurrentBook()(state)?.year
   const index = years.indexOf(currentYear)
@@ -85,7 +85,7 @@ export const jumpToFirstYear = () => changeSelectedYear(state => first(selectYea
 
 export const jumpToLastYear = () => changeSelectedYear(state => last(selectYears()(state)))
 
-export const shiftSelection = (shift) => (dispatch, getState) => {
+export const shiftSelection = shift => (dispatch, getState) => {
   const state = getState()
   const currentBook = selectCurrentBook()(state)
   const yearBookIds = selectShuffledBooksOfYear(currentBook.year)(state).map(book => book.id)
@@ -102,7 +102,7 @@ export const jumpToLatestYear = () => (dispatch, getState) => {
   dispatch(jumpToYear(targetYear))
 }
 
-export const loadCurrentBookDetails = () => async (dispatch, getState) => {
+export const loadCurrentBookDetails = () => async(dispatch, getState) => {
   const currentId = selectCurrentBookId()(getState())
   if (!currentId) { return }
 
@@ -110,29 +110,29 @@ export const loadCurrentBookDetails = () => async (dispatch, getState) => {
   dispatch(setCurrentBookDetails(details))
 }
 
-export const fetchYears = (query = {}) => async (dispatch) => {
+export const fetchYears = (query = {}) => async dispatch => {
   const years = await apiClient.getYears(query)
   dispatch(addYears(years))
 }
 
-export const fetchAuthorYears = (authorId) => async (dispatch) => {
+export const fetchAuthorYears = authorId => async dispatch => {
   const years = await apiClient.getAuthorYears(authorId)
   dispatch(addYears(years))
 }
 
-export const fetchAuthorBooks = (authorId) => async (dispatch) => {
+export const fetchAuthorBooks = authorId => async dispatch => {
   const books = await apiClient.getBooks({ authorId }).books
   dispatch(addBooks(books))
   dispatch(markBooksYearsAsLoaded(books))
 }
 
-export const fetchTagBooks = (tagId) => async (dispatch) => {
+export const fetchTagBooks = tagId => async dispatch => {
   const books = await apiClient.getBooks({ tagId }).books
   dispatch(addBooks(books))
   dispatch(markBooksYearsAsLoaded(books))
 }
 
-export const fetchBooksForYears = (years) => async (dispatch, getState) => {
+export const fetchBooksForYears = years => async(dispatch, getState) => {
   if (!years.length) { return }
 
   dispatch(addYearsToLoad(years))
@@ -141,14 +141,14 @@ export const fetchBooksForYears = (years) => async (dispatch, getState) => {
   dispatch(markBooksYearsAsLoaded(loadedBooks))
 }
 
-export const reloadBook = (id) => async (dispatch) => {
+export const reloadBook = id => async dispatch => {
   const book = await apiClient.getBook(id)
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
   dispatch(showBook(id))
 }
 
-const updateBookInYears = (book) => (dispatch, getState) => {
+const updateBookInYears = book => (dispatch, getState) => {
   const state = getState()
   const years = selectYears()(state)
   const previousYear = selectCurrentBook()(state)?.year
@@ -169,20 +169,20 @@ export const reloadBooks = () => (dispatch, getState) => {
   currentBookId && dispatch(reloadBook(currentBookId))
 }
 
-export const addTagToBook = (id, tagName) => async (dispatch, getState) => {
+export const addTagToBook = (id, tagName) => async(dispatch, getState) => {
   const state = getState()
   const book = selectBook(id)(state)
-  var tagNames = selectTagNames(book.tagIds)(state)
+  let tagNames = selectTagNames(book.tagIds)(state)
   tagNames.push(tagName)
   apiClient.putBookDetails(id, { tagNames }).then(() =>
     dispatch(reloadBook(id))
   )
 }
 
-export const removeTagFromBook = (id, tagName) => async (dispatch, getState) => {
+export const removeTagFromBook = (id, tagName) => async(dispatch, getState) => {
   const state = getState()
   const book = selectBook(id)(state)
-  var tagNames = selectTagNames(book.tagIds)(state)
+  let tagNames = selectTagNames(book.tagIds)(state)
   pull(tagNames, tagName)
   tagNames.push('')
   apiClient.putBookDetails(id, { tagNames }).then(() =>
@@ -190,7 +190,7 @@ export const removeTagFromBook = (id, tagName) => async (dispatch, getState) => 
   )
 }
 
-export const jumpToYear = (year) => (dispatch, getState) => {
+export const jumpToYear = year => (dispatch, getState) => {
   if (!year) { return }
 
   dispatch(switchToBookByYear(year))
@@ -209,7 +209,7 @@ const loadBooksLazily = (dispatch, getState) =>{
   if (yearsToLoad.length < 1) {
     return []
   } else {
-    return new Promise((resolve) => lazyBookLoadIteration(dispatch, getState, resolve))
+    return new Promise(resolve => lazyBookLoadIteration(dispatch, getState, resolve))
   }
 }
 
@@ -237,12 +237,12 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
   }, 100 + Math.floor(Math.random() * 100))
 }
 
-const changeSelectedYear = (selectTargetYear) => async (dispatch, getState) => {
+const changeSelectedYear = selectTargetYear => async(dispatch, getState) => {
   const targetYear = selectTargetYear(getState())
   dispatch(jumpToYear(targetYear))
 }
 
-const switchToBookByYear = (targetYear) => (dispatch, getState) => {
+const switchToBookByYear = targetYear => (dispatch, getState) => {
   const state = getState()
   const bookIdPreselected = selectYearCurrentBookId(targetYear)(state)
   if (bookIdPreselected) {
@@ -259,7 +259,7 @@ export const addBookIdToSelected = selectId
 export const removeBookIdFromSelected = unselectId
 export const clearBooksSelection = clearSelection
 
-export const clearListState = () => (dispatch) => {
+export const clearListState = () => dispatch => {
   dispatch(clearBooks())
   dispatch(clearListInnerState())
   dispatch(clearSelection())

@@ -14,6 +14,26 @@
     "sourceType": "module"
   },
   "rules": {
+    "array-element-newline": ["off"],
+    "arrow-parens": ["error", "as-needed"],
+    "capitalized-comments": ["off"],
+    "comma-dangle": ["off"],
+    "dot-notation": ["off"],
+    "function-call-argument-newline": ["off"],
+    "indent": ["error", 2],
+    "multiline-comment-style": ["off"],
+    "object-curly-spacing": ["error", "always"],
+    "one-var": ["off"],
+    "max-len": ["error", { "code": 120 }],
+    "no-var": ["error"],
+    "padded-blocks": ["error", "never"],
+    "quote-props": ["off"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "never"],
+    "space-before-function-paren": ["error", "never"],
+    "sort-imports": ["off"],
+    "sort-keys": ["off"],
+     "template-curly-spacing": ["off"]
   },
   "settings": {
     "react": {

@@ -11,8 +11,8 @@ export const usePageUrlStore = () => {
     state,
     {
       ...baseActions,
-      changeSortOrder: (order) => patch(buildPath({ params: { sort_order: order } })),
-      addAuthorWidget: (id) => patch(buildPath({ params: { author_id: id } })),
+      changeSortOrder: order => patch(buildPath({ params: { sort_order: order } })),
+      addAuthorWidget: id => patch(buildPath({ params: { author_id: id } })),
       removeAuthorWidget: () => patch(buildPath({ params: { author_id: null } })),
     },
     paths

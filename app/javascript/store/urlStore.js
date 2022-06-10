@@ -9,11 +9,12 @@ const NEW_BOOK_HASH = '#new-book'
 const EDIT_BOOK_HASH = '#edit-book'
 
 const absolutePaths = {
-  authorsPath: ({ authorId, sortOrder } = {}) => `/authors${ objectToParams({ author_id: authorId, sort_order: sortOrder }) }`,
-  authorBooksPath: (authorId, { bookId } = {}) => `/authors/${authorId}${ objectToParams({ book_id: bookId }) }`,
-  booksPath: ({ bookId } = {}) => `/books${ objectToParams({ book_id: bookId }) }`,
+  authorsPath: ({ authorId, sortOrder } = {}) =>
+    `/authors${ objectToParams({ 'author_id': authorId, 'sort_order': sortOrder }) }`,
+  authorBooksPath: (authorId, { bookId } = {}) => `/authors/${authorId}${ objectToParams({ 'book_id': bookId }) }`,
+  booksPath: ({ bookId } = {}) => `/books${ objectToParams({ 'book_id': bookId }) }`,
   tagsPath: () => '/tags',
-  tagBooksPath: (tagId, { bookId } = {}) => `/tags/${tagId}${ objectToParams({ book_id: bookId }) }`,
+  tagBooksPath: (tagId, { bookId } = {}) => `/tags/${tagId}${ objectToParams({ 'book_id': bookId }) }`,
 }
 
 export const useUrlStore = (calculatePageState = null) => {
@@ -41,8 +42,8 @@ export const useUrlStore = (calculatePageState = null) => {
     ...pageState,
   })
 
-  const goto = (path) => history.push(path)
-  const patch = (path) => history.replace(path)
+  const goto = path => history.push(path)
+  const patch = path => history.replace(path)
   const buildPath = ({ path, params, hash } = {}) => {
     return [
       path ?? window.LOCATION.pathname,
@@ -50,14 +51,14 @@ export const useUrlStore = (calculatePageState = null) => {
       hash ?? window.LOCATION.hash
     ].join('')
   }
-  const showModal = (hash) => patch(buildPath({ hash: hash }))
+  const showModal = hash => patch(buildPath({ hash: hash }))
 
   const paths = {
     ...absolutePaths,
     newAuthorModalPath: () => buildPath({ hash: NEW_AUTHOR_HASH }),
-    editAuthorModalPath: (authorId) => buildPath({ params: { authorId }, hash: EDIT_AUTHOR_HASH }),
+    editAuthorModalPath: authorId => buildPath({ params: { authorId }, hash: EDIT_AUTHOR_HASH }),
     newBookModalPath: () => buildPath({ hash: NEW_BOOK_HASH }),
-    editBookModalPath: (bookId) => buildPath({ params: { bookId }, hash: EDIT_BOOK_HASH }),
+    editBookModalPath: bookId => buildPath({ params: { bookId }, hash: EDIT_BOOK_HASH }),
   }
 
   const [state, setInfo] = useState(calculateState())

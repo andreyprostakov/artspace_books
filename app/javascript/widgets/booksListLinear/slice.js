@@ -45,7 +45,7 @@ export const slice = createSlice({
       state.perPage = perPage
     },
 
-    clearState: (state) => {
+    clearState: state => {
       state.bookIds = []
       state.booksTotal = 0
       state.listFilter = {}

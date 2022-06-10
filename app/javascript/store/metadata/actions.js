@@ -17,27 +17,27 @@ export const {
   setCurrentBookDetails,
 } = slice.actions
 
-export const fetchAllTags = () => async (dispatch) => {
+export const fetchAllTags = () => async dispatch => {
   const response = await apiClient.getTags()
   dispatch(setTags(response))
 }
 
-export const fetchAuthors = () => async (dispatch) => {
+export const fetchAuthors = () => async dispatch => {
   const response = await apiClient.getAuthors()
   dispatch(setAuthors(response))
 }
 
-export const loadAuthor = (id) => async (dispatch) => {
+export const loadAuthor = id => async dispatch => {
   const author = await apiClient.getAuthor(id)
   dispatch(addAuthor(author))
 }
 
-export const loadAuthorDetails = (id) => async (dispatch) => {
+export const loadAuthorDetails = id => async dispatch => {
   const details = await apiClient.getAuthorDetails(id)
   dispatch(setCurrentAuthorDetails(details))
 }
 
-export const showBook = (bookId) => (dispatch, getState) => {
+export const showBook = bookId => (dispatch, getState) => {
   if (!bookId) { throw('Trying to show nothing!') }
 
   const state = getState()

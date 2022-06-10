@@ -4,7 +4,7 @@ import {
 } from 'store/metadata/actions'
 import { slice } from 'pages/authorsPage/slice'
 
-export const setupStoreForPage = () => async (dispatch) => {
+export const setupStoreForPage = () => async dispatch => {
   dispatch(fetchAllTags())
   dispatch(fetchAuthors())
 }

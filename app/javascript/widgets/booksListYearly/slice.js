@@ -29,7 +29,7 @@ export const slice = createSlice({
       state.yearsToLoad = uniq([...state.yearsToLoad, ...difference(years, state.yearsLoaded)])
     },
 
-    clearState: (state) => {
+    clearState: state => {
       state.bookShiftDirectionHorizontal = null
       state.bookIdsCurrentInYear = {}
       state.years = []
@@ -38,7 +38,7 @@ export const slice = createSlice({
       state.yearsToLoad = []
     },
 
-    markYearsAsLoading: (state) => {
+    markYearsAsLoading: state => {
       const years = state.yearsToLoad
       state.yearsToLoad = []
       state.yearsInLoading = uniq([...state.yearsInLoading, ...years])

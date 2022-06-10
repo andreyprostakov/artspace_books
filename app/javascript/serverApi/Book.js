@@ -1,14 +1,14 @@
 class Book {
-  static parse(bookData) {
+  static parse(data) {
     return {
-      ...bookData,
-      authorId: bookData.author_id,
-      coverUrl: bookData.cover_thumb_url,
-      coverFullUrl: bookData.cover_full_url,
-      goodreadsUrl: bookData.goodreads_url,
-      tagIds: bookData.tag_ids,
-      popularity: bookData.popularity,
-      globalRank: bookData.global_rank,
+      ...data,
+      authorId: data['author_id'],
+      coverUrl: data['cover_thumb_url'],
+      coverFullUrl: data['cover_full_url'],
+      goodreadsUrl: data['goodreads_url'],
+      tagIds: data['tag_ids'],
+      popularity: data['popularity'],
+      globalRank: data['global_rank'],
     }
   }
 }

@@ -5,12 +5,12 @@ const pickNearEntries = (entries, middle, { lengthBefore = 1, lengthAfter = 1, l
 
   if (isEmpty(entries)) { return [] }
 
-  var indexes = []
+  let indexes = []
   const minOffset = -min([Math.floor((entries.length - 1) / 2), lengthBefore])
   const maxOffset = +min([Math.floor(entries.length / 2), lengthAfter])
-  var currentOffset = minOffset
+  let currentOffset = minOffset
   while (currentOffset <= maxOffset) {
-    var realIndex = middleIndex + currentOffset
+    let realIndex = middleIndex + currentOffset
     if (looped) { realIndex = indexToLoopedIndex(realIndex, entries) }
     if (!indexes.includes(realIndex)) { indexes.push(realIndex) }
 

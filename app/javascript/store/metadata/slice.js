@@ -39,7 +39,7 @@ export const slice = createSlice({
       })
     },
 
-    clearBooks: (state) => {
+    clearBooks: state => {
       state.booksIndexed = {}
     },
 
