@@ -1,8 +1,8 @@
-import { difference, pick } from 'lodash'
+import { difference } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
-import { selectCurrentBookId, selectSeed } from 'store/axis/selectors'
+import { selectSeed } from 'store/axis/selectors'
 import { selectBooks, selectCurrentBook } from 'store/metadata/selectors'
 import { selectIdsSelected, selectBatchModeOn, selectIdIsSelected } from 'store/selectables/selectors'
 

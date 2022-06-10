@@ -17,7 +17,7 @@ export const slice = createSlice({
       state.idsSelected = pull(state.idsSelected, id)
     },
 
-    clearSelection: (state, actions) => {
+    clearSelection: (state) => {
       state.idsSelected = []
     },
   }

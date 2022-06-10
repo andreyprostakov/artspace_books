@@ -1,4 +1,4 @@
-import { difference, find, pull, sort, uniq } from 'lodash'
+import { difference, uniq } from 'lodash'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const slice = createSlice({
@@ -29,7 +29,7 @@ export const slice = createSlice({
       state.yearsToLoad = uniq([...state.yearsToLoad, ...difference(years, state.yearsLoaded)])
     },
 
-    clearState: (state, actions) => {
+    clearState: (state) => {
       state.bookShiftDirectionHorizontal = null
       state.bookIdsCurrentInYear = {}
       state.years = []
@@ -38,7 +38,7 @@ export const slice = createSlice({
       state.yearsToLoad = []
     },
 
-    markYearsAsLoading: (state, action) => {
+    markYearsAsLoading: (state) => {
       const years = state.yearsToLoad
       state.yearsToLoad = []
       state.yearsInLoading = uniq([...state.yearsInLoading, ...years])

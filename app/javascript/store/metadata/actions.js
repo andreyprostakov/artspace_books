@@ -1,7 +1,5 @@
-import { first, last, max, min } from 'lodash'
-
 import { slice } from 'store/metadata/slice'
-import { selectBook, selectCurrentBook } from 'store/metadata/selectors'
+import { selectBook } from 'store/metadata/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import apiClient from 'serverApi/apiClient'
@@ -24,17 +22,17 @@ export const fetchAllTags = () => async (dispatch) => {
   dispatch(setTags(response))
 }
 
-export const fetchAuthors = () => async (dispatch, getState) => {
+export const fetchAuthors = () => async (dispatch) => {
   const response = await apiClient.getAuthors()
   dispatch(setAuthors(response))
 }
 
-export const loadAuthor = (id) => async (dispatch, getState) => {
+export const loadAuthor = (id) => async (dispatch) => {
   const author = await apiClient.getAuthor(id)
   dispatch(addAuthor(author))
 }
 
-export const loadAuthorDetails = (id) => async (dispatch, getState) => {
+export const loadAuthorDetails = (id) => async (dispatch) => {
   const details = await apiClient.getAuthorDetails(id)
   dispatch(setCurrentAuthorDetails(details))
 }

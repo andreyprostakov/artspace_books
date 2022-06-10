@@ -1,10 +1,10 @@
-import { isArray, pull } from 'lodash'
 import { objectToParams } from 'utils/objectToParams'
 import Author from 'serverApi/Author'
 import AuthorDetails from 'serverApi/AuthorDetails'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 import Tag from 'serverApi/Tag'
+import $ from 'jquery'
 
 class ApiClient {
   getYears({ tagId } = {}) {

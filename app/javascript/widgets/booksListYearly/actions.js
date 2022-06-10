@@ -1,4 +1,4 @@
-import { clamp, first, last, max, min, pull } from 'lodash'
+import { clamp, first, last, pull } from 'lodash'
 import { slice } from 'widgets/booksListYearly/slice'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import apiClient from 'serverApi/apiClient'
@@ -27,7 +27,6 @@ import {
   pickYearsToLoad,
   selectBookIdsByYear,
   selectShuffledBooksOfYear,
-  selectTargetYear,
   selectYears,
   selectYearCurrentBookId,
   selectYearsInLoading,
@@ -111,23 +110,23 @@ export const loadCurrentBookDetails = () => async (dispatch, getState) => {
   dispatch(setCurrentBookDetails(details))
 }
 
-export const fetchYears = (query = {}) => async (dispatch, getState) => {
+export const fetchYears = (query = {}) => async (dispatch) => {
   const years = await apiClient.getYears(query)
   dispatch(addYears(years))
 }
 
-export const fetchAuthorYears = (authorId) => async (dispatch, getState) => {
+export const fetchAuthorYears = (authorId) => async (dispatch) => {
   const years = await apiClient.getAuthorYears(authorId)
   dispatch(addYears(years))
 }
 
-export const fetchAuthorBooks = (authorId) => async (dispatch, getState) => {
+export const fetchAuthorBooks = (authorId) => async (dispatch) => {
   const books = await apiClient.getBooks({ authorId }).books
   dispatch(addBooks(books))
   dispatch(markBooksYearsAsLoaded(books))
 }
 
-export const fetchTagBooks = (tagId) => async (dispatch, getState) => {
+export const fetchTagBooks = (tagId) => async (dispatch) => {
   const books = await apiClient.getBooks({ tagId }).books
   dispatch(addBooks(books))
   dispatch(markBooksYearsAsLoaded(books))
@@ -142,7 +141,7 @@ export const fetchBooksForYears = (years) => async (dispatch, getState) => {
   dispatch(markBooksYearsAsLoaded(loadedBooks))
 }
 
-export const reloadBook = (id) => async (dispatch, getState) => {
+export const reloadBook = (id) => async (dispatch) => {
   const book = await apiClient.getBook(id)
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))

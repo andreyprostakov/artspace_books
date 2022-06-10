@@ -17,11 +17,11 @@ export const selectPageIsLoading = () => state => localState(state).pageIsLoadin
 
 export const selectTag  = (id) => state => localState(state).tagsIndexed[id]
 
-export const selectTagBookmark = () => state => 'BookmarkedByA'
+export const selectTagBookmark = () => () => 'BookmarkedByA'
 
 export const selectTagIdBookmark = () => state => selectAllTags()(state).find(tag => tag.name == 'BookmarkedByA')?.id
 
-export const selectTagRead = () => state => 'ReadByA'
+export const selectTagRead = () => () => 'ReadByA'
 
 export const selectTagIdRead = () => state => selectAllTags()(state).find(tag => tag.name == 'ReadByA')?.id
 

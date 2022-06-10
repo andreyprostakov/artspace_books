@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'
+import { useState , useEffect } from 'react'
 import { useLocation, useParams, useHistory } from 'react-router-dom'
 
 import { objectToParams } from 'utils/objectToParams'
@@ -45,9 +45,9 @@ export const useUrlStore = (calculatePageState = null) => {
   const patch = (path) => history.replace(path)
   const buildPath = ({ path, params, hash } = {}) => {
     return [
-      path ?? LOCATION.pathname,
-      objectToParams(params ?? {}, LOCATION.search),
-      hash ?? LOCATION.hash
+      path ?? window.LOCATION.pathname,
+      objectToParams(params ?? {}, window.LOCATION.search),
+      hash ?? window.LOCATION.hash
     ].join('')
   }
   const showModal = (hash) => patch(buildPath({ hash: hash }))
@@ -87,11 +87,4 @@ export const useUrlStore = (calculatePageState = null) => {
   }
 
   return [state, actions, paths]
-}
-
-export const connectToUrlStore = (Component) => {
-  return (props) => {
-    const [urlStore, urlStoreActions] = useUrlStore()
-    return <Component { ...props } urlStore={ urlStore } urlStoreActions= { urlStoreActions }/>
-  }
 }

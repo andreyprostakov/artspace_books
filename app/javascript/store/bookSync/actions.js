@@ -21,7 +21,7 @@ export const syncBookStats = (id) => async (dispatch, getState) => {
   })
 }
 
-const reloadBookWithSync = (id) => async (dispatch, getState) => {
+const reloadBookWithSync = (id) => async (dispatch) => {
   const apiCall = apiClient.syncBookStats(id)
     .fail(response => {
       dispatch(addErrorMessage(`Book #${id} not synced due to some failure`))

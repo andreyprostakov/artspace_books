@@ -13,11 +13,11 @@ export const selectSortedAuthors = (order) => state => {
   return authors
 }
 
-export const selectSortAttribute = (order) => state => {
+export const selectSortAttribute = (order) => () => {
   switch (order) {
-    case orders.BY_NAME_ASCENDING: case orders.BY_NAME_DESCENDING: return 'fullname'; break;
-    case orders.BY_RANK_ASCENDING: case orders.BY_RANK_DESCENDING: return 'rank'; break;
-    case orders.BY_YEAR_ASCENDING: case orders.BY_YEAR_DESCENDING: return 'birthYear'; break;
+    case orders.BY_NAME_ASCENDING: case orders.BY_NAME_DESCENDING: return 'fullname';
+    case orders.BY_RANK_ASCENDING: case orders.BY_RANK_DESCENDING: return 'rank';
+    case orders.BY_YEAR_ASCENDING: case orders.BY_YEAR_DESCENDING: return 'birthYear';
     default: return 'fullname'
   }
 }
