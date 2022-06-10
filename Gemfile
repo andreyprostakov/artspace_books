@@ -53,7 +53,6 @@ group :development do
   gem 'pronto'
   gem 'pronto-flay', require: false
   gem 'pronto-rubocop', require: false
-  gem 'pronto-scss', require: false
   gem 'spring'
   gem 'web-console', '>= 4.1.0'
 end
