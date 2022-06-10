@@ -11,7 +11,7 @@
   }
 
   .author-tags {
-    display: -webkit-box;
+    display: box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -27,7 +27,8 @@
     display: block;
     margin-bottom: 4px;
 
-    a, a:visited {
+    a,
+    a:visited {
       font-size: 14px;
       color: rgb(102, 102, 102);
     }

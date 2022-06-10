@@ -36,7 +36,7 @@
 
     &:not(.selected) {
       cursor: pointer;
-      opacity: .8;
+      opacity: 0.8;
     }
   }
 
@@ -54,7 +54,7 @@
   }
 
   .popularities-chart {
-    opacity: .3;
+    opacity: 0.3;
 
     canvas {
       left: 80px;

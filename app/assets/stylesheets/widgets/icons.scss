@@ -5,14 +5,15 @@
   background-color: #fff;
 
   &:hover {
-    opacity: 1.0;
+    opacity: 1;
     color: #ea4335;
     background-color: #fff;
   }
 }
 
 .icon-goodreads {
-  &, &:hover {
+  &,
+  &:hover {
     color: #382110;
     background-color: #f4f2e9;
   }

@@ -4,7 +4,7 @@
   margin-bottom: 10px;
 
   .book-details {
-    animation: appear .3s ease-out;
+    animation: appear 0.3s ease-out;
     float: right;
     height: 200px;
     overflow: hidden;
@@ -24,7 +24,7 @@
 
   .book-title {
     -webkit-box-orient: vertical;
-    display: -webkit-box;
+    display: box;
     font-size: 12px;
     font-style: italic;
     font-weight: 600;
