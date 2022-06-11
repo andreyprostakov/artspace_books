@@ -50,26 +50,28 @@ const AuthorCard = (props) => {
         <CloseIcon onClick={ () => onClose() }/>
       }
 
-      { authorDetails.imageUrl &&
-        <ImageContainer className='author-image'
-                        url={ authorDetails.imageCardUrl }
-                        onClick={ () => dispatch(setImageSrc(authorDetails.imageUrl)) }/>
-      }
-
       <Card.Body>
-        <Card.Title>{ authorDetails.fullname }</Card.Title>
-        <Card.Text className='author-card-text'>
-          <span>Years: { renderLifetime(authorDetails, authorsPath) }</span>
-          <br/>
-          <span>Popularity: { authorDetails.popularity.toLocaleString() } pts (
-            <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_RANK_ASCENDING }) }>#{ authorDetails.rank }</a>
-          )</span>
-        </Card.Text>
+        { authorDetails.imageUrl &&
+          <ImageContainer className='author-image'
+          url={ authorDetails.imageThumbUrl }
+          onClick={ () => dispatch(setImageSrc(authorDetails.imageUrl)) }/>
+        }
 
-        <div className='author-tags'>
-          { sortedTags.map(tag =>
-            <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
-          ) }
+        <div className='details-right'>
+          <div className='author-name'>{ authorDetails.fullname }</div>
+
+          <div className='author-card-text'>
+            <div>Years: { renderLifetime(authorDetails, authorsPath) }</div>
+            <div>Popularity: { authorDetails.popularity.toLocaleString() } pts (
+              <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_RANK_ASCENDING }) }>#{ authorDetails.rank }</a>
+            )</div>
+          </div>
+
+          <div className='author-tags'>
+            { sortedTags.map(tag =>
+              <TagBadge text={ tag.name } id={ tag.id } key={ tag.id } variant='dark'/>
+            ) }
+          </div>
         </div>
 
         <Toolbar author={ authorDetails }/>

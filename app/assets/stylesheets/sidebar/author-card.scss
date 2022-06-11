@@ -1,12 +1,26 @@
 .sidebar-widget-author-card {
   .author-image {
-    width: 100%;
-    height: 225px;
-    margin-top: 10px;
     cursor: zoom-in;
+    display: block;
+    position: relative;
+    float: left;
+    height: 130px;
+    width: 130px;
+    border-radius: 70px;
+  }
+
+  .details-right {
+    float: right;
+    width: 148px;
+  }
+
+  .author-name {
+    font-size: 12px;
+    font-weight: 600;
   }
 
   .author-card-text {
+    font-size: 12px;
     margin-bottom: 6px;
   }
 
@@ -25,11 +39,14 @@
 
   .author-toolbar {
     display: block;
-    margin-bottom: 4px;
+    margin-top: 12px;
+    float: left;
+    width: 100%;
 
     a,
     a:visited {
-      font-size: 14px;
+      font-size: 12px;
+      padding: 4px 8px;
       color: rgb(102, 102, 102);
     }
   }

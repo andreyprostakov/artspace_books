@@ -14,7 +14,7 @@ class AuthorDetails {
     }
   }
 
-  static objectToServerdata(details) {
+  static objectToServerData(details) {
     return {
       'fullname': details.fullname,
       'photo_url': details.imageUrl,

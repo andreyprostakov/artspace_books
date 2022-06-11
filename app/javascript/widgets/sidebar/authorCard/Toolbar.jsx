@@ -38,9 +38,7 @@ const Toolbar = (props) => {
             <FontAwesomeIcon icon={ faBook }/> ({author.booksCount})
           </Button>
         }
-      </ButtonGroup>
 
-      <ButtonGroup className='author-toolbar'>
         <Button variant='outline-warning' title='Edit info'
                 href={ editAuthorModalPath(author.id) }
                 onClick={ (e) => { e.preventDefault(); openEditAuthorModal() } }>
