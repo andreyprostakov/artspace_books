@@ -5,7 +5,7 @@ import { Form, FormControl, NavDropdown } from 'react-bootstrap'
 import { selectAuthors } from 'store/metadata/selectors'
 import { selectAuthorsSearchKey } from 'widgets/navbar/selectors'
 import { setAuthorsSearchKey } from 'widgets/navbar/actions'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
 

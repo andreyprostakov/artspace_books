@@ -17,6 +17,7 @@ const Layout = (props) => {
   if (pageIsLoading) {
     return 'Wait...'
   }
+  const x = 13
 
   return (
     <Row { ...options }>

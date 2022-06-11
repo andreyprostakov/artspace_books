@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
-import { setDefaultBookImageUrl } from 'widgets/booksList/actions'
+import { setDefaultBookImageUrl } from 'store/metadata/actions'
 
 const Page = (props) => {
   store.dispatch(setDefaultBookImageUrl(props.default_book_image_url))

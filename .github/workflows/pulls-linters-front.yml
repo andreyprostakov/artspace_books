@@ -1,0 +1,22 @@
+name: ESLint + Stylelint
+on:
+  pull_request:
+    branches:
+      - '*'
+jobs:
+  analize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Fetch base for diff
+        run: git fetch origin
+      - name: Setup Node JS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17
+      - name: Yarn setup
+        run: yarn
+      - name: Run ESLint
+        run: yarn run eslint app/javascript/
+      - name: Run Stylelint
+        run: yarn run stylelint app/assets/stylesheets/

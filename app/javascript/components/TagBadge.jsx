@@ -2,7 +2,7 @@ import React from 'react'
 import { Badge } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const TagBadge = (props) => {
   const { text, id, variant, renderPostfix } = props

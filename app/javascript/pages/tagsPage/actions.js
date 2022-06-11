@@ -1,5 +1,5 @@
 import { fetchAllTags } from 'store/metadata/actions'
 
-export const setupStoreForTagsPage = () => async (dispatch, getState) => {
-    dispatch(fetchAllTags())
+export const setupStoreForTagsPage = () => dispatch => {
+  dispatch(fetchAllTags())
 }

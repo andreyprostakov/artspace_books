@@ -1,16 +1,15 @@
-import { isArray  } from 'lodash'
+import { isArray } from 'lodash'
 
 export const objectToParams = (object, initialParams = '') => {
-  var params = new URLSearchParams(initialParams)
+  const params = new URLSearchParams(initialParams)
   Object.keys(object).forEach(key => {
     const value = object[key]
-    if (isArray(value)) {
+    if (isArray(value))
       value.forEach(entry => params.append(`${key}[]`, entry))
-    } else if (value) {
+    else if (value)
       params.set(key, value)
-    } else {
+    else
       params.delete(key)
-    }
   })
   const query = params.toString()
   return query ? `?${query}` : ''

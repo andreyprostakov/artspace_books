@@ -8,7 +8,7 @@ import { selectCurrentAuthorDetails } from 'store/metadata/selectors'
 import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import AuthorForm from 'components/authors/AuthorForm'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const AuthorEditModal = () => {
   const [{ editAuthorModalShown }, { closeModal }] = useUrlStore()

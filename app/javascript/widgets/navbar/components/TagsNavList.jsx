@@ -5,7 +5,7 @@ import { FormControl, NavDropdown } from 'react-bootstrap'
 import { selectAllTags } from 'store/metadata/selectors'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const TagsNavList = () => {
   const allTags = useSelector(selectAllTags())

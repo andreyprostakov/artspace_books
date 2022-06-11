@@ -20,6 +20,7 @@
     "jquery": "^3.6.0",
     "knuth-shuffle-seeded": "^1.0.6",
     "lodash": "^4.17.21",
+    "postcss": "8",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-autosuggest": "^10.1.0",
@@ -42,6 +43,15 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.17.0",
+    "eslint-plugin-react": "^7.30.0",
+    "stylelint": "^14.9.0",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-config-standard-scss": "^4.0.0",
     "webpack-dev-server": "^3.11.2"
+  },
+  "engines": {
+    "node": ">= 17.0.0"
   }
 }

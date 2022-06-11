@@ -1,3 +1,5 @@
+@import './palette';
+
 .authors-list-page {
   .authors-list-controls {
     margin-top: 10px;
@@ -26,10 +28,10 @@
     vertical-align: top;
 
     &.selected {
-      box-shadow: 0px 0px 10px #777 inset;
+      box-shadow: 0 0 10px $color-shadow inset;
     }
 
-    &.non-selected {
+    &:not(.selected) {
       cursor: pointer;
     }
 

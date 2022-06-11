@@ -1,12 +1,10 @@
 @import 'bootstrap';
-
-@import 'author-card';
 @import 'authors-list';
 @import 'book-form';
 @import 'books-list';
+@import 'books-list-linear';
 @import 'navbar';
 @import 'scaffolds';
-@import 'widgets/books-batch-controls';
 @import 'widgets/form-input-image';
 @import 'widgets/form-input-tags';
 @import 'widgets/icons';
@@ -14,6 +12,11 @@
 @import 'widgets/tag-container';
 @import 'widgets/years-slider';
 @import 'rsuite/dist/rsuite.min.css';
+@import 'sidebar/sidebar';
+@import 'sidebar/author-card';
+@import 'sidebar/batch-controls';
+@import 'sidebar/book-card';
+@import 'sidebar/books-list-linear-controls';
 
 body {
   min-width: 900px;

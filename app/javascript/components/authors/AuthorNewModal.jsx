@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
 import AuthorForm from 'components/authors/AuthorForm'
-import { useUrlStore } from 'store/urlStore'
+import useUrlStore from 'store/urlStore'
 
 const AuthorNewModal = () => {
   const [{ newAuthorModalShown }, { closeModal, gotoAuthorBooks }] = useUrlStore()
