@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
+import { setSeed } from 'store/axis/actions'
 import {
   fetchAllTags,
   fetchAuthors,
@@ -21,6 +22,7 @@ const Configurer = () => {
   useEffect(() => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
+    dispatch(setSeed())
 
     Promise.all([
       dispatch(fetchAllTags()),

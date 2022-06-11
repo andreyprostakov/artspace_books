@@ -14,9 +14,7 @@ export const slice = createSlice({
   reducers: {
     markBooksYearsAsLoaded: (state, action) => {
       const books = action.payload
-      books.forEach(book => {
-        state.yearsLoaded.push(book.year)
-      })
+      state.yearsLoaded = uniq([...state.yearsLoaded, ...books.map(b => b.year)])
     },
 
     addYears: (state, action) => {

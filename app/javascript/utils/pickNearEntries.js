@@ -6,7 +6,7 @@ const pickNearEntries = (entries, middle, { lengthBefore = 1, lengthAfter = 1, l
   if (isEmpty(entries)) return []
 
   const indexes = []
-  const leftOffset = -min([Math.floor((entries.length - 1) / 2), lengthBefore])
+  const leftOffset = min([Math.floor((entries.length - 1) / 2), lengthBefore])
   const rightOffset = min([Math.floor(entries.length / 2), lengthAfter])
   iterateIndexesNear(entries, middleIndex - leftOffset, middleIndex + rightOffset, index => {
     const workingIndex = looped ? indexToLoopedIndex(index, entries) : index

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { setSeed } from 'store/axis/actions'
 import { selectCurrentBook } from 'store/metadata/selectors'
 import { selectYearsToDisplay } from 'widgets/booksListYearly/selectors'
 import { fetchBooksForYears, jumpToLatestYear } from 'widgets/booksListYearly/actions'
@@ -16,10 +15,6 @@ const BooksListYearly = () => {
   const yearsToDisplay = useSelector(selectYearsToDisplay())
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-
-  useEffect(() => !currentBookId && dispatch(jumpToLatestYear()), [currentBookId])
-  useEffect(() => dispatch(fetchBooksForYears(yearsToDisplay)), [currentBook])
-  useEffect(() => dispatch(setSeed()), [])
 
   return (
     <HotKeysWrap>

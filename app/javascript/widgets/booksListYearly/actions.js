@@ -30,6 +30,7 @@ import {
   selectYears,
   selectYearCurrentBookId,
   selectYearsInLoading,
+  selectYearsLoaded,
   selectYearsToLoad,
 } from 'widgets/booksListYearly/selectors'
 
@@ -56,7 +57,10 @@ export const {
 export const setupBooksListSelection = () => (dispatch, getState) => {
   const bookId = selectCurrentBookId()(getState())
   if (bookId)
-    dispatch(reloadBook(bookId))
+    dispatch(reloadBook(bookId)).then(() => {
+      const book = selectCurrentBook()(getState())
+      dispatch(jumpToYear(book.year))
+    })
   else
     dispatch(jumpToLatestYear())
 }
@@ -119,13 +123,7 @@ export const fetchAuthorYears = authorId => async dispatch => {
 
 export const fetchAuthorBooks = authorId => async dispatch => {
   const books = await apiClient.getBooks({ authorId }).books
-  dispatch(addBooks(books))
-  dispatch(markBooksYearsAsLoaded(books))
-}
-
-export const fetchTagBooks = tagId => async dispatch => {
-  const books = await apiClient.getBooks({ tagId }).books
-  dispatch(addBooks(books))
+  if (books.length > 0) dispatch(addBooks(books))
   dispatch(markBooksYearsAsLoaded(books))
 }
 
@@ -134,7 +132,7 @@ export const fetchBooksForYears = years => async(dispatch, getState) => {
 
   dispatch(addYearsToLoad(years))
   const loadedBooks = await loadBooksLazily(dispatch, getState)
-  dispatch(addBooks(loadedBooks))
+  if (loadedBooks.length > 0) dispatch(addBooks(loadedBooks))
   dispatch(markBooksYearsAsLoaded(loadedBooks))
 }
 
@@ -142,6 +140,7 @@ export const reloadBook = id => async dispatch => {
   const book = await apiClient.getBook(id)
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
+  dispatch(setBookAsCurrentInYear(id))
   dispatch(showBook(id))
 }
 
@@ -189,13 +188,16 @@ export const removeTagFromBook = (id, tagName) => (dispatch, getState) => {
 export const jumpToYear = year => (dispatch, getState) => {
   if (!year) return
 
-  dispatch(switchToBookByYear(year))
-  const yearsToLoad = pickYearsToLoad(year)(getState())
+  const state = getState()
+  const loadedYears = selectYearsLoaded()(state)
+  if (loadedYears.includes(year)) dispatch(switchToBookByYear(year))
+
+  const yearsToLoad = pickYearsToLoad(year)(state)
   if (yearsToLoad.length < 1) return
 
-  dispatch(fetchBooksForYears(yearsToLoad)).then(() =>
+  dispatch(fetchBooksForYears(yearsToLoad)).then(() => {
     dispatch(switchToBookByYear(year))
-  )
+  })
 }
 
 // PRIVATES

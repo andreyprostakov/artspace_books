@@ -26,7 +26,7 @@ export const fetchBooks = () => (dispatch, getState) => {
     sortBy: selectSortBy()(state),
   }
   return apiClient.getBooks(query).then(({ books, total }) => {
-    dispatch(addBooks(books))
+    if (books.length > 0) dispatch(addBooks(books))
     dispatch(assignBooks(books))
     dispatch(assignBooksTotal(total))
   })

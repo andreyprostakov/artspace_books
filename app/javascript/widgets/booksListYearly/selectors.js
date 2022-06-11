@@ -1,4 +1,4 @@
-import { difference } from 'lodash'
+import { difference, uniq } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
@@ -39,6 +39,8 @@ export const selectYearsToDisplay = () => state => {
 
 export const selectYearsInLoading = () => state => localState(state).yearsInLoading
 
+export const selectYearsLoaded = () => state => localState(state).yearsLoaded
+
 export const selectYearsToLoad = () => state => localState(state).yearsToLoad
 
 export const pickYearsToLoad = year => state => {
@@ -50,8 +52,8 @@ export const pickYearsToLoad = year => state => {
   const yearsNearerNotLoaded = difference(yearsNearer, [...yearsInLoading, ...yearsLoaded])
   if (yearsNearerNotLoaded.length === 0) return [...yearsToLoad]
 
-  return [
+  return uniq([
     ...yearsToLoad,
     ...difference(yearsFarther, [...yearsInLoading, ...yearsLoaded])
-  ]
+  ])
 }
