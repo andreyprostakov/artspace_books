@@ -19,10 +19,10 @@ const AuthorPage = () => {
       <Layout>
         <Col xs={ 4 }>
           <div className='page-sidebar'>
+            <BookCard/>
             <AuthorCard/>
             <BooksListLinearControls/>
             <BatchControls/>
-            <BookCard/>
           </div>
         </Col>
 
