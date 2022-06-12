@@ -57,7 +57,7 @@ const BookCard = (props) => {
           </div>
 
           <div className='book-stats'>
-            { book.popularity && book.globalRank &&
+            { Boolean(book.popularity) && book.globalRank &&
               <PopularityBadge rank={ book.globalRank } points={ book.popularity }/>
             }
           </div>
