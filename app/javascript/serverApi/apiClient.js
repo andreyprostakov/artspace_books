@@ -8,16 +8,22 @@ import jQuery from 'jquery'
 // jQuery = window.$
 
 class ApiClient {
-  static getYears({ tagId } = {}) {
+  static getYears({ authorId, tagIds } = {}) {
+    const query = {
+      'author_id': authorId,
+      'tag_ids': tagIds,
+    }
     return jQuery.ajax({
-      url: `/years.json${ objectToParams({ 'tag_id': tagId }) }`
+      url: `/years.json${ objectToParams(query) }`
     })
   }
 
   static getAuthorYears(authorId) {
-    return jQuery.ajax({
-      url: `/years.json${ objectToParams({ 'author_id': authorId }) }`
-    })
+    return ApiClient.getYears({ authorId })
+  }
+
+  static getTagsYears(tagIds) {
+    return ApiClient.getYears({ tagIds })
   }
 
   static getAuthors() {
@@ -56,12 +62,13 @@ class ApiClient {
     })
   }
 
-  static getBooks({ years, authorId, tagId, page, perPage, sortBy }) {
+  static getBooks({ years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
     const params = {
       years,
       page,
       'author_id': authorId,
       'tag_id': tagId,
+      'tag_ids': tagIds,
       'per_page': perPage,
       'sort_by': sortBy
     }

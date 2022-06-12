@@ -43,6 +43,17 @@ const PageNavbar = () => {
           <NavDropdown.Divider />
           <NavDropdown.Item href={ tagsPath() }>List all</NavDropdown.Item>
         </NavDropdown>
+
+        <NavDropdown title='Awards'>
+          <NavDropdown.Item href={ '/awards/booker' }>Booker Prize</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/campbell' }>Campbell Awards</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/goodreads' }>Goodreads Choice</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/hugo' }>Hugo</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/nebula' }>Nebula</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/nytimes' }>NY Times Bestsellers</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/pulitzer' }>Pulitzer Prize</NavDropdown.Item>
+          <NavDropdown.Item href={ '/awards/prosvetitel' }>Просветитель</NavDropdown.Item>
+        </NavDropdown>
       </Nav>
     </Navbar>
   )

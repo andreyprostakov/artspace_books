@@ -1,0 +1,3 @@
+yarn run stylelint app/assets/stylesheets/
+yarn run eslint app/javascript/
+bundle exec pronto run

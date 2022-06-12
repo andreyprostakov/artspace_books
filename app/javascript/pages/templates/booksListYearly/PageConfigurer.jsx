@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
@@ -12,10 +13,14 @@ import {
   clearListState,
   fetchYears,
   reloadBook,
+  setFilters,
   setupBooksListSelection,
 } from 'widgets/booksListYearly/actions'
 
-const Configurer = () => {
+import ListUrlStore from 'widgets/booksListYearly/components/UrlStore'
+
+const Configurer = (props) => {
+  const listFilter = props.listFilter || {}
   const dispatch = useDispatch()
   const bookId = useSelector(selectCurrentBookId())
 
@@ -23,11 +28,12 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(setSeed())
+    if (listFilter) dispatch(setFilters(listFilter))
 
     Promise.all([
       dispatch(fetchAllTags()),
       dispatch(fetchAuthors()),
-      dispatch(fetchYears()),
+      dispatch(fetchYears(listFilter)),
     ]).then(() =>
       dispatch(setupBooksListSelection())
     ).then(() =>
@@ -35,7 +41,11 @@ const Configurer = () => {
     )
   }, [])
 
-  return null
+  return <ListUrlStore/>
+}
+
+Configurer.propTypes = {
+  listFilter: PropTypes.object,
 }
 
 export default Configurer

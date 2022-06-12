@@ -6,6 +6,7 @@ export const slice = createSlice({
   initialState: {
     bookShiftDirectionHorizontal: null,
     bookIdsCurrentInYear: {},
+    filters: {},
     years: [],
     yearsInLoading: [],
     yearsLoaded: [],
@@ -55,6 +56,11 @@ export const slice = createSlice({
     setCurrentBookForYear: (state, action) => {
       const { id, year } = action.payload
       state.bookIdsCurrentInYear[year] = id
+    },
+
+    setFilters: (state, action) => {
+      const filters = action.payload
+      state.filters = filters
     },
 
     setYears: (state, action) => {
