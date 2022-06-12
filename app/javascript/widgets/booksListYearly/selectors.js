@@ -57,3 +57,5 @@ export const pickYearsToLoad = year => state => {
     ...difference(yearsFarther, [...yearsInLoading, ...yearsLoaded])
   ])
 }
+
+export const selectCurrentFilters = () => state => localState(state).filters

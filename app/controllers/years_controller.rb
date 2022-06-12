@@ -16,6 +16,9 @@ class YearsController < ApplicationController
   end
 
   def apply_tag_filter(books_scope)
-    params[:tag_id].present? ? books_scope.with_tags(params[:tag_id]) : books_scope
+    ids = Array.wrap(params[:tag_id]).presence || params[:tag_ids]
+    return books_scope if ids.blank?
+
+    books_scope.with_tags(ids)
   end
 end

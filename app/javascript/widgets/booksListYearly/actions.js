@@ -26,6 +26,7 @@ import {
 import {
   pickYearsToLoad,
   selectBookIdsByYear,
+  selectCurrentFilters,
   selectShuffledBooksOfYear,
   selectYears,
   selectYearCurrentBookId,
@@ -51,6 +52,7 @@ export const {
   markYearsAsLoading,
   setBookShiftDirectionHorizontal,
   setCurrentBookForYear,
+  setFilters,
   setYears,
 } = slice.actions
 
@@ -118,6 +120,11 @@ export const fetchYears = (query = {}) => async dispatch => {
 
 export const fetchAuthorYears = authorId => async dispatch => {
   const years = await apiClient.getAuthorYears(authorId)
+  dispatch(addYears(years))
+}
+
+export const fetchTagsYears = tagIds => async dispatch => {
+  const years = await apiClient.getTagsYears(tagIds)
   dispatch(addYears(years))
 }
 
@@ -221,13 +228,14 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
     const yearsToLoad = selectYearsToLoad()(state)
     const yearsInLoading = selectYearsInLoading()(state)
     const currentAuthorId = selectCurrentAuthorId()(state)
+    const currentFilters = selectCurrentFilters()(state)
     if (yearsToLoad.length < 1)
       resolve([])
     else if (yearsInLoading.length > 0)
       lazyBookLoadIteration(dispatch, getState, resolve, index + 1)
     else {
       dispatch(markYearsAsLoading())
-      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId }).then(({ books }) => {
+      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId, ...currentFilters }).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)
       })
