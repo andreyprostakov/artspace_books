@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [31]
 
@@ -13,13 +14,9 @@ const Page = () => {
           Nebula awards
         </Card.Header>
         <Card.Body>
-          <a href='https://nebulas.sfwa.org/'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://nebulas.sfwa.org/' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/Nebula_Award'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/Nebula_Award' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

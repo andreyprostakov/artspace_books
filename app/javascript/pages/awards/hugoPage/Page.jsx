@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [29, 181]
 
@@ -13,13 +14,9 @@ const Page = () => {
           Hugo awards
         </Card.Header>
         <Card.Body>
-          <a href='https://www.thehugoawards.org/'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://www.thehugoawards.org/' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/Hugo_Award_for_Best_Novel'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/Hugo_Award_for_Best_Novel' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [0]
 
@@ -13,13 +14,9 @@ const Page = () => {
           Booker Prize winners
         </Card.Header>
         <Card.Body>
-          <a href='https://thebookerprizes.com/'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://thebookerprizes.com/' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/Booker_Prize'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/Booker_Prize' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

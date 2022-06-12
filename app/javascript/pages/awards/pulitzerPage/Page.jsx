@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [0]
 
@@ -13,13 +14,9 @@ const Page = () => {
           Pulitzer Prize winners
         </Card.Header>
         <Card.Body>
-          <a href='https://www.pulitzer.org/'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://www.pulitzer.org/' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/Pulitzer_Prize'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/Pulitzer_Prize' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

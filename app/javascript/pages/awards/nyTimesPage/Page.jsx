@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [0]
 
@@ -13,13 +14,9 @@ const Page = () => {
           The New York Times Best Sellers
         </Card.Header>
         <Card.Body>
-          <a href='https://www.nytimes.com/books/best-sellers/'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://www.nytimes.com/books/best-sellers/' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/The_New_York_Times_Best_Seller_list'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/The_New_York_Times_Best_Seller_list' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

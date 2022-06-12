@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
+import ExternalTextLink from 'components/ExternalTextLink'
 
 const TAG_IDS = [240]
 
@@ -13,13 +14,9 @@ const Page = () => {
           Goodreads Choice awards
         </Card.Header>
         <Card.Body>
-          <a href='https://www.goodreads.com/choiceawards'>
-            Official site
-          </a>
+          <ExternalTextLink href='https://www.goodreads.com/choiceawards' text='Official site'/>
           <br/>
-          <a href='https://en.wikipedia.org/wiki/Goodreads_Choice_Awards'>
-            Wiki
-          </a>
+          <ExternalTextLink href='https://en.wikipedia.org/wiki/Goodreads_Choice_Awards' text='Wiki'/>
         </Card.Body>
       </Card>
     ),

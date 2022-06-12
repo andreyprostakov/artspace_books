@@ -67,7 +67,6 @@ const PageContent = () => {
         <NebulaPage/>
       </Route>
 
-
       <Route path='/awards/nytimes'>
         <NYTimesPage/>
       </Route>
