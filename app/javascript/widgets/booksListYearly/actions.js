@@ -118,22 +118,6 @@ export const fetchYears = (query = {}) => async dispatch => {
   dispatch(addYears(years))
 }
 
-export const fetchAuthorYears = authorId => async dispatch => {
-  const years = await apiClient.getAuthorYears(authorId)
-  dispatch(addYears(years))
-}
-
-export const fetchTagsYears = tagIds => async dispatch => {
-  const years = await apiClient.getTagsYears(tagIds)
-  dispatch(addYears(years))
-}
-
-export const fetchAuthorBooks = authorId => async dispatch => {
-  const books = await apiClient.getBooks({ authorId }).books
-  if (books.length > 0) dispatch(addBooks(books))
-  dispatch(markBooksYearsAsLoaded(books))
-}
-
 export const fetchBooksForYears = years => async(dispatch, getState) => {
   if (!years.length) return
 
