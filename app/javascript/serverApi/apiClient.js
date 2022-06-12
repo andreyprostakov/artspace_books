@@ -4,8 +4,8 @@ import AuthorDetails from 'serverApi/AuthorDetails'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 import Tag from 'serverApi/Tag'
-import jQuery from 'jquery'
-// jQuery = window.$
+
+const jQuery = window.$
 
 class ApiClient {
   static getYears({ authorId, tagIds } = {}) {
