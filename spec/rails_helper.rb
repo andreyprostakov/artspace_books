@@ -1,11 +1,26 @@
 # frozen_string_literal: true
 
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails' do
+    add_filter 'spec/'
+    add_filter 'config/'
+    add_group 'Controllers', 'app/controllers'
+    add_group 'Models', 'app/models'
+    add_group 'Services', 'app/services'
+  end
+end
+
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+
+if ENV['COVERAGE']
+  Rails.application.eager_load!
+end
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
