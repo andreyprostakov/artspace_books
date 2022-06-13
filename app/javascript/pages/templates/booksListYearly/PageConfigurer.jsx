@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setSeed } from 'store/axis/actions'
-import {
-  fetchAllTags,
-  fetchAuthorsRefs,
-  setPageIsLoading,
-} from 'store/metadata/actions'
+import { fetchAuthorsRefs } from 'store/authors/actions'
+import { fetchAllTags, setPageIsLoading } from 'store/metadata/actions'
 import {
   clearListState,
   fetchYears,

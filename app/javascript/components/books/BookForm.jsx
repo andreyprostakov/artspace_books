@@ -10,7 +10,8 @@ import FormInputTags from 'components/FormInputTags'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { fetchAllTags } from 'store/metadata/actions'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
-import { selectAuthorRef, selectTags } from 'store/metadata/selectors'
+import { selectTags } from 'store/metadata/selectors'
+import { selectAuthorRef } from 'store/authors/selectors'
 import apiClient from 'serverApi/apiClient'
 
 const BookForm = (props) => {

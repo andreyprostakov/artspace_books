@@ -1,8 +1,5 @@
-import {
-  fetchAuthorsIndex,
-  fetchAuthorsRefs,
-  fetchAllTags,
-} from 'store/metadata/actions'
+import { fetchAuthorsIndex, fetchAuthorsRefs } from 'store/authors/actions'
+import { fetchAllTags } from 'store/metadata/actions'
 import { slice } from 'pages/authorsPage/slice'
 
 export const {

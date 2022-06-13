@@ -3,16 +3,6 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 
 const localState = state => state.metadata
 
-export const selectAuthorRef = id => state => localState(state).authorsRefs[id]
-
-export const selectAuthorsRefs = () => state => Object.values(localState(state).authorsRefs)
-
-export const selectAuthorFull = id => state => localState(state).authorsFull[id]
-
-export const selectAuthorIndexEntry = id => state => localState(state).authorsIndex[id]
-
-export const selectAuthorsIndex = () => state => Object.values(localState(state).authorsIndex)
-
 export const selectAllTags = () => state => Object.values(localState(state).tagsIndexed)
 
 export const selectPageIsLoading = () => state => localState(state).pageIsLoading

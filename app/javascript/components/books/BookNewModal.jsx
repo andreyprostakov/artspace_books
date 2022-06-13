@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
 import { selectCurrentAuthorId } from 'store/axis/selectors'
-import { reloadAuthor } from 'store/metadata/actions'
+import { reloadAuthor } from 'store/authors/actions'
 import { reloadBook } from 'widgets/booksListYearly/actions'
 import BookForm from 'components/books/BookForm'
 import useUrlStore from 'store/urlStore'

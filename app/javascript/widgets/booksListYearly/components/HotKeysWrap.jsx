@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import useUrlStore from 'store/urlStore'
-import { selectAuthorFull, selectCurrentBook } from 'store/metadata/selectors'
+import { selectAuthorFull } from 'store/authors/selectors'
+import { selectCurrentBook } from 'store/metadata/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import {
   jumpToFirstYear,

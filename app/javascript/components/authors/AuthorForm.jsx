@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import InputLine from 'components/FormInputLine'
 import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/authors/apiClient'
 
 import { selectTags  } from 'store/metadata/selectors'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
@@ -35,9 +35,9 @@ const AuthorForm = (props) => {
 
   const sendRequest = (formData) => {
     if (authorFull.new) {
-      return apiClient.postAuthorDetails(formData)
+      return apiClient.postNewAuthor(formData)
     } else {
-      return apiClient.putAuthorDetails(authorFull.id, formData)
+      return apiClient.putAuthorUpdates(authorFull.id, formData)
     }
   }
 

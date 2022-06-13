@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
-import { selectAuthorRef, selectBook } from 'store/metadata/selectors'
+import { selectAuthorRef } from 'store/authors/selectors'
+import { selectBook } from 'store/metadata/selectors'
 import { showBook } from 'store/metadata/actions'
 import {
   selectBatchModeOn,

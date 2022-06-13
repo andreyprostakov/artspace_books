@@ -2,11 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
-import {
-  fetchAllTags,
-  fetchAuthorsRefs,
-  setPageIsLoading,
-} from 'store/metadata/actions'
+import { fetchAuthorsRefs } from 'store/authors/actions'
+import { fetchAllTags, setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
   assignFilter,

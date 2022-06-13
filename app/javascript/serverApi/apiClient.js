@@ -1,8 +1,4 @@
 import { objectToParams } from 'utils/objectToParams'
-import AuthorForm from 'serverApi/AuthorForm'
-import AuthorFull from 'serverApi/AuthorFull'
-import AuthorIndexEntry from 'serverApi/AuthorIndexEntry'
-import AuthorRef from 'serverApi/AuthorRef'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 import Tag from 'serverApi/Tag'
@@ -17,54 +13,6 @@ class ApiClient {
     }
     return jQuery.ajax({
       url: `/api/years.json${ objectToParams(query) }`
-    })
-  }
-
-  static getAuthorsRefs() {
-    return jQuery.ajax({
-      url: '/api/authors/ref_entries.json'
-    }).then(authors => authors.map(data => AuthorRef.parse(data)))
-  }
-
-  static getAuthorRef(id) {
-    return jQuery.ajax({
-      url: `/api/authors/ref_entries/${id}.json`
-    }).then(data => AuthorRef.parse(data))
-  }
-
-  static getAuthorsIndex() {
-    return jQuery.ajax({
-      url: '/api/authors/index_entries.json'
-    }).then(authors => authors.map(data => AuthorIndexEntry.parse(data)))
-  }
-
-  static getAuthorIndexEntry(id) {
-    return jQuery.ajax({
-      url: `/api/authors/index_entries/${id}.json`
-    }).then(data => AuthorIndexEntry.parse(data))
-  }
-
-  static getAuthorFull(id) {
-    return jQuery.ajax({
-      url: `/api/authors/full_entries/${id}.json`
-    }).then(data => AuthorFull.parse(data))
-  }
-
-  static putAuthorDetails(id, details) {
-    const body = AuthorForm.buildServerData(details)
-    return jQuery.ajax({
-      url: `/api/authors/${id}/details.json`,
-      type: 'PUT',
-      data: { author: body }
-    })
-  }
-
-  static postAuthorDetails(details) {
-    const body = AuthorForm.buildServerData(details)
-    return jQuery.ajax({
-      url: '/api/authors/details.json',
-      type: 'POST',
-      data: { author: body }
     })
   }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormControl, NavDropdown } from 'react-bootstrap'
 
-import { selectAuthorsRefs } from 'store/metadata/selectors'
+import { selectAuthorsRefs } from 'store/authors/selectors'
 import { selectAuthorsSearchKey } from 'widgets/navbar/selectors'
 import { setAuthorsSearchKey } from 'widgets/navbar/actions'
 import useUrlStore from 'store/urlStore'
