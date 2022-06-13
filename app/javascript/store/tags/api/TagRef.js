@@ -1,10 +1,11 @@
-class Tag {
+class TagRef {
   static parse(data) {
     return {
-      ...data,
+      id: data['id'],
+      name: data['name'],
       connectionsCount: data['connections_count']
     }
   }
 }
 
-export default Tag
+export default TagRef

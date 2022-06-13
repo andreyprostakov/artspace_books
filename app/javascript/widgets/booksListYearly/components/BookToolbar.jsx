@@ -11,7 +11,7 @@ import {
   selectTagBookmark,
   selectTagRead,
   selectTagNames,
-} from 'store/metadata/selectors'
+} from 'store/tags/selectors'
 
 import {
   selectBookIsSelected,

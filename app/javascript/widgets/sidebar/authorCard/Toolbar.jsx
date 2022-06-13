@@ -7,7 +7,7 @@ import { faBookmark as faBookmarkEmpty } from '@fortawesome/free-regular-svg-ico
 import { faWikipediaW } from '@fortawesome/free-brands-svg-icons'
 import PropTypes from 'prop-types'
 
-import { selectTagBookmark, selectTagNames } from 'store/metadata/selectors'
+import { selectTagBookmark, selectTagNames } from 'store/tags/selectors'
 import { markAuthorAsBookmarked, unmarkAuthorAsBookmarked } from 'widgets/sidebar/authorCard/actions'
 import useUrlStore from 'store/urlStore'
 

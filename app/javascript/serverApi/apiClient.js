@@ -1,7 +1,6 @@
 import { objectToParams } from 'utils/objectToParams'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
-import Tag from 'serverApi/Tag'
 
 const jQuery = window.$
 
@@ -89,12 +88,6 @@ class ApiClient {
         'tag_names': tagNames,
       }
     })
-  }
-
-  static getTags() {
-    return jQuery.ajax({
-      url: '/api/tags.json'
-    }).then(tags => tags.map(data => Tag.parse(data)))
   }
 }
 

@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FormControl, NavDropdown } from 'react-bootstrap'
 
-import { selectAllTags } from 'store/metadata/selectors'
+import { selectTagsRefs } from 'store/tags/selectors'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
 import useUrlStore from 'store/urlStore'
 
 const TagsNavList = () => {
-  const allTags = useSelector(selectAllTags())
+  const allTags = useSelector(selectTagsRefs())
   const [query, setQuery] = useState('')
   const [{}, { gotoTagBooks }, paths] = useUrlStore()
 

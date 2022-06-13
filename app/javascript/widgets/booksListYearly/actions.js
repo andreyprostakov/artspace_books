@@ -12,8 +12,7 @@ import { setCurrentBookId } from 'store/axis/actions'
 import {
   selectBook,
   selectBooks,
-  selectCurrentBook,
-  selectTagNames,
+  selectCurrentBook
 } from 'store/metadata/selectors'
 import {
   addBook,
@@ -22,6 +21,7 @@ import {
   setCurrentBookDetails,
   showBook,
 } from 'store/metadata/actions'
+import { selectTagNames } from 'store/tags/selectors'
 
 import {
   pickYearsToLoad,

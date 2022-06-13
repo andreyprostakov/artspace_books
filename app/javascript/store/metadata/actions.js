@@ -1,7 +1,6 @@
 import { slice } from 'store/metadata/slice'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
-import apiClient from 'serverApi/apiClient'
 
 import {
   selectBook,
@@ -11,15 +10,9 @@ export const {
   addBooks,
   clearBooks,
   setPageIsLoading,
-  setTags,
   setDefaultBookImageUrl,
   setCurrentBookDetails,
 } = slice.actions
-
-export const fetchAllTags = () => async dispatch => {
-  const response = await apiClient.getTags()
-  dispatch(setTags(response))
-}
 
 export const showBook = bookId => (dispatch, getState) => {
   if (!bookId) throw new Error('Trying to show nothing!')

@@ -14,7 +14,7 @@ import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { selectAuthorFull } from 'store/authors/selectors'
 import { fetchAuthorFull } from 'store/authors/actions'
-import { selectTags, selectVisibleTags } from 'store/metadata/selectors'
+import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
@@ -36,7 +36,7 @@ const AuthorCard = (props) => {
   const [{}, {}, { authorsPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
-  const tags = useSelector(selectTags(authorFull.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
 

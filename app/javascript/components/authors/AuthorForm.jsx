@@ -9,14 +9,14 @@ import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
 import apiClient from 'store/authors/apiClient'
 
-import { selectTags  } from 'store/metadata/selectors'
+import { selectTagsRefsByIds } from 'store/tags/selectors'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 const AuthorForm = (props) => {
   const { authorFull, id, onSubmit } = props
   const [state, setState] = useState({ currentTags: [], errors: {} })
   const { currentTags, errors } = state
-  const tags = useSelector(selectTags(authorFull.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))
   const initialTags = authorFull.new ? [] : tags
   const dispatch = useDispatch()
 

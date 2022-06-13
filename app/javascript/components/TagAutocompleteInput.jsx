@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import classNames from 'classnames'
 
-import { selectAllTags } from 'store/metadata/selectors'
+import { selectTagsRefs } from 'store/tags/selectors'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
 
 const TagAutocompleteInput = (props) => {
   const { inputProps, onSuggestionSelected } = props
-  const allTags = useSelector(selectAllTags())
+  const allTags = useSelector(selectTagsRefs())
   const [query, setQuery] = useState('')
   var suggestions = sortByString(
     filterByString(allTags, 'name', query),

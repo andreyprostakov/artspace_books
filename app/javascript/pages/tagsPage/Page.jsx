@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Layout from 'pages/Layout'
 import TagBadge from 'components/TagBadge'
 import { setupStoreForTagsPage } from 'pages/tagsPage/actions'
-import { selectAllTags } from 'store/metadata/selectors'
+import { selectTagsRefs } from 'store/tags/selectors'
 
 const TagsPage = () => {
   const dispatch = useDispatch()
-  const tags = useSelector(selectAllTags())
+  const tags = useSelector(selectTagsRefs())
   const sortedTags = sortBy(tags, tag => upperCase(tag.name))
 
   useEffect(() => {

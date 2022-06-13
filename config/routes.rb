@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
       resources :years, only: :index
 
-      resources :tags, only: :index
+      namespace :tags do
+        resources :ref_entries, only: :index
+      end
     end
   end
 

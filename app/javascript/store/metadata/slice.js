@@ -6,7 +6,6 @@ export const slice = createSlice({
     bookDetailsCurrent: {},
     booksIndexed: {},
     pageIsLoading: false,
-    tagsIndexed: {},
     defaultCoverUrl: null,
   },
   reducers: {
@@ -28,14 +27,6 @@ export const slice = createSlice({
 
     setPageIsLoading: (state, action) => {
       state.pageIsLoading = Boolean(action.payload)
-    },
-
-    setTags: (state, action) => {
-      const tags = action.payload
-      state.tagsIndexed = {}
-      tags.forEach(tag => {
-        state.tagsIndexed[tag.id] = tag
-      })
     },
 
     setDefaultBookImageUrl: (state, action) => {
