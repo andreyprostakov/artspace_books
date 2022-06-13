@@ -3,11 +3,11 @@ import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors
 
 const localState = state => state.metadata
 
-export const selectAuthor = id => state => localState(state).authorsIndexed[id]
+export const selectAuthorRef = id => state => localState(state).authorsRefs[id]
 
-export const selectAuthors = () => state => Object.values(localState(state).authorsIndexed)
+export const selectAuthorsRefs = () => state => Object.values(localState(state).authorsRefs)
 
-export const selectCurrentAuthorDetails = () => state => localState(state).authorDetailsCurrent
+export const selectAuthorFull = id => state => localState(state).authorsFull[id]
 
 export const selectCurrentAuthor = () => state => selectAuthor(selectCurrentAuthorId()(state))(state)
 

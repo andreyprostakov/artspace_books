@@ -5,12 +5,13 @@ import { setCurrentBookId } from 'store/axis/actions'
 import apiClient from 'serverApi/apiClient'
 
 export const {
-  addAuthor,
-  setAuthors,
+  addAuthorFull,
+  addAuthorIndexEntry,
+  addAuthorRef,
+  assignAuthorsRefs,
   addBook,
   addBooks,
   clearBooks,
-  setCurrentAuthorDetails,
   setPageIsLoading,
   setTags,
   setDefaultBookImageUrl,
@@ -22,19 +23,32 @@ export const fetchAllTags = () => async dispatch => {
   dispatch(setTags(response))
 }
 
-export const fetchAuthors = () => async dispatch => {
-  const response = await apiClient.getAuthors()
-  dispatch(setAuthors(response))
+export const fetchAuthorsRefs = () => async dispatch => {
+  const authorRefs = await apiClient.getAuthorsRefs()
+  dispatch(assignAuthorsRefs(authorRefs))
 }
 
-export const loadAuthor = id => async dispatch => {
-  const author = await apiClient.getAuthor(id)
-  dispatch(addAuthor(author))
+export const reloadAuthor = id => async(dispatch, getState) => {
+  const state = getState()
+  const oldFull = selectAuthorFull()(state)
+  if (oldFull) dispatch(fetchAuthorFull(id))
+
+  const oldIndexEntry = selectAuthorIndexEntry()(state)
+  if (oldIndexEntry) {
+    const authorIndexEntry = await apiClient.getAuthorIndexEntry(id)
+    dispatch(addAuthorIndexEntry(authorIndexEntry))
+  }
+
+  const oldRef = selectAuthorRef()(state)
+  if (oldRef) {
+    const authorRef = await apiClient.getAuthorRef(id)
+    dispatch(addAuthorRef(authorRef))
+  }
 }
 
-export const loadAuthorDetails = id => async dispatch => {
-  const details = await apiClient.getAuthorDetails(id)
-  dispatch(setCurrentAuthorDetails(details))
+export const fetchAuthorFull = id => async dispatch => {
+  const authorFull = await apiClient.getAuthorFull(id)
+  dispatch(addAuthorFull(authorFull))
 }
 
 export const showBook = bookId => (dispatch, getState) => {

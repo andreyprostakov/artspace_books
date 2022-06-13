@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
-import { selectAuthor, selectBook } from 'store/metadata/selectors'
+import { selectAuthorRef, selectBook } from 'store/metadata/selectors'
 import { showBook } from 'store/metadata/actions'
 import {
   selectBatchModeOn,
@@ -68,13 +68,15 @@ const SelectedBooksEntry = (props) => {
   const { id } = props
   const dispatch = useDispatch()
   const book = useSelector(selectBook(id))
-  const author = useSelector(selectAuthor(book.authorId))
+  const authorRef = useSelector(selectAuthorRef(book.authorId))
 
   return (
     <ListGroup.Item key={ id }>
       <a className='icon-remove' onClick={ () => dispatch(removeBookIdFromSelected(id)) }>X</a>
       { ' | ' }
-      <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(showBook(id)) } }>{ author.fullname }. { book.title }</a>
+      <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(showBook(id)) } }>
+        { authorRef.fullname }. { book.title }
+      </a>
     </ListGroup.Item>
   )
 }

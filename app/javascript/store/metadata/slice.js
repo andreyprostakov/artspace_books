@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'metadata',
   initialState: {
-    authorDetailsCurrent: {},
-    authorsIndexed: {},
+    authorsFull: {},
+    authorsIndex: {},
+    authorsRefs: {},
     bookDetailsCurrent: {},
     booksIndexed: {},
     pageIsLoading: false,
@@ -12,21 +13,35 @@ export const slice = createSlice({
     defaultCoverUrl: null,
   },
   reducers: {
-    addAuthor: (state, action) => {
-      const author = action.payload
-      state.authorsIndexed[author.id] = author
+    addAuthorFull: (state, action) => {
+      const authorFull = action.payload
+      state.authorsRefs[authorFull.id] = authorFull
     },
 
-    setAuthors: (state, action) => {
-      const authors = action.payload
-      state.authorsIndexed = {}
-      authors.forEach(author => {
-        state.authorsIndexed[author.id] = author
+    addAuthorIndexEntry: (state, action) => {
+      const authorIndexEntry = action.payload
+      state.authorsIndex[authorIndexEntry.id] = authorIndexEntry
+    },
+
+    addAuthorRef: (state, action) => {
+      const authorRef = action.payload
+      state.authorsRefs[authorRef.id] = authorRef
+    },
+
+    assignAuthorsIndexEntries: (state, action) => {
+      const authorIndexEntries = action.payload
+      state.authorsIndex = {}
+      authorIndexEntries.forEach(authorIndexEntry => {
+        state.authorsIndex[authorIndexEntry.id] = authorIndexEntry
       })
     },
 
-    setCurrentAuthorDetails: (state, action) => {
-      state.authorDetailsCurrent = action.payload
+    assignAuthorsRefs: (state, action) => {
+      const refs = action.payload
+      state.authorsRefs = {}
+      refs.forEach(authorRef => {
+        state.authorsRefs[authorRef.id] = authorRef
+      })
     },
 
     addBook: (state, action) => {

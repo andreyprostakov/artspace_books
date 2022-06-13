@@ -1,5 +1,5 @@
 import {
-  fetchAuthors,
+  fetchAuthorsRefs,
   fetchAllTags,
 } from 'store/metadata/actions'
 import { slice } from 'pages/authorsPage/slice'
@@ -12,5 +12,5 @@ export const {
 
 export const setupStoreForPage = () => dispatch => {
   dispatch(fetchAllTags())
-  dispatch(fetchAuthors())
+  dispatch(fetchAuthorsRefs())
 }

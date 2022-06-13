@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
 import {
   fetchAllTags,
-  fetchAuthors,
+  fetchAuthorsRefs,
   setPageIsLoading,
 } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
@@ -26,7 +26,7 @@ const Configurer = () => {
     dispatch(assignSortBy('popularity'))
     Promise.all([
       dispatch(fetchAllTags()),
-      dispatch(fetchAuthors()),
+      dispatch(fetchAuthorsRefs()),
     ]).then(() => {
       dispatch(assignFilter({ tagId }))
       dispatch(fetchBooks()).then(() => {

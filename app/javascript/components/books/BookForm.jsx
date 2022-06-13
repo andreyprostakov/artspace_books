@@ -10,12 +10,12 @@ import FormInputTags from 'components/FormInputTags'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
 import { fetchAllTags } from 'store/metadata/actions'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
-import { selectAuthor, selectTags } from 'store/metadata/selectors'
+import { selectAuthorRef, selectTags } from 'store/metadata/selectors'
 import apiClient from 'serverApi/apiClient'
 
 const BookForm = (props) => {
   const { bookDetails, onSubmit } = props
-  const author = useSelector(selectAuthor(bookDetails.authorId))
+  const authorRef = useSelector(selectAuthorRef(bookDetails.authorId))
   const tags = useSelector(selectTags(bookDetails.tagIds))
   const dispatch = useDispatch()
   const [state, setState] = useState({
@@ -25,7 +25,7 @@ const BookForm = (props) => {
     currentTags: [],
   })
   const { currentTags, currentTitle, currentOriginalTitle, errors } = state
-  if (!author || isEmpty(bookDetails)) { return null }
+  if (!authorRef || isEmpty(bookDetails)) { return null }
 
   const initialTags = bookDetails.new ? [{ name: 'Novel' }] : tags
 
@@ -65,7 +65,7 @@ const BookForm = (props) => {
       'originalTitle',
     )
     Object.keys(formData).forEach(key => formData[key] = formInputToValue(formData[key]))
-    formData.authorId = author.id
+    formData.authorId = authorRef.id
     formData.tagNames = currentTags.map(tag => tag.name)
 
     sendRequest(bookDetails, formData).fail(onServerFailure).then(onServerSuccess)
@@ -73,15 +73,17 @@ const BookForm = (props) => {
 
   return (
     <Form id='book_form' className='book-form' onSubmit={ handleSubmit }>
-      <InputLine controlId='authorId' label='Author' value={ author?.fullname } readOnly/>
+      <InputLine controlId='authorId' label='Author' value={ authorRef.fullname } readOnly/>
       <InputLine controlId='yearPublished' label='Year' value={ bookDetails.yearPublished } errors={ errors.year_published } autoFocus/>
       <InputLine controlId='title' label='Title' value={ bookDetails.title } errors={ errors.title }
                  onChange={ (e) => setState({ ...state, currentTitle: e.target.value }) }/>
-      <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails } errors={ errors.goodreads_url } author={ author } currentTitle={ currentTitle }/>
+      <BookFormGoodreadsLine controlId='goodreadsUrl' bookDetails={ bookDetails }
+                             errors={ errors.goodreads_url } authorRef={ authorRef }
+                             currentTitle={ currentTitle }/>
       <FormInputImage label='Cover'
                       imageUrl={ bookDetails.imageUrl }
                       errors={ errors.image_url }
-                      searchPrefix={ `book cover ${ author.fullname }` }
+                      searchPrefix={ `book cover ${ authorRef.fullname }` }
                       searchKey={ currentOriginalTitle || currentTitle }/>
       <Row />
       <FormInputTags initialTags={ initialTags } onChange={ (tags) => setState({ ...state, currentTags: tags }) }/>

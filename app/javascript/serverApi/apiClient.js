@@ -1,6 +1,8 @@
 import { objectToParams } from 'utils/objectToParams'
-import Author from 'serverApi/Author'
-import AuthorDetails from 'serverApi/AuthorDetails'
+import AuthorForm from 'serverApi/AuthorForm'
+import AuthorFull from 'serverApi/AuthorFull'
+import AuthorIndexEntry from 'serverApi/AuthorIndexEntry'
+import AuthorRef from 'serverApi/AuthorRef'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 import Tag from 'serverApi/Tag'
@@ -18,34 +20,38 @@ class ApiClient {
     })
   }
 
-  static getAuthorYears(authorId) {
-    return ApiClient.getYears({ authorId })
-  }
-
-  static getTagsYears(tagIds) {
-    return ApiClient.getYears({ tagIds })
-  }
-
-  static getAuthors() {
+  static getAuthorsRefs() {
     return jQuery.ajax({
-      url: '/authors.json'
-    }).then(authors => authors.map(data => Author.parse(data)))
+      url: '/authors/ref_entries.json'
+    }).then(authors => authors.map(data => AuthorRef.parse(data)))
   }
 
-  static getAuthor(id) {
+  static getAuthorRef(id) {
     return jQuery.ajax({
-      url: `/authors/${id}.json`
-    }).then(data => Author.parse(data))
+      url: `/authors/ref_entries/${id}.json`
+    }).then(data => AuthorRef.parse(data))
   }
 
-  static getAuthorDetails(id) {
+  static getAuthorsIndex() {
     return jQuery.ajax({
-      url: `/authors/${id}/details.json`
-    }).then(data => AuthorDetails.serverDataToObject(data))
+      url: '/authors/index_entries.json'
+    }).then(authors => authors.map(data => AuthorIndexEntry.parse(data)))
+  }
+
+  static getAuthorIndexEntry(id) {
+    return jQuery.ajax({
+      url: `/authors/index_entries/${id}.json`
+    }).then(data => AuthorIndexEntry.parse(data))
+  }
+
+  static getAuthorFull(id) {
+    return jQuery.ajax({
+      url: `/authors/full_entries/${id}.json`
+    }).then(data => AuthorFull.parse(data))
   }
 
   static putAuthorDetails(id, details) {
-    const body = AuthorDetails.objectToServerData(details)
+    const body = AuthorForm.buildServerData(details)
     return jQuery.ajax({
       url: `/authors/${id}/details.json`,
       type: 'PUT',
@@ -54,7 +60,7 @@ class ApiClient {
   }
 
   static postAuthorDetails(details) {
-    const body = AuthorDetails.objectToServerData(details)
+    const body = AuthorForm.buildServerData(details)
     return jQuery.ajax({
       url: '/authors/details.json',
       type: 'POST',

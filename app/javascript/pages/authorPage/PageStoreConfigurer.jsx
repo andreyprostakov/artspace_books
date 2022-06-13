@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentBookId, selectCurrentAuthorId } from 'store/axis/selectors'
 import {
   fetchAllTags,
-  fetchAuthors,
-  loadAuthorDetails,
+  fetchAuthorsRefs,
+  fetchAuthorFull,
   setPageIsLoading,
 } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
@@ -30,8 +30,8 @@ const Configurer = () => {
     dispatch(assignPerPage(60))
     Promise.all([
       dispatch(fetchAllTags()),
-      dispatch(fetchAuthors()),
-      dispatch(loadAuthorDetails(authorId)),
+      dispatch(fetchAuthorsRefs()),
+      dispatch(fetchAuthorFull(authorId)),
     ]).then(() => {
       dispatch(assignFilter({ authorId }))
       dispatch(fetchBooks()).then(() => {

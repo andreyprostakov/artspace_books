@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
-import { selectAuthor, selectCurrentBook, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectAuthorRef, selectCurrentBook, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
 
@@ -23,7 +23,7 @@ const BookCardWrap = () => {
 const BookCard = (props) => {
   const { book } = props
   const dispatch = useDispatch()
-  const author = useSelector(selectAuthor(book.authorId))
+  const authorRef = useSelector(selectAuthorRef(book.authorId))
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const tags = useSelector(selectTags(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
@@ -41,9 +41,10 @@ const BookCard = (props) => {
 
         <div className='book-details'>
           <div>
-            <a href={ authorBooksPath(author.id, { bookId: book.id }) } className='book-author' title={ author.fullname }
-               onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id, { bookId: book.id }) } }>
-              { author.fullname }
+            <a href={ authorBooksPath(authorRef.id, { bookId: book.id }) }
+               className='book-author' title={ authorRef.fullname }
+               onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id, { bookId: book.id }) } }>
+              { authorRef.fullname }
             </a>
             ,&nbsp;
             <span className='year'>{ book.year }</span>

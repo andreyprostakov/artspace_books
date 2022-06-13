@@ -6,7 +6,7 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { setSeed } from 'store/axis/actions'
 import {
   fetchAllTags,
-  fetchAuthors,
+  fetchAuthorsRefs,
   setPageIsLoading,
 } from 'store/metadata/actions'
 import {
@@ -32,7 +32,7 @@ const Configurer = (props) => {
 
     Promise.all([
       dispatch(fetchAllTags()),
-      dispatch(fetchAuthors()),
+      dispatch(fetchAuthorsRefs()),
       dispatch(fetchYears(listFilter)),
     ]).then(() =>
       dispatch(setupBooksListSelection())

@@ -12,7 +12,7 @@ import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
-import { selectCurrentAuthorDetails, selectTags, selectVisibleTags } from 'store/metadata/selectors'
+import { selectAuthorFull, selectTags, selectVisibleTags } from 'store/metadata/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
@@ -28,8 +28,8 @@ const AuthorCard = (props) => {
   const [{}, {}, { authorsPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
-  const authorDetails = useSelector(selectCurrentAuthorDetails())
-  const tags = useSelector(selectTags(authorDetails.tagIds))
+  const authorFull = useSelector(selectAuthorFull(authorId))
+  const tags = useSelector(selectTags(authorFull.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
 
@@ -39,9 +39,7 @@ const AuthorCard = (props) => {
     dispatch(setupStoreForAuthorCard(authorId))
   }, [authorId])
 
-  if (isEmpty(authorDetails) || (authorDetails.id && authorDetails.id !== authorId)) {
-    return null
-  }
+  if (isEmpty(authorFull)) return null
 
   return (
     <Card className='sidebar-widget-author-card sidebar-card-widget'>
@@ -51,19 +49,20 @@ const AuthorCard = (props) => {
       }
 
       <Card.Body>
-        { authorDetails.imageUrl &&
-          <ImageContainer className='author-image'
-          url={ authorDetails.imageThumbUrl }
-          onClick={ () => dispatch(setImageSrc(authorDetails.imageUrl)) }/>
+        { authorFull.imageUrl &&
+          <ImageContainer className='author-image' url={ authorFull.imageThumbUrl }
+                          onClick={ () => dispatch(setImageSrc(authorFull.imageUrl)) }/>
         }
 
         <div className='details-right'>
-          <div className='author-name'>{ authorDetails.fullname }</div>
+          <div className='author-name'>{ authorFull.fullname }</div>
 
           <div className='author-card-text'>
-            <div>Years: { renderLifetime(authorDetails, authorsPath) }</div>
-            <div>Popularity: { authorDetails.popularity.toLocaleString() } pts (
-              <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_RANK_ASCENDING }) }>#{ authorDetails.rank }</a>
+            <div>Years: { renderLifetime(authorFull, authorsPath) }</div>
+            <div>Popularity: { authorFull.popularity.toLocaleString() } pts (
+              <a href={ authorsPath({ authorId: authorFull.id, sortOrder: orders.BY_RANK_ASCENDING }) }>
+                #{ authorFull.rank }
+              </a>
             )</div>
           </div>
 
@@ -74,7 +73,7 @@ const AuthorCard = (props) => {
           </div>
         </div>
 
-        <Toolbar author={ authorDetails }/>
+        <Toolbar authorFull={ authorFull }/>
       </Card.Body>
     </Card>
   )
@@ -84,19 +83,19 @@ AuthorCard.propTypes = {
   authorId: PropTypes.number.isRequired
 }
 
-const renderLifetime = (authorDetails, authorsPath) => {
-  if (!authorDetails.birthYear) { return null }
+const renderLifetime = (authorFull, authorsPath) => {
+  if (!authorFull.birthYear) { return null }
 
-  const birthLabel = `${authorDetails.birthYear}--`
-  const age = authorDetails.deathYear
-              ? authorDetails.deathYear - authorDetails.birthYear
-              : new Date().getFullYear() - authorDetails.birthYear
+  const birthLabel = `${authorFull.birthYear}--`
+  const age = authorFull.deathYear
+              ? authorFull.deathYear - authorFull.birthYear
+              : new Date().getFullYear() - authorFull.birthYear
   return(
     <>
       { birthLabel }
-      { authorDetails.deathYear }
+      { authorFull.deathYear }
       &nbsp;(
-        <a href={ authorsPath({ authorId: authorDetails.id, sortOrder: orders.BY_YEAR_ASCENDING }) }>
+        <a href={ authorsPath({ authorId: authorFull.id, sortOrder: orders.BY_YEAR_ASCENDING }) }>
           age { age }
         </a>
       )
