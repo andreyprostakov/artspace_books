@@ -13,33 +13,31 @@ import CloseIcon from 'components/icons/CloseIcon'
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { selectAuthorFull, selectTags, selectVisibleTags } from 'store/metadata/selectors'
+import { fetchAuthorFull } from 'store/metadata/actions'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
 
 const AuthorCardWrap = () => {
   const authorId = useSelector(selectCurrentAuthorId())
-  if (!authorId) { return null }
-  return (<AuthorCard authorId={ authorId }/>)
+  const authorFull = useSelector(selectAuthorFull(authorId))
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (!authorFull) dispatch(fetchAuthorFull(authorId))
+  }, [authorId])
+
+  if (!authorFull) return null
+  return (<AuthorCard authorFull={ authorFull }/>)
 }
 
 const AuthorCard = (props) => {
-  const { authorId } = props
+  const { authorFull } = props
   const [{}, {}, { authorsPath }] = useUrlStore()
   const { onClose } = props
   const dispatch = useDispatch()
-  const authorFull = useSelector(selectAuthorFull(authorId))
   const tags = useSelector(selectTags(authorFull.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
-
-  useEffect(() => {
-    if (!authorId) { return }
-
-    dispatch(setupStoreForAuthorCard(authorId))
-  }, [authorId])
-
-  if (isEmpty(authorFull)) return null
 
   return (
     <Card className='sidebar-widget-author-card sidebar-card-widget'>
@@ -50,7 +48,7 @@ const AuthorCard = (props) => {
 
       <Card.Body>
         { authorFull.imageUrl &&
-          <ImageContainer className='author-image' url={ authorFull.imageThumbUrl }
+          <ImageContainer className='author-image' url={ authorFull.thumbUrl }
                           onClick={ () => dispatch(setImageSrc(authorFull.imageUrl)) }/>
         }
 
@@ -80,7 +78,7 @@ const AuthorCard = (props) => {
 }
 
 AuthorCard.propTypes = {
-  authorId: PropTypes.number.isRequired
+  authorFull: PropTypes.object.isRequired,
 }
 
 const renderLifetime = (authorFull, authorsPath) => {

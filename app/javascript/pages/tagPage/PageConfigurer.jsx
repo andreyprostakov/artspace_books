@@ -15,6 +15,8 @@ import {
   setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
 
+import PageUrlStore from 'pages/tagPage/PageUrlStore'
+
 const Configurer = () => {
   const dispatch = useDispatch()
   const tagId = useSelector(selectCurrentTagId())
@@ -35,7 +37,7 @@ const Configurer = () => {
       })
     })
   }, [tagId])
-  return null
+  return <PageUrlStore/>
 }
 
 export default Configurer

@@ -4,7 +4,7 @@ class AuthorFull {
       id: data['id'],
       fullname: data['fullname'],
       booksCount: data['books_count'],
-      imageCardUrl: data['photo_card_url'],
+      thumbUrl: data['photo_thumb_url'],
       imageUrl: data['photo_full_url'],
       birthYear: data['birth_year'],
       deathYear: data['death_year'],

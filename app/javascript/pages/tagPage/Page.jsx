@@ -7,14 +7,12 @@ import BookCard from 'widgets/sidebar/bookCard/BookCard'
 import BooksListLinearControls from 'widgets/sidebar/booksListLinearControls/BooksListLinearControls'
 import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
 import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
-import PageUrlStore from 'pages/tagPage/PageUrlStore'
-import PageStoreConfigurer from 'pages/tagPage/PageStoreConfigurer'
+import PageConfigurer from 'pages/tagPage/PageConfigurer'
 
 const TagPage = () => {
   return (
     <>
-      <PageUrlStore/>
-      <PageStoreConfigurer/>
+      <PageConfigurer/>
 
       <Layout>
         <Col xs={ 4 }>

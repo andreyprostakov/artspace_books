@@ -21,7 +21,7 @@ RSpec.describe '/authors/full_entries', type: :request do
       expect(response.body).to eq({
         id: author.id,
         fullname: author.fullname,
-        photo_card_url: nil,
+        photo_thumb_url: nil,
         photo_full_url: nil,
         reference: 'http://example.com',
         birth_year: 1900,

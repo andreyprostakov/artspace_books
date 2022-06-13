@@ -15,7 +15,7 @@ export const slice = createSlice({
   reducers: {
     addAuthorFull: (state, action) => {
       const authorFull = action.payload
-      state.authorsRefs[authorFull.id] = authorFull
+      state.authorsFull[authorFull.id] = authorFull
     },
 
     addAuthorIndexEntry: (state, action) => {
@@ -28,7 +28,7 @@ export const slice = createSlice({
       state.authorsRefs[authorRef.id] = authorRef
     },
 
-    assignAuthorsIndexEntries: (state, action) => {
+    assignAuthorsIndex: (state, action) => {
       const authorIndexEntries = action.payload
       state.authorsIndex = {}
       authorIndexEntries.forEach(authorIndexEntry => {

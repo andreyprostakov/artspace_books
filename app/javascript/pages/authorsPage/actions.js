@@ -1,4 +1,5 @@
 import {
+  fetchAuthorsIndex,
   fetchAuthorsRefs,
   fetchAllTags,
 } from 'store/metadata/actions'
@@ -13,4 +14,5 @@ export const {
 export const setupStoreForPage = () => dispatch => {
   dispatch(fetchAllTags())
   dispatch(fetchAuthorsRefs())
+  dispatch(fetchAuthorsIndex())
 }

@@ -1,5 +1,5 @@
 import { pick } from 'lodash'
-import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
+import { selectCurrentBookId } from 'store/axis/selectors'
 
 const localState = state => state.metadata
 
@@ -9,7 +9,9 @@ export const selectAuthorsRefs = () => state => Object.values(localState(state).
 
 export const selectAuthorFull = id => state => localState(state).authorsFull[id]
 
-export const selectCurrentAuthor = () => state => selectAuthor(selectCurrentAuthorId()(state))(state)
+export const selectAuthorIndexEntry = id => state => localState(state).authorsIndex[id]
+
+export const selectAuthorsIndex = () => state => Object.values(localState(state).authorsIndex)
 
 export const selectAllTags = () => state => Object.values(localState(state).tagsIndexed)
 

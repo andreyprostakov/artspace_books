@@ -3,7 +3,7 @@
 author = @author
 json.id author.id
 json.fullname author.fullname
-json.photo_card_url author.photo_card_url
+json.photo_thumb_url author.photo_thumb_url
 json.photo_full_url author.photo_url
 json.reference author.reference
 json.birth_year author.birth_year

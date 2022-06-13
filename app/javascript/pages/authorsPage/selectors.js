@@ -1,12 +1,12 @@
 import { sortBy } from 'lodash'
 
 import { selectCurrentAuthorId } from 'store/axis/selectors'
-import { selectAuthors } from 'store/metadata/selectors'
+import { selectAuthorsIndex } from 'store/metadata/selectors'
 import orders from 'pages/authorsPage/sortOrders'
 
 export const selectSortedAuthors = order => state => {
   const attribute = selectSortAttribute(order)(state)
-  const authors = sortBy(selectAuthors()(state), attribute)
+  const authors = sortBy(selectAuthorsIndex()(state), attribute)
   if ([orders.BY_NAME_DESCENDING, orders.BY_RANK_DESCENDING, orders.BY_YEAR_DESCENDING].includes(order))
     return authors.reverse()
   return authors

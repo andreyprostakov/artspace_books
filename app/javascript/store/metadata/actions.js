@@ -1,13 +1,19 @@
 import { slice } from 'store/metadata/slice'
-import { selectBook } from 'store/metadata/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import apiClient from 'serverApi/apiClient'
 
+import {
+  selectAuthorFull,
+  selectAuthorIndexEntry,
+  selectAuthorRef,
+  selectBook,
+} from 'store/metadata/selectors'
 export const {
   addAuthorFull,
   addAuthorIndexEntry,
   addAuthorRef,
+  assignAuthorsIndex,
   assignAuthorsRefs,
   addBook,
   addBooks,
@@ -28,27 +34,36 @@ export const fetchAuthorsRefs = () => async dispatch => {
   dispatch(assignAuthorsRefs(authorRefs))
 }
 
-export const reloadAuthor = id => async(dispatch, getState) => {
+export const fetchAuthorsIndex = () => async dispatch => {
+  const authorIndex = await apiClient.getAuthorsIndex()
+  dispatch(assignAuthorsIndex(authorIndex))
+}
+
+export const reloadAuthor = id => (dispatch, getState) => {
   const state = getState()
   const oldFull = selectAuthorFull()(state)
   if (oldFull) dispatch(fetchAuthorFull(id))
 
   const oldIndexEntry = selectAuthorIndexEntry()(state)
-  if (oldIndexEntry) {
-    const authorIndexEntry = await apiClient.getAuthorIndexEntry(id)
-    dispatch(addAuthorIndexEntry(authorIndexEntry))
-  }
+  if (oldIndexEntry) dispatch(fetchAuthorIndexEntry(id))
 
   const oldRef = selectAuthorRef()(state)
-  if (oldRef) {
-    const authorRef = await apiClient.getAuthorRef(id)
-    dispatch(addAuthorRef(authorRef))
-  }
+  if (oldRef) dispatch(fetchAuthorRef(id))
 }
 
 export const fetchAuthorFull = id => async dispatch => {
   const authorFull = await apiClient.getAuthorFull(id)
   dispatch(addAuthorFull(authorFull))
+}
+
+export const fetchAuthorIndexEntry = id => async dispatch => {
+  const authorIndexEntry = await apiClient.getAuthorIndexEntry(id)
+  dispatch(addAuthorIndexEntry(authorIndexEntry))
+}
+
+export const fetchAuthorRef = id => async dispatch => {
+  const authorRef = await apiClient.getAuthorRef(id)
+  dispatch(addAuthorRef(authorRef))
 }
 
 export const showBook = bookId => (dispatch, getState) => {
