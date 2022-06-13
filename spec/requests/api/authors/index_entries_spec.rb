@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe '/authors/index_entries', type: :request do
+RSpec.describe '/api/authors/index_entries', type: :request do
   let(:author) { create(:author, birth_year: 1900) }
 
   before do
@@ -9,7 +9,7 @@ RSpec.describe '/authors/index_entries', type: :request do
   end
 
   describe 'GET /:id' do
-    subject(:send_request) { get "/authors/index_entries/#{author.id}.json", headers: authorization_header }
+    subject(:send_request) { get "/api/authors/index_entries/#{author.id}.json", headers: authorization_header }
 
     it 'returns most basic info' do
       send_request
@@ -26,7 +26,7 @@ RSpec.describe '/authors/index_entries', type: :request do
   end
 
   describe 'GET /' do
-    subject(:send_request) { get '/authors/index_entries.json', headers: authorization_header }
+    subject(:send_request) { get '/api/authors/index_entries.json', headers: authorization_header }
 
     it 'returns list' do
       send_request

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe '/authors/full_entries', type: :request do
+RSpec.describe '/api/authors/full_entries', type: :request do
   let(:tag) { create(:tag, name: 'foo') }
 
   before { tag }
 
   describe 'GET /:id' do
-    subject(:send_request) { get "/authors/full_entries/#{author.id}.json", headers: authorization_header }
+    subject(:send_request) { get "/api/authors/full_entries/#{author.id}.json", headers: authorization_header }
 
     let(:author) { create(:author, reference: 'http://example.com', birth_year: 1900, death_year: 2000, tags: [tag]) }
 
@@ -36,7 +36,7 @@ RSpec.describe '/authors/full_entries', type: :request do
 
   describe 'POST /' do
     subject(:send_request) do
-      post '/authors/full_entries.json', params: { author: author_params }, headers: authorization_header
+      post '/api/authors/full_entries.json', params: { author: author_params }, headers: authorization_header
     end
 
     let(:author_params) do
@@ -81,7 +81,7 @@ RSpec.describe '/authors/full_entries', type: :request do
 
   describe 'PUT /:id' do
     subject(:send_request) do
-      put "/authors/full_entries/#{author.id}.json", params: { author: author_params }, headers: authorization_header
+      put "/api/authors/full_entries/#{author.id}.json", params: { author: author_params }, headers: authorization_header
     end
 
     let(:author) { create(:author, tags: [tag]) }
@@ -127,7 +127,7 @@ RSpec.describe '/authors/full_entries', type: :request do
 
   describe 'DELETE /:id' do
     subject(:send_request) do
-      delete "/authors/full_entries/#{author.id}.json", headers: authorization_header
+      delete "/api/authors/full_entries/#{author.id}.json", headers: authorization_header
     end
 
     let(:author) { create(:author) }

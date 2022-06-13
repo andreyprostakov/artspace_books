@@ -23,7 +23,7 @@ const AuthorCardWrap = () => {
   const authorFull = useSelector(selectAuthorFull(authorId))
   const dispatch = useDispatch()
   useEffect(() => {
-    if (!authorFull) dispatch(fetchAuthorFull(authorId))
+    if (authorId && !authorFull) dispatch(fetchAuthorFull(authorId))
   }, [authorId])
 
   if (!authorFull) return null
