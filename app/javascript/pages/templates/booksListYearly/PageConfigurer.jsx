@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setSeed } from 'store/axis/actions'
-import { fetchAuthorsRefs } from 'store/authors/actions'
-import { fetchAllTags, setPageIsLoading } from 'store/metadata/actions'
+import { setPageIsLoading } from 'store/metadata/actions'
 import {
   clearListState,
   fetchYears,
@@ -13,6 +12,7 @@ import {
   setFilters,
   setupBooksListSelection,
 } from 'widgets/booksListYearly/actions'
+import { prepareNavRefs } from 'widgets/navbar/actions'
 
 import ListUrlStore from 'widgets/booksListYearly/components/UrlStore'
 
@@ -28,8 +28,7 @@ const Configurer = (props) => {
     if (listFilter) dispatch(setFilters(listFilter))
 
     Promise.all([
-      dispatch(fetchAllTags()),
-      dispatch(fetchAuthorsRefs()),
+      dispatch(prepareNavRefs()),
       dispatch(fetchYears(listFilter)),
     ]).then(() =>
       dispatch(setupBooksListSelection())

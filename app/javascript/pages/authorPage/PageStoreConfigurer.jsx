@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId, selectCurrentAuthorId } from 'store/axis/selectors'
-import { fetchAuthorsRefs, fetchAuthorFull } from 'store/authors/actions'
-import { fetchAllTags, setPageIsLoading } from 'store/metadata/actions'
+import { fetchAuthorFull } from 'store/authors/actions'
+import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
   assignFilter,
@@ -11,6 +11,7 @@ import {
   assignSortBy,
   fetchBooks,
 } from 'widgets/booksListLinear/actions'
+import { prepareNavRefs } from 'widgets/navbar/actions'
 
 const Configurer = () => {
   const dispatch = useDispatch()
@@ -25,8 +26,7 @@ const Configurer = () => {
     dispatch(assignSortBy('year'))
     dispatch(assignPerPage(60))
     Promise.all([
-      dispatch(fetchAllTags()),
-      dispatch(fetchAuthorsRefs()),
+      dispatch(prepareNavRefs()),
       dispatch(fetchAuthorFull(authorId)),
     ]).then(() => {
       dispatch(assignFilter({ authorId }))

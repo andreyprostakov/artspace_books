@@ -6,6 +6,7 @@ export const slice = createSlice({
     authorsFull: {},
     authorsIndex: {},
     authorsRefs: {},
+    refsLoaded: false,
   },
   reducers: {
     addAuthorFull: (state, action) => {
@@ -37,6 +38,7 @@ export const slice = createSlice({
       refs.forEach(authorRef => {
         state.authorsRefs[authorRef.id] = authorRef
       })
+      state.refsLoaded = true
     },
   }
 })
