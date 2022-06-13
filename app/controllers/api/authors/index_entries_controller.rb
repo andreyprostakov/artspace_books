@@ -1,12 +1,12 @@
 module Api
   module Authors
-    class IndexEntriesController < ApplicationController
+    class IndexEntriesController < Api::Authors::BaseController
       def index
         @authors = Author.all
       end
 
       def show
-        @author = Author.find(params[:id])
+        fetch_author
       end
     end
   end

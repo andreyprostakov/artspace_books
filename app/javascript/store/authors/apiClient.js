@@ -1,4 +1,3 @@
-import { objectToParams } from 'utils/objectToParams'
 import AuthorForm from 'store/authors/api/AuthorForm'
 import AuthorFull from 'store/authors/api/AuthorFull'
 import AuthorIndexEntry from 'store/authors/api/AuthorIndexEntry'

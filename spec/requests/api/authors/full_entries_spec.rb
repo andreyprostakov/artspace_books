@@ -81,7 +81,8 @@ RSpec.describe '/api/authors/full_entries', type: :request do
 
   describe 'PUT /:id' do
     subject(:send_request) do
-      put "/api/authors/full_entries/#{author.id}.json", params: { author: author_params }, headers: authorization_header
+      put "/api/authors/full_entries/#{author.id}.json",
+          params: { author: author_params }, headers: authorization_header
     end
 
     let(:author) { create(:author, tags: [tag]) }

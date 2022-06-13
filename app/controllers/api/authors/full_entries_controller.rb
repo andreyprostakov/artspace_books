@@ -1,6 +1,6 @@
 module Api
   module Authors
-    class FullEntriesController < ApplicationController
+    class FullEntriesController < Api::Authors::BaseController
       before_action :fetch_author, only: %i[show update destroy]
 
       protect_from_forgery with: :null_session
@@ -30,10 +30,6 @@ module Api
       end
 
       private
-
-      def fetch_author
-        @author = Author.find(params[:id])
-      end
 
       def form
         Forms::AuthorForm.new(@author)
