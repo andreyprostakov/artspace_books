@@ -2,11 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
-import {
-  fetchAllTags,
-  fetchAuthors,
-  setPageIsLoading,
-} from 'store/metadata/actions'
+import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
   assignFilter,
@@ -14,6 +10,9 @@ import {
   fetchBooks,
   setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
+import { prepareNavRefs } from 'widgets/navbar/actions'
+
+import PageUrlStore from 'pages/tagPage/PageUrlStore'
 
 const Configurer = () => {
   const dispatch = useDispatch()
@@ -24,10 +23,7 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
-    Promise.all([
-      dispatch(fetchAllTags()),
-      dispatch(fetchAuthors()),
-    ]).then(() => {
+    dispatch(prepareNavRefs()).then(() => {
       dispatch(assignFilter({ tagId }))
       dispatch(fetchBooks()).then(() => {
         dispatch(setPageIsLoading(false))
@@ -35,7 +31,7 @@ const Configurer = () => {
       })
     })
   }, [tagId])
-  return null
+  return <PageUrlStore/>
 }
 
 export default Configurer

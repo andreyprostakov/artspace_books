@@ -10,7 +10,8 @@ import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectAuthor, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectAuthorRef } from 'store/authors/selectors'
+import { selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
 import { selectBook } from 'store/metadata/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
@@ -18,7 +19,7 @@ import useUrlStore from 'store/urlStore'
 const BookSelected = (props) => {
   const { id } = props
   const book = useSelector(selectBook(id))
-  const author = useSelector(selectAuthor(book.authorId))
+  const authorRef = useSelector(selectAuthorRef(book.authorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id
   const dispatch = useDispatch()
@@ -37,9 +38,9 @@ const BookSelected = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>
 
       <div className='book-details'>
-        <a href={ authorBooksPath(author.id, { bookId: id }) } className='book-author' title={ author.fullname }
-           onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(author.id, { bookId: id }) } }>
-          { author.fullname }
+        <a href={ authorBooksPath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }
+           onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id, { bookId: id }) } }>
+          { authorRef.fullname }
         </a>
 
         <div className='book-title' title={ book.title }>

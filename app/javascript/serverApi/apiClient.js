@@ -1,6 +1,4 @@
 import { objectToParams } from 'utils/objectToParams'
-import Author from 'serverApi/Author'
-import AuthorDetails from 'serverApi/AuthorDetails'
 import Book from 'serverApi/Book'
 import BookDetails from 'serverApi/BookDetails'
 import Tag from 'serverApi/Tag'
@@ -14,51 +12,7 @@ class ApiClient {
       'tag_ids': tagIds,
     }
     return jQuery.ajax({
-      url: `/years.json${ objectToParams(query) }`
-    })
-  }
-
-  static getAuthorYears(authorId) {
-    return ApiClient.getYears({ authorId })
-  }
-
-  static getTagsYears(tagIds) {
-    return ApiClient.getYears({ tagIds })
-  }
-
-  static getAuthors() {
-    return jQuery.ajax({
-      url: '/authors.json'
-    }).then(authors => authors.map(data => Author.parse(data)))
-  }
-
-  static getAuthor(id) {
-    return jQuery.ajax({
-      url: `/authors/${id}.json`
-    }).then(data => Author.parse(data))
-  }
-
-  static getAuthorDetails(id) {
-    return jQuery.ajax({
-      url: `/authors/${id}/details.json`
-    }).then(data => AuthorDetails.serverDataToObject(data))
-  }
-
-  static putAuthorDetails(id, details) {
-    const body = AuthorDetails.objectToServerData(details)
-    return jQuery.ajax({
-      url: `/authors/${id}/details.json`,
-      type: 'PUT',
-      data: { author: body }
-    })
-  }
-
-  static postAuthorDetails(details) {
-    const body = AuthorDetails.objectToServerData(details)
-    return jQuery.ajax({
-      url: '/authors/details.json',
-      type: 'POST',
-      data: { author: body }
+      url: `/api/years.json${ objectToParams(query) }`
     })
   }
 
@@ -73,7 +27,7 @@ class ApiClient {
       'sort_by': sortBy
     }
     return jQuery.ajax({
-      url: `/books.json${ objectToParams(params) }`
+      url: `/api/books.json${ objectToParams(params) }`
     }).then(({ list, total }) => ({
       total,
       books: list.map(bookData => Book.parse(bookData)),
@@ -82,26 +36,26 @@ class ApiClient {
 
   static getAuthorBooks(authorId) {
     return jQuery.ajax({
-      url: `/books.json${ objectToParams({ 'author_id': authorId }) }`
+      url: `/api/books.json${ objectToParams({ 'author_id': authorId }) }`
     }).then(books => books.map(bookData => Book.parse(bookData)))
   }
 
   static getBook(id) {
     return jQuery.ajax({
-      url: `/books/${id}.json`
+      url: `/api/books/${id}.json`
     }).then(data => Book.parse(data))
   }
 
   static syncBookStats(id) {
     return jQuery.ajax({
-      url: `/books/${id}/sync_goodreads_stats.json`,
+      url: `/api/books/${id}/sync_goodreads_stats.json`,
       type: 'PUT'
     }).then(data => Book.parse(data))
   }
 
   static getBookDetails(id) {
     return jQuery.ajax({
-      url: `/books/${id}/details.json`
+      url: `/api/books/${id}/details.json`
     }).then(data => BookDetails.parse(data))
   }
 
@@ -110,7 +64,7 @@ class ApiClient {
     const formData = new FormData()
     Object.keys(body).forEach(key => formData.append(`book[${key}]`, body[key]))
     return jQuery.ajax({
-      url: `/books/${id}/details.json`,
+      url: `/api/books/${id}/details.json`,
       type: 'PUT',
       data: { book: body },
       // contentType: false, cache: false, processData: false
@@ -120,7 +74,7 @@ class ApiClient {
   static postBookDetails(details) {
     const body = BookDetails.objectToServerData(details)
     return jQuery.ajax({
-      url: '/books/details.json',
+      url: '/api/books/details.json',
       type: 'POST',
       data: { book: body }
     })
@@ -128,7 +82,7 @@ class ApiClient {
 
   static postTagsForBooksBatch(ids, tagNames) {
     return jQuery.ajax({
-      url: '/books_batch/assign_tags.json',
+      url: '/api/books_batch/assign_tags.json',
       type: 'POST',
       data: {
         'book_ids': ids,
@@ -139,7 +93,7 @@ class ApiClient {
 
   static getTags() {
     return jQuery.ajax({
-      url: '/tags.json'
+      url: '/api/tags.json'
     }).then(tags => tags.map(data => Tag.parse(data)))
   }
 }

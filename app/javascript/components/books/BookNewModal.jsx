@@ -4,25 +4,24 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
-import { selectCurrentAuthor } from 'store/metadata/selectors'
-import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
+import { reloadAuthor } from 'store/authors/actions'
 import { reloadBook } from 'widgets/booksListYearly/actions'
 import BookForm from 'components/books/BookForm'
 import useUrlStore from 'store/urlStore'
 
 const BookNewModal = () => {
-  const author = useSelector(selectCurrentAuthor())
+  const authorId = useSelector(selectCurrentAuthorId())
   const [{ newBookModalShown }, { closeModal }] = useUrlStore()
   const dispatch = useDispatch()
 
   const handleSuccess = (data) => {
     dispatch(reloadBook(data.id))
-    dispatch(loadAuthorDetails(author.id))
-    dispatch(loadAuthor(author.id))
+    dispatch(reloadAuthor(authorId))
     closeModal()
   }
 
-  if (isEmpty(author)) { return null }
+  if (!authorId) return null
 
   return (
     <Modal show={ newBookModalShown } onHide={ () => closeModal() } size='lg' centered className='book-modal' backdropClassName='book-modal-backdrop'>
@@ -30,7 +29,7 @@ const BookNewModal = () => {
         <Modal.Title>New book</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <BookForm id='book_form' bookDetails={ { new: true, authorId: author.id } } onSubmit={ (data) => handleSuccess(data) }/>
+        <BookForm id='book_form' bookDetails={ { new: true, authorId: authorId } } onSubmit={ (data) => handleSuccess(data) }/>
       </Modal.Body>
       <Modal.Footer>
         <Button variant='secondary' onClick={ () => closeModal() }>

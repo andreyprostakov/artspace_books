@@ -1,16 +1,15 @@
 import { slice } from 'store/metadata/slice'
-import { selectBook } from 'store/metadata/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import apiClient from 'serverApi/apiClient'
 
+import {
+  selectBook,
+} from 'store/metadata/selectors'
 export const {
-  addAuthor,
-  setAuthors,
   addBook,
   addBooks,
   clearBooks,
-  setCurrentAuthorDetails,
   setPageIsLoading,
   setTags,
   setDefaultBookImageUrl,
@@ -20,21 +19,6 @@ export const {
 export const fetchAllTags = () => async dispatch => {
   const response = await apiClient.getTags()
   dispatch(setTags(response))
-}
-
-export const fetchAuthors = () => async dispatch => {
-  const response = await apiClient.getAuthors()
-  dispatch(setAuthors(response))
-}
-
-export const loadAuthor = id => async dispatch => {
-  const author = await apiClient.getAuthor(id)
-  dispatch(addAuthor(author))
-}
-
-export const loadAuthorDetails = id => async dispatch => {
-  const details = await apiClient.getAuthorDetails(id)
-  dispatch(setCurrentAuthorDetails(details))
 }
 
 export const showBook = bookId => (dispatch, getState) => {

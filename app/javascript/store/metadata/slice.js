@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'metadata',
   initialState: {
-    authorDetailsCurrent: {},
-    authorsIndexed: {},
     bookDetailsCurrent: {},
     booksIndexed: {},
     pageIsLoading: false,
@@ -12,23 +10,6 @@ export const slice = createSlice({
     defaultCoverUrl: null,
   },
   reducers: {
-    addAuthor: (state, action) => {
-      const author = action.payload
-      state.authorsIndexed[author.id] = author
-    },
-
-    setAuthors: (state, action) => {
-      const authors = action.payload
-      state.authorsIndexed = {}
-      authors.forEach(author => {
-        state.authorsIndexed[author.id] = author
-      })
-    },
-
-    setCurrentAuthorDetails: (state, action) => {
-      state.authorDetailsCurrent = action.payload
-    },
-
     addBook: (state, action) => {
       const book = action.payload
       state.booksIndexed[book.id] = book

@@ -22,7 +22,7 @@ const AuthorNewModal = () => {
         <Modal.Title>New author</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AuthorForm id='author_details_form' authorDetails={ { new: true } } onSubmit={ (data) => handleSuccess(data) }/>
+        <AuthorForm id='author_details_form' authorFull={ { new: true } } onSubmit={ (data) => handleSuccess(data) }/>
       </Modal.Body>
       <Modal.Footer>
         <Button variant='secondary' onClick={() => closeModal()}>

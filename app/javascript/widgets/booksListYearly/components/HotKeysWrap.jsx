@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import useUrlStore from 'store/urlStore'
-import { selectCurrentAuthor, selectCurrentBook } from 'store/metadata/selectors'
+import { selectAuthorFull } from 'store/authors/selectors'
+import { selectCurrentBook } from 'store/metadata/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import {
   jumpToFirstYear,
@@ -42,7 +43,7 @@ const HotKeysWrap = (props) => {
   const dispatch = useDispatch()
   const ref = useRef(null)
   const currentAuthorId = useSelector(selectCurrentAuthorId())
-  const currentAuthor = useSelector(selectCurrentAuthor())
+  const currentAuthor = useSelector(selectAuthorFull(currentAuthorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
   const [{

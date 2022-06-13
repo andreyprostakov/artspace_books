@@ -1,7 +1,5 @@
-import {
-  fetchAuthors,
-  fetchAllTags,
-} from 'store/metadata/actions'
+import { fetchAuthorsIndex } from 'store/authors/actions'
+import { prepareNavRefs } from 'widgets/navbar/actions'
 import { slice } from 'pages/authorsPage/slice'
 
 export const {
@@ -11,6 +9,6 @@ export const {
 } = slice.actions
 
 export const setupStoreForPage = () => dispatch => {
-  dispatch(fetchAllTags())
-  dispatch(fetchAuthors())
+  dispatch(prepareNavRefs())
+  dispatch(fetchAuthorsIndex())
 }

@@ -7,17 +7,17 @@ import PropTypes from 'prop-types'
 import InputLine from 'components/FormInputLine'
 import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/authors/apiClient'
 
 import { selectTags  } from 'store/metadata/selectors'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 const AuthorForm = (props) => {
-  const { authorDetails, id, onSubmit } = props
+  const { authorFull, id, onSubmit } = props
   const [state, setState] = useState({ currentTags: [], errors: {} })
   const { currentTags, errors } = state
-  const tags = useSelector(selectTags(authorDetails.tagIds))
-  const initialTags = authorDetails.new ? [] : tags
+  const tags = useSelector(selectTags(authorFull.tagIds))
+  const initialTags = authorFull.new ? [] : tags
   const dispatch = useDispatch()
 
   const onServerSuccess = (responseData) => {
@@ -34,10 +34,10 @@ const AuthorForm = (props) => {
   }
 
   const sendRequest = (formData) => {
-    if (authorDetails.new) {
-      return apiClient.postAuthorDetails(formData)
+    if (authorFull.new) {
+      return apiClient.postNewAuthor(formData)
     } else {
-      return apiClient.putAuthorDetails(authorDetails.id, formData)
+      return apiClient.putAuthorUpdates(authorFull.id, formData)
     }
   }
 
@@ -57,16 +57,16 @@ const AuthorForm = (props) => {
 
   return (
     <Form id={ id } onSubmit={ handleSubmit }>
-      <InputLine controlId='fullname' label='Name' value={ authorDetails.fullname } errors={ errors.fullname } autoFocus/>
+      <InputLine controlId='fullname' label='Name' value={ authorFull.fullname } errors={ errors.fullname } autoFocus/>
       <FormInputImage label='Photo'
-                      imageUrl={ authorDetails.imageUrl }
+                      imageUrl={ authorFull.imageUrl }
                       errors={ errors.image_url }
                       searchPrefix='author photo'
-                      searchKey={ authorDetails.fullname }/>
-      <InputLine controlId='reference' label='WIKI URL' value={ authorDetails.reference } errors={ errors.reference }/>
+                      searchKey={ authorFull.fullname }/>
+      <InputLine controlId='reference' label='WIKI URL' value={ authorFull.reference } errors={ errors.reference }/>
       <Row />
-      <InputLine controlId='birthYear' label='Year of birth' value={ authorDetails.birthYear } errors={ errors.birth_year }/>
-      <InputLine controlId='deathYear' label='Year of death' value={ authorDetails.deathYear } errors={ errors.death_year }/>
+      <InputLine controlId='birthYear' label='Year of birth' value={ authorFull.birthYear } errors={ errors.birth_year }/>
+      <InputLine controlId='deathYear' label='Year of death' value={ authorFull.deathYear } errors={ errors.death_year }/>
       <Row />
       <FormInputTags initialTags={ initialTags } onChange={ (tags) => setState({ ...state, currentTags: tags }) }/>
     </Form>
@@ -75,7 +75,7 @@ const AuthorForm = (props) => {
 
 AuthorForm.propTypes = {
   id: PropTypes.string.isRequired,
-  authorDetails: PropTypes.object.isRequired,
+  authorFull: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired
 }
 

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
 
-import { selectCurrentAuthorDetails } from 'store/metadata/selectors'
-import { loadAuthorDetails, loadAuthor } from 'store/metadata/actions'
+import { selectAuthorFull } from 'store/authors/selectors'
+import { reloadAuthor } from 'store/authors/actions'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import AuthorForm from 'components/authors/AuthorForm'
 import useUrlStore from 'store/urlStore'
@@ -13,16 +13,15 @@ import useUrlStore from 'store/urlStore'
 const AuthorEditModal = () => {
   const [{ editAuthorModalShown }, { closeModal }] = useUrlStore()
   const currentAuthorId = useSelector(selectCurrentAuthorId())
-  const authorDetails = useSelector(selectCurrentAuthorDetails())
+  const authorFull = useSelector(selectAuthorFull(currentAuthorId))
   const dispatch = useDispatch()
 
   const handleSuccess = () => {
-    dispatch(loadAuthorDetails(currentAuthorId))
-    dispatch(loadAuthor(currentAuthorId))
+    dispatch(reloadAuthor(currentAuthorId))
     closeModal()
   }
 
-  if (isEmpty(authorDetails)) { return null }
+  if (isEmpty(authorFull)) { return null }
 
   return (
     <Modal show={ editAuthorModalShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
@@ -30,7 +29,7 @@ const AuthorEditModal = () => {
         <Modal.Title>Edit author</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <AuthorForm id='author_details_form' authorDetails={ authorDetails } onSubmit={ (data) => handleSuccess(data) }/>
+        <AuthorForm id='author_details_form' authorFull={ authorFull } onSubmit={ (data) => handleSuccess(data) }/>
       </Modal.Body>
       <Modal.Footer>
         <Button variant='secondary' onClick={ () => closeModal() }>

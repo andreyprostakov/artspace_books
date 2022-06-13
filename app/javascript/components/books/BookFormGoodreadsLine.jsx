@@ -8,7 +8,7 @@ import GoodreadsIcon from 'components/icons/GoodreadsIcon'
 import GoogleIcon from 'components/icons/GoogleIcon'
 
 const BookFormGoodreadsLine = (props) => {
-  const { controlId, bookDetails, currentTitle, author } = props
+  const { controlId, bookDetails, currentTitle, authorRef } = props
   const errors = props.errors || []
   const [currentUrl, setUrl] = useState(bookDetails.goodreadsUrl)
 
@@ -18,7 +18,7 @@ const BookFormGoodreadsLine = (props) => {
         Goodreads URL
       </Form.Label>
       <Col sm={ 1 } className='search-goodreads-container' hidden={ !currentTitle }>
-        <GoogleIcon queryParts={ ['goodreads', author.fullname, currentTitle] }/>
+        <GoogleIcon queryParts={ ['goodreads', authorRef.fullname, currentTitle] }/>
         <div className='icon-relation'><FontAwesomeIcon icon={ faCaretRight }/></div>
       </Col>
       <Col sm={ 7 }>
@@ -40,7 +40,7 @@ const BookFormGoodreadsLine = (props) => {
 BookFormGoodreadsLine.propTypes = {
   controlId: PropTypes.string.isRequired,
   bookDetails: PropTypes.object.isRequired,
-  author: PropTypes.object.isRequired,
+  authorRef: PropTypes.object.isRequired,
   errors: PropTypes.array,
   currentTitle: PropTypes.string
 }

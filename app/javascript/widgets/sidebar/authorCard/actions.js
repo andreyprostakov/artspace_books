@@ -1,10 +1,10 @@
 import { pull } from 'lodash'
-import { loadAuthorDetails } from 'store/metadata/actions'
+import { fetchAuthorFull } from 'store/authors/actions'
 import { selectTagBookmark, selectTagNames } from 'store/metadata/selectors'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/authors/apiClient'
 
 export const setupStoreForAuthorCard = authorId => dispatch => {
-  dispatch(loadAuthorDetails(authorId))
+  dispatch(fetchAuthorFull(authorId))
 }
 
 export const markAuthorAsBookmarked = (id, tagIds) => (dispatch, getState) => {
@@ -12,8 +12,8 @@ export const markAuthorAsBookmarked = (id, tagIds) => (dispatch, getState) => {
   const tagBookmark = selectTagBookmark()(state)
   const tagNames = selectTagNames(tagIds)(state)
   tagNames.push(tagBookmark)
-  apiClient.putAuthorDetails(id, { tagNames }).then(() =>
-    dispatch(loadAuthorDetails(id))
+  apiClient.putAuthorUpdates(id, { tagNames }).then(() =>
+    dispatch(fetchAuthorFull(id))
   )
 }
 
@@ -23,7 +23,7 @@ export const unmarkAuthorAsBookmarked = (id, tagIds) => (dispatch, getState) => 
   const tagNames = selectTagNames(tagIds)(state)
   pull(tagNames, tagBookmark)
   tagNames.push('')
-  apiClient.putAuthorDetails(id, { tagNames }).then(() =>
-    dispatch(loadAuthorDetails(id))
+  apiClient.putAuthorUpdates(id, { tagNames }).then(() =>
+    dispatch(fetchAuthorFull(id))
   )
 }
