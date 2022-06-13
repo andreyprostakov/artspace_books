@@ -2,6 +2,12 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   scope constraints: ->(req) { req.format == :json } do
+    namespace :authors do
+      resources :full_entries, only: %i[show create update destroy]
+      resources :index_entries, only: %i[show index]
+      resources :ref_entries, only: %i[show index]
+    end
+
     resources :authors, only: %i[index show] do
       post :details, to: 'author_details#create', on: :collection
       resource :details, controller: 'author_details', only: %i[show update]

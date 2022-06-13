@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-if ENV['COVERAGE']
+with_coverage = ENV.fetch('COVERAGE', false)
+
+if with_coverage
   require 'simplecov'
   SimpleCov.start 'rails' do
     add_filter 'spec/'
@@ -18,9 +20,7 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
-if ENV['COVERAGE']
-  Rails.application.eager_load!
-end
+Rails.application.eager_load! if with_coverage
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -38,6 +38,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include FactoryBot::Syntax::Methods
+  config.include AuthHelper, type: :request
 end
 
 Shoulda::Matchers.configure do |config|

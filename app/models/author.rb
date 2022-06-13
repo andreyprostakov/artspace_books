@@ -17,7 +17,7 @@
 class Author < ApplicationRecord
   include CarrierwaveUrlAssign
 
-  has_many :books, class_name: 'Book', dependent: :restrict_with_error
+  has_many :books, class_name: 'Book', inverse_of: :author, dependent: :restrict_with_error
   has_many :tag_connections, class_name: 'TagConnection', as: :entity, dependent: :destroy
   has_many :tags, through: :tag_connections, class_name: 'Tag'
 

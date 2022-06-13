@@ -1,6 +1,6 @@
 module Authors
-  class FullInfoController < ApplicationController
-    before_action :fetch_author, only: %i[show update]
+  class FullEntriesController < ApplicationController
+    before_action :fetch_author, only: %i[show update destroy]
 
     protect_from_forgery with: :null_session
 
@@ -11,7 +11,7 @@ module Authors
       if form.update(author_params)
         render json: { id: @author.id }
       else
-        render json: @author.errors, status: :unprocessable_entity
+        render json: { errors: @author.errors }, status: :unprocessable_entity
       end
     end
 
@@ -19,14 +19,19 @@ module Authors
       if form.update(author_params)
         render json: {}
       else
-        render json: @author.errors, status: :unprocessable_entity
+        render json: { errors: @author.errors }, status: :unprocessable_entity
       end
+    end
+
+    def destroy
+      @author.destroy
+      render json: {}
     end
 
     private
 
     def fetch_author
-      @author = Author.find(params[:author_id])
+      @author = Author.find(params[:id])
     end
 
     def form

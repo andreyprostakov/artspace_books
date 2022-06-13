@@ -1,5 +1,5 @@
 module Authors
-  class ListInfoController < ApplicationController
+  class RefEntriesController < ApplicationController
     def index
       @authors = Author.all
     end
