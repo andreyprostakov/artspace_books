@@ -39,7 +39,7 @@ class ApiClient {
   static putAuthorUpdates(id, formData) {
     const body = AuthorForm.buildServerData(formData)
     return jQuery.ajax({
-      url: `/api/authors/${id}/details.json`,
+      url: `/api/authors/full_entries/${id}.json`,
       type: 'PUT',
       data: { author: body }
     })
@@ -48,7 +48,7 @@ class ApiClient {
   static postNewAuthor(formData) {
     const body = AuthorForm.buildServerData(formData)
     return jQuery.ajax({
-      url: '/api/authors/details.json',
+      url: '/api/authors/full_entries.json',
       type: 'POST',
       data: { author: body }
     })
