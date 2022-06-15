@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+module Api
+  module Books
+    class PopularityController < Api::Books::BaseController
+      before_action :fetch_book, only: :update
+
+      def update
+        unless GoodreadsStatsUpdater.update(@book)
+          render json: { errors: @book.errors }, status: :unprocessable_entity
+        end
+      end
+    end
+  end
+end

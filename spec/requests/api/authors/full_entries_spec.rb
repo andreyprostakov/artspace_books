@@ -70,6 +70,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
 
       it 'responds with validation errors' do
         expect { send_request }.not_to change(Author, :count)
+        expect(response).to be_unprocessable
         expect(response.body).to eq({
           errors: {
             tags: ['is invalid']

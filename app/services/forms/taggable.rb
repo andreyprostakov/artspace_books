@@ -7,19 +7,22 @@ module Forms
     included do
       private
 
-      alias_method :normalize_params_non_taggable, :normalize_params
-
-      def normalize_params(params)
-        attributes = normalize_params_non_taggable(params).except(:tag_names)
-        attributes[:tags] = map_names_onto_tags(params[:tag_names]) if params.key?(:tag_names)
-        attributes
+      def apply_update(record, update_params)
+        tag_names = update_params[:tag_names]
+        old_tags, new_tag_names = map_names_onto_tags(record, tag_names)
+        old_tags.each { |tag| record.tag_connections.build(tag: tag) }
+        new_tag_names.each { |name| record.tags.build(name: name) }
+        super(record, update_params.except(:tag_names))
       end
 
-      def map_names_onto_tags(names)
-        names = names.reject(&:blank?)
-        existing_tags = Tag.where(name: names)
-        non_existent_tags = (names - existing_tags.map(&:name)).map { |name| Tag.new(name: name) }
-        existing_tags + non_existent_tags
+      def map_names_onto_tags(record, names)
+        names = names&.reject(&:blank?)
+        return [[], []] if names.blank?
+
+        assigned_tags = record.tags
+        old_tags = Tag.where(name: names) - assigned_tags
+        new_names = names - (old_tags + assigned_tags).map(&:name)
+        [old_tags, new_names]
       end
     end
   end

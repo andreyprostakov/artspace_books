@@ -9,17 +9,13 @@ Rails.application.routes.draw do
         resources :ref_entries, only: %i[show index]
       end
 
-      resources :books, only: %i[index show] do
-        post :details, to: 'book_details#create', on: :collection
-        resource :details, controller: 'book_details', only: %i[show update]
-        put :sync_goodreads_stats, on: :member
+      namespace :books do
+        resource :batch, only: :update, controller: 'batch'
+        resources :full_entries, only: %i[show create update destroy]
+        resources :index_entries, only: %i[show index]
+        resources :popularity, only: :update
+        resources :years, only: :index
       end
-
-      namespace :books_batch do
-        post :assign_tags
-      end
-
-      resources :years, only: :index
 
       namespace :tags do
         resources :ref_entries, only: :index
