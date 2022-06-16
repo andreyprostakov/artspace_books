@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap'
 import PageTemplate from 'pages/templates/booksListYearly/Page'
 import ExternalTextLink from 'components/ExternalTextLink'
 
-const TAG_IDS = [0]
+const TAG_IDS = [179]
 
 const Page = () => {
   const pageConfig = {

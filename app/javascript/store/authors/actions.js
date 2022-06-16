@@ -1,6 +1,7 @@
 import { slice } from 'store/authors/slice'
 import apiClient from 'store/authors/apiClient'
 
+import { setCurrentAuthorId } from 'store/axis/actions'
 import {
   selectAuthorFull,
   selectAuthorIndexEntry,
@@ -49,4 +50,7 @@ export const reloadAuthor = id => (dispatch, getState) => {
 
   const oldRef = selectAuthorRef()(state)
   if (oldRef) dispatch(fetchAuthorRef(id))
+
+  dispatch(setCurrentAuthorId(null))
+  dispatch(setCurrentAuthorId(id))
 }

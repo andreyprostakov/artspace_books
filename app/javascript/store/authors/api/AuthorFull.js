@@ -11,6 +11,7 @@ class AuthorFull {
       tagIds: data['tag_ids'],
       popularity: data['popularity'],
       rank: data['rank'],
+      reference: data['reference'],
     }
   }
 }
