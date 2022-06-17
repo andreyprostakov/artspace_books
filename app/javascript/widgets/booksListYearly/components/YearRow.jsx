@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectBookPopularities, selectCurrentBook } from 'store/metadata/selectors'
+import { selectBookPopularities, selectCurrentBook } from 'store/books/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import {
   selectBookIdsByYear,

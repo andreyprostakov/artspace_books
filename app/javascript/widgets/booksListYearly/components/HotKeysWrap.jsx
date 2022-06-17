@@ -5,7 +5,7 @@ import { HotKeys } from 'react-hotkeys'
 
 import useUrlStore from 'store/urlStore'
 import { selectAuthorFull } from 'store/authors/selectors'
-import { selectCurrentBook } from 'store/metadata/selectors'
+import { selectCurrentBook } from 'store/books/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import {
   jumpToFirstYear,

@@ -7,6 +7,7 @@ import bookSyncReducer from 'store/bookSync/slice'
 import metadataReducer from 'store/metadata/slice'
 import selectablesReducer from 'store/selectables/slice'
 import storeAuthorsReducer from 'store/authors/slice'
+import storeBooksReducer from 'store/books/slice'
 import storeTagsReducer from 'store/tags/slice'
 
 import booksListLinearReducer from 'widgets/booksListLinear/slice'
@@ -28,6 +29,7 @@ export default configureStore({
     notifications: notificationsReducer,
     selectables: selectablesReducer,
     storeAuthors: storeAuthorsReducer,
+    storeBooks: storeBooksReducer,
     storeTags: storeTagsReducer,
   }
 })

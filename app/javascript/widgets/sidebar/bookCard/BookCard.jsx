@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
 import { selectAuthorRef } from 'store/authors/selectors'
-import { selectCurrentBook, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectCurrentBook, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'

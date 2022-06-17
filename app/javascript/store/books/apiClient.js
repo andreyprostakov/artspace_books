@@ -1,11 +1,12 @@
 import { objectToParams } from 'utils/objectToParams'
-import Book from 'serverApi/Book'
-import BookDetails from 'serverApi/BookDetails'
+import BookForm from 'store/books/api/BookForm'
+import BookFull from 'store/books/api/BookFull'
+import BookIndexEntry from 'store/books/api/BookIndexEntry'
 
 const jQuery = window.$
 
 class ApiClient {
-  static getYears({ authorId, tagIds } = {}) {
+  static getBooksYears({ authorId, tagIds } = {}) {
     const query = {
       'author_id': authorId,
       'tag_ids': tagIds,
@@ -15,7 +16,7 @@ class ApiClient {
     })
   }
 
-  static getBooks({ years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
+  static getBooksIndex({ years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
     const params = {
       years,
       page,
@@ -29,37 +30,31 @@ class ApiClient {
       url: `/api/books/index_entries.json${ objectToParams(params) }`
     }).then(({ list, total }) => ({
       total,
-      books: list.map(bookData => Book.parse(bookData)),
+      books: list.map(bookData => BookIndexEntry.parse(bookData)),
     }))
   }
 
-  static getAuthorBooks(authorId) {
-    return jQuery.ajax({
-      url: `/api/books/index_entries.json${ objectToParams({ 'author_id': authorId }) }`
-    }).then(books => books.map(bookData => Book.parse(bookData)))
-  }
-
-  static getBook(id) {
+  static getBooksIndexEntry(id) {
     return jQuery.ajax({
       url: `/api/books/index_entries/${id}.json`
-    }).then(data => Book.parse(data))
+    }).then(data => BookIndexEntry.parse(data))
   }
 
-  static syncBookStats(id) {
+  static updateBookPopularity(id) {
     return jQuery.ajax({
       url: `/api/books/popularity/${id}.json`,
       type: 'PUT'
-    }).then(data => Book.parse(data))
+    }).then(data => BookIndexEntry.parse(data))
   }
 
-  static getBookDetails(id) {
+  static getBookFull(id) {
     return jQuery.ajax({
       url: `/api/books/full_entries/${id}.json`
-    }).then(data => BookDetails.parse(data))
+    }).then(data => BookFull.parse(data))
   }
 
-  static putBookDetails(id, details) {
-    const body = BookDetails.objectToServerData(details)
+  static updateBook(id, data) {
+    const body = BookForm.buildServerData(data)
     const formData = new FormData()
     Object.keys(body).forEach(key => formData.append(`book[${key}]`, body[key]))
     return jQuery.ajax({
@@ -70,8 +65,8 @@ class ApiClient {
     })
   }
 
-  static postBookDetails(details) {
-    const body = BookDetails.objectToServerData(details)
+  static createBook(data) {
+    const body = BookForm.buildServerData(data)
     return jQuery.ajax({
       url: '/api/books/full_entries.json',
       type: 'POST',
@@ -79,7 +74,7 @@ class ApiClient {
     })
   }
 
-  static postTagsForBooksBatch(ids, tagNames) {
+  static updateBooksBatch(ids, tagNames) {
     return jQuery.ajax({
       url: '/api/books/batch.json',
       type: 'PUT',

@@ -3,7 +3,7 @@ import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 import { selectSeed } from 'store/axis/selectors'
-import { selectBooks, selectCurrentBook } from 'store/metadata/selectors'
+import { selectBooksIndex, selectCurrentBook } from 'store/books/selectors'
 import { selectIdsSelected, selectBatchModeOn, selectIdIsSelected } from 'store/selectables/selectors'
 
 export const selectBookIdsSelected = selectIdsSelected
@@ -13,7 +13,7 @@ export { selectBatchModeOn }
 const localState = state => state.booksListYearly
 
 export const selectShuffledBooksOfYear = year => state =>
-  shuffle(selectBooks()(state).filter(book => book.year === year), selectSeed()(state))
+  shuffle(selectBooksIndex()(state).filter(book => book.year === year), selectSeed()(state))
 
 export const selectBookIdsByYear = year => state => selectShuffledBooksOfYear(year)(state).map(book => book.id)
 

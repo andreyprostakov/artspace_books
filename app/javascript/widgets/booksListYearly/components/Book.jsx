@@ -3,17 +3,16 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 
-import { showBook } from 'store/metadata/actions'
-import { selectBook } from 'store/metadata/selectors'
+import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
+import { showBook } from 'store/books/actions'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectBookDefaultImageUrl } from 'store/metadata/selectors'
 
 import ImageContainer from 'components/ImageContainer'
 
 const Book = (props) => {
   const { id, showYear, ...options } = props
   const dispatch = useDispatch()
-  const book = useSelector(selectBook(id))
+  const book = useSelector(selectBooksIndexEntry(id))
   const currentBookId = useSelector(selectCurrentBookId())
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const ref = useRef(null)

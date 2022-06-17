@@ -11,14 +11,14 @@ import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
-import { selectBook, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
 
 const BookSelected = (props) => {
   const { id } = props
-  const book = useSelector(selectBook(id))
+  const book = useSelector(selectBooksIndexEntry(id))
   const authorRef = useSelector(selectAuthorRef(book.authorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id

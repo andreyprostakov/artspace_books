@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
 import { selectAuthorRef } from 'store/authors/selectors'
-import { selectBook } from 'store/metadata/selectors'
-import { showBook } from 'store/metadata/actions'
+import { selectBooksIndexEntry } from 'store/books/selectors'
+import { showBook } from 'store/books/actions'
 import {
   selectBatchModeOn,
   selectBookIdsSelected,
@@ -16,7 +16,7 @@ import {
   reloadBooks,
   removeBookIdFromSelected,
 } from 'widgets/booksListYearly/actions'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/books/apiClient'
 
 const BatchControls = () => {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const BatchControls = () => {
     event.preventDefault()
     const formData = { tagNames: state.currentTags.map(tag => tag.name) }
 
-    apiClient.postTagsForBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() =>
+    apiClient.updateBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() =>
       dispatch(reloadBooks())
     )
   }
@@ -68,7 +68,7 @@ const BatchControls = () => {
 const SelectedBooksEntry = (props) => {
   const { id } = props
   const dispatch = useDispatch()
-  const book = useSelector(selectBook(id))
+  const book = useSelector(selectBooksIndexEntry(id))
   const authorRef = useSelector(selectAuthorRef(book.authorId))
 
   return (

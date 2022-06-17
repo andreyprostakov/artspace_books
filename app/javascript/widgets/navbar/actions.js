@@ -9,7 +9,7 @@ export const {
   setTagsSearchKey,
 } = slice.actions
 
-export const prepareNavRefs = () => (dispatch, getState) => {
+export const prepareNavRefs = () => async(dispatch, getState) => {
   const state = getState()
 
   const tagsLoaded = selectTagsRefsLoaded()(state)

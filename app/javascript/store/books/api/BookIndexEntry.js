@@ -1,4 +1,4 @@
-class Book {
+class BookIndexEntry {
   static parse(data) {
     return {
       ...data,
@@ -13,4 +13,4 @@ class Book {
   }
 }
 
-export default Book
+export default BookIndexEntry

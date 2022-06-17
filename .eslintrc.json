@@ -43,6 +43,7 @@
     "quote-props": ["off"],
     "quotes": ["error", "single"],
     "radix": ["off"],
+    "require-await": ["off"],
     "semi": ["error", "never"],
     "space-before-function-paren": ["error", "never"],
     "sort-imports": ["off"],

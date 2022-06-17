@@ -12,7 +12,7 @@ import { fetchTagsRefs } from 'store/tags/actions'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectTagsRefsByIds } from 'store/tags/selectors'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/books/apiClient'
 
 const BookForm = (props) => {
   const { bookDetails, onSubmit } = props
@@ -32,9 +32,9 @@ const BookForm = (props) => {
 
   const sendRequest = (bookDetails, formData) => {
     if (bookDetails.new) {
-      return apiClient.postBookDetails(formData)
+      return apiClient.createBook(formData)
     } else {
-      return apiClient.putBookDetails(bookDetails.id, formData)
+      return apiClient.updateBook(bookDetails.id, formData)
     }
   }
 

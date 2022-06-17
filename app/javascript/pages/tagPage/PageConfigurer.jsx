@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
+import { setCurrentBookId } from 'store/axis/actions'
 import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
@@ -23,6 +24,7 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
+    dispatch(setCurrentBookId(null))
     dispatch(prepareNavRefs()).then(() => {
       dispatch(assignFilter({ tagId }))
       dispatch(fetchBooks()).then(() => {

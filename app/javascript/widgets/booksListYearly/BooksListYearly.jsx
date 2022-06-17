@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectCurrentBook } from 'store/metadata/selectors'
+import { selectCurrentBook } from 'store/books/selectors'
 import { selectYearsToDisplay } from 'widgets/booksListYearly/selectors'
 import { fetchBooksForYears, jumpToLatestYear } from 'widgets/booksListYearly/actions'
 
