@@ -31,7 +31,7 @@ RSpec.describe '/api/books/batch' do
         send_request
 
         expect(response).to be_unprocessable
-        expect(json_response).to eq(foo: 'bar')
+        expect(json_response).to eq(errors: { tags: ['name is invalid'] })
       end
     end
   end

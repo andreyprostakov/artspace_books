@@ -18,5 +18,5 @@
 #
 class TagConnection < ApplicationRecord
   belongs_to :tag, class_name: 'Tag', inverse_of: :tag_connections, required: false
-  belongs_to :entity, polymorphic: true, inverse_of: :tags
+  belongs_to :entity, polymorphic: true
 end

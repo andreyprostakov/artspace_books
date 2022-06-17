@@ -5,24 +5,39 @@ module Forms
     extend ActiveSupport::Concern
 
     included do
-      private
-
-      def apply_update(record, update_params)
-        tag_names = update_params[:tag_names]
-        old_tags, new_tag_names = map_names_onto_tags(record, tag_names)
-        old_tags.each { |tag| record.tag_connections.build(tag: tag) }
-        new_tag_names.each { |name| record.tags.build(name: name) }
-        super(record, update_params.except(:tag_names))
+      def update(*args)
+        super(*args)
+      rescue ActiveRecord::RecordInvalid
+        expose_invalid_new_tags
+        false
       end
 
-      def map_names_onto_tags(record, names)
-        names = names&.reject(&:blank?)
-        return [[], []] if names.blank?
+      private
 
-        assigned_tags = record.tags
-        old_tags = Tag.where(name: names) - assigned_tags
-        new_names = names - (old_tags + assigned_tags).map(&:name)
-        [old_tags, new_names]
+      attr_reader :new_tags
+
+      def normalize_params(params)
+        if params.key?(:tag_names)
+          tags = map_names_onto_tags(params[:tag_names])
+          params = params.except(:tag_names).merge(tags: tags)
+        end
+        params
+      end
+
+      def map_names_onto_tags(names)
+        names = names&.reject(&:blank?)
+        return [] if names.blank?
+
+        existing_tags = Tag.where(name: names)
+        @new_tags = (names - existing_tags.map(&:name)).map { |name| Tag.new(name: name) }
+        new_tags.map(&:save!)
+        existing_tags + new_tags
+      end
+
+      def expose_invalid_new_tags
+        tag_errors = new_tags.select { |tag| tag.errors.present? }
+                             .flat_map { |tag| tag.errors.full_messages.map(&:downcase) }.uniq
+        errors.add(:tags, tag_errors.join(', ')) if tag_errors.present?
       end
     end
   end

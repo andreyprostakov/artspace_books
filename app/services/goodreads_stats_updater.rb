@@ -11,7 +11,5 @@ class GoodreadsStatsUpdater
     book.goodreads_rating = info[:rating] if info[:rating]
     book.goodreads_popularity = info[:popularity] if info[:popularity]
     book.save
-  # rescue Errno::ECONNREFUSED, Errno::ETIMEDOUT
-  #   false
   end
 end

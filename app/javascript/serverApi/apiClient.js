@@ -11,7 +11,7 @@ class ApiClient {
       'tag_ids': tagIds,
     }
     return jQuery.ajax({
-      url: `/api/years.json${ objectToParams(query) }`
+      url: `/api/books/years.json${ objectToParams(query) }`
     })
   }
 
@@ -26,7 +26,7 @@ class ApiClient {
       'sort_by': sortBy
     }
     return jQuery.ajax({
-      url: `/api/books.json${ objectToParams(params) }`
+      url: `/api/books/index_entries.json${ objectToParams(params) }`
     }).then(({ list, total }) => ({
       total,
       books: list.map(bookData => Book.parse(bookData)),
@@ -35,26 +35,26 @@ class ApiClient {
 
   static getAuthorBooks(authorId) {
     return jQuery.ajax({
-      url: `/api/books.json${ objectToParams({ 'author_id': authorId }) }`
+      url: `/api/books/index_entries.json${ objectToParams({ 'author_id': authorId }) }`
     }).then(books => books.map(bookData => Book.parse(bookData)))
   }
 
   static getBook(id) {
     return jQuery.ajax({
-      url: `/api/books/${id}.json`
+      url: `/api/books/index_entries/${id}.json`
     }).then(data => Book.parse(data))
   }
 
   static syncBookStats(id) {
     return jQuery.ajax({
-      url: `/api/books/${id}/sync_goodreads_stats.json`,
+      url: `/api/books/popularity/${id}.json`,
       type: 'PUT'
     }).then(data => Book.parse(data))
   }
 
   static getBookDetails(id) {
     return jQuery.ajax({
-      url: `/api/books/${id}/details.json`
+      url: `/api/books/full_entries/${id}.json`
     }).then(data => BookDetails.parse(data))
   }
 
@@ -63,7 +63,7 @@ class ApiClient {
     const formData = new FormData()
     Object.keys(body).forEach(key => formData.append(`book[${key}]`, body[key]))
     return jQuery.ajax({
-      url: `/api/books/${id}/details.json`,
+      url: `/api/books/full_entries/${id}.json`,
       type: 'PUT',
       data: { book: body },
       // contentType: false, cache: false, processData: false
@@ -73,7 +73,7 @@ class ApiClient {
   static postBookDetails(details) {
     const body = BookDetails.objectToServerData(details)
     return jQuery.ajax({
-      url: '/api/books/details.json',
+      url: '/api/books/full_entries.json',
       type: 'POST',
       data: { book: body }
     })
@@ -81,11 +81,13 @@ class ApiClient {
 
   static postTagsForBooksBatch(ids, tagNames) {
     return jQuery.ajax({
-      url: '/api/books_batch/assign_tags.json',
-      type: 'POST',
+      url: '/api/books/batch.json',
+      type: 'PUT',
       data: {
-        'book_ids': ids,
-        'tag_names': tagNames,
+        ids,
+        'batch_update': {
+          'tag_names': tagNames,
+        },
       }
     })
   }

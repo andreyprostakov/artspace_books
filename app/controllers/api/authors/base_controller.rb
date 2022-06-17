@@ -1,6 +1,6 @@
 module Api
   module Authors
-    class BaseController < ApplicationController
+    class BaseController < Api::BaseController
       private
 
       def fetch_author

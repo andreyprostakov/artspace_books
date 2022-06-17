@@ -6,9 +6,9 @@ module Api
       before_action :fetch_book, only: :update
 
       def update
-        unless GoodreadsStatsUpdater.update(@book)
-          render json: { errors: @book.errors }, status: :unprocessable_entity
-        end
+        return if GoodreadsStatsUpdater.update(@book)
+
+        render json: { errors: @book.errors }, status: :unprocessable_entity
       end
     end
   end

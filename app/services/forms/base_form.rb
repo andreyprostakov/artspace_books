@@ -2,6 +2,8 @@
 
 module Forms
   class BaseForm
+    include ActiveModel::Validations
+
     def initialize(record)
       @record = record
     end
@@ -10,10 +12,6 @@ module Forms
       ApplicationRecord.transaction do
         apply_update(record, normalize_params(record_params)) || raise(ActiveRecord::Rollback)
       end || false
-    end
-
-    def errors
-      record.errors
     end
 
     protected
@@ -25,7 +23,9 @@ module Forms
     end
 
     def apply_update(record, update_params)
-      record.update(update_params)
+      record.update(update_params).tap do
+        errors.merge!(record.errors)
+      end
     end
   end
 end

@@ -73,7 +73,7 @@ RSpec.describe '/api/authors/full_entries', type: :request do
         expect(response).to be_unprocessable
         expect(response.body).to eq({
           errors: {
-            tags: ['is invalid']
+            tags: ['name is invalid']
           }
         }.to_json)
       end

@@ -14,7 +14,7 @@ module Api
         { tag_names: [] }
       ].freeze
 
-      before_action :fetch_book, only: %i[show update]
+      before_action :fetch_book, only: %i[show update destroy]
 
       protect_from_forgery with: :null_session
 
@@ -22,26 +22,19 @@ module Api
 
       def create
         @book = Book.new
-        if form.update(book_params)
-          render json: { id: @book.id }
-        else
-          render json: @book.errors, status: :unprocessable_entity
-        end
+        perform_form_create(Forms::BookForm.new(@book), book_params, @book)
       end
 
       def update
-        if form.update(book_params)
-          render json: {}
-        else
-          render json: @book.errors, status: :unprocessable_entity
-        end
+        perform_form_update(Forms::BookForm.new(@book), book_params)
+      end
+
+      def destroy
+        @book.destroy!
+        render json: {}
       end
 
       private
-
-      def form
-        Forms::BookForm.new(@book)
-      end
 
       def book_params
         params.fetch(:book, {})

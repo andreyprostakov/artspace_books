@@ -1,6 +1,6 @@
 module Api
   module Books
-    class BaseController < ApplicationController
+    class BaseController < Api::BaseController
       private
 
       def fetch_book

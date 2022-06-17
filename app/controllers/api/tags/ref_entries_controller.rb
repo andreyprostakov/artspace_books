@@ -2,7 +2,7 @@
 
 module Api
   module Tags
-    class RefEntriesController < ApplicationController
+    class RefEntriesController < Api::BaseController
       def index
         @tags = Tag.preload(:tag_connections)
       end
