@@ -7,9 +7,9 @@ class GoodreadsStatsScraper
   def self.extract_stats(book)
     return {} unless book.goodreads_url
 
-    site_page = HTTParty.get(book.goodreads_url)
-    (rating,), = site_page.scan(RATING_PATTERN)
-    (popularity,), = site_page.scan(POPULARITY_PATTERN)
+    site_page_content = HTTParty.get(book.goodreads_url).body
+    (rating,), = site_page_content.scan(RATING_PATTERN)
+    (popularity,), = site_page_content.scan(POPULARITY_PATTERN)
     {
       rating: rating&.to_f,
       popularity: popularity&.to_i
