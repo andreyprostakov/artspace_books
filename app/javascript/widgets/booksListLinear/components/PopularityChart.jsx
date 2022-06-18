@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
-import { selectBookPopularities } from 'store/metadata/selectors'
+import { selectBookPopularities } from 'store/books/selectors'
 import PopularityChart from 'components/PopularityChart'
 
 const BOOK_CASE_WIDTH = 140

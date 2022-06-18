@@ -9,14 +9,14 @@ import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
 import apiClient from 'store/authors/apiClient'
 
-import { selectTags  } from 'store/metadata/selectors'
+import { selectTagsRefsByIds } from 'store/tags/selectors'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 const AuthorForm = (props) => {
   const { authorFull, id, onSubmit } = props
-  const [state, setState] = useState({ currentTags: [], errors: {} })
+  const [state, setState] = useState({ currentTags: [], fullname: authorFull.fullname, errors: {} })
   const { currentTags, errors } = state
-  const tags = useSelector(selectTags(authorFull.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))
   const initialTags = authorFull.new ? [] : tags
   const dispatch = useDispatch()
 
@@ -57,12 +57,14 @@ const AuthorForm = (props) => {
 
   return (
     <Form id={ id } onSubmit={ handleSubmit }>
-      <InputLine controlId='fullname' label='Name' value={ authorFull.fullname } errors={ errors.fullname } autoFocus/>
+      <InputLine controlId='fullname' label='Name'
+                 value={ authorFull.fullname } errors={ errors.fullname } autoFocus
+                 onChange={ e => setState({ ...state, fullname: e.target.value }) }/>
       <FormInputImage label='Photo'
                       imageUrl={ authorFull.imageUrl }
                       errors={ errors.image_url }
                       searchPrefix='author photo'
-                      searchKey={ authorFull.fullname }/>
+                      searchKey={ state.fullname }/>
       <InputLine controlId='reference' label='WIKI URL' value={ authorFull.reference } errors={ errors.reference }/>
       <Row />
       <InputLine controlId='birthYear' label='Year of birth' value={ authorFull.birthYear } errors={ errors.birth_year }/>

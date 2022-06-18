@@ -1,7 +1,7 @@
 import { clamp, first, last, pull } from 'lodash'
 import { slice } from 'widgets/booksListYearly/slice'
 import { pickNearEntries } from 'utils/pickNearEntries'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/books/apiClient'
 
 import {
   selectCurrentAuthorId,
@@ -10,18 +10,18 @@ import {
 import { setCurrentBookId } from 'store/axis/actions'
 
 import {
-  selectBook,
-  selectBooks,
-  selectCurrentBook,
-  selectTagNames,
-} from 'store/metadata/selectors'
+  selectBooksIndexEntry,
+  selectBooksIndex,
+  selectCurrentBook
+} from 'store/books/selectors'
 import {
   addBook,
   addBooks,
   clearBooks,
   setCurrentBookDetails,
   showBook,
-} from 'store/metadata/actions'
+} from 'store/books/actions'
+import { selectTagNames } from 'store/tags/selectors'
 
 import {
   pickYearsToLoad,
@@ -69,7 +69,7 @@ export const setupBooksListSelection = () => (dispatch, getState) => {
 
 export const setBookAsCurrentInYear = bookId => (dispatch, getState) => {
   const state = getState()
-  const book = selectBook(bookId)(state)
+  const book = selectBooksIndexEntry(bookId)(state)
   const currentYearsBookId = selectYearCurrentBookId(book.year)(state)
   if (bookId !== currentYearsBookId)
     dispatch(setCurrentBookForYear({ id: bookId, year: book.year }))
@@ -109,12 +109,12 @@ export const loadCurrentBookDetails = () => async(dispatch, getState) => {
   const currentId = selectCurrentBookId()(getState())
   if (!currentId) return
 
-  const details = await apiClient.getBookDetails(currentId)
+  const details = await apiClient.getBookFull(currentId)
   dispatch(setCurrentBookDetails(details))
 }
 
 export const fetchYears = (query = {}) => async dispatch => {
-  const years = await apiClient.getYears(query)
+  const years = await apiClient.getBooksYears(query)
   dispatch(addYears(years))
 }
 
@@ -128,7 +128,7 @@ export const fetchBooksForYears = years => async(dispatch, getState) => {
 }
 
 export const reloadBook = id => async dispatch => {
-  const book = await apiClient.getBook(id)
+  const book = await apiClient.getBooksIndexEntry(id)
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
   dispatch(setBookAsCurrentInYear(id))
@@ -143,7 +143,7 @@ const updateBookInYears = book => (dispatch, getState) => {
   if (!years.includes(book.year)) dispatch(addYears([book.year]))
 
   if (previousYear && previousYear !== book.year) {
-    const yearBook = selectBooks()(state).find(b => b.year === previousYear)
+    const yearBook = selectBooksIndex()(state).find(b => b.year === previousYear)
     if (!yearBook)
       setYears(years.filter(year => year !== previousYear))
   }
@@ -157,21 +157,21 @@ export const reloadBooks = () => (dispatch, getState) => {
 
 export const addTagToBook = (id, tagName) => (dispatch, getState) => {
   const state = getState()
-  const book = selectBook(id)(state)
+  const book = selectBooksIndexEntry(id)(state)
   const tagNames = selectTagNames(book.tagIds)(state)
   tagNames.push(tagName)
-  apiClient.putBookDetails(id, { tagNames }).then(() =>
+  apiClient.updateBook(id, { tagNames }).then(() =>
     dispatch(reloadBook(id))
   )
 }
 
 export const removeTagFromBook = (id, tagName) => (dispatch, getState) => {
   const state = getState()
-  const book = selectBook(id)(state)
+  const book = selectBooksIndexEntry(id)(state)
   const tagNames = selectTagNames(book.tagIds)(state)
   pull(tagNames, tagName)
   tagNames.push('')
-  apiClient.putBookDetails(id, { tagNames }).then(() =>
+  apiClient.updateBook(id, { tagNames }).then(() =>
     dispatch(reloadBook(id))
   )
 }
@@ -219,7 +219,8 @@ const lazyBookLoadIteration = (dispatch, getState, resolve, index = 0) => {
       lazyBookLoadIteration(dispatch, getState, resolve, index + 1)
     else {
       dispatch(markYearsAsLoading())
-      apiClient.getBooks({ years: yearsToLoad, authorId: currentAuthorId, ...currentFilters }).then(({ books }) => {
+      const query = { years: yearsToLoad, authorId: currentAuthorId, ...currentFilters }
+      apiClient.getBooksIndex(query).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)
       })

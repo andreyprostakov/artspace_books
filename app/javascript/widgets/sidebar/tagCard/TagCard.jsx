@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import { Card } from 'react-bootstrap'
 
 import { selectCurrentTagId } from 'store/axis/selectors'
-import { selectTag } from 'store/metadata/selectors'
+import { selectTagRef } from 'store/tags/selectors'
 
 const TagCard = (props) => {
   const tagId = useSelector(selectCurrentTagId())
-  const tag = useSelector(selectTag(tagId))
+  const tag = useSelector(selectTagRef(tagId))
 
   if (!tag) { return null }
   return (

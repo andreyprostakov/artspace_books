@@ -1,6 +1,6 @@
 import { pull } from 'lodash'
 import { fetchAuthorFull } from 'store/authors/actions'
-import { selectTagBookmark, selectTagNames } from 'store/metadata/selectors'
+import { selectTagBookmark, selectTagNames } from 'store/tags/selectors'
 import apiClient from 'store/authors/apiClient'
 
 export const setupStoreForAuthorCard = authorId => dispatch => {

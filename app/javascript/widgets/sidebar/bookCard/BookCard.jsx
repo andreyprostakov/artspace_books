@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
 
 import { selectAuthorRef } from 'store/authors/selectors'
-import { selectCurrentBook, selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
+import { selectCurrentBook, selectBookDefaultImageUrl } from 'store/books/selectors'
+import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
 
@@ -26,7 +27,7 @@ const BookCard = (props) => {
   const dispatch = useDispatch()
   const authorRef = useSelector(selectAuthorRef(book.authorId))
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
-  const tags = useSelector(selectTags(book.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
 

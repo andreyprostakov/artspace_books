@@ -1,9 +1,9 @@
 import { first, last } from 'lodash'
-import apiClient from 'serverApi/apiClient'
+import apiClient from 'store/books/apiClient'
 import { setCurrentBookId } from 'store/axis/actions'
 import { clearSelection } from 'store/selectables/actions'
-import { selectBook, selectCurrentBook } from 'store/metadata/selectors'
-import { addBooks, showBook } from 'store/metadata/actions'
+import { selectBooksIndexEntry, selectCurrentBook } from 'store/books/selectors'
+import { addBooks, showBook } from 'store/books/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
 import { slice } from 'widgets/booksListLinear/slice'
@@ -25,7 +25,7 @@ export const fetchBooks = () => (dispatch, getState) => {
     perPage: selectPerPage()(state),
     sortBy: selectSortBy()(state),
   }
-  return apiClient.getBooks(query).then(({ books, total }) => {
+  return apiClient.getBooksIndex(query).then(({ books, total }) => {
     if (books.length > 0) dispatch(addBooks(books))
     dispatch(assignBooks(books))
     dispatch(assignBooksTotal(total))

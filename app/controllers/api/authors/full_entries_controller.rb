@@ -9,19 +9,11 @@ module Api
 
       def create
         @author = Author.new
-        if form.update(author_params)
-          render json: { id: @author.id }
-        else
-          render json: { errors: @author.errors }, status: :unprocessable_entity
-        end
+        perform_form_create(Forms::AuthorForm.new(@author), author_params, @author)
       end
 
       def update
-        if form.update(author_params)
-          render json: {}
-        else
-          render json: { errors: @author.errors }, status: :unprocessable_entity
-        end
+        perform_form_update(Forms::AuthorForm.new(@author), author_params)
       end
 
       def destroy
@@ -30,10 +22,6 @@ module Api
       end
 
       private
-
-      def form
-        Forms::AuthorForm.new(@author)
-      end
 
       def author_params
         params.fetch(:author, {})

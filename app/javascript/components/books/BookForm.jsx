@@ -8,16 +8,16 @@ import InputLine from 'components/FormInputLine'
 import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
 import BookFormGoodreadsLine from 'components/books/BookFormGoodreadsLine'
-import { fetchAllTags } from 'store/metadata/actions'
+import { fetchTagsRefs } from 'store/tags/actions'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
-import { selectTags } from 'store/metadata/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
-import apiClient from 'serverApi/apiClient'
+import { selectTagsRefsByIds } from 'store/tags/selectors'
+import apiClient from 'store/books/apiClient'
 
 const BookForm = (props) => {
   const { bookDetails, onSubmit } = props
   const authorRef = useSelector(selectAuthorRef(bookDetails.authorId))
-  const tags = useSelector(selectTags(bookDetails.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(bookDetails.tagIds))
   const dispatch = useDispatch()
   const [state, setState] = useState({
     errors: {},
@@ -32,15 +32,15 @@ const BookForm = (props) => {
 
   const sendRequest = (bookDetails, formData) => {
     if (bookDetails.new) {
-      return apiClient.postBookDetails(formData)
+      return apiClient.createBook(formData)
     } else {
-      return apiClient.putBookDetails(bookDetails.id, formData)
+      return apiClient.updateBook(bookDetails.id, formData)
     }
   }
 
   const onServerSuccess = (responseData) => {
     dispatch(addSuccessMessage('Book updated'))
-    dispatch(fetchAllTags())
+    dispatch(fetchTagsRefs())
     onSubmit(responseData)
   }
 

@@ -6,7 +6,7 @@ import AuthorsNavList from 'widgets/navbar/components/AuthorsNavList'
 import TagsNavList from 'widgets/navbar/components/TagsNavList'
 import useUrlStore from 'store/urlStore'
 import { setAuthorsSearchKey, setTagsSearchKey } from 'widgets/navbar/actions'
-import { selectTagIdBookmark, selectTagIdRead } from 'store/metadata/selectors'
+import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
   const [{},

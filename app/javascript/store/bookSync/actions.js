@@ -1,9 +1,9 @@
 import { slice } from 'store/bookSync/slice'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectBook } from 'store/metadata/selectors'
-import { addBook } from 'store/metadata/actions'
-import apiClient from 'serverApi/apiClient'
+import { selectBooksIndexEntry } from 'store/books/selectors'
+import { addBook } from 'store/books/actions'
+import apiClient from 'store/books/apiClient'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
 
 const {
@@ -11,12 +11,12 @@ const {
   unmarkBookAsInProcess,
 } = slice.actions
 
-export const syncBookStats = id => (dispatch, getState) => {
+export const updateBookPopularity = id => (dispatch, getState) => {
   const state = getState()
   const ids = selectBookIdsInProcessing()(state)
   if (ids.includes(id)) return
 
-  const initialBook = selectBook(id)(state)
+  const initialBook = selectBooksIndexEntry(id)(state)
   dispatch(markBookAsInProcess(id))
   dispatch(reloadBookWithSync(id, initialBook)).then(book => {
     dispatch(addBook(book))
@@ -25,7 +25,7 @@ export const syncBookStats = id => (dispatch, getState) => {
 }
 
 const reloadBookWithSync = (id, initialBook) => async dispatch => {
-  const apiCall = apiClient.syncBookStats(id).
+  const apiCall = apiClient.updateBookPopularity(id).
     fail(response => {
       dispatch(addErrorMessage(`Book #${id} not synced due to some failure`))
       return response
@@ -52,5 +52,5 @@ export const syncCurrentBookStats = () => (dispatch, getState) => {
   const id = selectCurrentBookId()(getState())
   if (!id) return
 
-  dispatch(syncBookStats(id))
+  dispatch(updateBookPopularity(id))
 }

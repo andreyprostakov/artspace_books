@@ -1,5 +1,5 @@
-import { fetchAllTags } from 'store/metadata/actions'
+import { fetchTagsRefs } from 'store/tags/actions'
 
 export const setupStoreForTagsPage = () => dispatch => {
-  dispatch(fetchAllTags())
+  dispatch(fetchTagsRefs())
 }

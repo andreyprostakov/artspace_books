@@ -11,14 +11,14 @@ import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
-import { selectTags, selectVisibleTags, selectBookDefaultImageUrl } from 'store/metadata/selectors'
-import { selectBook } from 'store/metadata/selectors'
+import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
+import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setImageSrc } from 'widgets/imageModal/actions'
 import useUrlStore from 'store/urlStore'
 
 const BookSelected = (props) => {
   const { id } = props
-  const book = useSelector(selectBook(id))
+  const book = useSelector(selectBooksIndexEntry(id))
   const authorRef = useSelector(selectAuthorRef(book.authorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id
@@ -26,7 +26,7 @@ const BookSelected = (props) => {
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
   const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
-  const tags = useSelector(selectTags(book.tagIds))
+  const tags = useSelector(selectTagsRefsByIds(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)

@@ -11,7 +11,7 @@ import {
   selectTagBookmark,
   selectTagRead,
   selectTagNames,
-} from 'store/metadata/selectors'
+} from 'store/tags/selectors'
 
 import {
   selectBookIsSelected,
@@ -23,7 +23,7 @@ import {
   removeTagFromBook,
 } from 'widgets/booksListYearly/actions'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
-import { syncBookStats } from 'store/bookSync/actions'
+import { updateBookPopularity } from 'store/bookSync/actions'
 
 import useUrlStore from 'store/urlStore'
 
@@ -88,7 +88,7 @@ const BookToolbar = (props) => {
 
         { book.goodreadsUrl &&
           <Button variant='outline-warning' title='Sync latest ratings' href='#'
-                  onClick={ () => dispatch(syncBookStats(book.id)) }
+                  onClick={ () => dispatch(updateBookPopularity(book.id)) }
                   disabled={ bookIdsInProcess.includes(book.id) }>
             <FontAwesomeIcon icon={ faSync }/>
           </Button>

@@ -4,7 +4,7 @@ class GoodreadsStatsScraper
   RATING_PATTERN = /&quot;rating&quot;:&quot;([\d.]+)&quot;/
   POPULARITY_PATTERN = /&quot;ratingsCount&quot;:(\d+),&quot;/
 
-  def extract_stats(book)
+  def self.extract_stats(book)
     return {} unless book.goodreads_url
 
     site_page = HTTParty.get(book.goodreads_url)
