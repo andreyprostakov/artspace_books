@@ -1,0 +1,38 @@
+.tags-page {
+  padding-top: 20px;
+
+  .tags-index-category {
+    margin-bottom: 20px;
+
+    .category-name {
+    }
+
+    .category-contents {
+      .tags-index-entry {
+        display: inline-block;
+      }
+    }
+  }
+
+  .badge-pill {
+    &.tag-category-format {
+      background-color: gray;
+    }
+
+    &.tag-category-genre {
+      background-color: green;
+    }
+
+    &.tag-category-location {
+      background-color: blue;
+    }
+
+    &.tag-category-other {
+      // background-color: green;
+    }
+
+    &.tag-category-series {
+      background-color: orange;
+    }
+  }
+}

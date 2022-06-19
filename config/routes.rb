@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       end
 
       namespace :tags do
+        resources :index_entries, only: :index
         resources :ref_entries, only: :index
       end
     end

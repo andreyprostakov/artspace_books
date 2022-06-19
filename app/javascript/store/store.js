@@ -9,6 +9,7 @@ import selectablesReducer from 'store/selectables/slice'
 import storeAuthorsReducer from 'store/authors/slice'
 import storeBooksReducer from 'store/books/slice'
 import storeTagsReducer from 'store/tags/slice'
+import urlStoreReducer from 'store/urlStore/slice'
 
 import booksListLinearReducer from 'widgets/booksListLinear/slice'
 import booksListYearlyReducer from 'widgets/booksListYearly/slice'
@@ -31,5 +32,6 @@ export default configureStore({
     storeAuthors: storeAuthorsReducer,
     storeBooks: storeBooksReducer,
     storeTags: storeTagsReducer,
+    urlStore: urlStoreReducer,
   }
 })

@@ -1,17 +1,20 @@
 import React from 'react'
 import { Badge } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import useUrlStore from 'store/urlStore'
 
 const TagBadge = (props) => {
-  const { text, id, variant, renderPostfix } = props
+  const { text, id, variant, renderPostfix, className, onClick, ...restProps } = props
+  const classnames = classNames(['tag-container', className])
   const label = `#${text}`
   const [{}, { gotoTagBooks }, { tagBooksPath }] = useUrlStore()
+  const clickHandler = onClick ? onClick : gotoTagBooks
 
   return (
-    <Badge pill variant={ variant } className='tag-container'>
-      <a className='tag-name' href={ tagBooksPath(id) } onClick={ (e) => { e.preventDefault(); gotoTagBooks(id) } }>
+    <Badge pill variant={ variant } className={ classnames } { ...restProps }>
+      <a className='tag-name' href={ tagBooksPath(id) } onClick={ (e) => { e.preventDefault(); clickHandler(id) } }>
         { label }
       </a>
       { renderPostfix && renderPostfix() }

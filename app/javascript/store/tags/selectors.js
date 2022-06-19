@@ -1,9 +1,14 @@
 import { pick } from 'lodash'
+import { selectCurrentTagId } from 'store/axis/selectors'
 
 const BOOKMARK = 'BookmarkedByA'
 const READ = 'ReadByA'
 
 const localState = state => state.storeTags
+
+export const selectTagsIndex = () => state => Object.values(localState(state).tagsIndex)
+
+export const selectTagsCategoriesIndex = () => state => localState(state).tagsCategoriesIndex
 
 export const selectTagsRefs = () => state => Object.values(localState(state).tagsRefs)
 
@@ -28,3 +33,8 @@ export const selectVisibleTags = tags => state => {
 }
 
 export const selectTagsRefsLoaded = () => state => localState(state).refsLoaded
+
+export const selectCurrentTagIndexEntry = () => state => {
+  const id = selectCurrentTagId()(state)
+  return selectTagsIndex()(state)[id]
+}

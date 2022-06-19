@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
+import UrlStoreProvider from 'store/urlStore/Provider'
 import { setDefaultBookImageUrl } from 'store/books/actions'
 
 const Page = (props) => {
@@ -14,10 +15,12 @@ const Page = (props) => {
   return (
     <Provider store={ store }>
       <BrowserRouter>
-        <Container className='page'>
-          <Navbar/>
-          <PageContent/>
-        </Container>
+        <UrlStoreProvider>
+          <Container className='page'>
+            <Navbar/>
+            <PageContent/>
+          </Container>
+        </UrlStoreProvider>
       </BrowserRouter>
     </Provider>
   );
