@@ -4,6 +4,8 @@ import store from 'store/store'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter } from 'react-router-dom'
 
+import Notifications from 'widgets/notifications/Notifications'
+import Modals from 'modals/AllModals'
 import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
 import UrlStoreProvider from 'store/urlStore/Provider'
@@ -16,6 +18,10 @@ const Page = (props) => {
     <Provider store={ store }>
       <BrowserRouter>
         <UrlStoreProvider>
+          <Modals/>
+
+          <Notifications/>
+
           <Container className='page'>
             <Navbar/>
             <PageContent/>

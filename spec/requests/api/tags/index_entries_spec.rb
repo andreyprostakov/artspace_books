@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe '/api/tags/ref_entries', type: :request do
-  let(:tag) { create(:tag) }
+RSpec.describe '/api/tags/index_entries', type: :request do
+  let(:tag) { create(:tag, category: 'other') }
 
   before { create(:tag_connection, tag: tag, entity: build(:book)) }
 
   describe 'GET /:id' do
-    subject(:send_request) { get "/api/tags/ref_entries/#{tag.id}.json", headers: authorization_header }
+    subject(:send_request) { get "/api/tags/index_entries/#{tag.id}.json", headers: authorization_header }
 
     it 'returns list' do
       send_request
@@ -14,13 +14,15 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
       expect(json_response).to eq({
         id: tag.id,
         name: tag.name,
-        connections_count: 1
+        book_connections_count: 1,
+        author_connections_count: 0,
+        category: 'other'
       })
     end
   end
 
   describe 'GET /' do
-    subject(:send_request) { get '/api/tags/ref_entries.json', headers: authorization_header }
+    subject(:send_request) { get '/api/tags/index_entries.json', headers: authorization_header }
 
     it 'returns list' do
       send_request
@@ -28,7 +30,9 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
       expect(json_response).to eq([{
         id: tag.id,
         name: tag.name,
-        connections_count: 1
+        book_connections_count: 1,
+        author_connections_count: 0,
+        category: 'other'
       }])
     end
   end

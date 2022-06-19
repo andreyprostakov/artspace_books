@@ -17,6 +17,7 @@ class UrlAccessor {
   }
 
   buildUrl({ path, params, hash } = {}) {
+    console.log(['UrlAccessor.buildUrl', this.location.pathname, this.location.search, this.hash])
     return [
       path ?? this.location.pathname,
       objectToParams(params ?? {}, this.location.search),
@@ -36,23 +37,34 @@ const Provider = (props) => {
   const [urlActions, setUrlActions] = useState({})
   const [stateDefiners, setStateDefiners] = useState([])
   const [pageState, setPageState] = useState({})
+  const [routes, setRoutes] = useState({})
 
   const contextValue = {
     pageState: pageState,
     actions: {
       ...urlActions,
-      addUrlAction: (name, definer) => setUrlActions({ ...urlActions, [name]: definer }),
-      addUrlState: definer => setStateDefiners([...stateDefiners, definer]),
+      addRoute: (name, builder) => setRoutes(value => {
+        return { ...value, [name]: builder }
+      }),
+      addUrlAction: (name, builder) => setUrlActions(value => {
+        return { ...value, [name]: builder }
+      }),
+      addUrlState: definer => setStateDefiners(value => {
+        return [...value, definer]
+      }),
       goto: path => history.push(path),
       patch: path => history.replace(path),
     },
     helpers: {
+      ...routes,
       buildPath: ({ path, params, hash } = {}) => {
-        return [
+        console.log(['helpers.buildUrl', location.pathname, location.search, location.hash])
+        const newPath = [
           path ?? location.pathname,
           objectToParams(params ?? {}, location.search),
           hash ?? location.hash
         ].join('')
+        return newPath
       },
     },
   }

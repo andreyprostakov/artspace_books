@@ -30,6 +30,7 @@ const TagsPage = () => {
             </div>
           </Col>
         }
+
         <Col xs={ sidebarShown ? 8 : 12 }>
           { categories.map((category, index) => {
             const tagsSorted = sortBy(tagsByCategories[category], tag => upperCase(tag.name))

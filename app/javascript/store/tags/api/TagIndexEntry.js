@@ -4,7 +4,8 @@ class TagRef {
       id: data['id'],
       name: data['name'],
       category: data['category'],
-      connectionsCount: data['connections_count']
+      bookConnectionsCount: data['book_connections_count'],
+      authorConnectionsCount: data['author_connections_count'],
     }
   }
 }

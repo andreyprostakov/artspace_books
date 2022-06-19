@@ -29,7 +29,8 @@ class Tag < ApplicationRecord
 
   before_validation :strip_name
 
-  validates :name, presence: true, uniqueness: { case_sensitive: false }, format: /\A[\w\d-]+\z/
+  validates :name, presence: true, uniqueness: { case_sensitive: false },
+                   format: { with: /\A[\w\d-]+\z/, message: 'allows only alphanums and dashes' }
 
   protected
 
