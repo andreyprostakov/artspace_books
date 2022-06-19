@@ -7,14 +7,17 @@ import UrlStoreContext from 'store/urlStore/Context'
 const UrlStore = () => {
   const dispatch = useDispatch()
   const { pageState: { tagId = null },
-          actions: { patch, addUrlAction, addUrlState },
-          helpers: { buildPath },
+          actions: { patch, addRoute, addUrlAction, addUrlState },
+          routes: { tagSelectedPath },
         } = useContext(UrlStoreContext)
 
   useEffect(() => {
-    addUrlAction('selectTag', (id) =>
-      patch(buildPath({ params: { 'tag_id': id } }))
-    )
+    addRoute('tagSelectedPath', (id) => ({ params: { 'tag_id': id } }))
+
+    addUrlAction('selectTag', (routes) => (id) => {
+      console.log([routes, routes.tagSelectedPath, routes.tagSelectedPath(id)])
+      patch(routes.tagSelectedPath(id))
+    })
 
     addUrlState((urlAccessor) => {
       return { tagId: parseInt(urlAccessor.queryParameter('tag_id')) }

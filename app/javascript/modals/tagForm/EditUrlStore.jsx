@@ -6,15 +6,13 @@ const HASH = '#edit-hash'
 
 const UrlStore = () => {
   const { actions: { patch, addUrlAction, addRoute, addUrlState },
-          helpers: { buildPath },
+          routes: { editTagPath },
         } = useContext(UrlStoreContext)
 
-  const route = () => buildPath({ hash: HASH })
-
   useEffect(() => {
-    addRoute('editTagPath', () => buildPath({ hash: HASH }))
+    addRoute('editTagPath', () => ({ hash: HASH }))
 
-    addUrlAction('openEditTagModal', () => patch(route()))
+    addUrlAction('openEditTagModal', routes => () => patch(routes.editTagPath()))
 
     addUrlState((urlAccessor) => {
       return { modalTagEditShown: urlAccessor.hash === HASH }

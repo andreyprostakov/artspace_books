@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useLocation, useParams, useHistory } from 'react-router-dom'
 
 import { objectToParams } from 'utils/objectToParams'
 import Context from 'store/urlStore/Context'
 
 class UrlAccessor {
-  constructor({ params, query, location }) {
+  constructor({ params, location }) {
     this.params = params
-    this.query = query
     this.location = location
+    this.query = new URLSearchParams(location.search)
     this.hash = location.hash
   }
 
@@ -16,8 +16,7 @@ class UrlAccessor {
     return this.query.get(name)
   }
 
-  buildUrl({ path, params, hash } = {}) {
-    console.log(['UrlAccessor.buildUrl', this.location.pathname, this.location.search, this.hash])
+  buildPath({ locationOverride, path, params, hash } = {}) {
     return [
       path ?? this.location.pathname,
       objectToParams(params ?? {}, this.location.search),
@@ -29,25 +28,41 @@ class UrlAccessor {
 const Provider = (props) => {
   const { children } = props
   const history = useHistory()
-  const location = useLocation()
   const params = useParams()
-  const query = new URLSearchParams(location.search)
-  const urlAccessor = new UrlAccessor({ params, query, location })
+
+  const location = useLocation()
+  const locationRef = useRef()
+  locationRef.current = location
 
   const [urlActions, setUrlActions] = useState({})
-  const [stateDefiners, setStateDefiners] = useState([])
   const [pageState, setPageState] = useState({})
+  const [stateDefiners, setStateDefiners] = useState([])
+
   const [routes, setRoutes] = useState({})
+  const routesRef = useRef(routes)
+  routesRef.current = routes
+
+  const query = new URLSearchParams(location.search)
+  const urlAccessor = new UrlAccessor({ params, location: location })
+  const buildPath = ({ path, params, hash } = {}) => {
+    const location = locationRef.current
+    const newPath = [
+      path ?? location.pathname,
+      objectToParams(params ?? {}, location.search),
+      hash ?? location.hash
+    ].join('')
+    return newPath
+  }
 
   const contextValue = {
     pageState: pageState,
     actions: {
       ...urlActions,
-      addRoute: (name, builder) => setRoutes(value => {
-        return { ...value, [name]: builder }
+      addRoute: (name, pieces) => setRoutes(value => {
+        return { ...value, [name]: (...args) => buildPath(pieces(...args)) }
       }),
       addUrlAction: (name, builder) => setUrlActions(value => {
-        return { ...value, [name]: builder }
+        return { ...value, [name]: (...args) => builder(routesRef.current)(...args) }
       }),
       addUrlState: definer => setStateDefiners(value => {
         return [...value, definer]
@@ -55,18 +70,7 @@ const Provider = (props) => {
       goto: path => history.push(path),
       patch: path => history.replace(path),
     },
-    helpers: {
-      ...routes,
-      buildPath: ({ path, params, hash } = {}) => {
-        console.log(['helpers.buildUrl', location.pathname, location.search, location.hash])
-        const newPath = [
-          path ?? location.pathname,
-          objectToParams(params ?? {}, location.search),
-          hash ?? location.hash
-        ].join('')
-        return newPath
-      },
-    },
+    routes: routesRef,
   }
 
   const updatePageState = () => {
@@ -78,7 +82,7 @@ const Provider = (props) => {
 
   useEffect(() => {
     updatePageState()
-  }, [location, stateDefiners])
+  }, [location.pathname, location.search, location.hash, stateDefiners])
 
   return (
     <Context.Provider value={ contextValue }>

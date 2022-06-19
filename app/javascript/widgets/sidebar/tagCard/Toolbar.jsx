@@ -9,8 +9,9 @@ import UrlStoreContext from 'store/urlStore/Context'
 const Toolbar = (props) => {
   const { tagFull } = props
   const { actions: { openEditTagModal },
-          helpers: { editTagPath },
+          routes,
         } = useContext(UrlStoreContext)
+  const { editTagPath } = routes.current
 
   return (
     <>
