@@ -21,7 +21,7 @@ RSpec.describe Tag do
   describe '#category enum' do
     it do
       expect(subject).to define_enum_for(:category).
-        with_values([:other, :format, :genre, :location, :series, :awards])
+        with_values([:other, :format, :genre, :location, :series, :award, :theme])
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Tag do
 
     describe 'of name format' do
       it { is_expected.to allow_value('ABCDEabcde12345-').for(:name) }
-      it { is_expected.not_to allow_value('A B').for(:name).with_message('is invalid') }
+      it { is_expected.not_to allow_value('A B').for(:name).with_message('allows only alphanums and dashes') }
     end
 
     it 'has a valid factory' do

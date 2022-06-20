@@ -24,7 +24,8 @@ class Tag < ApplicationRecord
     genre: 2,
     location: 3,
     series: 4,
-    awards: 5
+    award: 5,
+    theme: 6
   }
 
   before_validation :strip_name
