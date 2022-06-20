@@ -7,25 +7,23 @@ import PropTypes from 'prop-types'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
-  const { tagFull } = props
-  const { actions: { openEditTagModal },
-          routes,
-        } = useContext(UrlStoreContext)
+  const { tagIndexEntry } = props
+  const { actions: { openEditTagModal }, routes } = useContext(UrlStoreContext)
   const { editTagPath } = routes.current
 
   return (
     <>
-      <ButtonGroup className='author-toolbar'>
-        {
+      <ButtonGroup className='toolbar'>
+        { tagIndexEntry.bookConnectionsCount > 0 &&
           <Button variant='outline-info' title='See all books'
-                  href={ editTagPath(tagFull.id) }
-                  onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(tagFull.id) } }>
-            <FontAwesomeIcon icon={ faBook }/> ({ tagFull.bookConnectionsCount })
+                  href={ editTagPath(tagIndexEntry.id) }
+                  onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(tagIndexEntry.id) } }>
+            <FontAwesomeIcon icon={ faBook }/> ({ tagIndexEntry.bookConnectionsCount })
           </Button>
         }
 
         <Button variant='outline-warning' title='Edit info'
-                href={ editTagPath(tagFull.id) }
+                href={ editTagPath(tagIndexEntry.id) }
                 onClick={ (e) => { e.preventDefault(); openEditTagModal() } }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
@@ -39,7 +37,7 @@ const Toolbar = (props) => {
 }
 
 Toolbar.propTypes = {
-  tagFull: PropTypes.object.isRequired,
+  tagIndexEntry: PropTypes.object.isRequired,
 }
 
 export default Toolbar
