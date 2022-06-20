@@ -11,13 +11,13 @@ RSpec.describe '/api/tags/index_entries', type: :request do
     it 'returns list' do
       send_request
       expect(response).to be_successful
-      expect(json_response).to eq({
+      expect(json_response).to eq(
         id: tag.id,
         name: tag.name,
         book_connections_count: 1,
         author_connections_count: 0,
         category: 'other'
-      })
+      )
     end
   end
 
@@ -27,13 +27,15 @@ RSpec.describe '/api/tags/index_entries', type: :request do
     it 'returns list' do
       send_request
       expect(response).to be_successful
-      expect(json_response).to eq([{
-        id: tag.id,
-        name: tag.name,
-        book_connections_count: 1,
-        author_connections_count: 0,
-        category: 'other'
-      }])
+      expect(json_response).to eq(
+        [{
+          id: tag.id,
+          name: tag.name,
+          book_connections_count: 1,
+          author_connections_count: 0,
+          category: 'other'
+        }]
+      )
     end
   end
 end

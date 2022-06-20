@@ -15,8 +15,8 @@
 #
 class Tag < ApplicationRecord
   has_many :tag_connections, class_name: 'TagConnection', dependent: :destroy
-  has_many :book_tag_connections, ->{ where(entity_type: Book.name) }, class_name: 'TagConnection'
-  has_many :author_tag_connections, ->{ where(entity_type: Author.name) }, class_name: 'TagConnection'
+  has_many :book_tag_connections, -> { where(entity_type: Book.name) }, class_name: 'TagConnection'
+  has_many :author_tag_connections, -> { where(entity_type: Author.name) }, class_name: 'TagConnection'
 
   enum category: {
     other: 0,

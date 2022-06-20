@@ -15,7 +15,7 @@ export const fetchTagsIndex = () => async dispatch => {
   dispatch(assignTagsIndex(tagsRefs))
 }
 
-export const fetchTagsIndexEntry = (id) => async dispatch => {
+export const fetchTagsIndexEntry = id => async dispatch => {
   const entry = await apiClient.getTagsIndexEntry(id)
   dispatch(addTagIndexEntry(entry))
 }
@@ -25,19 +25,17 @@ export const fetchTagsRefs = () => async dispatch => {
   dispatch(assignTagsRefs(tagsRefs))
 }
 
-export const fetchTagRef = (id) => async dispatch => {
+export const fetchTagRef = id => async dispatch => {
   const entry = await apiClient.getTagRef(id)
   dispatch(addTagRef(entry))
 }
 
-export const reloadTag = (id) => async(dispatch, getState) => {
-  const state = getState()
+export const reloadTag = id => async(dispatch, getState) => {
   Promise.all([
     dispatch(fetchTagsIndexEntry(id)),
     dispatch(fetchTagRef(id)),
   ]).then(() => {
     const tagIndexEntry = selectTagIndexEntry(id)(getState())
-    console.log(['reloadTag, resetTagInCategories', tagIndexEntry])
     dispatch(resetTagInCategories(tagIndexEntry))
   })
 }

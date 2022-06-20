@@ -11,11 +11,11 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
     it 'returns list' do
       send_request
       expect(response).to be_successful
-      expect(json_response).to eq({
+      expect(json_response).to eq(
         id: tag.id,
         name: tag.name,
         connections_count: 1
-      })
+      )
     end
   end
 
@@ -25,11 +25,13 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
     it 'returns list' do
       send_request
       expect(response).to be_successful
-      expect(json_response).to eq([{
-        id: tag.id,
-        name: tag.name,
-        connections_count: 1
-      }])
+      expect(json_response).to eq(
+        [{
+          id: tag.id,
+          name: tag.name,
+          connections_count: 1
+        }]
+      )
     end
   end
 end

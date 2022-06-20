@@ -42,7 +42,7 @@ export const slice = createSlice({
     resetTagInCategories: (state, action) => {
       const tagIndexEntry = action.payload
       const entriesGrouped = Object.values(state.tagsCategoriesIndex)
-      entriesGrouped.forEach((entries) => {
+      entriesGrouped.forEach(entries => {
         const index = entries.findIndex(tag => tag.id === tagIndexEntry.id)
         if (index < 0) return
 

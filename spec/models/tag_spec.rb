@@ -20,8 +20,8 @@ require 'rails_helper'
 RSpec.describe Tag do
   describe '#category enum' do
     it do
-      expect(subject).to define_enum_for(:category).
-        with_values([:other, :format, :genre, :location, :series, :award, :theme])
+      expect(subject).to define_enum_for(:category)
+        .with_values(%i[other format genre location series award theme])
     end
   end
 
