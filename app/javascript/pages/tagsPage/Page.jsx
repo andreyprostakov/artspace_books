@@ -32,26 +32,28 @@ const TagsPage = () => {
         }
 
         <Col xs={ sidebarShown ? 8 : 12 }>
-          { categories.map((category, index) => {
-            const tagsSorted = sortBy(tagsByCategories[category], tag => upperCase(tag.name))
-            return (
-              <div className='tags-index-category' key={ index }>
-                <div className='category-name'>Category: { category }</div>
-                <div className='category-contents'>
-                  { tagsSorted.map((tag, tagIndex) =>
+          <div className='tags-index-categories'>
+            { categories.map((category, index) => {
+              const tagsSorted = sortBy(tagsByCategories[category], tag => upperCase(tag.name))
+              return (
+                <div className='tags-index-category' key={ index }>
+                  <div className='category-name'>Category: { category }</div>
+                  <div className='category-contents'>
+                    { tagsSorted.map((tag, tagIndex) =>
 
-                    <div className='tags-index-entry' key={ tagIndex }>
-                      <TagBadge key={ tag.id } text={ tag.name } id={ tag.id }
-                        renderPostfix={ () => (tag.connectionsCount > 0 && ` (${tag.connectionsCount})`) }
-                        variant='dark' className={ `tag-category-${category}` } onClick={ () => showTagIndexEntry(tag.id) }
-                      />
-                    </div>
+                      <div className='tags-index-entry' key={ tagIndex }>
+                        <TagBadge key={ tag.id } text={ tag.name } id={ tag.id }
+                          renderPostfix={ () => (tag.connectionsCount > 0 && ` (${tag.connectionsCount})`) }
+                          variant='dark' className={ `tag-category-${category}` } onClick={ () => showTagIndexEntry(tag.id) }
+                        />
+                      </div>
 
-                  ) }
+                    ) }
+                  </div>
                 </div>
-              </div>
-            )
-          } ) }
+              )
+            } ) }
+          </div>
         </Col>
       </Layout>
     </>

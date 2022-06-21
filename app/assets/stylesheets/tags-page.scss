@@ -1,6 +1,12 @@
 .tags-page {
   padding-top: 20px;
 
+  .tags-index-categories {
+    height: calc(100vh - 126px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
   .tags-index-category {
     margin-bottom: 20px;
 
