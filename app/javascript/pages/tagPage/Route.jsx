@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, useParams } from 'react-router-dom'
 
@@ -29,6 +29,8 @@ const Renderer = () => {
 
 const LocalStoreConfigurer = () => {
   const params = useParams()
+  const paramsRef = useRef()
+  paramsRef.current = params
   const dispatch = useDispatch()
 
   const { actions: { addUrlState },
@@ -37,7 +39,7 @@ const LocalStoreConfigurer = () => {
 
   useEffect(() => {
     addUrlState(() => {
-      return { tagId: parseInt(params.tagId) }
+      return { tagId: parseInt(paramsRef.current.tagId) }
     })
 
     dispatch(setPageIsLoading(true))
