@@ -33,11 +33,12 @@ const LocalStoreConfigurer = () => {
   const { pageState: { tagId },
           actions: { patch, addUrlAction, addUrlState },
           helpers: { buildRelativePath },
+          getActions,
         } = useContext(UrlStoreContext)
 
   useEffect(() => {
     addUrlAction('showTagIndexEntry', (id) =>
-      patch(buildRelativePath({ params: { 'tag_id': id } }))
+      getActions().patch(buildRelativePath({ params: { 'tag_id': id } }))
     )
 
     addUrlState((urlAccessor) => {

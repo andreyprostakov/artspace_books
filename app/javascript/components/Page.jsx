@@ -1,5 +1,5 @@
 import React from 'react'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider as ReduxProvider } from 'react-redux'
 import store from 'store/store'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter } from 'react-router-dom'
@@ -9,16 +9,16 @@ import Modals from 'modals/AllModals'
 import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
 import PageRouteHelpers from 'components/PageRouteHelpers'
-import UrlStoreProvider from 'store/urlStore/Provider'
+import RootUrlStoreProvider from 'store/urlStore/RootStoreProvider'
 import { setDefaultBookImageUrl } from 'store/books/actions'
 
 const Page = (props) => {
   store.dispatch(setDefaultBookImageUrl(props.default_book_image_url))
 
   return (
-    <Provider store={ store }>
+    <ReduxProvider store={ store }>
       <BrowserRouter>
-        <UrlStoreProvider>
+        <RootUrlStoreProvider>
           <PageRouteHelpers/>
 
           <Modals/>
@@ -29,9 +29,9 @@ const Page = (props) => {
             <Navbar/>
             <PageContent/>
           </Container>
-        </UrlStoreProvider>
+        </RootUrlStoreProvider>
       </BrowserRouter>
-    </Provider>
+    </ReduxProvider>
   );
 }
 

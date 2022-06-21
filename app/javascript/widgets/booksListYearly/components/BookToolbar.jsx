@@ -80,9 +80,7 @@ const BookToolbar = (props) => {
       </ButtonGroup>
 
       <ButtonGroup className='book-toolbar'>
-        <Button variant='outline-warning' title='Edit info'
-                href={ editBookModalPath(book.id) }
-                onClick={ (e) => { e.preventDefault(); openEditBookModal() } }>
+        <Button variant='outline-warning' title='Edit info' href={ editBookModalPath(book.id) }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 

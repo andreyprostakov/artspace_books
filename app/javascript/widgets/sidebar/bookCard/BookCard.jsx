@@ -43,9 +43,7 @@ const BookCard = (props) => {
 
         <div className='book-details'>
           <div>
-            <a href={ authorBooksPath(authorRef.id, { bookId: book.id }) }
-               className='book-author' title={ authorRef.fullname }
-               onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id, { bookId: book.id }) } }>
+            <a href={ authorBooksPath(authorRef.id, { bookId: book.id }) } className='book-author' title={ authorRef.fullname }>
               { authorRef.fullname }
             </a>
             ,&nbsp;

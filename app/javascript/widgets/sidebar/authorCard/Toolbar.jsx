@@ -32,16 +32,12 @@ const Toolbar = (props) => {
         }
 
         { authorFull.booksCount > 0 &&
-          <Button variant='outline-info' title='See all books'
-                  href={ authorBooksPath(authorFull.id) }
-                  onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorFull.id) } }>
+          <Button variant='outline-info' title='See all books' href={ authorBooksPath(authorFull.id) }>
             <FontAwesomeIcon icon={ faBook }/> ({ authorFull.booksCount })
           </Button>
         }
 
-        <Button variant='outline-warning' title='Edit info'
-                href={ editAuthorModalPath(authorFull.id) }
-                onClick={ (e) => { e.preventDefault(); openEditAuthorModal() } }>
+        <Button variant='outline-warning' title='Edit info' href={ editAuthorModalPath(authorFull.id) }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 
@@ -61,9 +57,7 @@ const Toolbar = (props) => {
           <FontAwesomeIcon icon={ faTrash }/>
         </Button>
 
-        <Button variant='outline-warning' title='Add a book'
-                href={ newBookModalPath() }
-                onClick={ (e) => { e.preventDefault(); openNewBookModal() } }>
+        <Button variant='outline-warning' title='Add a book' href={ newBookModalPath() }>
           + <FontAwesomeIcon icon={ faBook }/>
         </Button>
       </ButtonGroup>

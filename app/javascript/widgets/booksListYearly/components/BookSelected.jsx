@@ -38,8 +38,7 @@ const BookSelected = (props) => {
       <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>
 
       <div className='book-details'>
-        <a href={ authorBooksPath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }
-           onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id, { bookId: id }) } }>
+        <a href={ authorBooksPath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }>
           { authorRef.fullname }
         </a>
 

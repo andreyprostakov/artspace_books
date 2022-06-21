@@ -25,6 +25,8 @@ const Book = (props) => {
     if (isCurrent) { ref.current?.scrollIntoViewIfNeeded() }
   })
 
+  if (!book) return null
+
   return (
     <div className={ classNames } onClick={ () => dispatch(showBook(id)) } title={ book.title } ref={ ref } { ...options }>
       <ImageContainer className='book-cover' url={ coverUrl }/>

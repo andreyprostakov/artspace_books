@@ -30,9 +30,7 @@ const AuthorsNavList = () => {
       </div>
       <div className='authors-nav-list'>
         { displayedAuthorsRef.map(authorRef =>
-          <NavDropdown.Item href={ paths.authorBooksPath(authorRef.id) }
-                            onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id) } }
-                            key={ authorRef.id } className='d-flex justify-content-between'>
+          <NavDropdown.Item href={ paths.authorBooksPath(authorRef.id) } key={ authorRef.id } className='d-flex justify-content-between'>
             { authorRef.fullname }
             <span className='badge badge-primary badge-pill'>{ authorRef.booksCount }</span>
           </NavDropdown.Item>

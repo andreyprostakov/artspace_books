@@ -22,8 +22,9 @@ const EditModalWrap = () => {
 const EditModal = () => {
   const {
     pageState: { modalTagEditShown },
-    actions: { closeModal },
+    actions,
   } = useContext(UrlStoreContext)
+  const { closeModal } = actions
   const dispatch = useDispatch()
   const tag = useSelector(selectCurrentTagIndexEntry())
 

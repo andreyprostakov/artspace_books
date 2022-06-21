@@ -18,24 +18,24 @@ class UrlAccessor {
 
 const Provider = (props) => {
   const { children } = props
-  const history = useHistory()
 
+  const history = useHistory()
   const location = useLocation()
-  const locationRef = useRef()
-  locationRef.current = location
 
   const [urlActions, setUrlActions] = useState({})
-
+  const actionsRef = useRef()
+  actionsRef.current = urlActions
   const [pageState, setPageState] = useState({})
   const [stateDefiners, setStateDefiners] = useState([])
-  window.PAGE_STATE = pageState
-
   const [routes, setRoutes] = useState({})
   const routesRef = useRef(routes)
   routesRef.current = routes
+  const locationRef = useRef({})
+  locationRef.current = location
+  const [routesReady, setroutesReady] = useState(false)
+  useEffect(() => setroutesReady(true), [])
 
-  const query = new URLSearchParams(location.search)
-  const urlAccessor = new UrlAccessor({ location })
+  const urlAccessor = new UrlAccessor({ location: locationRef.current })
 
   const buildPath = ({ path, params, initialParams = '', hash } = {}) => {
     const newPath = [
@@ -56,27 +56,42 @@ const Provider = (props) => {
     })
   }
 
+  const currentActions = {
+    ...actionsRef.current,
+
+    addRoute: (name, builder) => setRoutes(value => ({ ...value, [name]: builder })),
+
+    addUrlAction: (name, action) => setUrlActions(value => ({ ...value, [name]: action })),
+
+    addUrlState: definer => setStateDefiners(value => [...value, definer]),
+
+    updateLocation: location => {
+      locationRef.current = location
+      updatePageState()
+    },
+
+    goto: path => history.push(path),
+
+    patch: path => history.replace(path),
+  }
+
   const contextValue = {
     pageState: pageState,
-    actions: {
-      ...urlActions,
-      addRoute: (name, builder) => setRoutes(value => {
-        return { ...value, [name]: builder }
-      }),
-      addUrlAction: (name, action) => setUrlActions(value => {
-        return { ...value, [name]: action }
-      }),
-      addUrlState: definer => setStateDefiners(value => {
-        return [...value, definer]
-      }),
-      goto: path => history.push(path),
-      patch: path => history.replace(path),
-    },
+
+    actions: currentActions,
+
     helpers: {
       buildPath,
       buildRelativePath,
     },
+
+    routes: routesRef.current,
+
     getRoutes: () => routesRef.current,
+
+    getActions: () => currentActions,
+
+    routesReady,
   }
 
   const updatePageState = () => {
@@ -88,7 +103,7 @@ const Provider = (props) => {
 
   useEffect(() => {
     updatePageState()
-  }, [location.pathname, location.search, location.hash, stateDefiners])
+  }, [location, stateDefiners])
 
   return (
     <Context.Provider value={ contextValue }>

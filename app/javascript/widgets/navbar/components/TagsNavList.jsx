@@ -24,7 +24,7 @@ const TagsNavList = () => {
       </div>
       <div className='tags-nav-list'>
         { tags.map(tag =>
-          <NavDropdown.Item href={ paths.tagBooksPath(tag.id) } onClick={ (e) => { e.preventDefault(); gotoTagBooks(tag.id) } } key={ tag.id } className='d-flex justify-content-between'>
+          <NavDropdown.Item href={ paths.tagBooksPath(tag.id) } key={ tag.id } className='d-flex justify-content-between'>
             { tag.name }
             <span className='badge badge-primary badge-pill'>{ tag.connectionsCount }</span>
           </NavDropdown.Item>

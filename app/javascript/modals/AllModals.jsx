@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import ModalsUrlStore from 'modals/ModalsUrlStore'
 import BookNewModal from 'components/books/BookNewModal'

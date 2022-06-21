@@ -33,7 +33,7 @@ const PageNavbar = () => {
           <NavDropdown.Divider />
           <NavDropdown.Item href={ authorsPath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ newAuthorModalPath() } onClick={ (e) => { e.preventDefault(); openNewAuthorModal() } }>
+          <NavDropdown.Item href={ newAuthorModalPath() }>
             +Author
           </NavDropdown.Item>
         </NavDropdown>
@@ -41,7 +41,7 @@ const PageNavbar = () => {
         <NavDropdown title='Tags'>
           <TagsNavList/>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ tagsPath() } onClick={ (e) => { e.preventDefault(); goto(tagsPath()) } }>List all</NavDropdown.Item>
+          <NavDropdown.Item href={ tagsPath() }>List all</NavDropdown.Item>
         </NavDropdown>
 
         <NavDropdown title='Awards'>
