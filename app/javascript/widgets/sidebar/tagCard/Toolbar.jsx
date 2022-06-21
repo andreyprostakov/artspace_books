@@ -8,23 +8,22 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { tagIndexEntry } = props
-  const { actions: { openEditTagModal }, routes } = useContext(UrlStoreContext)
-  const { editTagPath } = routes.current
+  const { actions: { goto, openEditTagModal }, getRoutes } = useContext(UrlStoreContext)
 
   return (
     <>
       <ButtonGroup className='toolbar'>
         { tagIndexEntry.bookConnectionsCount > 0 &&
           <Button variant='outline-info' title='See all books'
-                  href={ editTagPath(tagIndexEntry.id) }
-                  onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(tagIndexEntry.id) } }>
+                  href={ getRoutes().tagPagePath(tagIndexEntry.id) }
+                  onClick={ (e) => { e.preventDefault(); goto(getRoutes().tagPagePath(tagIndexEntry.id)) } }>
             <FontAwesomeIcon icon={ faBook }/> ({ tagIndexEntry.bookConnectionsCount })
           </Button>
         }
 
         <Button variant='outline-warning' title='Edit info'
-                href={ editTagPath(tagIndexEntry.id) }
-                onClick={ (e) => { e.preventDefault(); openEditTagModal() } }>
+                href={ getRoutes().editTagPath(tagIndexEntry.id) }
+                onClick={ (e) => { e.preventDefault(); goto(getRoutes().editTagPath(tagIndexEntry.id)) } }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 

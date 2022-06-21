@@ -10,6 +10,15 @@ import EditUrlStore from 'modals/tagForm/EditUrlStore'
 import Form from 'modals/tagForm/Form'
 import UrlStoreContext from 'store/urlStore/Context'
 
+const EditModalWrap = () => {
+  return (
+    <>
+      <EditUrlStore/>
+      <EditModal/>
+    </>
+  )
+}
+
 const EditModal = () => {
   const {
     pageState: { modalTagEditShown },
@@ -26,27 +35,23 @@ const EditModal = () => {
   if (isEmpty(tag)) { return null }
 
   return (
-    <>
-      <EditUrlStore/>
-
-      <Modal show={ modalTagEditShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
-        <Modal.Header>
-          <Modal.Title>Edit tag { tag.id }</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form id='tag_form' tag={ tag } onSubmit={ (data) => handleSuccess(data) }/>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={ () => closeModal() }>
-            Close
-          </Button>
-          <Button variant='primary' form='tag_form' type='submit'>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Modal show={ modalTagEditShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
+      <Modal.Header>
+        <Modal.Title>Edit tag { tag.id }</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form id='tag_form' tag={ tag } onSubmit={ (data) => handleSuccess(data) }/>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant='secondary' onClick={ () => closeModal() }>
+          Close
+        </Button>
+        <Button variant='primary' form='tag_form' type='submit'>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
   )
 }
 
-export default EditModal
+export default EditModalWrap

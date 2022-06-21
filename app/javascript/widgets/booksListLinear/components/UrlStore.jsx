@@ -31,7 +31,6 @@ const UrlStore = () => {
   }
 
   useEffect(() => {
-    console.log('BooksListLinear/UrlStore.useEffect')
     dispatch(setCurrentBookId(bookId))
     dispatch(assignPage(page))
     dispatch(assignPerPage(perPage))

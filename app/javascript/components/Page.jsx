@@ -8,6 +8,7 @@ import Notifications from 'widgets/notifications/Notifications'
 import Modals from 'modals/AllModals'
 import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
+import PageRouteHelpers from 'components/PageRouteHelpers'
 import UrlStoreProvider from 'store/urlStore/Provider'
 import { setDefaultBookImageUrl } from 'store/books/actions'
 
@@ -18,6 +19,8 @@ const Page = (props) => {
     <Provider store={ store }>
       <BrowserRouter>
         <UrlStoreProvider>
+          <PageRouteHelpers/>
+
           <Modals/>
 
           <Notifications/>

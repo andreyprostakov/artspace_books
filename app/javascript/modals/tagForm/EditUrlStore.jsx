@@ -4,15 +4,15 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const HASH = '#edit-hash'
 
-const UrlStore = () => {
+const EditTagUrlStore = () => {
   const { actions: { patch, addUrlAction, addRoute, addUrlState },
-          routes: { editTagPath },
+          getRoutes,
         } = useContext(UrlStoreContext)
 
   useEffect(() => {
-    addRoute('editTagPath', () => ({ hash: HASH }))
+    addRoute('editTagPath', () => getRoutes().modalOpenPath(HASH))
 
-    addUrlAction('openEditTagModal', routes => () => patch(routes.editTagPath()))
+    addUrlAction('openEditTagModal', () => patch(getRoutes().editTagPath()))
 
     addUrlState((urlAccessor) => {
       return { modalTagEditShown: urlAccessor.hash === HASH }
@@ -22,4 +22,4 @@ const UrlStore = () => {
   return null
 }
 
-export default UrlStore
+export default EditTagUrlStore

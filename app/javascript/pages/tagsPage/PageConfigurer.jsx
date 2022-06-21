@@ -6,8 +6,6 @@ import { setPageIsLoading } from 'store/metadata/actions'
 import { fetchTagsIndex } from 'store/tags/actions'
 import { prepareNavRefs } from 'widgets/navbar/actions'
 
-import PageUrlStore from 'pages/tagsPage/PageUrlStore'
-
 const Configurer = () => {
   const dispatch = useDispatch()
   const tagId = useSelector(selectCurrentTagId())
@@ -22,7 +20,8 @@ const Configurer = () => {
     })
     if (!tagId) { return }
   }, [])
-  return <PageUrlStore/>
+
+  return null
 }
 
 export default Configurer

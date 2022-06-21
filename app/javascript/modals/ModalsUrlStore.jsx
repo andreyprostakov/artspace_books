@@ -4,20 +4,21 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const UrlStore = () => {
   const { actions: { patch, addRoute, addUrlAction },
-          routes: { modalOpenPath, modalClosedPath }
+          getRoutes,
+          helpers: { buildRelativePath },
         } = useContext(UrlStoreContext)
 
   useEffect(() => {
-    addRoute('modalClosedPath', () => ({ hash: '' }))
+    addRoute('modalClosedPath', () => buildRelativePath({ hash: '' }))
 
-    addRoute('modalOpenPath', (modalHash) => ({ hash: modalHash }))
+    addRoute('modalOpenPath', (modalHash) => buildRelativePath({ hash: modalHash }))
 
-    addUrlAction('closeModal', routes => () => {
-      patch(routes.modalClosedPath())
+    addUrlAction('closeModal', () => {
+      patch(getRoutes().modalClosedPath())
     })
 
-    addUrlAction('openModal', routes => (modalHash) =>
-      patch(routes.modalOpenPath(modalHash))
+    addUrlAction('openModal', (modalHash) =>
+      patch(getRoutes().modalOpenPath(modalHash))
     )
   }, [])
 

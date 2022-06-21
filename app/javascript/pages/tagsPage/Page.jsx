@@ -16,7 +16,7 @@ const TagsPage = () => {
   const sidebarShown = Boolean(useSelector(selectCurrentTagId()))
   const tagsByCategories = useSelector(selectTagsCategoriesIndex())
   const categories = Object.keys(tagsByCategories).sort()
-  const { actions: { selectTag: urlSelectTag } } = useContext(UrlStoreContext)
+  const { actions: { showTagIndexEntry } } = useContext(UrlStoreContext)
 
   return (
     <>
@@ -43,7 +43,7 @@ const TagsPage = () => {
                     <div className='tags-index-entry' key={ tagIndex }>
                       <TagBadge key={ tag.id } text={ tag.name } id={ tag.id }
                         renderPostfix={ () => (tag.connectionsCount > 0 && ` (${tag.connectionsCount})`) }
-                        variant='dark' className={ `tag-category-${category}` } onClick={ () => urlSelectTag(tag.id) }
+                        variant='dark' className={ `tag-category-${category}` } onClick={ () => showTagIndexEntry(tag.id) }
                       />
                     </div>
 

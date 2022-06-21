@@ -10,7 +10,7 @@ import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
   const [{},
-         { gotoBooks, openNewAuthorModal },
+         { goto, gotoBooks, openNewAuthorModal },
          { authorsPath, booksPath, newAuthorModalPath, tagBooksPath, tagsPath }] = useUrlStore()
   const dispatch = useDispatch()
   const tagIdBookmark = useSelector(selectTagIdBookmark())
@@ -41,7 +41,7 @@ const PageNavbar = () => {
         <NavDropdown title='Tags'>
           <TagsNavList/>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ tagsPath() }>List all</NavDropdown.Item>
+          <NavDropdown.Item href={ tagsPath() } onClick={ (e) => { e.preventDefault(); goto(tagsPath()) } }>List all</NavDropdown.Item>
         </NavDropdown>
 
         <NavDropdown title='Awards'>

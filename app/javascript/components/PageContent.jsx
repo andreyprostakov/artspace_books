@@ -18,6 +18,8 @@ import NYTimesPage from 'pages/awards/nyTimesPage/Page'
 import ProsvetitelPage from 'pages/awards/prosvetitelPage/Page'
 import PulitzerPage from 'pages/awards/pulitzerPage/Page'
 
+import pageRoutes from 'components/pageRoutes'
+
 const PageContent = () => {
   const dispatch = useDispatch()
 
@@ -39,13 +41,11 @@ const PageContent = () => {
         <AuthorsPage/>
       </Route>
 
-      <Route path='/tags/:tagId'>
-        <TagPage/>
-      </Route>
-
-      <Route path='/tags'>
-        <TagsPage/>
-      </Route>
+      { pageRoutes.map((route, i) =>
+        <Route path={ route.path } key={ i }>
+          <route.Renderer/>
+        </Route>
+      ) }
 
       <Route path='/awards/booker'>
         <BookerPage/>
