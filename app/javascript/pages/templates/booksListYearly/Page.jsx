@@ -4,7 +4,7 @@ import { Col } from 'react-bootstrap'
 import PageConfigurer from 'pages/templates/booksListYearly/PageConfigurer'
 import Layout from 'pages/Layout'
 import BooksListYearly from 'widgets/booksListYearly/BooksListYearly'
-import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
+import BatchControls from 'sidebar/batchControls/BatchControls'
 
 const Page = (props) => {
   const { config } = props

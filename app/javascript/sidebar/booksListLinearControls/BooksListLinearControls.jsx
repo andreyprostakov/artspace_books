@@ -8,8 +8,8 @@ import {
   selectPerPage,
 } from 'widgets/booksListLinear/selectors'
 
-import Pagination from 'widgets/sidebar/booksListLinearControls/Pagination'
-import SortingDropdown from 'widgets/sidebar/booksListLinearControls/SortingDropdown'
+import Pagination from 'sidebar/booksListLinearControls/Pagination'
+import SortingDropdown from 'sidebar/booksListLinearControls/SortingDropdown'
 
 const BooksListControls = () => {
   const totalCount = useSelector(selectBooksTotal())

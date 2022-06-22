@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Card } from 'react-bootstrap'
 
 import { selectCurrentTagIndexEntry } from 'store/tags/selectors'
-import Toolbar from 'widgets/sidebar/tagCard/Toolbar'
+import Toolbar from 'sidebar/tagCard/Toolbar'
 
 const TagCard = (props) => {
   const tagIndexEntry = useSelector(selectCurrentTagIndexEntry())
