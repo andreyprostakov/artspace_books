@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,13 +24,14 @@ import {
 } from 'widgets/booksListYearly/actions'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { updateBookPopularity } from 'store/bookSync/actions'
-
+import UrlStoreContext from 'store/urlStore/Context'
 import useUrlStore from 'store/urlStore'
 
 const BookToolbar = (props) => {
   const { book } = props
   const dispatch = useDispatch()
-  const [{}, { openEditBookModal }, { booksPath, editBookModalPath }] = useUrlStore()
+  const [{}, {}, { booksPath }] = useUrlStore()
+  const { routesReady, routes: { editBookPath }, actions: { openEditBookModal } } = useContext(UrlStoreContext)
   const bookIdsInProcess = useSelector(selectBookIdsInProcessing())
   const tagNames = useSelector(selectTagNames(book.tagIds))
 
@@ -39,6 +40,8 @@ const BookToolbar = (props) => {
   const tagRead = useSelector(selectTagRead())
   const isRead = tagNames.includes(tagRead)
   const isSelected = useSelector(selectBookIsSelected(book.id))
+
+  if (!routesReady) return null
 
   return (
     <div>
@@ -80,7 +83,8 @@ const BookToolbar = (props) => {
       </ButtonGroup>
 
       <ButtonGroup className='book-toolbar'>
-        <Button variant='outline-warning' title='Edit info' href={ editBookModalPath(book.id) }>
+        <Button variant='outline-warning' title='Edit info' href={ editBookPath(book.id) }
+                onClick={ e => { e.preventDefault(); openEditBookModal() } }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 

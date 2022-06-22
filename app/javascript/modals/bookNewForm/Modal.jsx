@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash'
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal } from 'react-bootstrap'
@@ -7,12 +7,22 @@ import { Button, Modal } from 'react-bootstrap'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { reloadAuthor } from 'store/authors/actions'
 import { reloadBook } from 'widgets/booksListYearly/actions'
-import BookForm from 'components/books/BookForm'
-import useUrlStore from 'store/urlStore'
+import BookForm from 'modals/bookEditForm/Form'
+import ModalStore from 'modals/bookNewForm/UrlStore'
+import UrlStoreContext from 'store/urlStore/Context'
+
+const Wrap = () => {
+  return (
+    <>
+      <ModalStore/>
+      <BookNewModal/>
+    </>
+  )
+}
 
 const BookNewModal = () => {
   const authorId = useSelector(selectCurrentAuthorId())
-  const [{ newBookModalShown }, { closeModal }] = useUrlStore()
+  const { routesReady, pageState: { modalBookNewShown }, actions: { closeModal } } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
 
   const handleSuccess = (data) => {
@@ -24,7 +34,7 @@ const BookNewModal = () => {
   if (!authorId) return null
 
   return (
-    <Modal show={ newBookModalShown } onHide={ () => closeModal() } size='lg' centered className='book-modal' backdropClassName='book-modal-backdrop'>
+    <Modal show={ modalBookNewShown } onHide={ () => closeModal() } size='lg' centered className='book-modal' backdropClassName='book-modal-backdrop'>
       <Modal.Header>
         <Modal.Title>New book</Modal.Title>
       </Modal.Header>
@@ -43,4 +53,4 @@ const BookNewModal = () => {
   )
 }
 
-export default BookNewModal
+export default Wrap

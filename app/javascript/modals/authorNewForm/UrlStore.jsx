@@ -5,10 +5,7 @@ import UrlStoreContext from 'store/urlStore/Context'
 const HASH = '#new-author'
 
 const NewAuthorUrlStore = () => {
-  const { actions: { patch, addUrlAction, addRoute, addUrlState },
-          getRoutes,
-        } = useContext(UrlStoreContext)
-
+  const { actions: { patch, addUrlAction, addRoute, addUrlState }, getRoutes } = useContext(UrlStoreContext)
 
   useEffect(() => {
     addRoute('newAuthorPath', () => getRoutes().modalOpenPath(HASH))

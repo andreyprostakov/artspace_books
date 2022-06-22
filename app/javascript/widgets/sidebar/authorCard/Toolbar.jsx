@@ -14,10 +14,9 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { authorFull } = props
-  const [{},
-         { gotoAuthorBooks, openNewBookModal },
-         { authorBooksPath, newBookModalPath }] = useUrlStore()
-  const { routes: { editAuthorPath }, actions: { openEditAuthorModal }, routesReady } = useContext(UrlStoreContext)
+  const [{}, { gotoAuthorBooks }, { authorBooksPath, }] = useUrlStore()
+  const { routes: { editAuthorPath, newBookPath },
+          actions: { openEditAuthorModal, openNewBookModal }, routesReady } = useContext(UrlStoreContext)
 
   const dispatch = useDispatch()
   const tagNames = useSelector(selectTagNames(authorFull.tagIds))
@@ -62,7 +61,8 @@ const Toolbar = (props) => {
           <FontAwesomeIcon icon={ faTrash }/>
         </Button>
 
-        <Button variant='outline-warning' title='Add a book' href={ newBookModalPath() }>
+        <Button variant='outline-warning' title='Add a book' href={ newBookPath() }
+                onClick={ e => { e.preventDefault(); openNewBookModal() } }>
           + <FontAwesomeIcon icon={ faBook }/>
         </Button>
       </ButtonGroup>
