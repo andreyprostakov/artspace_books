@@ -16,7 +16,7 @@ import { selectAuthorFull } from 'store/authors/selectors'
 import { fetchAuthorFull } from 'store/authors/actions'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
-import { setImageSrc } from 'widgets/imageModal/actions'
+import { setImageSrc } from 'modals/imageFullShow/actions'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorCardWrap = () => {

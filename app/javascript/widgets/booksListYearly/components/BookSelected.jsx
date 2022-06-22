@@ -13,7 +13,7 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
-import { setImageSrc } from 'widgets/imageModal/actions'
+import { setImageSrc } from 'modals/imageFullShow/actions'
 import useUrlStore from 'store/urlStore'
 
 const BookSelected = (props) => {

@@ -7,7 +7,7 @@ import { Card } from 'react-bootstrap'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectCurrentBook, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
-import { setImageSrc } from 'widgets/imageModal/actions'
+import { setImageSrc } from 'modals/imageFullShow/actions'
 import useUrlStore from 'store/urlStore'
 
 import ImageContainer from 'components/ImageContainer'

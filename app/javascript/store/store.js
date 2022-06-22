@@ -12,9 +12,10 @@ import storeTagsReducer from 'store/tags/slice'
 
 import booksListLinearReducer from 'widgets/booksListLinear/slice'
 import booksListYearlyReducer from 'widgets/booksListYearly/slice'
-import imageModalReducer from 'widgets/imageModal/slice'
 import navbarReducer from 'widgets/navbar/slice'
 import notificationsReducer from 'widgets/notifications/slice'
+
+import imageModalReducer from 'modals/imageFullShow/slice'
 
 export default configureStore({
   reducer: {
