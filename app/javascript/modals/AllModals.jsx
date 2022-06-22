@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import ModalsUrlStore from 'modals/ModalsUrlStore'
+import ModalsUrlStore from 'modals/UrlStore'
 import BookNewModal from 'modals/bookNewForm/Modal'
 import BookEditModal from 'modals/bookEditForm/Modal'
 import AuthorNewModal from 'modals/authorNewForm/Modal'
