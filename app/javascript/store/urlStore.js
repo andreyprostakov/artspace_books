@@ -62,9 +62,7 @@ const useUrlStore = (calculatePageState = null) => {
   ]
 }
 
-const wrappersSorted = [
-  wrapBookId,
-]
+const wrappersSorted = [wrapBookId]
 
 const wrappedUrlStore = wrappersSorted.reduce((storeFunc, wrapperFunc) => wrapperFunc(storeFunc), useUrlStore)
 
