@@ -8,7 +8,7 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { tagIndexEntry } = props
-  const { actions: { goto }, routes: { tagPagePath, editTagPath }, getRoutes, routesReady } = useContext(UrlStoreContext)
+  const { routes: { tagPagePath, editTagPath }, routesReady } = useContext(UrlStoreContext)
 
   if (!tagIndexEntry) return null
   if (!routesReady) return null

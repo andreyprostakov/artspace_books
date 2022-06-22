@@ -26,7 +26,7 @@ const Provider = (props) => {
   const actionsRef = useRef()
   actionsRef.current = urlActions
   const [pageState, setPageState] = useState({})
-  const [stateDefiners, setStateDefiners] = useState([])
+  const [stateDefiners, setStateDefiners] = useState({})
   const [routes, setRoutes] = useState({})
   const routesRef = useRef(routes)
   routesRef.current = routes
@@ -63,7 +63,7 @@ const Provider = (props) => {
 
     addUrlAction: (name, action) => setUrlActions(value => ({ ...value, [name]: action })),
 
-    addUrlState: definer => setStateDefiners(value => [...value, definer]),
+    addUrlState: (name, definer) => setStateDefiners(value => ({ ...value, [name]: definer })),
 
     updateLocation: location => {
       locationRef.current = location
@@ -95,8 +95,8 @@ const Provider = (props) => {
   }
 
   const updatePageState = () => {
-    let newPageState = stateDefiners.reduce((newState, definer) => {
-      return { ...newState, ...definer(urlAccessor) }
+    let newPageState = Object.keys(stateDefiners).reduce((newState, key) => {
+      return { ...newState, [key]: stateDefiners[key](urlAccessor) }
     }, {})
     setPageState(newPageState)
   }

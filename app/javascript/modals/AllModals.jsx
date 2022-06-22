@@ -5,7 +5,7 @@ import BookNewModal from 'components/books/BookNewModal'
 import BookEditModal from 'components/books/BookEditModal'
 import AuthorNewModal from 'components/authors/AuthorNewModal'
 import AuthorEditModal from 'components/authors/AuthorEditModal'
-import TagEditModal from 'modals/tagForm/EditModal'
+import TagEditModal from 'modals/tagEditForm/Modal'
 import ImageModal from 'widgets/imageModal/ImageModal'
 
 const AllModals = () => {

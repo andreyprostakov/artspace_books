@@ -38,9 +38,7 @@ const LocalStoreConfigurer = () => {
         } = useContext(UrlStoreContext)
 
   useEffect(() => {
-    addUrlState(() => {
-      return { tagId: parseInt(paramsRef.current.tagId) }
-    })
+    addUrlState('tagId', () => parseInt(paramsRef.current.tagId))
 
     dispatch(setPageIsLoading(true))
     dispatch(setCurrentTagId(tagId))

@@ -6,8 +6,8 @@ import { Button, Modal } from 'react-bootstrap'
 
 import { selectCurrentTagIndexEntry } from 'store/tags/selectors'
 import { reloadTag } from 'store/tags/actions'
-import EditUrlStore from 'modals/tagForm/EditUrlStore'
-import Form from 'modals/tagForm/Form'
+import EditUrlStore from 'modals/tagEditForm/UrlStore'
+import Form from 'modals/tagEditForm/Form'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const EditModalWrap = () => {

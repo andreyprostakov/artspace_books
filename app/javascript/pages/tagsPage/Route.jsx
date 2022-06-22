@@ -41,9 +41,7 @@ const LocalStoreConfigurer = () => {
       getActions().patch(buildRelativePath({ params: { 'tag_id': id } }))
     )
 
-    addUrlState((urlAccessor) => {
-      return { tagId: parseInt(urlAccessor.queryParameter('tag_id')) }
-    })
+    addUrlState('tagId', (url) => parseInt(url.queryParameter('tag_id')))
   }, [])
 
   useEffect(() => {

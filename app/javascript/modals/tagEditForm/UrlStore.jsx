@@ -9,14 +9,13 @@ const EditTagUrlStore = () => {
           getRoutes,
         } = useContext(UrlStoreContext)
 
+
   useEffect(() => {
     addRoute('editTagPath', () => getRoutes().modalOpenPath(HASH))
 
     addUrlAction('openEditTagModal', () => patch(getRoutes().editTagPath()))
 
-    addUrlState((urlAccessor) => {
-      return { modalTagEditShown: urlAccessor.hash === HASH }
-    })
+    addUrlState('modalTagEditShown', (url) => url.hash === HASH)
   }, [])
 
   return null
