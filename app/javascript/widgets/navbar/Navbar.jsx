@@ -10,10 +10,10 @@ import { setAuthorsSearchKey, setTagsSearchKey } from 'widgets/navbar/actions'
 import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
-  const [{},
-         { gotoBooks },
-         { authorsPath, booksPath, tagBooksPath, tagsPath }] = useUrlStore()
-  const { routes: { newAuthorPath }, actions: { openNewAuthorModal }, routesReady } = useContext(UrlStoreContext)
+  const [{}, { gotoBooks }, { booksPath }] = useUrlStore()
+  const { routes: { authorsPagePath, newAuthorPath, tagsPagePath, tagPagePath },
+          actions: { openNewAuthorModal },
+          routesReady } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
   const tagIdBookmark = useSelector(selectTagIdBookmark())
   const tagIdRead = useSelector(selectTagIdRead())
@@ -28,14 +28,14 @@ const PageNavbar = () => {
         <NavDropdown title='Books'>
           <NavDropdown.Item href={ booksPath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ tagBooksPath(tagIdBookmark) }>Bookmarked by me</NavDropdown.Item>
-          <NavDropdown.Item href={ tagBooksPath(tagIdRead) }>Read by me</NavDropdown.Item>
+          <NavDropdown.Item href={ tagPagePath(tagIdBookmark) }>Bookmarked by me</NavDropdown.Item>
+          <NavDropdown.Item href={ tagPagePath(tagIdRead) }>Read by me</NavDropdown.Item>
         </NavDropdown>
 
         <NavDropdown title='Authors' onClick={ () => dispatch(setAuthorsSearchKey('')) }>
           <AuthorsNavList/>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ authorsPath() }>List all</NavDropdown.Item>
+          <NavDropdown.Item href={ authorsPagePath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href={ newAuthorPath() } onClick={ e => { e.preventDefault(); openNewAuthorModal() } }>
             +Author
@@ -45,7 +45,7 @@ const PageNavbar = () => {
         <NavDropdown title='Tags'>
           <TagsNavList/>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ tagsPath() }>List all</NavDropdown.Item>
+          <NavDropdown.Item href={ tagsPagePath() }>List all</NavDropdown.Item>
         </NavDropdown>
 
         <NavDropdown title='Awards'>

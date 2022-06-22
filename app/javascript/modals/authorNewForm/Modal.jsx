@@ -16,12 +16,12 @@ const Wrap = () => {
 }
 
 const AuthorNewModal = () => {
-  const { pageState: { modalAuthorNewShown }, actions: { closeModal, gotoAuthorBooks } } = useContext(UrlStoreContext)
+  const { pageState: { modalAuthorNewShown }, actions: { closeModal, goto }, routes: { authorPagePath } } = useContext(UrlStoreContext)
 
   const handleSuccess = (data) => {
     const { id: newAuthorId } = data
     closeModal()
-    gotoAuthorBooks(newAuthorId)
+    goto(authorPagePath(newAuthorId))
   }
 
   return (

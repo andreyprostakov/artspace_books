@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { Route } from 'react-router-dom'
 
 import { setCurrentTagId } from 'store/axis/actions'
-import { setPageIsLoading } from 'store/metadata/actions'
 import UrlStoreContext from 'store/urlStore/Context'
 import TagsPage from 'pages/tagsPage/Page'
 

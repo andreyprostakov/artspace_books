@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card } from 'react-bootstrap'
@@ -8,12 +8,11 @@ import { selectAuthorRef } from 'store/authors/selectors'
 import { selectCurrentBook, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setImageSrc } from 'modals/imageFullShow/actions'
-import useUrlStore from 'store/urlStore'
-
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const BookCardWrap = () => {
   const book = useSelector(selectCurrentBook())
@@ -29,7 +28,7 @@ const BookCard = (props) => {
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const tags = useSelector(selectTagsRefsByIds(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
-  const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
+  const { routes: { authorPagePath } } = useContext(UrlStoreContext)
 
   const coverUrl = book.coverUrl || defaultCoverUrl
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
@@ -43,7 +42,7 @@ const BookCard = (props) => {
 
         <div className='book-details'>
           <div>
-            <a href={ authorBooksPath(authorRef.id, { bookId: book.id }) } className='book-author' title={ authorRef.fullname }>
+            <a href={ authorPagePath(authorRef.id, { bookId: book.id }) } className='book-author' title={ authorRef.fullname }>
               { authorRef.fullname }
             </a>
             ,&nbsp;

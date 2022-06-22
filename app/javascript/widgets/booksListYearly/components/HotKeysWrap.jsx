@@ -51,7 +51,6 @@ const HotKeysWrap = (props) => {
          },
          {
            closeModal,
-           gotoAuthorBooks,
            gotoBooks,
            openEditBookModal,
          }] = useUrlStore()
@@ -75,18 +74,7 @@ const HotKeysWrap = (props) => {
       dispatch(shiftSelection(-1))
     },
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
-    TOGGLE_AUTHOR: () => {
-      const { currentAuthorId, currentBookId, currentBook } = state
-      console.log(`TOGGLE_AUTHOR get State: ${currentAuthorId}, ${currentBookId}`)
-      console.log(`TOGGLE! AuthorID: ${currentAuthorId}, BookID: ${currentBookId}, Book: ${currentBook?.id}`)
-      if (!currentBook) {
-        return
-      } else if (currentAuthorId) {
-        gotoBooks({ bookId: currentBookId })
-      } else {
-        gotoAuthorBooks(currentBook.authorId, { bookId: currentBook.id })
-      }
-    },
+    TOGGLE_AUTHOR: () => alert('TOGGLE'),
     TOGGLE_EDIT: () => {
       if (!currentBook) { return }
 

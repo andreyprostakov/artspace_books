@@ -7,13 +7,11 @@ import BookCard from 'sidebar/bookCard/BookCard'
 import BooksListLinearControls from 'sidebar/booksListLinearControls/BooksListLinearControls'
 import BatchControls from 'sidebar/batchControls/BatchControls'
 import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
-import PageUrlStore from 'pages/authorPage/PageUrlStore'
 import PageStoreConfigurer from 'pages/authorPage/PageStoreConfigurer'
 
 const AuthorPage = () => {
   return (
     <>
-      <PageUrlStore/>
       <PageStoreConfigurer/>
 
       <Layout>

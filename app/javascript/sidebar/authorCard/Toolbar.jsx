@@ -9,13 +9,11 @@ import PropTypes from 'prop-types'
 
 import { selectTagBookmark, selectTagNames } from 'store/tags/selectors'
 import { markAuthorAsBookmarked, unmarkAuthorAsBookmarked } from 'sidebar/authorCard/actions'
-import useUrlStore from 'store/urlStore'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { authorFull } = props
-  const [{}, { gotoAuthorBooks }, { authorBooksPath, }] = useUrlStore()
-  const { routes: { editAuthorPath, newBookPath },
+  const { routes: { authorPagePath, editAuthorPath, newBookPath },
           actions: { openEditAuthorModal, openNewBookModal }, routesReady } = useContext(UrlStoreContext)
 
   const dispatch = useDispatch()
@@ -35,7 +33,7 @@ const Toolbar = (props) => {
         }
 
         { authorFull.booksCount > 0 &&
-          <Button variant='outline-info' title='See all books' href={ authorBooksPath(authorFull.id) }>
+          <Button variant='outline-info' title='See all books' href={ authorPagePath(authorFull.id) }>
             <FontAwesomeIcon icon={ faBook }/> ({ authorFull.booksCount })
           </Button>
         }

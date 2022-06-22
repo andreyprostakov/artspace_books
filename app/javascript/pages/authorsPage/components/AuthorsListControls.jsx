@@ -1,14 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useContext } from 'react'
 import { Form } from 'react-bootstrap'
 
 import orders from 'pages/authorsPage/sortOrders'
-import { setSortOrder } from 'pages/authorsPage/actions'
-import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsListControls = () => {
-  const dispatch = useDispatch()
-  const [{ sortOrder }, { changeSortOrder }] = usePageUrlStore()
+  const { pageState: { sortOrder }, actions: { changeSortOrder } } = useContext(UrlStoreContext)
   return (
     <div className='authors-list-controls'>
       <Form.Label>Sort by:</Form.Label>

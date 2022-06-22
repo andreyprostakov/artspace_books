@@ -33,12 +33,14 @@ const AuthorCardWrap = () => {
 
 const AuthorCard = (props) => {
   const { authorFull } = props
-  const { routes: { authorsPath = () => '#' } } = useContext(UrlStoreContext)  
+  const { routes: { authorsPagePath }, routesReady } = useContext(UrlStoreContext)
   const { onClose } = props
   const dispatch = useDispatch()
   const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
+
+  if (!routesReady) return null
 
   return (
     <Card className='sidebar-widget-author-card sidebar-card-widget'>
@@ -57,9 +59,9 @@ const AuthorCard = (props) => {
           <div className='author-name'>{ authorFull.fullname }</div>
 
           <div className='author-card-text'>
-            <div>Years: { renderLifetime(authorFull, authorsPath) }</div>
+            <div>Years: { renderLifetime(authorFull, authorsPagePath) }</div>
             <div>Popularity: { authorFull.popularity.toLocaleString() } pts (
-              <a href={ authorsPath({ authorId: authorFull.id, sortOrder: orders.BY_RANK_ASCENDING }) }>
+              <a href={ authorsPagePath({ authorId: authorFull.id, sortOrder: orders.BY_RANK_ASCENDING }) }>
                 #{ authorFull.rank }
               </a>
             )</div>

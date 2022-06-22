@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { FormControl, NavDropdown } from 'react-bootstrap'
 
 import { selectTagsRefs } from 'store/tags/selectors'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
-import useUrlStore from 'store/urlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const TagsNavList = () => {
   const allTags = useSelector(selectTagsRefs())
   const [query, setQuery] = useState('')
-  const [{}, { gotoTagBooks }, paths] = useUrlStore()
+  const { routes: { tagPagePath } } = useContext(UrlStoreContext)
 
   const tags = sortByString(
     filterByString(allTags, 'name', query),
@@ -24,7 +24,7 @@ const TagsNavList = () => {
       </div>
       <div className='tags-nav-list'>
         { tags.map(tag =>
-          <NavDropdown.Item href={ paths.tagBooksPath(tag.id) } key={ tag.id } className='d-flex justify-content-between'>
+          <NavDropdown.Item href={ tagPagePath(tag.id) } key={ tag.id } className='d-flex justify-content-between'>
             { tag.name }
             <span className='badge badge-primary badge-pill'>{ tag.connectionsCount }</span>
           </NavDropdown.Item>

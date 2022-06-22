@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import authorsBatchReducer from 'pages/authorsPage/slice'
-
 import axisReducer from 'store/axis/slice'
 import bookSyncReducer from 'store/bookSync/slice'
 import metadataReducer from 'store/metadata/slice'
@@ -19,7 +17,6 @@ import imageModalReducer from 'modals/imageFullShow/slice'
 
 export default configureStore({
   reducer: {
-    authorsBatch: authorsBatchReducer,
     axis: axisReducer,
     booksListLinear: booksListLinearReducer,
     booksListYearly: booksListYearlyReducer,

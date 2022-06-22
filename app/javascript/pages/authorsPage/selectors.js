@@ -1,6 +1,5 @@
 import { sortBy } from 'lodash'
 
-import { selectCurrentAuthorId } from 'store/axis/selectors'
 import { selectAuthorsIndex } from 'store/authors/selectors'
 import orders from 'pages/authorsPage/sortOrders'
 
@@ -20,9 +19,3 @@ export const selectSortAttribute = order => () => {
   default: return 'fullname'
   }
 }
-
-export const selectLeftSidebarShown = () => state => Boolean(selectCurrentAuthorId()(state))
-
-export const selectBatchMode = () => state => state.authorsBatch.batchMode
-
-export const selectBatchIds = () => state => state.authorsBatch.selectedIds

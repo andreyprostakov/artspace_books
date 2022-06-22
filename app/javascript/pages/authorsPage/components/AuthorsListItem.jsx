@@ -1,41 +1,33 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 import classNames from 'classnames'
 
 import {
-  selectLeftSidebarShown,
   selectSortAttribute,
 } from 'pages/authorsPage/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import ImageContainer from 'components/ImageContainer'
-import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsListItem = (props) => {
   const { author } = props
   const dispatch = useDispatch()
   const selectedAuthorId = useSelector(selectCurrentAuthorId())
-  const leftSidebarShown = useSelector(selectLeftSidebarShown())
   const isSelected = author.id == selectedAuthorId
   const ref = useRef(null)
 
-  const [{ sortOrder }, { addAuthorWidget }] = usePageUrlStore()
+  const { pageState: { sortOrder }, actions: { showAuthor } } = useContext(UrlStoreContext)
   const sortAttribute = useSelector(selectSortAttribute(sortOrder))
 
   useEffect(() => {
-    if (isSelected) {
-      ref.current?.scrollIntoViewIfNeeded()
-    }
+    if (isSelected) ref.current?.scrollIntoViewIfNeeded()
   })
 
-  const onItemClick = (author) => {
-    addAuthorWidget(author.id)
-  }
-
   return (
-    <Col key={ author.id } sm={ leftSidebarShown ? 3 : 2 } ref={ ref }>
+    <Col key={ author.id } sm={3} ref={ ref }>
       <div className={ classNames('authors-list-item', { 'selected': isSelected })}
-           onClick={ () => onItemClick(author) }
+           onClick={ () => showAuthor(author.id) }
            title={ author.fullname }>
         { author.thumbUrl && <ImageContainer className='thumb' url={ author.thumbUrl }/> }
 

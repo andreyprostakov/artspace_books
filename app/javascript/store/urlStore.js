@@ -5,22 +5,13 @@ import wrapBookId from 'store/urlStore/bookSelection'
 import { objectToParams } from 'utils/objectToParams'
 
 const absolutePaths = {
-  authorsPath: ({ authorId, sortOrder } = {}) =>
-    `/authors${ objectToParams({ 'author_id': authorId, 'sort_order': sortOrder }) }`,
-  authorBooksPath: (authorId, { bookId } = {}) => `/authors/${authorId}${ objectToParams({ 'book_id': bookId }) }`,
   booksPath: ({ bookId } = {}) => `/books${ objectToParams({ 'book_id': bookId }) }`,
-  tagsPath: () => '/tags',
-  tagBooksPath: (tagId, { bookId } = {}) => `/tags/${tagId}${ objectToParams({ 'book_id': bookId }) }`,
 }
 
 const navActions = (baseActions, paths) => {
   const { buildPath, goto, patch } = baseActions
   return {
-    gotoAuthorBooks: (id, options = {}) => goto(paths.authorBooksPath(id, options)),
-    gotoAuthors: (options = {}) => goto(paths.authorsPath(options)),
     gotoBooks: (options = {}) => goto(paths.booksPath(options)),
-    gotoTagBooks: (id, options = {}) => goto(paths.tagBooksPath(id, options)),
-    gotoTags: (options = {}) => goto(paths.tagsPath(options)),
     showModal: hash => patch(buildPath({ hash })),
     closeModal: () => patch(buildPath({ hash: '' })),
   }

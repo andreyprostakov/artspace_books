@@ -1,20 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormControl, NavDropdown } from 'react-bootstrap'
 
 import { selectAuthorsRefs } from 'store/authors/selectors'
 import { selectAuthorsSearchKey } from 'widgets/navbar/selectors'
 import { setAuthorsSearchKey } from 'widgets/navbar/actions'
-import useUrlStore from 'store/urlStore'
 import { filterByString } from 'utils/filterByString'
 import { sortByString } from 'utils/sortByString'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsNavList = () => {
   const allAuthorsRefs = useSelector(selectAuthorsRefs())
   const query = useSelector(selectAuthorsSearchKey())
-  const [{}, { gotoAuthorBooks }, paths] = useUrlStore()
   const dispatch = useDispatch()
   const searchRef = useRef()
+  const { routes: { authorPagePath } } = useContext(UrlStoreContext)
 
   const displayedAuthorsRef = sortByString(
     filterByString(allAuthorsRefs, 'fullname', query),
@@ -30,7 +30,7 @@ const AuthorsNavList = () => {
       </div>
       <div className='authors-nav-list'>
         { displayedAuthorsRef.map(authorRef =>
-          <NavDropdown.Item href={ paths.authorBooksPath(authorRef.id) } key={ authorRef.id } className='d-flex justify-content-between'>
+          <NavDropdown.Item href={ authorPagePath(authorRef.id) } key={ authorRef.id } className='d-flex justify-content-between'>
             { authorRef.fullname }
             <span className='badge badge-primary badge-pill'>{ authorRef.booksCount }</span>
           </NavDropdown.Item>
