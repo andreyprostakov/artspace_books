@@ -85,7 +85,7 @@ const Provider = (props) => {
       buildRelativePath,
     },
 
-    routes: routesRef.current,
+    routes: { ...routesRef.current },
 
     getRoutes: () => routesRef.current,
 

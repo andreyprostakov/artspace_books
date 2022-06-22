@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, ButtonGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,17 +10,21 @@ import PropTypes from 'prop-types'
 import { selectTagBookmark, selectTagNames } from 'store/tags/selectors'
 import { markAuthorAsBookmarked, unmarkAuthorAsBookmarked } from 'widgets/sidebar/authorCard/actions'
 import useUrlStore from 'store/urlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { authorFull } = props
   const [{},
-         { gotoAuthorBooks, openEditAuthorModal, openNewBookModal },
-         { editAuthorModalPath, authorBooksPath, newBookModalPath }] = useUrlStore()
+         { gotoAuthorBooks, openNewBookModal },
+         { authorBooksPath, newBookModalPath }] = useUrlStore()
+  const { routes: { editAuthorPath }, actions: { openEditAuthorModal }, routesReady } = useContext(UrlStoreContext)
 
   const dispatch = useDispatch()
   const tagNames = useSelector(selectTagNames(authorFull.tagIds))
   const tagBookmark = useSelector(selectTagBookmark())
   const isBookmarked = tagNames.includes(tagBookmark)
+
+  if (!routesReady) return null
 
   return (
     <>
@@ -37,7 +41,8 @@ const Toolbar = (props) => {
           </Button>
         }
 
-        <Button variant='outline-warning' title='Edit info' href={ editAuthorModalPath(authorFull.id) }>
+        <Button variant='outline-warning' title='Edit info' href={ editAuthorPath(authorFull.id) }
+                onClick={ e => { e.preventDefault(); openEditAuthorModal() } }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 

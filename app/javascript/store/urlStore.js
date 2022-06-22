@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLocation, useParams, useHistory } from 'react-router-dom'
 
-import wrapAuthorModal from 'store/urlStore/authorModal'
 import wrapBookId from 'store/urlStore/bookSelection'
 import wrapBookModal from 'store/urlStore/bookModal'
 import { objectToParams } from 'utils/objectToParams'
@@ -65,7 +64,6 @@ const useUrlStore = (calculatePageState = null) => {
 }
 
 const wrappersSorted = [
-  wrapAuthorModal,
   wrapBookModal,
   wrapBookId,
 ]

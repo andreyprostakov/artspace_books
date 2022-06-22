@@ -1,20 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import AuthorsNavList from 'widgets/navbar/components/AuthorsNavList'
 import TagsNavList from 'widgets/navbar/components/TagsNavList'
 import useUrlStore from 'store/urlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 import { setAuthorsSearchKey, setTagsSearchKey } from 'widgets/navbar/actions'
 import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
   const [{},
-         { goto, gotoBooks, openNewAuthorModal },
-         { authorsPath, booksPath, newAuthorModalPath, tagBooksPath, tagsPath }] = useUrlStore()
+         { gotoBooks },
+         { authorsPath, booksPath, tagBooksPath, tagsPath }] = useUrlStore()
+  const { routes: { newAuthorPath }, actions: { openNewAuthorModal }, routesReady } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
   const tagIdBookmark = useSelector(selectTagIdBookmark())
   const tagIdRead = useSelector(selectTagIdRead())
+
+  if (!routesReady) return null
 
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand>
@@ -33,7 +37,7 @@ const PageNavbar = () => {
           <NavDropdown.Divider />
           <NavDropdown.Item href={ authorsPath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item href={ newAuthorModalPath() }>
+          <NavDropdown.Item href={ newAuthorPath() } onClick={ e => { e.preventDefault(); openNewAuthorModal() } }>
             +Author
           </NavDropdown.Item>
         </NavDropdown>

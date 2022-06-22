@@ -8,7 +8,17 @@ import { selectAuthorFull } from 'store/authors/selectors'
 import { reloadAuthor } from 'store/authors/actions'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
 import AuthorForm from 'modals/authorEditForm/Form'
+import ModalStore from 'modals/authorEditForm/UrlStore'
 import UrlStoreContext from 'store/urlStore/Context'
+
+const Wrap = () => {
+  return (
+    <>
+      <ModalStore/>
+      <AuthorEditModal/>
+    </>
+  )
+}
 
 const AuthorEditModal = () => {
   const { pageState: { modalAuthorEditShown }, actions: { closeModal } } = useContext(UrlStoreContext)
@@ -43,4 +53,4 @@ const AuthorEditModal = () => {
   )
 }
 
-export default AuthorEditModal
+export default Wrap

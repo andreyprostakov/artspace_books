@@ -1,5 +1,5 @@
 import { isEmpty, sortBy } from 'lodash'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -17,7 +17,7 @@ import { fetchAuthorFull } from 'store/authors/actions'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setupStoreForAuthorCard } from 'widgets/sidebar/authorCard/actions'
 import { setImageSrc } from 'widgets/imageModal/actions'
-import useUrlStore from 'store/urlStore'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorCardWrap = () => {
   const authorId = useSelector(selectCurrentAuthorId())
@@ -33,7 +33,7 @@ const AuthorCardWrap = () => {
 
 const AuthorCard = (props) => {
   const { authorFull } = props
-  const [{}, {}, { authorsPath }] = useUrlStore()
+  const { routes: { authorsPath = () => '#' } } = useContext(UrlStoreContext)  
   const { onClose } = props
   const dispatch = useDispatch()
   const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))

@@ -2,8 +2,18 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 
-import AuthorForm from 'modals/AuthorEditModal/Form'
+import AuthorForm from 'modals/authorEditForm/Form'
+import ModalStore from 'modals/authorNewForm/UrlStore'
 import UrlStoreContext from 'store/urlStore/Context'
+
+const Wrap = () => {
+  return (
+    <>
+      <ModalStore/>
+      <AuthorNewModal/>
+    </>
+  )
+}
 
 const AuthorNewModal = () => {
   const { pageState: { modalAuthorNewShown }, actions: { closeModal, gotoAuthorBooks } } = useContext(UrlStoreContext)
@@ -34,4 +44,4 @@ const AuthorNewModal = () => {
   )
 }
 
-export default AuthorNewModal
+export default Wrap

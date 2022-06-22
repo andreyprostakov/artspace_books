@@ -10,7 +10,7 @@ import EditUrlStore from 'modals/tagEditForm/UrlStore'
 import Form from 'modals/tagEditForm/Form'
 import UrlStoreContext from 'store/urlStore/Context'
 
-const EditModalWrap = () => {
+const Wrap = () => {
   return (
     <>
       <EditUrlStore/>
@@ -55,4 +55,4 @@ const EditModal = () => {
   )
 }
 
-export default EditModalWrap
+export default Wrap
