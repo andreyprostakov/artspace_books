@@ -1,3 +1,5 @@
 # frozen_string_literal: true
 
-json.partial! 'api/authors/ref_entries/author', author: @author, counts_by_author: { @author.id => @author.books.count }
+json.id author.id
+json.fullname author.fullname
+json.books_count @author.books.count
