@@ -15,8 +15,11 @@ import notificationsReducer from 'widgets/notifications/slice'
 
 import imageModalReducer from 'modals/imageFullShow/slice'
 
+import authorsPageReducer from 'pages/authorsPage/slice'
+
 export default configureStore({
   reducer: {
+    authorsPage: authorsPageReducer,
     axis: axisReducer,
     booksListLinear: booksListLinearReducer,
     booksListYearly: booksListYearlyReducer,

@@ -12,7 +12,7 @@ import CloseIcon from 'components/icons/CloseIcon'
 
 import orders from 'pages/authorsPage/sortOrders'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
-import { selectAuthorFull } from 'store/authors/selectors'
+import { selectAuthorFull, selectAuthorDefaultImageUrl } from 'store/authors/selectors'
 import { fetchAuthorFull } from 'store/authors/actions'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
 import { setupStoreForAuthorCard } from 'sidebar/authorCard/actions'
@@ -39,6 +39,7 @@ const AuthorCard = (props) => {
   const tags = useSelector(selectTagsRefsByIds(authorFull.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => tag.connectionsCount)
+  const defaultPhotoUrl = useSelector(selectAuthorDefaultImageUrl())
 
   if (!routesReady) return null
 
@@ -50,10 +51,8 @@ const AuthorCard = (props) => {
       }
 
       <Card.Body>
-        { authorFull.imageUrl &&
-          <ImageContainer className='author-image' url={ authorFull.thumbUrl }
-                          onClick={ () => dispatch(setImageSrc(authorFull.imageUrl)) }/>
-        }
+        <ImageContainer className='author-image' url={ authorFull.thumbUrl || defaultPhotoUrl }
+                        onClick={ () => dispatch(setImageSrc(authorFull.imageUrl)) }/>
 
         <div className='details-right'>
           <div className='author-name'>{ authorFull.fullname }</div>

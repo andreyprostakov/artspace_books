@@ -11,9 +11,11 @@ import PageContent from 'components/PageContent'
 import PageRouteHelpers from 'components/PageRouteHelpers'
 import RootUrlStoreProvider from 'store/urlStore/RootStoreProvider'
 import { setDefaultBookImageUrl } from 'store/books/actions'
+import { setDefaultAuthorImageUrl } from 'store/authors/actions'
 
 const Page = (props) => {
   store.dispatch(setDefaultBookImageUrl(props.default_book_image_url))
+  store.dispatch(setDefaultAuthorImageUrl(props.default_author_image_url))
 
   return (
     <ReduxProvider store={ store }>

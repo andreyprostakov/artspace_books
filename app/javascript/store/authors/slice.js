@@ -6,6 +6,7 @@ export const slice = createSlice({
     authorsFull: {},
     authorsIndex: {},
     authorsRefs: {},
+    defaultPhotoUrl: null,
     refsLoaded: false,
   },
   reducers: {
@@ -32,6 +33,13 @@ export const slice = createSlice({
       })
     },
 
+    addAuthorsIndexEntries: (state, action) => {
+      const authorIndexEntries = action.payload
+      authorIndexEntries.forEach(authorIndexEntry => {
+        state.authorsIndex[authorIndexEntry.id] = authorIndexEntry
+      })
+    },
+
     assignAuthorsRefs: (state, action) => {
       const refs = action.payload
       state.authorsRefs = {}
@@ -39,6 +47,10 @@ export const slice = createSlice({
         state.authorsRefs[authorRef.id] = authorRef
       })
       state.refsLoaded = true
+    },
+
+    setDefaultAuthorImageUrl: (state, action) => {
+      state.defaultPhotoUrl = action.payload
     },
   }
 })

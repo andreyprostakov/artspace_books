@@ -18,6 +18,10 @@
     overflow-x: hidden;
   }
 
+  .author-item-container {
+    text-align: center;
+  }
+
   .authors-list-item {
     display: inline-block;
     position: relative;
@@ -27,14 +31,6 @@
     margin: 10px 20px 0 0;
     vertical-align: top;
 
-    &.selected {
-      box-shadow: 0 0 10px $color-shadow inset;
-    }
-
-    &:not(.selected) {
-      cursor: pointer;
-    }
-
     .thumb {
       display: block;
       position: relative;
@@ -42,6 +38,17 @@
       height: 130px;
       width: 130px;
       border-radius: 70px;
+      margin-bottom: 10px;
+    }
+
+    &.selected {
+      .thumb {
+        box-shadow: 0 0 15px purple;
+      }
+    }
+
+    &:not(.selected) {
+      cursor: pointer;
     }
   }
 }

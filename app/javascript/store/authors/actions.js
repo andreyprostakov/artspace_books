@@ -10,9 +10,11 @@ import {
 export const {
   addAuthorFull,
   addAuthorIndexEntry,
+  addAuthorsIndexEntries,
   addAuthorRef,
   assignAuthorsIndex,
   assignAuthorsRefs,
+  setDefaultAuthorImageUrl,
 } = slice.actions
 
 export const fetchAuthorsRefs = () => async dispatch => {

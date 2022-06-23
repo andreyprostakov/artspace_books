@@ -1,3 +1,4 @@
+import { objectToParams } from 'utils/objectToParams'
 import AuthorForm from 'store/authors/api/AuthorForm'
 import AuthorFull from 'store/authors/api/AuthorFull'
 import AuthorIndexEntry from 'store/authors/api/AuthorIndexEntry'
@@ -18,10 +19,15 @@ class ApiClient {
     }).then(data => AuthorRef.parse(data))
   }
 
-  static getAuthorsIndex() {
+  static getAuthorsIndex({ page, perPage, sortBy } = {}) {
+    const params = {
+      page,
+      'per_page': perPage,
+      'sort_by': sortBy
+    }
     return jQuery.ajax({
-      url: '/api/authors/index_entries.json'
-    }).then(authors => authors.map(data => AuthorIndexEntry.parse(data)))
+      url: `/api/authors/index_entries.json${ objectToParams(params) }`
+    }).then(({ list, total }) => ({ total, list: list.map(data => AuthorIndexEntry.parse(data)) }))
   }
 
   static getAuthorIndexEntry(id) {

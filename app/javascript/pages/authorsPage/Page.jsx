@@ -6,8 +6,8 @@ import { HotKeys } from 'react-hotkeys'
 import { selectSortedAuthors } from 'pages/authorsPage/selectors'
 
 import Layout from 'pages/Layout'
+import AuthorsIndexControls from 'sidebar/authorsIndexControls/Controls'
 import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
-import AuthorsListControls from 'pages/authorsPage/components/AuthorsListControls'
 import AuthorCard from 'sidebar/authorCard/AuthorCard'
 import PageConfigurer from 'pages/authorsPage/PageConfigurer'
 import UrlStoreContext from 'store/urlStore/Context'
@@ -38,12 +38,11 @@ const AuthorsPage = () => {
           <Col sm={4}>
             <div className='page-sidebar'>
               <AuthorCard onClose={ () => removeAuthorWidget() }/>
+              <AuthorsIndexControls/>
             </div>
           </Col>
 
           <Col sm={8}>
-            <AuthorsListControls/>
-
             <Row className='authors-list'>
               { authors.map(author =>
                 <AuthorsListItem key={ author.id } author={ author }/>

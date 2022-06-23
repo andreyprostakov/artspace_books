@@ -31,14 +31,17 @@ RSpec.describe '/api/authors/index_entries', type: :request do
     it 'returns list' do
       send_request
       expect(response).to be_successful
-      expect(response.body).to eq([{
-        id: author.id,
-        fullname: author.fullname,
-        books_count: 1,
-        thumb_url: nil,
-        birth_year: 1900,
-        rank: 13
-      }].to_json)
+      expect(json_response).to eq(
+        total: 1,
+        list: [{
+          id: author.id,
+          fullname: author.fullname,
+          books_count: 1,
+          thumb_url: nil,
+          birth_year: 1900,
+          rank: 13
+        }]
+      )
     end
   end
 end

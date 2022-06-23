@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 import classNames from 'classnames'
 
-import {
-  selectSortAttribute,
-} from 'pages/authorsPage/selectors'
+import { selectSortBy } from 'pages/authorsPage/selectors'
 import { selectCurrentAuthorId } from 'store/axis/selectors'
+import { selectAuthorDefaultImageUrl } from 'store/authors/selectors'
 import ImageContainer from 'components/ImageContainer'
 import UrlStoreContext from 'store/urlStore/Context'
 
@@ -16,28 +15,29 @@ const AuthorsListItem = (props) => {
   const selectedAuthorId = useSelector(selectCurrentAuthorId())
   const isSelected = author.id == selectedAuthorId
   const ref = useRef(null)
+  const defaultPhotoUrl = useSelector(selectAuthorDefaultImageUrl())
 
-  const { pageState: { sortOrder }, actions: { showAuthor } } = useContext(UrlStoreContext)
-  const sortAttribute = useSelector(selectSortAttribute(sortOrder))
+  const { actions: { showAuthor } } = useContext(UrlStoreContext)
+  const sortBy = useSelector(selectSortBy())
 
   useEffect(() => {
     if (isSelected) ref.current?.scrollIntoViewIfNeeded()
   })
 
   return (
-    <Col key={ author.id } sm={3} ref={ ref }>
+    <Col key={ author.id } sm={3} ref={ ref } className='author-item-container'>
       <div className={ classNames('authors-list-item', { 'selected': isSelected })}
            onClick={ () => showAuthor(author.id) }
            title={ author.fullname }>
-        { author.thumbUrl && <ImageContainer className='thumb' url={ author.thumbUrl }/> }
+        <ImageContainer className='thumb' url={ author.thumbUrl || defaultPhotoUrl }/>
 
         <div className='author-name'>{ author.fullname }</div>
 
-        { sortAttribute == 'birthYear' &&
+        { sortBy == 'years' &&
           <div className='author-years'>{ author.birthYear }</div>
         }
 
-        { sortAttribute == 'rank' &&
+        { sortBy == 'popularity' &&
           <div className='author-rank'>#{ author.rank }</div>
         }
       </div>
