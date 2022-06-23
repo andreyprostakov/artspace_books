@@ -1,5 +1,5 @@
 import { sortBy } from 'lodash'
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
@@ -8,13 +8,12 @@ import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
 import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
-
+import UrlStoreContext from 'store/urlStore/Context'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
-import { setImageSrc } from 'widgets/imageModal/actions'
-import useUrlStore from 'store/urlStore'
+import { setImageSrc } from 'modals/imageFullShow/actions'
 
 const BookSelected = (props) => {
   const { id } = props
@@ -25,21 +24,22 @@ const BookSelected = (props) => {
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
-  const [{}, { gotoAuthorBooks }, { authorBooksPath }] = useUrlStore()
   const tags = useSelector(selectTagsRefsByIds(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)
+  const { routes: { authorPagePath }, routesReady } = useContext(UrlStoreContext)
 
-  useEffect(() => ref.current.focus(), [])
+  useEffect(() => ref.current?.focus(), [])
+
+  if (!routesReady) return null
 
   return (
     <div className='book-case selected' ref={ ref }>
       <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>
 
       <div className='book-details'>
-        <a href={ authorBooksPath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }
-           onClick={ (e) => { e.preventDefault(); gotoAuthorBooks(authorRef.id, { bookId: id }) } }>
+        <a href={ authorPagePath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }>
           { authorRef.fullname }
         </a>
 

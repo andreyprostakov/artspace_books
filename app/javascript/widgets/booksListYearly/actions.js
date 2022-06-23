@@ -7,7 +7,6 @@ import {
   selectCurrentAuthorId,
   selectCurrentBookId,
 } from 'store/axis/selectors'
-import { setCurrentBookId } from 'store/axis/actions'
 
 import {
   selectBooksIndexEntry,
@@ -18,8 +17,8 @@ import {
   addBook,
   addBooks,
   clearBooks,
-  setCurrentBookDetails,
   showBook,
+  setCurrentBookDetails,
 } from 'store/books/actions'
 import { selectTagNames } from 'store/tags/selectors'
 
@@ -53,6 +52,7 @@ export const {
   setBookShiftDirectionHorizontal,
   setCurrentBookForYear,
   setFilters,
+  setRequestedBookId,
   setYears,
 } = slice.actions
 
@@ -97,7 +97,7 @@ export const shiftSelection = shift => (dispatch, getState) => {
   const targetId = shift > 0 ? last(displayedBookIds) : first(displayedBookIds)
   if (!targetId) return
 
-  dispatch(setCurrentBookId(targetId))
+  dispatch(setRequestedBookId(targetId))
 }
 
 export const jumpToLatestYear = () => (dispatch, getState) => {

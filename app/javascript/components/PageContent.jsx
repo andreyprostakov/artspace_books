@@ -3,11 +3,8 @@ import { Row } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import AuthorPage from 'pages/authorPage/Page'
 import AuthorsPage from 'pages/authorsPage/Page'
 import BooksPage from 'pages/booksPage/Page'
-import TagPage from 'pages/tagPage/Page'
-import TagsPage from 'pages/tagsPage/Page'
 
 import BookerPage from 'pages/awards/bookerPage/Page'
 import CampbellPage from 'pages/awards/campbellPage/Page'
@@ -18,6 +15,8 @@ import NYTimesPage from 'pages/awards/nyTimesPage/Page'
 import ProsvetitelPage from 'pages/awards/prosvetitelPage/Page'
 import PulitzerPage from 'pages/awards/pulitzerPage/Page'
 
+import pageRoutes from 'components/pageRoutes'
+
 const PageContent = () => {
   const dispatch = useDispatch()
 
@@ -27,25 +26,11 @@ const PageContent = () => {
         <Redirect to='/books'/>
       </Route>
 
-      <Route path='/books'>
-        <BooksPage/>
-      </Route>
-
-      <Route path='/authors/:authorId'>
-        <AuthorPage/>
-      </Route>
-
-      <Route path='/authors'>
-        <AuthorsPage/>
-      </Route>
-
-      <Route path='/tags/:tagId'>
-        <TagPage/>
-      </Route>
-
-      <Route path='/tags'>
-        <TagsPage/>
-      </Route>
+      { pageRoutes.map((route, i) =>
+        <Route path={ route.path } key={ i }>
+          <route.Renderer/>
+        </Route>
+      ) }
 
       <Route path='/awards/booker'>
         <BookerPage/>

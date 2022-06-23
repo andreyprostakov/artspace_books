@@ -18,7 +18,10 @@ Rails.application.routes.draw do
       end
 
       namespace :tags do
-        resources :ref_entries, only: :index
+        resources :categories, only: :index
+        resources :full_entries, only: %i[update destroy]
+        resources :index_entries, only: %i[show index]
+        resources :ref_entries, only: %i[show index]
       end
     end
   end

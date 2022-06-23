@@ -61,7 +61,7 @@ RSpec.describe Forms::BooksBatchForm do
         it 'reverts all changes to Tag', :aggregate_failures do
           expect { subject }.not_to change(Tag, :count)
           expect(subject).to be false
-          expect(form.errors[:tags]).to include('name is invalid')
+          expect(form.errors[:tags]).to include('name allows only alphanums and dashes')
         end
       end
     end

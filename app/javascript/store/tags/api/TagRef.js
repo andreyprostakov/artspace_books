@@ -3,7 +3,8 @@ class TagRef {
     return {
       id: data['id'],
       name: data['name'],
-      connectionsCount: data['connections_count']
+      categoryId: data['category_id'],
+      connectionsCount: data['connections_count'],
     }
   }
 }

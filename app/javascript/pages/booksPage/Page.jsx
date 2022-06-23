@@ -7,7 +7,7 @@ import { selectBatchModeOn } from 'widgets/booksListYearly/selectors'
 import PageConfigurer from 'pages/templates/booksListYearly/PageConfigurer'
 import Layout from 'pages/Layout'
 import BooksListYearly from 'widgets/booksListYearly/BooksListYearly'
-import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
+import BatchControls from 'sidebar/batchControls/BatchControls'
 
 const BooksPage = () => {
   const sidebarShown = useSelector(selectBatchModeOn())

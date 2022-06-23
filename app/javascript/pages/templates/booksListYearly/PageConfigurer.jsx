@@ -8,13 +8,10 @@ import { setPageIsLoading } from 'store/metadata/actions'
 import {
   clearListState,
   fetchYears,
-  reloadBook,
   setFilters,
   setupBooksListSelection,
 } from 'widgets/booksListYearly/actions'
 import { prepareNavRefs } from 'widgets/navbar/actions'
-
-import ListUrlStore from 'widgets/booksListYearly/components/UrlStore'
 
 const Configurer = (props) => {
   const listFilter = props.listFilter || {}
@@ -37,7 +34,7 @@ const Configurer = (props) => {
     )
   }, [])
 
-  return <ListUrlStore/>
+  return null
 }
 
 Configurer.propTypes = {

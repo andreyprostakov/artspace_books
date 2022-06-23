@@ -1,0 +1,49 @@
+.tags-page {
+  padding-top: 20px;
+
+  .tags-index-categories {
+    height: calc(100vh - 126px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .tags-index-category {
+    margin-bottom: 20px;
+
+    .category-contents {
+      .tags-index-entry {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.tag-container.badge-pill {
+  &.tag-category-format {
+    background-color: #005f73;
+  }
+
+  &.tag-category-genre {
+    background-color: #0a9396;
+  }
+
+  &.tag-category-location {
+    background-color: #e9d8a6;
+  }
+
+  &.tag-category-other {
+    background-color: #ee9b00;
+  }
+
+  &.tag-category-series {
+    background-color: #bb3e03;
+  }
+
+  &.tag-category-award {
+    background-color: #9b2226;
+  }
+
+  &.tag-category-theme {
+    background-color: #0a9396;
+  }
+}

@@ -31,7 +31,7 @@ RSpec.describe '/api/books/batch' do
         send_request
 
         expect(response).to be_unprocessable
-        expect(json_response).to eq(errors: { tags: ['name is invalid'] })
+        expect(json_response).to eq(errors: { tags: ['name allows only alphanums and dashes'] })
       end
     end
   end

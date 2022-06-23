@@ -1,6 +1,7 @@
 import { first, last } from 'lodash'
 import apiClient from 'store/books/apiClient'
-import { setCurrentBookId } from 'store/axis/actions'
+import { selectCurrentBookId } from 'store/axis/selectors'
+import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import { clearSelection } from 'store/selectables/actions'
 import { selectBooksIndexEntry, selectCurrentBook } from 'store/books/selectors'
 import { addBooks, showBook } from 'store/books/actions'
@@ -41,7 +42,7 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
   if (targetIndex < 0) { targetIndex = allBookIds.length - 1 }
   if (targetIndex >= allBookIds.length) { targetIndex = 0 }
 
-  dispatch(setCurrentBookId(allBookIds[targetIndex]))
+  dispatch(setRequestedBookId(allBookIds[targetIndex]))
 }
 
 export const setupBooksListSelection = () => (dispatch, getState) => {
@@ -53,24 +54,13 @@ export const setupBooksListSelection = () => (dispatch, getState) => {
   }
 }
 
-const switchToFirstBook = () => (dispatch, getState) => {
-  const id = selectBookIds()(getState())[0]
-  dispatch(setCurrentBookId(id))
-}
+export const switchToFirstBook = () => (dispatch, getState) => {
+  const state = getState()
+  const ids = selectBookIds()(state)
+  const currentBookId = selectCurrentBookId()(state)
+  if (ids.includes(currentBookId)) return
 
-export const switchToPage = (page) => (dispatch) => {
-  dispatch(assignPage(page))
-  dispatch(fetchBooks()).then(() =>
-    dispatch(switchToFirstBook())
-  )
-}
-
-export const switchToSortType = (value) => (dispatch) => {
-  dispatch(assignPage(1))
-  dispatch(assignSortBy(value))
-  dispatch(fetchBooks()).then(() =>
-    dispatch(switchToFirstBook())
-  )
+  dispatch(setRequestedBookId(ids[0]))
 }
 
 export const clearListState = () => (dispatch) => {

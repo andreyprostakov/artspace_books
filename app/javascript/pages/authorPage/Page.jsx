@@ -2,18 +2,16 @@ import React, { useEffect } from 'react'
 import { Col } from 'react-bootstrap'
 
 import Layout from 'pages/Layout'
-import AuthorCard from 'widgets/sidebar/authorCard/AuthorCard'
-import BookCard from 'widgets/sidebar/bookCard/BookCard'
-import BooksListLinearControls from 'widgets/sidebar/booksListLinearControls/BooksListLinearControls'
-import BatchControls from 'widgets/sidebar/batchControls/BatchControls'
+import AuthorCard from 'sidebar/authorCard/AuthorCard'
+import BookCard from 'sidebar/bookCard/BookCard'
+import BooksListLinearControls from 'sidebar/booksListLinearControls/BooksListLinearControls'
+import BatchControls from 'sidebar/batchControls/BatchControls'
 import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
-import PageUrlStore from 'pages/authorPage/PageUrlStore'
 import PageStoreConfigurer from 'pages/authorPage/PageStoreConfigurer'
 
 const AuthorPage = () => {
   return (
     <>
-      <PageUrlStore/>
       <PageStoreConfigurer/>
 
       <Layout>

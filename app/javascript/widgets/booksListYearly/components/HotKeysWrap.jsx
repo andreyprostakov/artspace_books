@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
-import useUrlStore from 'store/urlStore'
 import { selectAuthorFull } from 'store/authors/selectors'
 import { selectCurrentBook } from 'store/books/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
@@ -15,6 +14,7 @@ import {
   shiftYear,
 } from 'widgets/booksListYearly/actions'
 import { syncCurrentBookStats } from 'store/bookSync/actions'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const keyMap = {
   DOWN: 'Down',
@@ -46,15 +46,8 @@ const HotKeysWrap = (props) => {
   const currentAuthor = useSelector(selectAuthorFull(currentAuthorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-  const [{
-           editBookModalShown
-         },
-         {
-           closeModal,
-           gotoAuthorBooks,
-           gotoBooks,
-           openEditBookModal,
-         }] = useUrlStore()
+  const { pageState: { modalBookEditShown },
+          actions: { closeModal, openEditBookModal } } = useContext(UrlStoreContext)
 
   useEffect(() => ref.current.focus(), [])
 
@@ -75,22 +68,11 @@ const HotKeysWrap = (props) => {
       dispatch(shiftSelection(-1))
     },
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
-    TOGGLE_AUTHOR: () => {
-      const { currentAuthorId, currentBookId, currentBook } = state
-      console.log(`TOGGLE_AUTHOR get State: ${currentAuthorId}, ${currentBookId}`)
-      console.log(`TOGGLE! AuthorID: ${currentAuthorId}, BookID: ${currentBookId}, Book: ${currentBook?.id}`)
-      if (!currentBook) {
-        return
-      } else if (currentAuthorId) {
-        gotoBooks({ bookId: currentBookId })
-      } else {
-        gotoAuthorBooks(currentBook.authorId, { bookId: currentBook.id })
-      }
-    },
+    TOGGLE_AUTHOR: () => alert('TOGGLE'),
     TOGGLE_EDIT: () => {
       if (!currentBook) { return }
 
-      if (editBookModalShown) {
+      if (modalBookEditShown) {
         closeModal()
       } else {
         openEditBookModal()

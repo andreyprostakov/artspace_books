@@ -2,10 +2,14 @@
 
 module Api
   module Tags
-    class RefEntriesController < Api::BaseController
+    class RefEntriesController < Api::Tags::BaseController
+      before_action :fetch_tag, only: :show
+
       def index
-        @tags = Tag.preload(:tag_connections)
+        @tags = Tag.preload(:book_tag_connections)
       end
+
+      def show; end
     end
   end
 end

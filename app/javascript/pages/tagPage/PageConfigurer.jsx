@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { setCurrentTagId } from 'store/axis/actions'
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
-import { setCurrentBookId } from 'store/axis/actions'
 import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
@@ -12,8 +12,7 @@ import {
   setupBooksListSelection,
 } from 'widgets/booksListLinear/actions'
 import { prepareNavRefs } from 'widgets/navbar/actions'
-
-import PageUrlStore from 'pages/tagPage/PageUrlStore'
+import { fetchTagsIndexEntry } from 'store/tags/actions'
 
 const Configurer = () => {
   const dispatch = useDispatch()
@@ -24,16 +23,17 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
-    dispatch(setCurrentBookId(null))
-    dispatch(prepareNavRefs()).then(() => {
-      dispatch(assignFilter({ tagId }))
-      dispatch(fetchBooks()).then(() => {
-        dispatch(setPageIsLoading(false))
-        dispatch(setupBooksListSelection())
-      })
+    dispatch(assignFilter({ tagId }))
+    Promise.all([
+      dispatch(prepareNavRefs()),
+      dispatch(fetchBooks()),
+      dispatch(fetchTagsIndexEntry(tagId)),
+    ]).then(() => {
+      dispatch(setPageIsLoading(false))
+      dispatch(setupBooksListSelection())
     })
   }, [tagId])
-  return <PageUrlStore/>
+  return null
 }
 
 export default Configurer

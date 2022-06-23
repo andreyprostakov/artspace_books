@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import { HotKeys } from 'react-hotkeys'
 
-import { setupStoreForPage } from 'pages/authorsPage/actions'
-import { selectLeftSidebarShown, selectSortedAuthors } from 'pages/authorsPage/selectors'
-import { setCurrentAuthorId } from 'store/axis/actions'
+import { selectSortedAuthors } from 'pages/authorsPage/selectors'
 
-import usePageUrlStore from 'pages/authorsPage/usePageUrlStore'
 import Layout from 'pages/Layout'
 import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
 import AuthorsListControls from 'pages/authorsPage/components/AuthorsListControls'
-import AuthorCard from 'widgets/sidebar/authorCard/AuthorCard'
+import AuthorCard from 'sidebar/authorCard/AuthorCard'
+import PageConfigurer from 'pages/authorsPage/PageConfigurer'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsPage = () => {
   const dispatch = useDispatch()
-  const leftSidebarShown = useSelector(selectLeftSidebarShown())
-  const [{ authorId, sortOrder }, { removeAuthorWidget }] = usePageUrlStore()
+  const { pageState: { sortOrder }, actions: { removeAuthorWidget } } = useContext(UrlStoreContext)
   const authors = useSelector(selectSortedAuthors(sortOrder))
-
-  useEffect(() => dispatch(setupStoreForPage()), [])
-  useEffect(() => dispatch(setCurrentAuthorId(authorId)), [authorId])
 
   const keyMap = {
     SHIFT_ON: { sequence: 'shift', action: 'keydown' },
@@ -35,27 +30,29 @@ const AuthorsPage = () => {
   }
 
   return (
-    <HotKeys keyMap={ keyMap } handlers={ hotKeysHandlers }>
-      <Layout className='authors-list-page'>
-        { leftSidebarShown &&
+    <>
+      <PageConfigurer/>
+
+      <HotKeys keyMap={ keyMap } handlers={ hotKeysHandlers }>
+        <Layout className='authors-list-page'>
           <Col sm={4}>
             <div className='page-sidebar'>
               <AuthorCard onClose={ () => removeAuthorWidget() }/>
             </div>
           </Col>
-        }
 
-        <Col sm={ leftSidebarShown ? 8 : 12 }>
-          <AuthorsListControls/>
+          <Col sm={8}>
+            <AuthorsListControls/>
 
-          <Row className='authors-list'>
-            { authors.map(author =>
-              <AuthorsListItem key={ author.id } author={ author }/>
-            ) }
-          </Row>
-        </Col>
-      </Layout>
-    </HotKeys>
+            <Row className='authors-list'>
+              { authors.map(author =>
+                <AuthorsListItem key={ author.id } author={ author }/>
+              ) }
+            </Row>
+          </Col>
+        </Layout>
+      </HotKeys>
+    </>
   )
 }
 
