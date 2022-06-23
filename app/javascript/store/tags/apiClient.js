@@ -39,6 +39,12 @@ class ApiClient {
       data: { tag: body }
     })
   }
+
+  static getCategories() {
+    return jQuery.ajax({
+      url: '/api/tags/categories.json'
+    })
+  }
 }
 
 export default ApiClient

@@ -34,7 +34,6 @@ const BookCard = (props) => {
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
 
   if (!routesReady || !book) return null
-  console.log(['BookCard.render', authorRef?.id, book?.id])
 
   return (
     <Card className='sidebar-book-card-widget sidebar-card-widget'>

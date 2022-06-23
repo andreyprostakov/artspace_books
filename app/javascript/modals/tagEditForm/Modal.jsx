@@ -25,7 +25,8 @@ const EditModal = () => {
   const dispatch = useDispatch()
   const tag = useSelector(selectCurrentTagIndexEntry())
 
-  const handleSuccess = () => {
+  const handleSuccess = (x, y, z) => {
+    console.log([x, y, z])
     dispatch(reloadTag(tag.id))
     closeModal()
   }
@@ -35,7 +36,7 @@ const EditModal = () => {
   return (
     <Modal show={ modalTagEditShown } onHide={ () => closeModal() } size='lg' centered backdropClassName='book-modal-backdrop'>
       <Modal.Header>
-        <Modal.Title>Edit tag { tag.id }</Modal.Title>
+        <Modal.Title>Edit tag</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form id='tag_form' tag={ tag } onSubmit={ (data) => handleSuccess(data) }/>
@@ -44,7 +45,7 @@ const EditModal = () => {
         <Button variant='secondary' onClick={ () => closeModal() }>
           Close
         </Button>
-        <Button variant='primary' form='tag_form' type='submit'>
+        <Button variant='primary' form='tag_form' type='submit' value='a'>
           Save Changes
         </Button>
       </Modal.Footer>

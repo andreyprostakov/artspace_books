@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const slice = createSlice({
   name: 'storeTags',
   initialState: {
+    categories: {},
     tagsIndex: {},
     tagsCategoriesIndex: {},
     tagsRefs: {},
@@ -20,14 +21,22 @@ export const slice = createSlice({
       state.tagsCategoriesIndex = {}
       entries.forEach(entry => {
         state.tagsIndex[entry.id] = entry
-        state.tagsCategoriesIndex[entry.category] ||= []
-        state.tagsCategoriesIndex[entry.category].push(entry)
+        state.tagsCategoriesIndex[entry.categoryId] ||= []
+        state.tagsCategoriesIndex[entry.categoryId].push(entry)
       })
     },
 
     addTagRef: (state, action) => {
       const entry = action.payload
       state.tagsRefs[entry.id] = entry
+    },
+
+    assignCategories: (state, action) => {
+      const categories = action.payload
+      state.categories = {}
+      categories.forEach(category =>
+        state.categories[category.id] = category
+      )
     },
 
     assignTagsRefs: (state, action) => {

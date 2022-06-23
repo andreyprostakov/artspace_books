@@ -6,6 +6,10 @@ const READ = 'ReadByA'
 
 const localState = state => state.storeTags
 
+export const selectCategories = () => state => Object.values(localState(state).categories)
+
+export const selectCategory = id => state => localState(state).categories[id]
+
 export const selectTagsIndex = () => state => localState(state).tagsIndex
 
 export const selectTagIndexEntry = id => state => selectTagsIndex()(state)[id]

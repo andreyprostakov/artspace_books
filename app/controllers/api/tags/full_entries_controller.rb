@@ -4,7 +4,7 @@ module Api
   module Tags
     class FullEntriesController < Api::Tags::BaseController
       PERMITTED_ATTRIBUTES = [
-        :name
+        :name, :category_id
       ].freeze
 
       before_action :fetch_tag, only: %i[update destroy]
@@ -12,7 +12,7 @@ module Api
       protect_from_forgery with: :null_session
 
       def update
-        perform_form_update(@tag, tag_params)
+        perform_form_update(form, tag_params)
       end
 
       def destroy
@@ -21,6 +21,10 @@ module Api
       end
 
       private
+
+      def form
+        @form ||= Forms::TagForm.new(@tag)
+      end
 
       def fetch_tag
         @tag = Tag.find(params[:id])

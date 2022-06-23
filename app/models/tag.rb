@@ -32,6 +32,7 @@ class Tag < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { case_sensitive: false },
                    format: { with: /\A[\w\d-]+\z/, message: 'allows only alphanums and dashes' }
+  validates :category, presence: true
 
   protected
 
