@@ -4,15 +4,13 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import AuthorsNavList from 'widgets/navbar/components/AuthorsNavList'
 import TagsNavList from 'widgets/navbar/components/TagsNavList'
-import useUrlStore from 'store/urlStore'
 import UrlStoreContext from 'store/urlStore/Context'
 import { setAuthorsSearchKey, setTagsSearchKey } from 'widgets/navbar/actions'
 import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
-  const [{}, { gotoBooks }, { booksPath }] = useUrlStore()
-  const { routes: { authorsPagePath, newAuthorPath, tagsPagePath, tagPagePath },
-          actions: { openNewAuthorModal },
+  const { routes: { authorsPagePath, booksPagePath, newAuthorPath, tagsPagePath, tagPagePath },
+          actions: { goto, openNewAuthorModal },
           routesReady } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
   const tagIdBookmark = useSelector(selectTagIdBookmark())
@@ -23,10 +21,10 @@ const PageNavbar = () => {
   return (
     <Navbar bg='dark' variant='dark' fixed='top' expand>
       <Nav className='mr-auto'>
-        <Nav.Link onClick={ () => gotoBooks() }><b>Infospace | Literature</b></Nav.Link>
+        <Nav.Link onClick={ () => goto(booksPagePath()) }><b>Artspace | Literature</b></Nav.Link>
 
         <NavDropdown title='Books'>
-          <NavDropdown.Item href={ booksPath() }>List all</NavDropdown.Item>
+          <NavDropdown.Item href={ booksPagePath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href={ tagPagePath(tagIdBookmark) }>Bookmarked by me</NavDropdown.Item>
           <NavDropdown.Item href={ tagPagePath(tagIdRead) }>Read by me</NavDropdown.Item>

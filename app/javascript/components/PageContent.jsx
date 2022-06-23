@@ -26,10 +26,6 @@ const PageContent = () => {
         <Redirect to='/books'/>
       </Route>
 
-      <Route path='/books'>
-        <BooksPage/>
-      </Route>
-
       { pageRoutes.map((route, i) =>
         <Route path={ route.path } key={ i }>
           <route.Renderer/>

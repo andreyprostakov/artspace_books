@@ -7,6 +7,7 @@ export const slice = createSlice({
     bookShiftDirectionHorizontal: null,
     bookIdsCurrentInYear: {},
     filters: {},
+    requestedBookId: null,
     years: [],
     yearsInLoading: [],
     yearsLoaded: [],
@@ -65,6 +66,10 @@ export const slice = createSlice({
 
     setYears: (state, action) => {
       state.years = action.payload.slice()
+    },
+
+    setRequestedBookId: (state, action) => {
+      state.requestedBookId = action.payload
     },
   }
 })

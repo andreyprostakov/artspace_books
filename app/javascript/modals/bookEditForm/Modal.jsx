@@ -24,7 +24,7 @@ const Wrap = () => {
 const BookEditModal = () => {
   const bookId = useSelector(selectCurrentBookId())
   const bookDetails = useSelector(selectCurrentBookDetails())
-  const { pageState: { modalBookEditShown }, actions: { closeModal }, routesReady } = useContext(UrlStoreContext)
+  const { pageState: { modalBookEditShown }, actions: { closeModal, showBooksIndexEntry }, routesReady } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
 
   const handleClose = () => {
@@ -34,6 +34,7 @@ const BookEditModal = () => {
 
   const handleSuccess = () => {
     dispatch(reloadBook(bookId))
+    showBooksIndexEntry(bookId)
     handleClose()
   }
 

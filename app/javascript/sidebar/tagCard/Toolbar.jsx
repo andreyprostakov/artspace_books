@@ -8,7 +8,7 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const Toolbar = (props) => {
   const { tagIndexEntry } = props
-  const { routes: { tagPagePath, editTagPath }, routesReady } = useContext(UrlStoreContext)
+  const { routes: { tagPagePath, editTagPath }, actions: { patch }, routesReady } = useContext(UrlStoreContext)
 
   if (!tagIndexEntry) return null
   if (!routesReady) return null
@@ -22,7 +22,8 @@ const Toolbar = (props) => {
           </Button>
         }
 
-        <Button variant='outline-warning' title='Edit info' href={ editTagPath(tagIndexEntry.id) }>
+        <Button variant='outline-warning' title='Edit info' href={ editTagPath(tagIndexEntry.id) }
+                onClick={ e => { e.preventDefault(); patch(editTagPath(tagIndexEntry.id)) } }>
           <FontAwesomeIcon icon={ faPen }/>
         </Button>
 

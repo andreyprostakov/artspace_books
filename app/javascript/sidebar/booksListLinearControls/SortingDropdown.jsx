@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 
 import { selectSortBy } from 'widgets/booksListLinear/selectors'
-import { switchToSortType } from 'widgets/booksListLinear/actions'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const SORT_OPTIONS = ['popularity', 'year', 'random', 'name']
 
 const SortingDropdown = () => {
   const dispatch = useDispatch()
   const currentValue = useSelector(selectSortBy())
+  const { actions: { switchToIndexSort } } = useContext(UrlStoreContext)
 
   return (
     <Dropdown className='list-sort-dropdown'>
@@ -19,7 +20,7 @@ const SortingDropdown = () => {
 
       <Dropdown.Menu>
         { SORT_OPTIONS.map((value, i) =>
-          <Dropdown.Item onClick={ () => dispatch(switchToSortType(value)) } disabled={ currentValue == value } key={ i }>
+          <Dropdown.Item onClick={ () => switchToIndexSort(value) } disabled={ currentValue == value } key={ i }>
             { value }
           </Dropdown.Item>
         ) }

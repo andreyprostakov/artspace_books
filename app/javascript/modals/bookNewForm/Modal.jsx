@@ -22,12 +22,13 @@ const Wrap = () => {
 
 const BookNewModal = () => {
   const authorId = useSelector(selectCurrentAuthorId())
-  const { routesReady, pageState: { modalBookNewShown }, actions: { closeModal } } = useContext(UrlStoreContext)
+  const { routesReady, pageState: { modalBookNewShown }, actions: { closeModal, showBooksIndexEntry } } = useContext(UrlStoreContext)
   const dispatch = useDispatch()
 
-  const handleSuccess = (data) => {
-    dispatch(reloadBook(data.id))
+  const handleSuccess = ({ id }) => {
+    dispatch(reloadBook(id))
     dispatch(reloadAuthor(authorId))
+    showBooksIndexEntry(id)
     closeModal()
   }
 

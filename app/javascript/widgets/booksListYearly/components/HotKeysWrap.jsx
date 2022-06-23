@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
-import useUrlStore from 'store/urlStore'
 import { selectAuthorFull } from 'store/authors/selectors'
 import { selectCurrentBook } from 'store/books/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
@@ -15,6 +14,7 @@ import {
   shiftYear,
 } from 'widgets/booksListYearly/actions'
 import { syncCurrentBookStats } from 'store/bookSync/actions'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const keyMap = {
   DOWN: 'Down',
@@ -46,14 +46,8 @@ const HotKeysWrap = (props) => {
   const currentAuthor = useSelector(selectAuthorFull(currentAuthorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const currentBook = useSelector(selectCurrentBook())
-  const [{
-           editBookModalShown
-         },
-         {
-           closeModal,
-           gotoBooks,
-           openEditBookModal,
-         }] = useUrlStore()
+  const { pageState: { modalBookEditShown },
+          actions: { closeModal, openEditBookModal } } = useContext(UrlStoreContext)
 
   useEffect(() => ref.current.focus(), [])
 
@@ -78,7 +72,7 @@ const HotKeysWrap = (props) => {
     TOGGLE_EDIT: () => {
       if (!currentBook) { return }
 
-      if (editBookModalShown) {
+      if (modalBookEditShown) {
         closeModal()
       } else {
         openEditBookModal()

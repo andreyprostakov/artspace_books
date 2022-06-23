@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { setCurrentTagId } from 'store/axis/actions'
 import { selectCurrentBookId, selectCurrentTagId } from 'store/axis/selectors'
-import { setCurrentBookId } from 'store/axis/actions'
 import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
@@ -15,8 +14,6 @@ import {
 import { prepareNavRefs } from 'widgets/navbar/actions'
 import { fetchTagsIndexEntry } from 'store/tags/actions'
 
-import BooksListUrlStore from 'widgets/booksListLinear/components/UrlStore'
-
 const Configurer = () => {
   const dispatch = useDispatch()
   const tagId = useSelector(selectCurrentTagId())
@@ -26,7 +23,6 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
-    dispatch(setCurrentBookId(null))
     dispatch(assignFilter({ tagId }))
     Promise.all([
       dispatch(prepareNavRefs()),
@@ -37,7 +33,7 @@ const Configurer = () => {
       dispatch(setupBooksListSelection())
     })
   }, [tagId])
-  return <BooksListUrlStore/>
+  return null
 }
 
 export default Configurer

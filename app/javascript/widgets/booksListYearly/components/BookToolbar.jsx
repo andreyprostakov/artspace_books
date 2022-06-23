@@ -25,13 +25,13 @@ import {
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { updateBookPopularity } from 'store/bookSync/actions'
 import UrlStoreContext from 'store/urlStore/Context'
-import useUrlStore from 'store/urlStore'
 
 const BookToolbar = (props) => {
   const { book } = props
   const dispatch = useDispatch()
-  const [{}, {}, { booksPath }] = useUrlStore()
-  const { routesReady, routes: { editBookPath }, actions: { openEditBookModal } } = useContext(UrlStoreContext)
+  const { routesReady,
+          routes: { booksPagePath, editBookPath },
+          actions: { openEditBookModal } } = useContext(UrlStoreContext)
   const bookIdsInProcess = useSelector(selectBookIdsInProcessing())
   const tagNames = useSelector(selectTagNames(book.tagIds))
 
@@ -52,7 +52,7 @@ const BookToolbar = (props) => {
           </Button>
         }
 
-        <Button variant='outline-info' title='See what was then...' href={ booksPath({ bookId: book.id }) }>
+        <Button variant='outline-info' title='See what was then...' href={ booksPagePath({ bookId: book.id }) }>
           <FontAwesomeIcon icon={ faCalendarAlt }/>
         </Button>
 

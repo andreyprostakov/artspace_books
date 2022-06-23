@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectCurrentBookId, selectCurrentAuthorId } from 'store/axis/selectors'
-import { setCurrentBookId } from 'store/axis/actions'
 import { fetchAuthorFull } from 'store/authors/actions'
 import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
@@ -23,7 +22,6 @@ const Configurer = () => {
     if (!authorId) { return }
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
-    dispatch(setCurrentBookId(null))
     dispatch(assignSortBy('year'))
     dispatch(assignPerPage(60))
     Promise.all([

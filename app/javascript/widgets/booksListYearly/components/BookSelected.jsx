@@ -28,9 +28,11 @@ const BookSelected = (props) => {
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)
-  const { routes: { authorPagePath } } = useContext(UrlStoreContext)
+  const { routes: { authorPagePath }, routesReady } = useContext(UrlStoreContext)
 
-  useEffect(() => ref.current.focus(), [])
+  useEffect(() => ref.current?.focus(), [])
+
+  if (!routesReady) return null
 
   return (
     <div className='book-case selected' ref={ ref }>

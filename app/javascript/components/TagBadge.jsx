@@ -9,7 +9,10 @@ const TagBadge = (props) => {
   const { text, id, variant, renderPostfix, className, onClick, ...restProps } = props
   const classnames = classNames(['tag-container', className])
   const label = `#${text}`
-  const { routes: { tagPagePath } } = useContext(UrlStoreContext)
+  const { routes: { tagPagePath }, routesReady } = useContext(UrlStoreContext)
+
+  if (!routesReady) return null
+
   const clickHandler = onClick ? onClick : id => goto(tagPagePath(id))
 
   return (

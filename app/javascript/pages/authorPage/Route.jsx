@@ -11,7 +11,7 @@ const Helper = () => {
   const { actions: { addRoute }, helpers: { buildPath } } = useContext(UrlStoreContext)
 
   useEffect(() => {
-    addRoute('authorPagePath', (id) => buildPath({ path: `/authors/${id}` }))
+    addRoute('authorPagePath', (id, { bookId } = {}) => buildPath({ path: `/authors/${id}`, params: { 'book_id': bookId } }))
   }, [])
   return null
 }

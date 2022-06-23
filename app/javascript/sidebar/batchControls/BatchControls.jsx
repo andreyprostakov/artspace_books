@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Card, Form, ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -6,17 +6,14 @@ import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry } from 'store/books/selectors'
-import { showBook } from 'store/books/actions'
-import {
-  selectBatchModeOn,
-  selectBookIdsSelected,
-} from 'widgets/booksListYearly/selectors'
+import { selectBatchModeOn, selectBookIdsSelected } from 'widgets/booksListYearly/selectors'
 import {
   clearBooksSelection,
   reloadBooks,
   removeBookIdFromSelected,
 } from 'widgets/booksListYearly/actions'
 import apiClient from 'store/books/apiClient'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const BatchControls = () => {
   const dispatch = useDispatch()
@@ -70,12 +67,13 @@ const SelectedBooksEntry = (props) => {
   const dispatch = useDispatch()
   const book = useSelector(selectBooksIndexEntry(id))
   const authorRef = useSelector(selectAuthorRef(book.authorId))
+  const { actions: { showBooksIndexEntry } } = useContext(UrlStoreContext)
 
   return (
     <ListGroup.Item key={ id }>
       <a className='icon-remove' onClick={ () => dispatch(removeBookIdFromSelected(id)) }>X</a>
       { ' | ' }
-      <a href='#' onClick={ (e) => { e.preventDefault(); dispatch(showBook(id)) } }>
+      <a href='#' onClick={ (e) => { e.preventDefault(); showBooksIndexEntry(id) } }>
         { authorRef.fullname }. { book.title }
       </a>
     </ListGroup.Item>

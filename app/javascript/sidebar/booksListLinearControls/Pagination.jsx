@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Pagination } from 'react-bootstrap'
 
@@ -7,7 +7,7 @@ import {
   selectPage,
   selectPerPage,
 } from 'widgets/booksListLinear/selectors'
-import { switchToPage } from 'widgets/booksListLinear/actions'
+import UrlStoreContext from 'store/urlStore/Context'
 
 const BooksListPagination = () => {
   const dispatch = useDispatch()
@@ -16,24 +16,28 @@ const BooksListPagination = () => {
   const perPage = useSelector(selectPerPage())
 
   const lastPage = Math.ceil(totalCount / perPage)
-  const gotoPageHandler = (pageNumber) => () => dispatch(switchToPage(pageNumber))
+  const { actions: { switchToIndexPage }, routes: { indexPaginationPath }, routesReady } = useContext(UrlStoreContext)
+  const gotoPageHandler = (pageNumber) => () => switchToIndexPage(pageNumber, perPage)
 
-  if (perPage >= totalCount) { return null }
+  if (perPage >= totalCount) return null
+  if (!routesReady) return null
+
+  const renderPageLink = (pageNumber) => {
+    if (pageNumber < 1 || pageNumber > lastPage) return null
+    return (
+      <Pagination.Item title={ pageNumber } href={ indexPaginationPath(pageNumber, perPage) }
+                       onClick={ (e) => { e.preventDefault(); switchToIndexPage(pageNumber, perPage) } }>
+        { pageNumber }
+      </Pagination.Item>
+    )
+  }
   return (
     <Pagination className='pagination'>
-      { page > 2 &&
-        <Pagination.First title={ 1 } onClick={ gotoPageHandler(1) }/>
-      }
-      { page > 1 &&
-        <Pagination.Item title={ page - 1 } onClick={ gotoPageHandler(page - 1) }>{ page - 1 }</Pagination.Item>
-      }
+      { page > 2 && renderPageLink(1) }
+      { renderPageLink(page - 1) }
       <Pagination.Item active disabled>{ page }</Pagination.Item>
-      { lastPage - page > 0 &&
-        <Pagination.Item title={ page + 1 } onClick={ gotoPageHandler(page + 1) }>{ page + 1 }</Pagination.Item>
-      }
-      {  lastPage - page > 1 &&
-        <Pagination.Last title={ lastPage } onClick={ gotoPageHandler(lastPage) }/>
-      }
+      { renderPageLink(page + 1) }
+      { lastPage - page > 1 && renderPageLink(lastPage) }
     </Pagination>
   )
 }

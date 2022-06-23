@@ -28,12 +28,14 @@ const BookCard = (props) => {
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const tags = useSelector(selectTagsRefsByIds(book.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
-  const { routes: { authorPagePath } } = useContext(UrlStoreContext)
+  const { routes: { authorPagePath }, routesReady } = useContext(UrlStoreContext)
 
   const coverUrl = book.coverUrl || defaultCoverUrl
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
 
-  if (!book) { return null }
+  if (!routesReady || !book) return null
+  console.log(['BookCard.render', authorRef?.id, book?.id])
+
   return (
     <Card className='sidebar-book-card-widget sidebar-card-widget'>
       <Card.Header className='widget-title'>Book</Card.Header>

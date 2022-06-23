@@ -9,6 +9,7 @@ import { fetchBooksForYears, jumpToLatestYear } from 'widgets/booksListYearly/ac
 import HotKeysWrap from 'widgets/booksListYearly/components/HotKeysWrap'
 import YearRow from 'widgets/booksListYearly/components/YearRow'
 import YearsSlider from 'widgets/booksListYearly/components/YearsSlider'
+import LocalUrlStoreConfigurer from 'widgets/booksListYearly/UrlStore'
 
 const BooksListYearly = () => {
   const dispatch = useDispatch()
@@ -17,26 +18,29 @@ const BooksListYearly = () => {
   const currentBook = useSelector(selectCurrentBook())
 
   return (
-    <HotKeysWrap>
-      <div className='books-list'>
-        <div className='books-list-shadow shadow-top'/>
-        <div className='books-list-shadow shadow-bottom'/>
-        <div className='books-list-shadow shadow-left'/>
-        <div className='books-list-shadow shadow-right'/>
+    <>
+      <LocalUrlStoreConfigurer/>
+      <HotKeysWrap>
+        <div className='books-list'>
+          <div className='books-list-shadow shadow-top'/>
+          <div className='books-list-shadow shadow-bottom'/>
+          <div className='books-list-shadow shadow-left'/>
+          <div className='books-list-shadow shadow-right'/>
 
-        <div className='side-scroll'>
-          <YearsSlider/>
-        </div>
+          <div className='side-scroll'>
+            <YearsSlider/>
+          </div>
 
-        <div className='books-list-layer2'>
-          <div className='books-list-layer3'>
-            { yearsToDisplay.map(year =>
-              <YearRow year={ year } key={ year }/>
-            ) }
+          <div className='books-list-layer2'>
+            <div className='books-list-layer3'>
+              { yearsToDisplay.map(year =>
+                <YearRow year={ year } key={ year }/>
+              ) }
+            </div>
           </div>
         </div>
-      </div>
-    </HotKeysWrap>
+      </HotKeysWrap>
+    </>
   )
 }
 
