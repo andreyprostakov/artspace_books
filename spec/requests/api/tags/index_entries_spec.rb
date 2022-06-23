@@ -16,7 +16,7 @@ RSpec.describe '/api/tags/index_entries', type: :request do
         name: tag.name,
         book_connections_count: 1,
         author_connections_count: 0,
-        category: 'other'
+        category_id: 0
       )
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe '/api/tags/index_entries', type: :request do
           name: tag.name,
           book_connections_count: 1,
           author_connections_count: 0,
-          category: 'other'
+          category_id: 0
         }]
       )
     end

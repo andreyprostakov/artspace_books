@@ -3,8 +3,8 @@
 module Api
   module Tags
     class FullEntriesController < Api::Tags::BaseController
-      PERMITTED_ATTRIBUTES = [
-        :name, :category_id
+      PERMITTED_ATTRIBUTES = %i[
+        name category_id
       ].freeze
 
       before_action :fetch_tag, only: %i[update destroy]

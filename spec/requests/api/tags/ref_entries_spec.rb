@@ -14,6 +14,7 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
       expect(json_response).to eq(
         id: tag.id,
         name: tag.name,
+        category_id: 0,
         connections_count: 1
       )
     end
@@ -29,6 +30,7 @@ RSpec.describe '/api/tags/ref_entries', type: :request do
         [{
           id: tag.id,
           name: tag.name,
+          category_id: 0,
           connections_count: 1
         }]
       )

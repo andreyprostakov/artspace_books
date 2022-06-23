@@ -13,7 +13,7 @@ export const prepareNavRefs = () => async(dispatch, getState) => {
   const state = getState()
 
   const tagsLoaded = selectTagsRefsLoaded()(state)
-  if (!tagsLoaded)  {
+  if (!tagsLoaded) {
     dispatch(fetchTagsRefs())
     dispatch(fetchCategories())
   }

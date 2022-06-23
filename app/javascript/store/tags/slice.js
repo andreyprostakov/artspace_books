@@ -34,9 +34,9 @@ export const slice = createSlice({
     assignCategories: (state, action) => {
       const categories = action.payload
       state.categories = {}
-      categories.forEach(category =>
+      categories.forEach(category => {
         state.categories[category.id] = category
-      )
+      })
     },
 
     assignTagsRefs: (state, action) => {
