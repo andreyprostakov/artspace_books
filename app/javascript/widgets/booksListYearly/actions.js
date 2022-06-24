@@ -87,7 +87,12 @@ export const shiftYear = shift => changeSelectedYear(state => {
 
 export const jumpToFirstYear = () => changeSelectedYear(state => first(selectYears()(state)))
 
-export const jumpToLastYear = () => changeSelectedYear(state => last(selectYears()(state)))
+export const jumpToLastYear = () => changeSelectedYear(state => {
+  const availableYears = selectYears()(state)
+  const currentYear = new Date().getFullYear()
+  if (availableYears.includes(currentYear)) return currentYear
+  return last(availableYears)
+})
 
 export const shiftSelection = shift => (dispatch, getState) => {
   const state = getState()
@@ -101,7 +106,9 @@ export const shiftSelection = shift => (dispatch, getState) => {
 }
 
 export const jumpToLatestYear = () => (dispatch, getState) => {
-  const targetYear = last(selectYears()(getState()))
+  const availableYears = selectYears()(getState())
+  const currentYear = new Date().getFullYear()
+  const targetYear = availableYears.includes(currentYear) ? currentYear : last(availableYears)
   dispatch(jumpToYear(targetYear))
 }
 
