@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Modal } from 'react-bootstrap'
 
+import { fetchAuthorRef } from 'store/authors/actions'
 import AuthorForm from 'modals/authorEditForm/Form'
 import ModalStore from 'modals/authorNewForm/UrlStore'
 import UrlStoreContext from 'store/urlStore/Context'
@@ -16,10 +18,12 @@ const Wrap = () => {
 }
 
 const AuthorNewModal = () => {
+  const dispatch = useDispatch()
   const { pageState: { modalAuthorNewShown }, actions: { closeModal, goto }, routes: { authorPagePath } } = useContext(UrlStoreContext)
 
   const handleSuccess = (data) => {
     const { id: newAuthorId } = data
+    dispatch(fetchAuthorRef(newAuthorId))
     closeModal()
     goto(authorPagePath(newAuthorId))
   }

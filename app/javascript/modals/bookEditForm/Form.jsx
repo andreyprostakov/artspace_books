@@ -46,7 +46,6 @@ const BookForm = (props) => {
 
   const onServerFailure = (responseData) => {
     const errors = responseData.responseJSON.errors
-    console.log(errors)
     const description = map(errors, (messages, attribute) => `${attribute} ${messages.join(', ')}`).join('; ')
     dispatch(addErrorMessage(`Errors: ${description}`))
     setState({ ...state, errors: responseData.responseJSON })

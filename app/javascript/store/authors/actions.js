@@ -2,11 +2,6 @@ import { slice } from 'store/authors/slice'
 import apiClient from 'store/authors/apiClient'
 
 import { setCurrentAuthorId } from 'store/axis/actions'
-import {
-  selectAuthorFull,
-  selectAuthorIndexEntry,
-  selectAuthorRef,
-} from 'store/authors/selectors'
 export const {
   addAuthorFull,
   addAuthorIndexEntry,
@@ -42,17 +37,13 @@ export const fetchAuthorRef = id => async dispatch => {
   dispatch(addAuthorRef(authorRef))
 }
 
-export const reloadAuthor = id => (dispatch, getState) => {
-  const state = getState()
-  const oldFull = selectAuthorFull()(state)
-  if (oldFull) dispatch(fetchAuthorFull(id))
-
-  const oldIndexEntry = selectAuthorIndexEntry()(state)
-  if (oldIndexEntry) dispatch(fetchAuthorIndexEntry(id))
-
-  const oldRef = selectAuthorRef()(state)
-  if (oldRef) dispatch(fetchAuthorRef(id))
-
-  dispatch(setCurrentAuthorId(null))
-  dispatch(setCurrentAuthorId(id))
+export const reloadAuthor = id => dispatch => {
+  Promise.all([
+    dispatch(fetchAuthorFull(id)),
+    dispatch(fetchAuthorIndexEntry(id)),
+    dispatch(fetchAuthorRef(id)),
+  ]).then(() => {
+    dispatch(setCurrentAuthorId(null))
+    dispatch(setCurrentAuthorId(id))
+  })
 }

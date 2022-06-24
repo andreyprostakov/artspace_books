@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import 'react-tagsinput/react-tagsinput.css'
 
 import GoogleIcon from 'components/icons/GoogleIcon'
-import TagBadge from 'components/TagBadge'
+import FormTagBadge from 'components/FormTagBadge'
 import TagRemoveIcon from 'components/icons/TagRemoveIcon'
 import TagAutocompleteInput from 'components/TagAutocompleteInput'
 
@@ -41,9 +41,8 @@ FormInputTags.propTypes = {
 const renderTag = (props) => {
   let {tag, key, disabled, classNameRemove, onRemove, getTagDisplayValue, ...other} = props
   return (
-    <TagBadge variant='dark' key={ key } text={ getTagDisplayValue(tag) }
-      renderPostfix={ () => <TagRemoveIcon className={ classNameRemove } onRemove={ () => onRemove(key) }/> }
-    />
+    <FormTagBadge variant='dark' key={ key } text={ getTagDisplayValue(tag) }
+                  renderPostfix={ () => <TagRemoveIcon className={ classNameRemove } onRemove={ () => onRemove(key) }/> }/>
   )
 }
 
