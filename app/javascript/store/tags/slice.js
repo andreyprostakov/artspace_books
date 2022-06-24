@@ -57,8 +57,8 @@ export const slice = createSlice({
 
         entries.splice(index, 1)
       })
-      state.tagsCategoriesIndex[tagIndexEntry.category] ||= []
-      state.tagsCategoriesIndex[tagIndexEntry.category].push(tagIndexEntry)
+      state.tagsCategoriesIndex[tagIndexEntry.categoryId] ||= []
+      state.tagsCategoriesIndex[tagIndexEntry.categoryId].push(tagIndexEntry)
     }
   }
 })

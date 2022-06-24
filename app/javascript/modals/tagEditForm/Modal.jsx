@@ -25,8 +25,7 @@ const EditModal = () => {
   const dispatch = useDispatch()
   const tag = useSelector(selectCurrentTagIndexEntry())
 
-  const handleSuccess = (x, y, z) => {
-    console.log([x, y, z])
+  const handleSuccess = () => {
     dispatch(reloadTag(tag.id))
     closeModal()
   }
