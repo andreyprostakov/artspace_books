@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import InputLine from 'components/FormInputLine'
 import FormInputImage from 'components/FormInputImage'
 import FormInputTags from 'components/FormInputTags'
+import AuthorFormWikiLine from 'components/AuthorFormWikiLine'
 import apiClient from 'store/authors/apiClient'
 import { selectTagsRefsByIds } from 'store/tags/selectors'
 import { addErrorMessage, addSuccessMessage } from 'widgets/notifications/actions'
@@ -52,7 +53,7 @@ const AuthorForm = (props) => {
   }
 
   return (
-    <Form id={ id } onSubmit={ handleSubmit }>
+    <Form id={ id } onSubmit={ handleSubmit } className='author-form'>
       <InputLine controlId='fullname' label='Name'
                  value={ authorFull.fullname } errors={ errors.fullname } autoFocus
                  onChange={ e => setState({ ...state, fullname: e.target.value }) }/>
@@ -61,11 +62,14 @@ const AuthorForm = (props) => {
                       errors={ errors.image_url }
                       searchPrefix='author photo'
                       searchKey={ state.fullname }/>
-      <InputLine controlId='reference' label='WIKI URL' value={ authorFull.reference } errors={ errors.reference }/>
+      <AuthorFormWikiLine controlId='reference' authorForm={ authorFull }
+                          errors={ errors.reference } fullname={ state.fullname }/>
       <Row />
+
       <InputLine controlId='birthYear' label='Year of birth' value={ authorFull.birthYear } errors={ errors.birth_year }/>
       <InputLine controlId='deathYear' label='Year of death' value={ authorFull.deathYear } errors={ errors.death_year }/>
       <Row />
+
       <FormInputTags initialTags={ initialTags } onChange={ (tags) => setState({ ...state, currentTags: tags }) }/>
     </Form>
   )
