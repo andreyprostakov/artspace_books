@@ -31,7 +31,7 @@ export const slice = createSlice({
     },
 
     assignSortBy: (state, action) => {
-      const newSortBy = action.payload || DEFAULT_SORT_BY
+      const newSortBy = action.payload || state.sortBy || DEFAULT_SORT_BY
       state.sortBy = newSortBy
     },
 
@@ -41,7 +41,7 @@ export const slice = createSlice({
     },
 
     assignPerPage: (state, action) => {
-      const perPage = action.payload || DEFAULT_PER_PAGE
+      const perPage = action.payload || state.perPage || DEFAULT_PER_PAGE
       state.perPage = perPage
     },
 

@@ -7,6 +7,7 @@ import { setPageIsLoading } from 'store/metadata/actions'
 import { clearListState } from 'widgets/booksListLinear/actions'
 import {
   assignFilter,
+  assignPerPage,
   assignSortBy,
   fetchBooks,
   setupBooksListSelection,
@@ -23,6 +24,7 @@ const Configurer = () => {
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
+    dispatch(assignPerPage(40))
     dispatch(assignFilter({ tagId }))
     Promise.all([
       dispatch(prepareNavRefs()),
