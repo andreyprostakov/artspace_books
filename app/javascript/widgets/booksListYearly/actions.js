@@ -37,6 +37,7 @@ import {
 import {
   clearSelection,
   selectId,
+  toggleId,
   unselectId,
 } from 'store/selectables/actions'
 
@@ -157,9 +158,8 @@ const updateBookInYears = book => (dispatch, getState) => {
 }
 
 export const reloadBooks = () => (dispatch, getState) => {
-  const currentBookId = selectCurrentBookId()(getState())
   dispatch(clearListState())
-  if (currentBookId) dispatch(reloadBook(currentBookId))
+  dispatch(setupBooksListSelection())
 }
 
 export const addTagToBook = (id, tagName) => (dispatch, getState) => {
@@ -259,4 +259,9 @@ export const clearListState = () => dispatch => {
   dispatch(clearBooks())
   dispatch(clearListInnerState())
   dispatch(clearSelection())
+}
+
+export const toggleCurrentBookSelected = () => (dispatch, getState) => {
+  const id = selectCurrentBookId()(getState())
+  dispatch(toggleId(id))
 }

@@ -39,6 +39,13 @@ module Forms
                              .flat_map { |tag| tag.errors.full_messages.map(&:downcase) }.uniq
         errors.add(:tags, tag_errors.join(', ')) if tag_errors.present?
       end
+
+      def apply_update(record, update_params)
+        super(
+          record,
+          update_params.merge(tags: record.tags | update_params.fetch(:tags, []))
+        )
+      end
     end
   end
 end

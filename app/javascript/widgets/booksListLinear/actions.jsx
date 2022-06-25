@@ -8,6 +8,7 @@ import { addBooks, showBook } from 'store/books/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
 import { slice } from 'widgets/booksListLinear/slice'
+import { toggleId } from 'store/selectables/actions'
 export const {
   assignBooks,
   assignBooksTotal,
@@ -66,4 +67,9 @@ export const switchToFirstBook = () => (dispatch, getState) => {
 export const clearListState = () => (dispatch) => {
   dispatch(clearListInnerState())
   dispatch(clearSelection())
+}
+
+export const toggleCurrentBookSelected = () => (dispatch, getState) => {
+  const id = selectCurrentBookId()(getState())
+  dispatch(toggleId(id))
 }

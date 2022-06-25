@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import { syncCurrentBookStats } from 'store/bookSync/actions'
-import { shiftSelection } from 'widgets/booksListLinear/actions'
+import { shiftSelection, toggleCurrentBookSelected } from 'widgets/booksListLinear/actions'
 
 const keyMap = {
   DOWN: 'Down',
@@ -12,6 +12,7 @@ const keyMap = {
   LEFT: 'Left',
   RIGHT: 'Right',
   SYNC_BOOK_STATS: 's',
+  SELECT_BOOK_FOR_BATCH: 'b',
 }
 
 const HotKeysWrap = (props) => {
@@ -30,6 +31,7 @@ const HotKeysWrap = (props) => {
       dispatch(shiftSelection(-1))
     },
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
+    SELECT_BOOK_FOR_BATCH: () => dispatch(toggleCurrentBookSelected()),
   })
 
   return (

@@ -12,6 +12,14 @@ export const slice = createSlice({
       state.idsSelected.push(id)
     },
 
+    toggleId: (state, action) => {
+      const id = action.payload
+      if (state.idsSelected.includes(id))
+        state.idsSelected = pull(state.idsSelected, id)
+      else
+        state.idsSelected.push(id)
+    },
+
     unselectId: (state, action) => {
       const id = action.payload
       state.idsSelected = pull(state.idsSelected, id)

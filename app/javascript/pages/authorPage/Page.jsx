@@ -5,7 +5,7 @@ import Layout from 'pages/Layout'
 import AuthorCard from 'sidebar/authorCard/AuthorCard'
 import BookCard from 'sidebar/bookCard/BookCard'
 import BooksListLinearControls from 'sidebar/booksListLinearControls/BooksListLinearControls'
-import BatchControls from 'sidebar/batchControls/BatchControls'
+import BooksLinearControls from 'sidebar/batchControls/BooksLinearControls'
 import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
 import PageStoreConfigurer from 'pages/authorPage/PageStoreConfigurer'
 
@@ -20,7 +20,7 @@ const AuthorPage = () => {
             <BookCard/>
             <AuthorCard/>
             <BooksListLinearControls/>
-            <BatchControls/>
+            <BooksLinearControls/>
           </div>
         </Col>
 

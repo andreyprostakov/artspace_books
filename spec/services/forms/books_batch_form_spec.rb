@@ -52,7 +52,7 @@ RSpec.describe Forms::BooksBatchForm do
 
         new_tag = Tag.last
         expect(new_tag.name).to eq('TAG_C')
-        expect(books[0].reload.tags).to match_array [new_tag, preexisting_tags[0], preexisting_tags[1]]
+        expect(books[0].reload.tags).to match_array(preexisting_tags + [new_tag])
       end
 
       context 'when validation fails' do

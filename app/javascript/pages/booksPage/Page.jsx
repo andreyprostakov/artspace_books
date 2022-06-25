@@ -7,7 +7,7 @@ import { selectBatchModeOn } from 'widgets/booksListYearly/selectors'
 import PageConfigurer from 'pages/templates/booksListYearly/PageConfigurer'
 import Layout from 'pages/Layout'
 import BooksListYearly from 'widgets/booksListYearly/BooksListYearly'
-import BatchControls from 'sidebar/batchControls/BatchControls'
+import BooksYearlyControls from 'sidebar/batchControls/BooksYearlyControls'
 
 const BooksPage = () => {
   const sidebarShown = useSelector(selectBatchModeOn())
@@ -20,7 +20,7 @@ const BooksPage = () => {
         { sidebarShown &&
           <Col xs={ 4 }>
             <div className='page-sidebar'>
-              <BatchControls/>
+              <BooksYearlyControls/>
             </div>
           </Col>
         }

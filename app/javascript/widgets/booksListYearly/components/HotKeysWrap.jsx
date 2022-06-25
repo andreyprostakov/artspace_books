@@ -12,6 +12,7 @@ import {
   setBookShiftDirectionHorizontal,
   shiftSelection,
   shiftYear,
+  toggleCurrentBookSelected,
 } from 'widgets/booksListYearly/actions'
 import { syncCurrentBookStats } from 'store/bookSync/actions'
 import UrlStoreContext from 'store/urlStore/Context'
@@ -28,6 +29,7 @@ const keyMap = {
   LEFT: 'Left',
   RIGHT: 'Right',
   SYNC_BOOK_STATS: 's',
+  SELECT_BOOK_FOR_BATCH: 'b',
 }
 
 const handleWheel = (dispatch, xDirection, yDirection) => {
@@ -78,6 +80,7 @@ const HotKeysWrap = (props) => {
         openEditBookModal()
       }
     },
+    SELECT_BOOK_FOR_BATCH: () => dispatch(toggleCurrentBookSelected())
   })
 
   return (

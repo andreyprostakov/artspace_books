@@ -15,19 +15,21 @@ import {
 import apiClient from 'store/books/apiClient'
 import UrlStoreContext from 'store/urlStore/Context'
 
-const BatchControls = () => {
+const BatchControls = (props) => {
   const dispatch = useDispatch()
   const bookIds = useSelector(selectBookIdsSelected())
   const [state, setState] = useState({ currentTags: [] })
   const widgetShown = useSelector(selectBatchModeOn())
+  const { onSuccess } = props
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = { tagNames: state.currentTags.map(tag => tag.name) }
 
-    apiClient.updateBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() =>
-      dispatch(reloadBooks())
-    )
+    apiClient.updateBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() => {
+      console.log(['BATCH UPDATE!', onSuccess])
+      onSuccess && onSuccess(bookIds)
+    })
   }
 
   if (!widgetShown) { return null }
@@ -66,8 +68,10 @@ const SelectedBooksEntry = (props) => {
   const { id } = props
   const dispatch = useDispatch()
   const book = useSelector(selectBooksIndexEntry(id))
-  const authorRef = useSelector(selectAuthorRef(book.authorId))
+  const authorRef = useSelector(selectAuthorRef(book?.authorId))
   const { actions: { showBooksIndexEntry } } = useContext(UrlStoreContext)
+
+  if (!book) return null
 
   return (
     <ListGroup.Item key={ id }>

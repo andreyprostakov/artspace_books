@@ -5,7 +5,7 @@ import Layout from 'pages/Layout'
 import TagCard from 'sidebar/tagCard/TagCard'
 import BookCard from 'sidebar/bookCard/BookCard'
 import BooksListLinearControls from 'sidebar/booksListLinearControls/BooksListLinearControls'
-import BatchControls from 'sidebar/batchControls/BatchControls'
+import BooksLinearControls from 'sidebar/batchControls/BooksLinearControls'
 import BooksListLinear from 'widgets/booksListLinear/BooksListLinear'
 import PageConfigurer from 'pages/tagPage/PageConfigurer'
 
@@ -20,7 +20,7 @@ const TagPage = () => {
             <BookCard/>
             <TagCard/>
             <BooksListLinearControls/>
-            <BatchControls/>
+            <BooksLinearControls/>
           </div>
         </Col>
 
