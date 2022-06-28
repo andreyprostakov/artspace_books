@@ -4,6 +4,7 @@ import { Pagination } from 'react-bootstrap'
 
 import {
   selectBooksTotal,
+  selectLastPage,
   selectPage,
   selectPerPage,
 } from 'widgets/booksListLinear/selectors'
@@ -14,8 +15,8 @@ const BooksListPagination = () => {
   const totalCount = useSelector(selectBooksTotal())
   const page = useSelector(selectPage())
   const perPage = useSelector(selectPerPage())
+  const lastPage = useSelector(selectLastPage())
 
-  const lastPage = Math.ceil(totalCount / perPage)
   const { actions: { switchToIndexPage }, routes: { indexPaginationPath }, routesReady } = useContext(UrlStoreContext)
   const gotoPageHandler = (pageNumber) => () => switchToIndexPage(pageNumber, perPage)
 

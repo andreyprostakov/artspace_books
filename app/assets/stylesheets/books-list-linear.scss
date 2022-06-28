@@ -66,3 +66,23 @@
     }
   }
 }
+
+.linear-list-inline-page-control {
+  .control-button {
+    display: block;
+    margin: 0px 33px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0,0,0,.125);
+  }
+
+  &.up .control-button {
+    border-radius: 0px 0px 10px 10px;
+    border-top: none;
+  }
+
+  &.down .control-button {
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: none;
+  }
+}
