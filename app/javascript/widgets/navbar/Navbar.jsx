@@ -4,6 +4,7 @@ import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import AuthorsNavList from 'widgets/navbar/components/AuthorsNavList'
 import TagsNavList from 'widgets/navbar/components/TagsNavList'
+import EventsContext from 'store/events/Context'
 import UrlStoreContext from 'store/urlStore/Context'
 import { setAuthorsSearchKey, setTagsSearchKey } from 'widgets/navbar/actions'
 import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
@@ -12,6 +13,7 @@ const PageNavbar = () => {
   const { routes: { authorsPagePath, booksPagePath, newAuthorPath, tagsPagePath, tagPagePath },
           actions: { goto, openNewAuthorModal },
           routesReady } = useContext(UrlStoreContext)
+  const { triggerEvent } = useContext(EventsContext)
   const dispatch = useDispatch()
   const tagIdBookmark = useSelector(selectTagIdBookmark())
   const tagIdRead = useSelector(selectTagIdRead())
@@ -30,7 +32,7 @@ const PageNavbar = () => {
           <NavDropdown.Item href={ tagPagePath(tagIdRead) }>Read by me</NavDropdown.Item>
         </NavDropdown>
 
-        <NavDropdown title='Authors' onClick={ () => dispatch(setAuthorsSearchKey('')) }>
+        <NavDropdown title='Authors' onClick={ () => triggerEvent('AUTHORS_NAV_CLICKED') }>
           <AuthorsNavList/>
           <NavDropdown.Divider />
           <NavDropdown.Item href={ authorsPagePath() }>List all</NavDropdown.Item>

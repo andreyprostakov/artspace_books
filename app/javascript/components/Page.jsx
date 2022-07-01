@@ -10,6 +10,7 @@ import Navbar from 'widgets/navbar/Navbar'
 import PageContent from 'components/PageContent'
 import PageRouteHelpers from 'components/PageRouteHelpers'
 import RootUrlStoreProvider from 'store/urlStore/RootStoreProvider'
+import EventsProvider from 'store/events/Provider'
 import { setDefaultBookImageUrl } from 'store/books/actions'
 import { setDefaultAuthorImageUrl } from 'store/authors/actions'
 
@@ -21,16 +22,18 @@ const Page = (props) => {
     <ReduxProvider store={ store }>
       <BrowserRouter>
         <RootUrlStoreProvider>
-          <PageRouteHelpers/>
+          <EventsProvider>
+            <PageRouteHelpers/>
 
-          <Modals/>
+            <Modals/>
 
-          <Notifications/>
+            <Notifications/>
 
-          <Container className='page'>
-            <Navbar/>
-            <PageContent/>
-          </Container>
+            <Container className='page'>
+              <Navbar/>
+              <PageContent/>
+            </Container>
+          </EventsProvider>
         </RootUrlStoreProvider>
       </BrowserRouter>
     </ReduxProvider>

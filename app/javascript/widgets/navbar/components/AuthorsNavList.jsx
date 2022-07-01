@@ -2,21 +2,28 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Form, FormControl, NavDropdown, Spinner } from 'react-bootstrap'
 
 import apiClient from 'store/authors/apiClient'
+import EventsContext from 'store/events/Context'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsNavList = () => {
   const { routes: { authorPagePath } } = useContext(UrlStoreContext)
+  const { subscribeToEvent } = useContext(EventsContext)
   const [authorsSearchEntries, setAuthorsSearchEntries] = useState([])
   const [{ lastSearchedKey = null, searchInProgress = false }, setSearchState] = useState({})
   const searchKey = useRef(null)
   const searchRef = useRef()
 
-  useEffect(() => searchRef.current.focus(), [])
+  const setFocus = () => setTimeout(() => searchRef.current.focus(), 100)
+
+  useEffect(() => {
+    setFocus()
+    subscribeToEvent('AUTHORS_NAV_CLICKED', () => setFocus())
+  }, [])
 
   const searchAuthor = (key) => {
     searchKey.current = key
     setTimeout(() => {
-      if (key !== searchKey.current || key === lastSearchedKey || searchInProgress) return
+      if (!Boolean(key) || key !== searchKey.current || key === lastSearchedKey || searchInProgress) return
       setSearchState({ searchInProgress: true })
       apiClient.search(key).then(searchEntries => {
         setSearchState({ searchInProgress: false, lastSearchedKey: key })
