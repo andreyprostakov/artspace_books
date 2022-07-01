@@ -5,7 +5,6 @@ import { selectTagsRefsLoaded } from 'store/tags/selectors'
 import { fetchCategories, fetchTagsRefs } from 'store/tags/actions'
 
 export const {
-  setAuthorsSearchKey,
   setTagsSearchKey,
 } = slice.actions
 

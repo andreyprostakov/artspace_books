@@ -15,8 +15,4 @@ development:
     path: /solr/books_core
 
 test:
-  solr:
-    hostname: localhost
-    port: 8981
-    log_level: WARNING
-    path: /solr/test
+  disabled: true
