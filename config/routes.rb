@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :full_entries, only: %i[show create update destroy]
         resources :index_entries, only: %i[show index]
         resources :ref_entries, only: %i[show index]
+        resource :search, only: :show, controller: 'search'
       end
 
       namespace :books do

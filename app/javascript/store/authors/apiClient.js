@@ -3,6 +3,7 @@ import AuthorForm from 'store/authors/api/AuthorForm'
 import AuthorFull from 'store/authors/api/AuthorFull'
 import AuthorIndexEntry from 'store/authors/api/AuthorIndexEntry'
 import AuthorRef from 'store/authors/api/AuthorRef'
+import AuthorSearchEntry from 'store/authors/api/AuthorSearchEntry'
 
 const jQuery = window.$
 
@@ -58,6 +59,12 @@ class ApiClient {
       type: 'POST',
       data: { author: body }
     })
+  }
+
+  static search(key) {
+    return jQuery.ajax({
+      url: `/api/authors/search.json${ objectToParams({ key }) }`
+    }).then(entries => entries.map(raw => AuthorSearchEntry.parse(raw)))
   }
 }
 

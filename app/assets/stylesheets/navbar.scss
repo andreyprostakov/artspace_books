@@ -1,5 +1,17 @@
 .navbar {
+  .search-spinner {
+    position: absolute;
+    right: 18px;
+    height: 20px;
+    width: 20px;
+    top: 18px;
+  }
+
   .authors-nav {
+    .authors-nav-search {
+      padding: 0 10px 5px;
+    }
+
     .authors-nav-filter {
       padding: 0 10px 5px;
     }

@@ -45,3 +45,8 @@ yarn-debug.log*
 
 coverage
 
+solr/data
+solr/test/data
+solr/development/data
+solr/default/data
+solr/pids
