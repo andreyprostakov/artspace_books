@@ -2,5 +2,5 @@
 
 json.array! @entries do |search_entry|
   json.author_id search_entry.author_id
-  json.label search_entry.match_html
+  json.highlight search_entry.highlight
 end

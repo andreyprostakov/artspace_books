@@ -35,7 +35,9 @@ class Tag < ApplicationRecord
   validates :category, presence: true
 
   searchable do
-    text :name
+    text :name do
+      name.titleize
+    end
   end
 
   protected

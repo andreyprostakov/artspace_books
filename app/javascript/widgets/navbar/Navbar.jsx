@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 
 import AuthorsNavList from 'widgets/navbar/components/AuthorsNavList'
+import BooksNavList from 'widgets/navbar/components/BooksNavList'
 import TagsNavList from 'widgets/navbar/components/TagsNavList'
 import EventsContext from 'store/events/Context'
 import UrlStoreContext from 'store/urlStore/Context'
-import { setTagsSearchKey } from 'widgets/navbar/actions'
 import { selectTagIdBookmark, selectTagIdRead } from 'store/tags/selectors'
 
 const PageNavbar = () => {
@@ -25,7 +25,9 @@ const PageNavbar = () => {
       <Nav className='mr-auto'>
         <Nav.Link onClick={ () => goto(booksPagePath()) }><b>Artspace | Literature</b></Nav.Link>
 
-        <NavDropdown title='Books'>
+        <NavDropdown title='Books' onClick={ () => triggerEvent('BOOKS_NAV_CLICKED') }>
+          <BooksNavList/>
+          <NavDropdown.Divider />
           <NavDropdown.Item href={ booksPagePath() }>List all</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href={ tagPagePath(tagIdBookmark) }>Bookmarked by me</NavDropdown.Item>
@@ -42,7 +44,7 @@ const PageNavbar = () => {
           </NavDropdown.Item>
         </NavDropdown>
 
-        <NavDropdown title='Tags'>
+        <NavDropdown title='Tags' onClick={ () => triggerEvent('TAGS_NAV_CLICKED') }>
           <TagsNavList/>
           <NavDropdown.Divider />
           <NavDropdown.Item href={ tagsPagePath() }>List all</NavDropdown.Item>

@@ -1,6 +1,8 @@
+import { objectToParams } from 'utils/objectToParams'
 import TagIndexEntry from 'store/tags/api/TagIndexEntry'
 import TagForm from 'store/tags/api/TagForm'
 import TagRef from 'store/tags/api/TagRef'
+import TagSearchEntry from 'store/tags/api/TagSearchEntry'
 
 const jQuery = window.$
 
@@ -44,6 +46,12 @@ class ApiClient {
     return jQuery.ajax({
       url: '/api/tags/categories.json'
     })
+  }
+
+  static search(key) {
+    return jQuery.ajax({
+      url: `/api/tags/search.json${ objectToParams({ key }) }`
+    }).then(entries => entries.map(raw => TagSearchEntry.parse(raw)))
   }
 }
 

@@ -23,11 +23,11 @@ module Search
     end
 
     class Entry
-      attr_reader :author_id, :match_html
+      attr_reader :author_id, :highlight
 
-      def initialize(id, match_html)
+      def initialize(id, highlight)
         @author_id = id
-        @match_html = match_html
+        @highlight = highlight
       end
     end
   end

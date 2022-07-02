@@ -9,13 +9,11 @@ const Provider = (props) => {
 
   const contextValue = {
     subscribeToEvent: (event, subscriber) => {
-      const previousSubscribers = subscribers[event] || []
-      setSubscribers({ [event]: [...previousSubscribers, subscriber] })
-      console.log([...previousSubscribers, subscriber])
+      setSubscribers((value) => ({ ...value, [event]: [...(value[event] || []), subscriber] }))
     },
     triggerEvent: (event) => {
       (subscribers[event] || []).forEach(subscriber => subscriber())
-    }
+    },
   }
 
   return (

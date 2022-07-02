@@ -1,6 +1,6 @@
 module Search
   class BooksSearcher < Search::BaseSearcher
-    LIMIT = 7
+    LIMIT = 30
 
     private
 
@@ -15,19 +15,19 @@ module Search
 
     def format_results(search_result)
       search_result.hits.map do |hit|
-        Entry.new(
-          hit.result.id,
-          hit.highlights(:title).first.format
-        )
+        Entry.new(hit.result, hit.highlights(:title).first.format)
       end
     end
 
     class Entry
-      attr_reader :book_id, :match_html
+      attr_reader :book_id, :title, :year, :author_id, :highlight
 
-      def initialize(id, match_html)
-        @book_id = id
-        @match_html = match_html
+      def initialize(book, highlight)
+        @book_id = book.id
+        @title = book.title
+        @year = book.year_published
+        @author_id = book.author_id
+        @highlight = highlight
       end
     end
   end

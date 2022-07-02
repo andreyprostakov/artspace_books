@@ -23,11 +23,11 @@ module Search
     end
 
     class Entry
-      attr_reader :tag_id, :match_html
+      attr_reader :tag_id, :highlight
 
-      def initialize(id, match_html)
+      def initialize(id, highlight)
         @tag_id = id
-        @match_html = match_html
+        @highlight = highlight.gsub(' ', '')
       end
     end
   end

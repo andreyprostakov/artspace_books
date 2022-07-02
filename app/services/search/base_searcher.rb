@@ -16,7 +16,7 @@ module Search
     end
 
     def key_to_fuzzy_key(key)
-      key.gsub(/(\w+)/, '\1~')
+      key.gsub(/(\w+)/, '*\1* \1~')
     end
 
     def format_results(search_result)
