@@ -34,6 +34,12 @@ class Tag < ApplicationRecord
                    format: { with: /\A[\w\d-]+\z/, message: 'allows only alphanums and dashes' }
   validates :category, presence: true
 
+  searchable do
+    text :name do
+      name.titleize
+    end
+  end
+
   protected
 
   def strip_name

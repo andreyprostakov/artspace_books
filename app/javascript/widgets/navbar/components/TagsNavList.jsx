@@ -1,32 +1,29 @@
 import React, { useContext, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { FormControl, NavDropdown } from 'react-bootstrap'
+import { NavDropdown } from 'react-bootstrap'
 
-import { selectTagsRefs } from 'store/tags/selectors'
-import { filterByString } from 'utils/filterByString'
-import { sortByString } from 'utils/sortByString'
+import apiClient from 'store/tags/apiClient'
+import SearchForm from 'widgets/navbar/components/SearchForm'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const TagsNavList = () => {
-  const allTags = useSelector(selectTagsRefs())
-  const [query, setQuery] = useState('')
   const { routes: { tagPagePath } } = useContext(UrlStoreContext)
+  const [searchEntries, setSearchEntries] = useState([])
 
-  const tags = sortByString(
-    filterByString(allTags, 'name', query),
-    'name'
-  )
+  const apiSearcher = (key) => {
+    return apiClient.search(key).then(searchEntries => {
+      setSearchEntries(searchEntries)
+    })
+  }
 
   return (
     <div className='tags-nav'>
-      <div className='tags-nav-filter'>
-        <FormControl type='text' autoComplete='off' onChange={ (e) => setQuery(e.target.value) } autoFocus/>
+      <div className='nav-search-form'>
+        <SearchForm focusEvent='TAGS_NAV_CLICKED' apiSearcher={ apiSearcher }/>
       </div>
-      <div className='tags-nav-list'>
-        { tags.map(tag =>
-          <NavDropdown.Item href={ tagPagePath(tag.id) } key={ tag.id } className='d-flex justify-content-between'>
-            { tag.name }
-            <span className='badge badge-primary badge-pill'>{ tag.connectionsCount }</span>
+      <div className='nav-search-list'>
+        { searchEntries.map((searchEntry, i) =>
+          <NavDropdown.Item href={ tagPagePath(searchEntry.tagId) } key={ i }>
+            { searchEntry.highlight }
           </NavDropdown.Item>
         ) }
       </div>

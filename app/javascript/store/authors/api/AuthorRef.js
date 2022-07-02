@@ -3,7 +3,6 @@ class AuthorRef {
     return {
       id: data['id'],
       fullname: data['fullname'],
-      booksCount: data['books_count'],
     }
   }
 }

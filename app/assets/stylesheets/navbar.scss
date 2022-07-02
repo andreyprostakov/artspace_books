@@ -1,23 +1,27 @@
 .navbar {
-  .authors-nav {
-    .authors-nav-filter {
-      padding: 0 10px 5px;
-    }
+  .search-spinner {
+    position: absolute;
+    right: 18px;
+    height: 20px;
+    width: 20px;
+    top: 18px;
+  }
 
-    .authors-nav-list {
-      max-height: 200px;
-      overflow-y: scroll;
+  .nav-search-form {
+    padding: 0 10px 5px;
+  }
+
+  .nav-search-list {
+    max-height: 200px;
+    overflow-y: scroll;
+
+    .dropdown-item {
+      max-width: 400px;
+      overflow-x: hidden;
     }
   }
 
-  .tags-nav {
-    .tags-nav-filter {
-      padding: 0 10px 5px;
-    }
-
-    .tags-nav-list {
-      max-height: 200px;
-      overflow-y: scroll;
-    }
+  .books-nav .nav-search-list .dropdown-item .title {
+    font-weight: 500;
   }
 }

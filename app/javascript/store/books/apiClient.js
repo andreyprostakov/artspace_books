@@ -2,6 +2,7 @@ import { objectToParams } from 'utils/objectToParams'
 import BookForm from 'store/books/api/BookForm'
 import BookFull from 'store/books/api/BookFull'
 import BookIndexEntry from 'store/books/api/BookIndexEntry'
+import BookSearchEntry from 'store/books/api/BookSearchEntry'
 
 const jQuery = window.$
 
@@ -85,6 +86,12 @@ class ApiClient {
         },
       }
     })
+  }
+
+  static search(key) {
+    return jQuery.ajax({
+      url: `/api/books/search.json${ objectToParams({ key }) }`
+    }).then(entries => entries.map(raw => BookSearchEntry.parse(raw)))
   }
 }
 

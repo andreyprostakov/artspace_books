@@ -43,7 +43,7 @@ module Forms
       def apply_update(record, update_params)
         super(
           record,
-          update_params.merge(tags: record.tags | update_params.fetch(:tags, []))
+          update_params.merge(tags: update_params.fetch(:tags, []))
         )
       end
     end

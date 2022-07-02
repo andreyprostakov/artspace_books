@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :full_entries, only: %i[show create update destroy]
         resources :index_entries, only: %i[show index]
         resources :ref_entries, only: %i[show index]
+        resource :search, only: :show, controller: 'search'
       end
 
       namespace :books do
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
         resources :index_entries, only: %i[show index]
         resources :popularity, only: :update
         resources :years, only: :index
+        resource :search, only: :show, controller: 'search'
       end
 
       namespace :tags do
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
         resources :full_entries, only: %i[update destroy]
         resources :index_entries, only: %i[show index]
         resources :ref_entries, only: %i[show index]
+        resource :search, only: :show, controller: 'search'
       end
     end
   end

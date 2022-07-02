@@ -44,6 +44,10 @@ class Book < ApplicationRecord
     includes(:tags).references(:tags).where('tags.id IN (?)', Array(tag_ids))
   }
 
+  searchable do
+    text :title
+  end
+
   def tag_ids
     tag_connections.map(&:tag_id)
   end

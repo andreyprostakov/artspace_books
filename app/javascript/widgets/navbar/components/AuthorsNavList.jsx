@@ -1,38 +1,29 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Form, FormControl, NavDropdown } from 'react-bootstrap'
+import React, { useContext, useState } from 'react'
+import {  NavDropdown } from 'react-bootstrap'
 
-import { selectAuthorsRefs } from 'store/authors/selectors'
-import { selectAuthorsSearchKey } from 'widgets/navbar/selectors'
-import { setAuthorsSearchKey } from 'widgets/navbar/actions'
-import { filterByString } from 'utils/filterByString'
-import { sortByString } from 'utils/sortByString'
+import apiClient from 'store/authors/apiClient'
+import SearchForm from 'widgets/navbar/components/SearchForm'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsNavList = () => {
-  const allAuthorsRefs = useSelector(selectAuthorsRefs())
-  const query = useSelector(selectAuthorsSearchKey())
-  const dispatch = useDispatch()
-  const searchRef = useRef()
   const { routes: { authorPagePath } } = useContext(UrlStoreContext)
+  const [authorsSearchEntries, setAuthorsSearchEntries] = useState([])
 
-  const displayedAuthorsRef = sortByString(
-    filterByString(allAuthorsRefs, 'fullname', query),
-    'fullname'
-  )
-
-  useEffect(() => searchRef.current.focus(), [query])
+  const apiSearcher = (key) => {
+    return apiClient.search(key).then(searchEntries => {
+      setAuthorsSearchEntries(searchEntries)
+    })
+  }
 
   return (
     <div className='authors-nav'>
-      <div className='authors-nav-filter'>
-        <Form.Control type='text' autoComplete='off' value={ query } onChange={ (e) => dispatch(setAuthorsSearchKey(e.target.value)) } ref={ searchRef }/>
+      <div className='nav-search-form'>
+        <SearchForm focusEvent='AUTHORS_NAV_CLICKED' apiSearcher={ apiSearcher }/>
       </div>
-      <div className='authors-nav-list'>
-        { displayedAuthorsRef.map(authorRef =>
-          <NavDropdown.Item href={ authorPagePath(authorRef.id) } key={ authorRef.id } className='d-flex justify-content-between'>
-            { authorRef.fullname }
-            <span className='badge badge-primary badge-pill'>{ authorRef.booksCount }</span>
+      <div className='nav-search-list'>
+        { authorsSearchEntries.map((searchEntry, i) =>
+          <NavDropdown.Item href={ authorPagePath(searchEntry.authorId) } key={ i }>
+            { searchEntry.highlight }
           </NavDropdown.Item>
         ) }
       </div>
