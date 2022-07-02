@@ -7,7 +7,7 @@ RSpec.describe Search::TagsSearcher do
     let(:search_key) { 'foo bar' }
     let(:search_result) { instance_double(Sunspot::Search::StandardSearch, hits: [search_hit]) }
     let(:search_hit) { instance_double(Sunspot::Search::Hit, highlights: [search_highlight], result: tag) }
-    let(:search_highlight) { instance_double(Sunspot::Search::Highlight, format: '<em>Foo</em> Baz') }
+    let(:search_highlight) { instance_double(Sunspot::Search::Highlight, format: '*Foo* Baz') }
     let(:tag) { build_stubbed(:tag, name: 'Foo Baz') }
 
     before do
@@ -22,7 +22,7 @@ RSpec.describe Search::TagsSearcher do
       entry = subject.first
       expect(entry).to be_a(described_class::Entry)
       expect(entry.tag_id).to eq(tag.id)
-      expect(entry.match_html).to eq(search_highlight.format)
+      expect(entry.highlight).to eq('*Foo*Baz')
     end
   end
 end

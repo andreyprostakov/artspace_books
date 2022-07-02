@@ -13,8 +13,7 @@ RSpec.describe '/api/authors/ref_entries', type: :request do
       expect(response).to be_successful
       expect(response.body).to eq({
         id: author.id,
-        fullname: author.fullname,
-        books_count: 1
+        fullname: author.fullname
       }.to_json)
     end
   end
@@ -27,8 +26,7 @@ RSpec.describe '/api/authors/ref_entries', type: :request do
       expect(response).to be_successful
       expect(response.body).to eq([{
         id: author.id,
-        fullname: author.fullname,
-        books_count: 1
+        fullname: author.fullname
       }].to_json)
     end
   end

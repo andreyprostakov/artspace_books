@@ -5,29 +5,15 @@ module Search
     private
 
     def search_solr(key)
-      Author.search do
-        fulltext key_to_fuzzy_key(key) do
-          highlight :fullname
-        end
-        paginate per_page: LIMIT
-      end
-    end
-
-    def format_results(search_result)
-      search_result.hits.map do |hit|
-        Entry.new(
-          hit.result.id,
-          hit.highlights(:fullname).first.format
-        )
-      end
+      search_solr_parameterized(key, Author, :fullname)
     end
 
     class Entry
       attr_reader :author_id, :highlight
 
-      def initialize(id, highlight)
-        @author_id = id
-        @highlight = highlight
+      def initialize(hit)
+        @author_id = hit.result.id
+        @highlight = hit.highlights(:fullname).first.format { |word| "*#{word}*" }
       end
     end
   end

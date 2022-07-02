@@ -5,29 +5,15 @@ module Search
     private
 
     def search_solr(key)
-      Tag.search do
-        fulltext key_to_fuzzy_key(key) do
-          highlight :name
-        end
-        paginate per_page: LIMIT
-      end
-    end
-
-    def format_results(search_result)
-      search_result.hits.map do |hit|
-        Entry.new(
-          hit.result.id,
-          hit.highlights(:name).first.format
-        )
-      end
+      search_solr_parameterized(key, Tag, :name)
     end
 
     class Entry
       attr_reader :tag_id, :highlight
 
-      def initialize(id, highlight)
-        @tag_id = id
-        @highlight = highlight.gsub(' ', '')
+      def initialize(hit)
+        @tag_id = hit.result.id
+        @highlight = hit.highlights(:name).first.format { |word| "*#{word}*" }.gsub(' ', '')
       end
     end
   end

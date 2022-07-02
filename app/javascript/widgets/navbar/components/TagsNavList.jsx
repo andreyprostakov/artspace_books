@@ -22,8 +22,9 @@ const TagsNavList = () => {
       </div>
       <div className='nav-search-list'>
         { searchEntries.map((searchEntry, i) =>
-          <NavDropdown.Item href={ tagPagePath(searchEntry.tagId) } key={ i }
-                            dangerouslySetInnerHTML={ { __html: '#' + searchEntry.highlight } } />
+          <NavDropdown.Item href={ tagPagePath(searchEntry.tagId) } key={ i }>
+            { searchEntry.highlight }
+          </NavDropdown.Item>
         ) }
       </div>
     </div>

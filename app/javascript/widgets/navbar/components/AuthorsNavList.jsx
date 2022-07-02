@@ -22,8 +22,9 @@ const AuthorsNavList = () => {
       </div>
       <div className='nav-search-list'>
         { authorsSearchEntries.map((searchEntry, i) =>
-          <NavDropdown.Item href={ authorPagePath(searchEntry.authorId) } key={ i }
-                            dangerouslySetInnerHTML={ { __html: searchEntry.highlight } } />
+          <NavDropdown.Item href={ authorPagePath(searchEntry.authorId) } key={ i }>
+            { searchEntry.highlight }
+          </NavDropdown.Item>
         ) }
       </div>
     </div>

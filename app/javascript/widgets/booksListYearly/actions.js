@@ -157,7 +157,7 @@ const updateBookInYears = book => (dispatch, getState) => {
   }
 }
 
-export const reloadBooks = () => (dispatch, getState) => {
+export const reloadBooks = () => dispatch => {
   dispatch(clearListState())
   dispatch(setupBooksListSelection())
 }
