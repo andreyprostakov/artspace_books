@@ -13,6 +13,7 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
+import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
 import { setImageSrc } from 'modals/imageFullShow/actions'
 
 const BookSelected = (props) => {
@@ -21,6 +22,7 @@ const BookSelected = (props) => {
   const authorRef = useSelector(selectAuthorRef(book.authorId))
   const currentBookId = useSelector(selectCurrentBookId())
   const isSelected = currentBookId == id
+  const isSelectedForBatch = useSelector(selectBookIsSelected(book.id))
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const coverUrl = book.coverUrl || defaultCoverUrl
@@ -33,6 +35,8 @@ const BookSelected = (props) => {
   useEffect(() => ref.current?.focus(), [])
 
   if (!routesReady) return null
+
+  const classNames = classnames('book-case', 'selected', { 'selected-for-batch': isSelectedForBatch })
 
   return (
     <div className='book-case selected' ref={ ref }>

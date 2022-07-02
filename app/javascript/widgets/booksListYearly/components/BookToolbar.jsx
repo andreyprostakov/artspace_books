@@ -13,9 +13,7 @@ import {
   selectTagNames,
 } from 'store/tags/selectors'
 
-import {
-  selectBookIsSelected,
-} from 'widgets/booksListYearly/selectors'
+import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
 import {
   addBookIdToSelected,
   addTagToBook,
@@ -39,7 +37,7 @@ const BookToolbar = (props) => {
   const isBookmarked = tagNames.includes(tagBookmark)
   const tagRead = useSelector(selectTagRead())
   const isRead = tagNames.includes(tagRead)
-  const isSelected = useSelector(selectBookIsSelected(book.id))
+  const isSelectedForBatch = useSelector(selectBookIsSelected(book.id))
 
   if (!routesReady) return null
 
@@ -96,7 +94,7 @@ const BookToolbar = (props) => {
           </Button>
         }
 
-        { isSelected ?
+        { isSelectedForBatch ?
             <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(removeBookIdFromSelected(book.id)) }>
               <FontAwesomeIcon icon={ faCheckSquare }/>
             </Button>
