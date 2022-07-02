@@ -20,10 +20,6 @@ export const slice = createSlice({
       })
     },
 
-    clearBooks: state => {
-      state.booksIndex = {}
-    },
-
     setPageIsLoading: (state, action) => {
       state.pageIsLoading = Boolean(action.payload)
     },

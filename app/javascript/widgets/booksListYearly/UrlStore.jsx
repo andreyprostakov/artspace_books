@@ -15,6 +15,7 @@ const LocalStoreConfigurer = () => {
           actions: { addUrlAction, addUrlState },
           helpers: { buildRelativePath },
           getActions,
+          routesReady,
         } = useContext(UrlStoreContext)
   const currentBookId = useSelector(selectCurrentBookId())
   const requestedBookId = useSelector(selectRequestedBookId())
@@ -37,7 +38,10 @@ const LocalStoreConfigurer = () => {
   }, [requestedBookId])
 
   useEffect(() => {
-    dispatch(setCurrentBookId(bookId))
+    if (routesReady) {
+      console.log(['Yearly/UrlStore.useEffect setting currentBookId', bookId])
+      dispatch(setCurrentBookId(bookId))
+    }
 
     setStoreReady(true)
   }, [bookId])

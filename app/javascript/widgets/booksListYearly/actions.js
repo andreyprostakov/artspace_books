@@ -16,7 +16,6 @@ import {
 import {
   addBook,
   addBooks,
-  clearBooks,
   showBook,
   setCurrentBookDetails,
 } from 'store/books/actions'
@@ -59,6 +58,7 @@ export const {
 
 export const setupBooksListSelection = () => (dispatch, getState) => {
   const bookId = selectCurrentBookId()(getState())
+  console.log(['setupBooksListSelection currentBookId', bookId])
   if (bookId)
     dispatch(reloadBook(bookId)).then(() => {
       const book = selectCurrentBook()(getState())
@@ -140,6 +140,7 @@ export const reloadBook = id => async dispatch => {
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
   dispatch(setBookAsCurrentInYear(id))
+  console.log(['Yearly/actions.reloadBook id', id])
   dispatch(showBook(id))
 }
 
@@ -243,10 +244,13 @@ const changeSelectedYear = selectTargetYear => (dispatch, getState) => {
 const switchToBookByYear = targetYear => (dispatch, getState) => {
   const state = getState()
   const bookIdPreselected = selectYearCurrentBookId(targetYear)(state)
-  if (bookIdPreselected)
+  console.log(['Yearly/actions.switchToBookByYear', targetYear])
+  if (bookIdPreselected) {
+    console.log(['Yearly/actions.switchToBookByYear found preselected', bookIdPreselected])
     dispatch(showBook(bookIdPreselected))
-  else {
+  } else {
     const bookId = first(selectBookIdsByYear(targetYear)(state))
+    console.log(['Yearly/actions.switchToBookByYear new preselected', bookId])
     if (bookId) dispatch(showBook(bookId))
   }
 }
@@ -256,7 +260,6 @@ export const removeBookIdFromSelected = unselectId
 export const clearBooksSelection = clearSelection
 
 export const clearListState = () => dispatch => {
-  dispatch(clearBooks())
   dispatch(clearListInnerState())
   dispatch(clearSelection())
 }

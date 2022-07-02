@@ -8,7 +8,6 @@ import {
 export const {
   addBook,
   addBooks,
-  clearBooks,
   setPageIsLoading,
   setDefaultBookImageUrl,
   setCurrentBookDetails,
@@ -22,5 +21,8 @@ export const showBook = bookId => (dispatch, getState) => {
   const book = selectBooksIndexEntry(bookId)(state)
   if (!book) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
 
-  if (bookId !== currentBookId) dispatch(setRequestedBookId(bookId))
+  if (bookId !== currentBookId) {
+    console.log(['books/actions.showBook bookid', bookId, 'currentBookId', currentBookId])
+    dispatch(setRequestedBookId(bookId))
+  }
 }

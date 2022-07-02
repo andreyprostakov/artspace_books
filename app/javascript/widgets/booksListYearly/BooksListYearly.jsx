@@ -9,7 +9,6 @@ import { fetchBooksForYears, jumpToLatestYear } from 'widgets/booksListYearly/ac
 import HotKeysWrap from 'widgets/booksListYearly/components/HotKeysWrap'
 import YearRow from 'widgets/booksListYearly/components/YearRow'
 import YearsSlider from 'widgets/booksListYearly/components/YearsSlider'
-import LocalUrlStoreConfigurer from 'widgets/booksListYearly/UrlStore'
 
 const BooksListYearly = () => {
   const dispatch = useDispatch()
@@ -19,7 +18,6 @@ const BooksListYearly = () => {
 
   return (
     <>
-      <LocalUrlStoreConfigurer/>
       <HotKeysWrap>
         <div className='books-list'>
           <div className='books-list-shadow shadow-top'/>
