@@ -15,12 +15,12 @@ module Search
       raise NotImplementedError
     end
 
-    def search_solr_parameterized(key, model, field)
+    def search_solr_parameterized(key, model, field, limit:)
       model.search do
         fulltext key_to_fuzzy_key(key) do
           highlight field
         end
-        paginate per_page: self::LIMIT
+        paginate per_page: limit
       end
     end
 

@@ -5,7 +5,7 @@ module Search
     private
 
     def search_solr(key)
-      search_solr_parameterized(key, Author, :fullname)
+      search_solr_parameterized(key, Author, :fullname, limit: LIMIT)
     end
 
     class Entry
