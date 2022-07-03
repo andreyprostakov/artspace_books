@@ -6,6 +6,7 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import { selectPageIsLoading } from 'store/metadata/selectors'
 import { selectRequestedBookId } from 'widgets/booksListYearly/selectors'
+import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import UrlStoreContext from 'store/urlStore/Context'
 import TagsPage from 'pages/tagsPage/Page'
 
@@ -29,17 +30,20 @@ const LocalStoreConfigurer = () => {
 
     addUrlState('bookId', (url) => parseInt(url.queryParameter('book_id')))
   }, [])
+  console.log('Yearly/UrlStore.render')
 
   useEffect(() => {
-    if (!storeReady || pageLoading) return
-    if (requestedBookId === bookId) return
+    console.log(['Yearly/UrlStore.useEffect of requestedBookId', requestedBookId, [storeReady, pageLoading, bookId]])
+    if (!storeReady || pageLoading || !requestedBookId) return
 
-    getActions().showBooksIndexEntry(requestedBookId)
-  }, [requestedBookId])
+    dispatch(setRequestedBookId(null))
+    if (requestedBookId !== bookId)
+      getActions().showBooksIndexEntry(requestedBookId)
+  }, [pageLoading, storeReady, requestedBookId])
 
   useEffect(() => {
+    console.log(['Yearly/UrlStore.useEffect sets bookId to', bookId, '?', routesReady])
     if (routesReady) {
-      console.log(['Yearly/UrlStore.useEffect setting currentBookId', bookId])
       dispatch(setCurrentBookId(bookId))
     }
 

@@ -6,7 +6,7 @@ import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry } from 'store/books/selectors'
-import { selectBatchModeOn, selectBookIdsSelected } from 'widgets/booksListYearly/selectors'
+import { selectIdsSelected, selectBatchModeOn } from 'store/selectables/selectors'
 import {
   clearBooksSelection,
   reloadBooks,
@@ -17,7 +17,7 @@ import UrlStoreContext from 'store/urlStore/Context'
 
 const BatchControls = (props) => {
   const dispatch = useDispatch()
-  const bookIds = useSelector(selectBookIdsSelected())
+  const bookIds = useSelector(selectIdsSelected())
   const [state, setState] = useState({ currentTags: [] })
   const widgetShown = useSelector(selectBatchModeOn())
   const { onSuccess } = props

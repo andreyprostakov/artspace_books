@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import PopularityChart from 'widgets/booksListLinear/components/PopularityChart'
-import Book from 'widgets/booksListYearly/components/Book'
+import BookIndexEntry from 'widgets/booksListLinear/components/BookIndexEntry'
 
 const BooksRow = (props) => {
   const { ids: bookIds } = props
@@ -13,7 +13,7 @@ const BooksRow = (props) => {
 
       <div>
         { bookIds.map((bookId, i) =>
-            <Book id={ bookId } key={ i } showYear={ true }/>
+            <BookIndexEntry id={ bookId } key={ i } showYear={ true }/>
         ) }
       </div>
     </div>

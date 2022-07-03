@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Col } from 'react-bootstrap'
 
-import { selectBatchModeOn } from 'widgets/booksListYearly/selectors'
+import { selectBatchModeOn } from 'store/selectables/selectors'
 
 import PageConfigurer from 'pages/templates/booksListYearly/PageConfigurer'
 import Layout from 'pages/Layout'

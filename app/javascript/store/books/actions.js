@@ -3,12 +3,12 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 
 import {
-  selectBooksIndexEntry,
+  selectBookRef,
 } from 'store/books/selectors'
 export const {
   addBook,
   addBooks,
-  setPageIsLoading,
+  addBooksRefs,
   setDefaultBookImageUrl,
   setCurrentBookDetails,
 } = slice.actions
@@ -18,8 +18,8 @@ export const showBook = bookId => (dispatch, getState) => {
 
   const state = getState()
   const currentBookId = selectCurrentBookId()(state)
-  const book = selectBooksIndexEntry(bookId)(state)
-  if (!book) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
+  const bookRef = selectBookRef(bookId)(state)
+  if (!bookRef) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
 
   if (bookId !== currentBookId) {
     console.log(['books/actions.showBook bookid', bookId, 'currentBookId', currentBookId])

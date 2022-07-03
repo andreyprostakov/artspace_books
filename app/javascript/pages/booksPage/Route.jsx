@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, useParams } from 'react-router-dom'
 
-import { setPageIsLoading } from 'store/metadata/actions'
 import BooksPage from 'pages/booksPage/Page'
 import UrlStoreContext from 'store/urlStore/Context'
 import ListUrlStoreConfigurer from 'widgets/booksListYearly/UrlStore'

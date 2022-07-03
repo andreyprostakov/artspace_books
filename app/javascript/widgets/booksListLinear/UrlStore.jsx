@@ -6,6 +6,7 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
 import { selectPageIsLoading } from 'store/metadata/selectors'
 import { selectRequestedBookId } from 'widgets/booksListYearly/selectors'
+import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import { assignPage, assignPerPage, assignSortBy } from 'widgets/booksListLinear/actions'
 import UrlStoreContext from 'store/urlStore/Context'
 import TagsPage from 'pages/tagsPage/Page'
@@ -42,11 +43,13 @@ const LocalStoreConfigurer = () => {
   }, [])
 
   useEffect(() => {
-    if (!storeReady || pageLoading) return
-    if (requestedBookId === bookId) return
+    console.log(['Linear/UrlStore.useEffect of requestedBookId', requestedBookId, [storeReady, pageLoading, bookId]])
+    if (!storeReady || pageLoading || !requestedBookId) return
 
-    getActions().showBooksIndexEntry(requestedBookId)
-  }, [requestedBookId])
+    dispatch(setRequestedBookId(null))
+    if (requestedBookId !== bookId)
+      getActions().showBooksIndexEntry(requestedBookId)
+  }, [storeReady, pageLoading, requestedBookId])
 
   useEffect(() => {
     dispatch(assignPage(page))

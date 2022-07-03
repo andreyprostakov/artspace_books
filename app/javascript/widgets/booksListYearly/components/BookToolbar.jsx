@@ -13,7 +13,7 @@ import {
   selectTagNames,
 } from 'store/tags/selectors'
 
-import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
+import { selectIdIsSelected } from 'store/selectables/selectors'
 import {
   addBookIdToSelected,
   addTagToBook,
@@ -37,7 +37,7 @@ const BookToolbar = (props) => {
   const isBookmarked = tagNames.includes(tagBookmark)
   const tagRead = useSelector(selectTagRead())
   const isRead = tagNames.includes(tagRead)
-  const isSelectedForBatch = useSelector(selectBookIsSelected(book.id))
+  const isSelectedForBatch = useSelector(selectIdIsSelected(book.id))
 
   if (!routesReady) return null
 

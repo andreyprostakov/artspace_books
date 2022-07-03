@@ -4,6 +4,7 @@ export const slice = createSlice({
   name: 'storeBooks',
   initialState: {
     booksIndex: {},
+    booksRefs: {},
     bookDetailsCurrent: {},
     defaultCoverUrl: null,
   },
@@ -20,8 +21,11 @@ export const slice = createSlice({
       })
     },
 
-    setPageIsLoading: (state, action) => {
-      state.pageIsLoading = Boolean(action.payload)
+    addBooksRefs: (state, action) => {
+      const refs = action.payload
+      refs.forEach(entry => {
+        state.booksRefs[entry.id] = entry
+      })
     },
 
     setDefaultBookImageUrl: (state, action) => {

@@ -2,6 +2,7 @@ import { objectToParams } from 'utils/objectToParams'
 import BookForm from 'store/books/api/BookForm'
 import BookFull from 'store/books/api/BookFull'
 import BookIndexEntry from 'store/books/api/BookIndexEntry'
+import BookRefEntry from 'store/books/api/BookRefEntry'
 import BookSearchEntry from 'store/books/api/BookSearchEntry'
 
 const jQuery = window.$
@@ -17,8 +18,9 @@ class ApiClient {
     })
   }
 
-  static getBooksIndex({ years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
+  static getBooksIndex({ ids, years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
     const params = {
+      ids,
       years,
       page,
       'author_id': authorId,
@@ -39,6 +41,21 @@ class ApiClient {
     return jQuery.ajax({
       url: `/api/books/index_entries/${id}.json`
     }).then(data => BookIndexEntry.parse(data))
+  }
+
+  static getBooksRefs({ years, tagIds } = {}) {
+    const params = { years, 'tag_ids': tagIds }
+    return jQuery.ajax({
+      url: `/api/books/ref_entries.json${ objectToParams(params) }`
+    }).then(entries =>
+      entries.map(bookData => BookRefEntry.parse(bookData))
+    )
+  }
+
+  static getBookRefEntry(id) {
+    return jQuery.ajax({
+      url: `/api/books/ref_entries/${id}.json`
+    }).then(data => BookRefEntry.parse(data))
   }
 
   static updateBookPopularity(id) {

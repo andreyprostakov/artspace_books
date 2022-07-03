@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         resources :full_entries, only: %i[show create update destroy]
         resources :index_entries, only: %i[show index]
         resources :popularity, only: :update
+        resources :ref_entries, only: %i[show index]
         resources :years, only: :index
         resource :search, only: :show, controller: 'search'
       end

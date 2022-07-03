@@ -13,20 +13,19 @@ import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectTagsRefsByIds, selectVisibleTags } from 'store/tags/selectors'
-import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
+import { selectIdIsSelected } from 'store/selectables/selectors'
 import { setImageSrc } from 'modals/imageFullShow/actions'
 
 const BookSelected = (props) => {
-  const { id } = props
-  const book = useSelector(selectBooksIndexEntry(id))
-  const authorRef = useSelector(selectAuthorRef(book.authorId))
+  const { bookIndexEntry } = props
+  const id = bookIndexEntry.id
+  const authorRef = useSelector(selectAuthorRef(bookIndexEntry.authorId))
   const currentBookId = useSelector(selectCurrentBookId())
-  const isSelected = currentBookId == id
-  const isSelectedForBatch = useSelector(selectBookIsSelected(book.id))
+  const isSelectedForBatch = useSelector(selectIdIsSelected(bookIndexEntry.id))
   const dispatch = useDispatch()
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
-  const coverUrl = book.coverUrl || defaultCoverUrl
-  const tags = useSelector(selectTagsRefsByIds(book.tagIds))
+  const coverUrl = bookIndexEntry.coverUrl || defaultCoverUrl
+  const tags = useSelector(selectTagsRefsByIds(bookIndexEntry.tagIds))
   const visibleTags = useSelector(selectVisibleTags(tags))
   const sortedTags = sortBy(visibleTags, tag => -tag.connectionsCount)
   const ref = useRef(null)
@@ -40,18 +39,15 @@ const BookSelected = (props) => {
 
   return (
     <div className='book-case selected' ref={ ref }>
-      <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(book.coverFullUrl)) }/>
+      <ImageContainer className='book-cover' url={ coverUrl } onClick={ () => dispatch(setImageSrc(bookIndexEntry.coverFullUrl)) }/>
 
       <div className='book-details'>
         <a href={ authorPagePath(authorRef.id, { bookId: id }) } className='book-author' title={ authorRef.fullname }>
           { authorRef.fullname }
         </a>
 
-        <div className='book-title' title={ book.title }>
-          { book.goodreadsUrl
-            ? <a href={ book.goodreadsUrl }>{ book.title }</a>
-            : book.title
-          }
+        <div className='book-title' title={ bookIndexEntry.title }>
+          { bookIndexEntry.title }
         </div>
 
         <div className='book-tags'>
@@ -61,12 +57,12 @@ const BookSelected = (props) => {
         </div>
 
         <div className='book-stats'>
-          { Boolean(book.popularity) && book.globalRank &&
-            <PopularityBadge rank={ book.globalRank } points={ book.popularity }/>
+          { Boolean(bookIndexEntry.popularity) && bookIndexEntry.globalRank &&
+            <PopularityBadge rank={ bookIndexEntry.globalRank } points={ bookIndexEntry.popularity }/>
           }
         </div>
 
-        <BookToolbar book={ book }/>
+        <BookToolbar book={ bookIndexEntry }/>
       </div>
     </div>
   );
