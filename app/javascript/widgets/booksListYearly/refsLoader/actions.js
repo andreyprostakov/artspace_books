@@ -12,10 +12,13 @@ import {
 } from 'store/books/actions'
 const {
   addYearsToLoad,
+  clearState,
   markBooksYearsAsLoaded,
   markYearsAsLoaded,
   markYearsAsLoading,
 } = slice.actions
+
+export { clearState }
 
 export const requestYearRefsLoaded = year => async(dispatch, getState) => {
   const state = getState()
@@ -68,7 +71,7 @@ const lazyLoadBookRefIteration = (dispatch, getState, resolve, index = 0) => {
     else {
       dispatch(markYearsAsLoading())
       const query = { years: yearsToLoad, ...currentFilters }
-      apiClient.getBooksRefs(query).then(books => {
+      apiClient.getBooksRefs(query).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)
       })

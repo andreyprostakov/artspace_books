@@ -43,13 +43,22 @@ class ApiClient {
     }).then(data => BookIndexEntry.parse(data))
   }
 
-  static getBooksRefs({ years, tagIds } = {}) {
-    const params = { years, 'tag_ids': tagIds }
+  static getBooksRefs({ ids, years, authorId, tagIds, page, perPage, sortBy } = {}) {
+    const params = {
+      ids,
+      years,
+      page,
+      'author_id': authorId,
+      'tag_ids': tagIds,
+      'per_page': perPage,
+      'sort_by': sortBy
+    }
     return jQuery.ajax({
       url: `/api/books/ref_entries.json${ objectToParams(params) }`
-    }).then(entries =>
-      entries.map(bookData => BookRefEntry.parse(bookData))
-    )
+    }).then(({ list, total }) => ({
+      total,
+      books: list.map(bookData => BookRefEntry.parse(bookData)),
+    }))
   }
 
   static getBookRefEntry(id) {

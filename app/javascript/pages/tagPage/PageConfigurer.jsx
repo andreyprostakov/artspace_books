@@ -31,6 +31,7 @@ const Configurer = () => {
       dispatch(fetchBooks()),
       dispatch(fetchTagsIndexEntry(tagId)),
     ]).then(() => {
+      console.log('Set loading to false!')
       dispatch(setPageIsLoading(false))
       dispatch(setupBooksListSelection())
     })

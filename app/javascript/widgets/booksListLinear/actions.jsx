@@ -3,7 +3,11 @@ import apiClient from 'store/books/apiClient'
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import { clearSelection } from 'store/selectables/actions'
-import { addBooks, showBook } from 'store/books/actions'
+import {
+  addBooks,
+  fetchMissingBookIndexEntries,
+  showBook
+} from 'store/books/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
 import { slice } from 'widgets/booksListLinear/slice'
@@ -26,8 +30,12 @@ export const fetchBooks = () => (dispatch, getState) => {
     perPage: selectPerPage()(state),
     sortBy: selectSortBy()(state),
   }
-  return apiClient.getBooksIndex(query).then(({ books, total }) => {
-    if (books.length > 0) dispatch(addBooks(books))
+  console.log(['fetchBooks', query])
+  return apiClient.getBooksRefs(query).then(({ books, total }) => {
+    if (books.length > 0) {
+      const ids = books.map(book => book.id)
+      dispatch(fetchMissingBookIndexEntries(ids))
+    }
     dispatch(assignBooks(books))
     dispatch(assignBooksTotal(total))
   })

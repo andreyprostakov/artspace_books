@@ -18,6 +18,7 @@ import {
 import {
   addBook,
   addBooks,
+  fetchMissingBookIndexEntries,
   showBook,
   setCurrentBookDetails,
 } from 'store/books/actions'
@@ -39,6 +40,7 @@ import {
   unselectId,
 } from 'store/selectables/actions'
 import {
+  clearState as clearYearsInnerState,
   loadRequestedBookRefs,
   requestYearRefsLoaded,
 } from 'widgets/booksListYearly/refsLoader/actions'
@@ -202,16 +204,10 @@ const switchToBookByYear = targetYear => (dispatch, getState) => {
   }
 }
 
-export const requestBookIndexNeighboursLoaded = () => async(dispatch, getState) => {
+export const requestBookIndexNeighboursLoaded = () => (dispatch, getState) => {
   const state = getState()
   const ids = selectBookIdsToDisplay()(state)
-  const loadedIds = selectBooksIndexIds()(state)
-  const idsToLoad = difference(ids, loadedIds)
-  if (idsToLoad.length < 1) return
-  await apiClient.getBooksIndex({ ids: idsToLoad }).then(({ books }) => {
-    console.log(['getBooksIndex loaded', books])
-    dispatch(addBooks(books))
-  })
+  dispatch(fetchMissingBookIndexEntries(ids))
 }
 
 export const addBookIdToSelected = selectId
@@ -220,6 +216,7 @@ export const clearBooksSelection = clearSelection
 
 export const clearListState = () => dispatch => {
   dispatch(clearListInnerState())
+  dispatch(clearYearsInnerState())
   dispatch(clearSelection())
 }
 
