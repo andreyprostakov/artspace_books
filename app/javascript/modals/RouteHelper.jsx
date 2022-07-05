@@ -2,10 +2,8 @@ import React, { useContext, useEffect } from 'react'
 
 import UrlStoreContext from 'store/urlStore/Context'
 
-const ModalsUrlStore = () => {
-  const { actions,
-          getActions,
-          getRoutes,
+const ModalsRouteHelper = () => {
+  const { getActions, getRoutes,
           helpers: { buildRelativePath },
         } = useContext(UrlStoreContext)
   const { patch, addRoute, addUrlAction } = getActions()
@@ -27,4 +25,4 @@ const ModalsUrlStore = () => {
   return null
 }
 
-export default ModalsUrlStore
+export default ModalsRouteHelper
