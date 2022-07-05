@@ -2,8 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { selectBooksIndexEntry } from 'store/books/selectors'
-import Book from 'widgets/booksListYearly/components/Book'
-import BookPlaceholder from 'widgets/booksListYearly/components/BookPlaceholder'
+import Book from 'components/Book'
+import BookPlaceholder from 'components/BookPlaceholder'
 
 const BookIndexEntry = (props) => {
   const { id, ...otherProps } = props

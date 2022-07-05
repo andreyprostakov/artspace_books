@@ -11,7 +11,7 @@ import { setImageSrc } from 'modals/imageFullShow/actions'
 import ImageContainer from 'components/ImageContainer'
 import TagBadge from 'components/TagBadge'
 import PopularityBadge from 'components/PopularityBadge'
-import BookToolbar from 'widgets/booksListYearly/components/BookToolbar'
+import BookToolbar from 'components/BookToolbar'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const BookCardWrap = () => {

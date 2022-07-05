@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { selectBooksIndexEntry } from 'store/books/selectors'
-import Book from 'widgets/booksListYearly/components/Book'
-import BookPlaceholder from 'widgets/booksListYearly/components/BookPlaceholder'
+import Book from 'components/Book'
+import BookPlaceholder from 'components/BookPlaceholder'
 import BookSelected from 'widgets/booksListYearly/components/BookSelected'
 
 const BookIndexEntry = (props) => {
