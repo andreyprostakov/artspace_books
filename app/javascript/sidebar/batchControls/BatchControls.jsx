@@ -7,11 +7,7 @@ import FormInputTags from 'components/FormInputTags'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry } from 'store/books/selectors'
 import { selectIdsSelected, selectBatchModeOn } from 'store/selectables/selectors'
-import {
-  clearBooksSelection,
-  reloadBooks,
-  removeBookIdFromSelected,
-} from 'widgets/booksListYearly/actions'
+import { clearSelection, unselectId } from 'store/selectables/actions'
 import apiClient from 'store/books/apiClient'
 import UrlStoreContext from 'store/urlStore/Context'
 
@@ -35,7 +31,7 @@ const BatchControls = (props) => {
 
   return (
     <Card className='sidebar-widget-batch-controls sidebar-card-widget'>
-      <CloseIcon onClick={ () => dispatch(clearBooksSelection()) }/>
+      <CloseIcon onClick={ () => dispatch(clearSelection()) }/>
       <Card.Header className='widget-title'>Selection</Card.Header>
       <ListGroup variant="flush">
         <ListGroup.Item>
@@ -74,7 +70,7 @@ const SelectedBooksEntry = (props) => {
 
   return (
     <ListGroup.Item key={ id }>
-      <a className='icon-remove' onClick={ () => dispatch(removeBookIdFromSelected(id)) }>X</a>
+      <a className='icon-remove' onClick={ () => dispatch(unselectId(id)) }>X</a>
       { ' | ' }
       <a href='#' onClick={ (e) => { e.preventDefault(); showBooksIndexEntry(id) } }>
         { authorRef.fullname }. { book.title }

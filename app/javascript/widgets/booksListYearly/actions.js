@@ -204,10 +204,6 @@ export const requestBookIndexNeighboursLoaded = () => (dispatch, getState) => {
   dispatch(fetchMissingBookIndexEntries(ids))
 }
 
-export const addBookIdToSelected = selectId
-export const removeBookIdFromSelected = unselectId
-export const clearBooksSelection = clearSelection
-
 export const clearListState = () => dispatch => {
   dispatch(clearListInnerState())
   dispatch(clearYearsInnerState())

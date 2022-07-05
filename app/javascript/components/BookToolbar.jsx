@@ -14,12 +14,8 @@ import {
 } from 'store/tags/selectors'
 
 import { selectIdIsSelected } from 'store/selectables/selectors'
-import {
-  addBookIdToSelected,
-  addTagToBook,
-  removeBookIdFromSelected,
-  removeTagFromBook,
-} from 'widgets/booksListYearly/actions'
+import { selectId, unselectId } from 'store/selectables/actions'
+import { addTagToBook, removeTagFromBook } from 'widgets/booksListYearly/actions'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { updateBookPopularity } from 'store/bookSync/actions'
 import UrlStoreContext from 'store/urlStore/Context'
@@ -95,11 +91,11 @@ const BookToolbar = (props) => {
         }
 
         { isSelectedForBatch ?
-            <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(removeBookIdFromSelected(book.id)) }>
+            <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(unselectId(book.id)) }>
               <FontAwesomeIcon icon={ faCheckSquare }/>
             </Button>
           :
-            <Button variant='outline-warning' title='Select' href='#' onClick={ () => dispatch(addBookIdToSelected(book.id)) }>
+            <Button variant='outline-warning' title='Select' href='#' onClick={ () => dispatch(selectId(book.id)) }>
               <FontAwesomeIcon icon={ faSquare }/>
             </Button>
         }
