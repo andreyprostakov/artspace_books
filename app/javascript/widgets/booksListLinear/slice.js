@@ -15,9 +15,9 @@ export const slice = createSlice({
     perPage: DEFAULT_PER_PAGE,
   },
   reducers: {
-    assignBooks: (state, action) => {
-      const books = action.payload
-      state.bookIds = books.map(book => book.id)
+    assignBookIds: (state, action) => {
+      const ids = action.payload
+      state.bookIds = ids
     },
 
     assignBooksTotal: (state, action) => {

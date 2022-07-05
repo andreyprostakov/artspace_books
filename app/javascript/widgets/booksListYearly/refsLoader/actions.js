@@ -71,6 +71,7 @@ const lazyLoadBookRefIteration = (dispatch, getState, resolve, index = 0) => {
     else {
       dispatch(markYearsAsLoading())
       const query = { years: yearsToLoad, ...currentFilters }
+      console.log('lazy fetch')
       apiClient.getBooksRefs(query).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)

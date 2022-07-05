@@ -21,14 +21,14 @@ const Configurer = () => {
 
   useEffect(() => {
     if (!tagId) { return }
+    console.log(['TagPage/Configurer.useEffect of tagId', tagId])
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
     dispatch(assignPerPage(40))
-    dispatch(assignFilter({ tagId }))
+    dispatch(assignFilter({ tagIds: [tagId] }))
     Promise.all([
       dispatch(prepareNavRefs()),
-      dispatch(fetchBooks()),
       dispatch(fetchTagsIndexEntry(tagId)),
     ]).then(() => {
       console.log('Set loading to false!')
@@ -36,6 +36,7 @@ const Configurer = () => {
       dispatch(setupBooksListSelection())
     })
   }, [tagId])
+
   return null
 }
 

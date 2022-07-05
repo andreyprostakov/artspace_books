@@ -23,6 +23,8 @@ export const selectBooksRefsByYear = year => state => {
 
 export const selectBookRef = id => state => localState(state).booksRefs[id]
 
+export const selectBooksRefIds = () => state => Object.keys(localState(state).booksRefs[id]).map(id => parseInt(id))
+
 export const selectCurrentBookRef = () => state => {
   const id = selectCurrentBookId()(state)
   return selectBookRef(id)(state)
