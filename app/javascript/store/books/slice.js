@@ -7,6 +7,7 @@ export const slice = createSlice({
     booksRefs: {},
     bookDetailsCurrent: {},
     defaultCoverUrl: null,
+    requestedBookId: null,
   },
   reducers: {
     addBook: (state, action) => {
@@ -35,6 +36,10 @@ export const slice = createSlice({
 
     setCurrentBookDetails: (state, action) => {
       state.bookDetailsCurrent = action.payload
+    },
+
+    setRequestedBookId: (state, action) => {
+      state.requestedBookId = action.payload
     },
   }
 })

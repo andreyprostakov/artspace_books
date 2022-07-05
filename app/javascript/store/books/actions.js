@@ -1,7 +1,6 @@
 import { difference } from 'lodash'
 import { slice } from 'store/books/slice'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 
 import {
   selectBooksIndexIds,
@@ -13,6 +12,7 @@ export const {
   addBooksRefs,
   setDefaultBookImageUrl,
   setCurrentBookDetails,
+  setRequestedBookId,
 } = slice.actions
 
 import apiClient from 'store/books/apiClient'

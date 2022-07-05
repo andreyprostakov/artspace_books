@@ -50,5 +50,3 @@ export const selectDisplayedBookIdsInYear = year => state => {
 }
 
 export const selectCurrentFilters = () => state => localState(state).filters
-
-export const selectRequestedBookId = () => state => localState(state).requestedBookId

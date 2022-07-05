@@ -21,6 +21,7 @@ import {
   fetchMissingBookIndexEntries,
   showBook,
   setCurrentBookDetails,
+  setRequestedBookId,
 } from 'store/books/actions'
 import { selectTagNames } from 'store/tags/selectors'
 
@@ -53,7 +54,6 @@ export const {
   setBookShiftDirectionHorizontal,
   setCurrentBookForYear,
   setFilters,
-  setRequestedBookId,
   setYears,
 } = slice.actions
 

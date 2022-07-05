@@ -1,14 +1,14 @@
 import { first, last } from 'lodash'
 import apiClient from 'store/books/apiClient'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import { clearSelection } from 'store/selectables/actions'
 import { selectBooksRefIds, selectCurrentBookRef } from 'store/books/selectors'
 import {
   addBooks,
   addBooksRefs,
   fetchMissingBookIndexEntries,
-  showBook
+  setRequestedBookId,
+  showBook,
 } from 'store/books/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'

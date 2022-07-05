@@ -31,3 +31,5 @@ export const selectCurrentBookRef = () => state => {
 }
 
 export const selectBookPopularities = ids => state => ids.map(id => selectBooksIndexEntry(id)(state)?.popularity)
+
+export const selectRequestedBookId = () => state => localState(state).requestedBookId
