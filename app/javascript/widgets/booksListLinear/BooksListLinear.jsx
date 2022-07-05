@@ -22,7 +22,6 @@ const BooksListLinear = () => {
   const dispatch = useDispatch()
   const bookIds = useSelector(selectBookIds())
   const rows = buildBookRowConfigs(bookIds)
-  console.log(['BooksListLinear.render', bookIds, rows])
 
   return (
     <>

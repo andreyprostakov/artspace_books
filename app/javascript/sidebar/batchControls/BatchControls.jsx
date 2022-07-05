@@ -27,7 +27,6 @@ const BatchControls = (props) => {
     const formData = { tagNames: state.currentTags.map(tag => tag.name) }
 
     apiClient.updateBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() => {
-      console.log(['BATCH UPDATE!', onSuccess])
       onSuccess && onSuccess(bookIds)
     })
   }

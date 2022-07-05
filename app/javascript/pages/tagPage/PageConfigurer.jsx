@@ -21,7 +21,6 @@ const Configurer = () => {
 
   useEffect(() => {
     if (!tagId) { return }
-    console.log(['TagPage/Configurer.useEffect of tagId', tagId])
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
@@ -31,7 +30,6 @@ const Configurer = () => {
       dispatch(prepareNavRefs()),
       dispatch(fetchTagsIndexEntry(tagId)),
     ]).then(() => {
-      console.log('Set loading to false!')
       dispatch(setPageIsLoading(false))
       dispatch(setupBooksListSelection())
     })

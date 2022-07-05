@@ -29,7 +29,6 @@ const Configurer = (props) => {
 
   useEffect(() => {
     if (!routesReady) return
-    console.log('Yearly/Configurer.useEffect sets pageIsLoading to TRUE')
     dispatch(setPageIsLoading(true))
     dispatch(clearListState())
     dispatch(setSeed())
@@ -41,7 +40,6 @@ const Configurer = (props) => {
     ]).then(() =>
       dispatch(setupBooksListSelection())
     ).then(() => {
-      console.log('Yearly/Configurer.useEffect sets pageIsLoading to FALSE')
       dispatch(setPageIsLoading(false))
     })
   }, [routesReady])

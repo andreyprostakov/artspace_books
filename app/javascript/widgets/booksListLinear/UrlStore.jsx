@@ -43,7 +43,6 @@ const LocalStoreConfigurer = () => {
   }, [])
 
   useEffect(() => {
-    console.log(['Linear/UrlStore.useEffect of requestedBookId', requestedBookId, [storeReady, pageLoading, bookId]])
     if (!storeReady || pageLoading || !requestedBookId) return
 
     dispatch(setRequestedBookId(null))

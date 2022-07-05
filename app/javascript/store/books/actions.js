@@ -26,7 +26,6 @@ export const showBook = bookId => (dispatch, getState) => {
   if (!bookRef) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
 
   if (bookId !== currentBookId) {
-    console.log(['books/actions.showBook bookid', bookId, 'currentBookId', currentBookId])
     dispatch(setRequestedBookId(bookId))
   }
 }
@@ -37,7 +36,6 @@ export const fetchMissingBookIndexEntries = ids => async(dispatch, getState) => 
   const idsToLoad = difference(ids, loadedIds)
   if (idsToLoad.length < 1) return
   await apiClient.getBooksIndex({ ids: idsToLoad }).then(({ books }) => {
-    console.log(['getBooksIndex loaded', books])
     dispatch(addBooks(books))
   })
 }

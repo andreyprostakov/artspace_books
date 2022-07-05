@@ -30,10 +30,8 @@ const LocalStoreConfigurer = () => {
 
     addUrlState('bookId', (url) => parseInt(url.queryParameter('book_id')))
   }, [])
-  console.log('Yearly/UrlStore.render')
 
   useEffect(() => {
-    console.log(['Yearly/UrlStore.useEffect of requestedBookId', requestedBookId, [storeReady, pageLoading, bookId]])
     if (!storeReady || pageLoading || !requestedBookId) return
 
     dispatch(setRequestedBookId(null))
@@ -42,7 +40,6 @@ const LocalStoreConfigurer = () => {
   }, [pageLoading, storeReady, requestedBookId])
 
   useEffect(() => {
-    console.log(['Yearly/UrlStore.useEffect sets bookId to', bookId, '?', routesReady])
     if (routesReady) {
       dispatch(setCurrentBookId(bookId))
     }

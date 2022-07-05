@@ -32,7 +32,6 @@ export const fetchBooks = () => (dispatch, getState) => {
     perPage: selectPerPage()(state),
     sortBy: selectSortBy()(state),
   }
-  console.log(['fetchBooks', query])
   return apiClient.getBooksRefs(query).then(({ books, total }) => {
     dispatch(addBooksRefs(books))
     dispatch(assignBookIds(books.map(book => book.id)))

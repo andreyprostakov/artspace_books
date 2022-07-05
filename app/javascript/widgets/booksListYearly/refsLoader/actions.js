@@ -27,10 +27,9 @@ export const requestYearRefsLoaded = year => async(dispatch, getState) => {
   if (yearsToLoad.length < 1) {
     return null
   } else if (!yearsToLoad.includes(year)) {
-    dispatch(fetchBooksForYears(yearsToLoad)).then(() => console.log('requestYearRefsLoaded just loaded non-essential years'))
+    dispatch(fetchBooksForYears(yearsToLoad))
   } else {
     await dispatch(fetchBooksForYears(yearsToLoad))
-    console.log('requestYearRefsLoaded just loaded essential years')
   }
 }
 
@@ -71,7 +70,6 @@ const lazyLoadBookRefIteration = (dispatch, getState, resolve, index = 0) => {
     else {
       dispatch(markYearsAsLoading())
       const query = { years: yearsToLoad, ...currentFilters }
-      console.log('lazy fetch')
       apiClient.getBooksRefs(query).then(({ books }) => {
         dispatch(markYearsAsLoaded(yearsToLoad))
         resolve(books)

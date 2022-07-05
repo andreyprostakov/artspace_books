@@ -59,7 +59,6 @@ export const {
 
 export const setupBooksListSelection = () => async(dispatch, getState) => {
   const bookId = selectCurrentBookId()(getState())
-  console.log(['setupBooksListSelection currentBookId', bookId])
   if (bookId) {
     const bookRef = await apiClient.getBookRefEntry(bookId)
     dispatch(jumpToYear(bookRef.year))
@@ -130,7 +129,6 @@ export const reloadBook = id => async dispatch => {
   const book = await apiClient.getBooksIndexEntry(id)
   dispatch(addBook(book))
   dispatch(updateBookInYears(book))
-  console.log(['Yearly/actions.reloadBook id', id])
   dispatch(showBook(id))
 }
 
@@ -176,7 +174,6 @@ export const removeTagFromBook = (id, tagName) => (dispatch, getState) => {
 
 export const jumpToYear = year => (dispatch, getState) => {
   dispatch(requestYearRefsLoaded(year)).then(() => {
-    console.log('jumpToYear waited for refs and now switches to year ' + year)
     dispatch(switchToBookByYear(year))
   })
 }
@@ -192,13 +189,10 @@ const changeSelectedYear = selectTargetYear => (dispatch, getState) => {
 const switchToBookByYear = targetYear => (dispatch, getState) => {
   const state = getState()
   const bookIdPreselected = selectYearCurrentBookId(targetYear)(state)
-  console.log(['Yearly/actions.switchToBookByYear', targetYear])
   if (bookIdPreselected) {
-    console.log(['Yearly/actions.switchToBookByYear found preselected', bookIdPreselected])
     dispatch(showBook(bookIdPreselected))
   } else {
     const bookId = first(selectBookIdsByYear(targetYear)(state))
-    console.log(['Yearly/actions.switchToBookByYear new preselected', bookId])
     if (!bookId) return
     dispatch(showBook(bookId))
   }
