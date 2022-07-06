@@ -18,29 +18,18 @@ class ApiClient {
     })
   }
 
-  static getBooksIndex({ ids, years, authorId, tagId, tagIds, page, perPage, sortBy } = {}) {
-    const params = {
-      ids,
-      years,
-      page,
-      'author_id': authorId,
-      'tag_id': tagId,
-      'tag_ids': tagIds,
-      'per_page': perPage,
-      'sort_by': sortBy
-    }
+  static getBooksIndex({ ids } = {}) {
     return jQuery.ajax({
-      url: `/api/books/index_entries.json${ objectToParams(params) }`
-    }).then(({ list, total }) => ({
-      total,
-      books: list.map(bookData => BookIndexEntry.parse(bookData)),
-    }))
+      url: `/api/books/index_entries.json${ objectToParams({ ids }) }`
+    }).then(list =>
+      list.map(entry => BookIndexEntry.parse(entry))
+    )
   }
 
   static getBooksIndexEntry(id) {
     return jQuery.ajax({
       url: `/api/books/index_entries/${id}.json`
-    }).then(data => BookIndexEntry.parse(data))
+    }).then(entry => BookIndexEntry.parse(entry))
   }
 
   static getBooksRefs({ ids, years, authorId, tagIds, page, perPage, sortBy } = {}) {
@@ -57,14 +46,14 @@ class ApiClient {
       url: `/api/books/ref_entries.json${ objectToParams(params) }`
     }).then(({ list, total }) => ({
       total,
-      books: list.map(bookData => BookRefEntry.parse(bookData)),
+      books: list.map(entry => BookRefEntry.parse(entry)),
     }))
   }
 
   static getBookRefEntry(id) {
     return jQuery.ajax({
       url: `/api/books/ref_entries/${id}.json`
-    }).then(data => BookRefEntry.parse(data))
+    }).then(entry => BookRefEntry.parse(entry))
   }
 
   static updateBookPopularity(id) {
@@ -77,7 +66,7 @@ class ApiClient {
   static getBookFull(id) {
     return jQuery.ajax({
       url: `/api/books/full_entries/${id}.json`
-    }).then(data => BookFull.parse(data))
+    }).then(entry => BookFull.parse(entry))
   }
 
   static updateBook(id, data) {
@@ -117,7 +106,7 @@ class ApiClient {
   static search(key) {
     return jQuery.ajax({
       url: `/api/books/search.json${ objectToParams({ key }) }`
-    }).then(entries => entries.map(raw => BookSearchEntry.parse(raw)))
+    }).then(entries => entries.map(entry => BookSearchEntry.parse(entry)))
   }
 }
 

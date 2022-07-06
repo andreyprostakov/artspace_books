@@ -33,8 +33,9 @@ RSpec.describe '/api/books/index_entries' do
   end
 
   describe 'GET /' do
-    subject(:send_request) { get '/api/books/index_entries.json', headers: authorization_header }
+    subject(:send_request) { get '/api/books/index_entries.json', params: params, headers: authorization_header }
 
+    let(:params) { { ids: [book.id] } }
     let(:book) { create(:book) }
 
     before { book }
@@ -43,7 +44,7 @@ RSpec.describe '/api/books/index_entries' do
       send_request
 
       expect(response).to be_successful
-      expect(json_response).to match(list: [hash_including(id: book.id)], total: 1)
+      expect(json_response).to match([hash_including(id: book.id)])
     end
   end
 end

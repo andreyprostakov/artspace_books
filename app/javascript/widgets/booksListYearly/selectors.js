@@ -1,10 +1,9 @@
-import { first, uniq } from 'lodash'
+import { first } from 'lodash'
 import shuffle from 'knuth-shuffle-seeded'
 import { pickNearEntries } from 'utils/pickNearEntries'
 
 import { selectCurrentBookId, selectSeed } from 'store/axis/selectors'
 import {
-  selectBooksIndex,
   selectBooksRefsByYear,
   selectCurrentBookRef
 } from 'store/books/selectors'

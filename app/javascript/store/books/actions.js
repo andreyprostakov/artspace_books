@@ -25,9 +25,8 @@ export const showBook = bookId => (dispatch, getState) => {
   const bookRef = selectBookRef(bookId)(state)
   if (!bookRef) throw new Error(`Book #${bookId} is missing! Cannot show it.`)
 
-  if (bookId !== currentBookId) {
+  if (bookId !== currentBookId)
     dispatch(setRequestedBookId(bookId))
-  }
 }
 
 export const fetchMissingBookIndexEntries = ids => async(dispatch, getState) => {
@@ -35,7 +34,7 @@ export const fetchMissingBookIndexEntries = ids => async(dispatch, getState) => 
   const loadedIds = selectBooksIndexIds()(state)
   const idsToLoad = difference(ids, loadedIds)
   if (idsToLoad.length < 1) return
-  await apiClient.getBooksIndex({ ids: idsToLoad }).then(({ books }) => {
+  await apiClient.getBooksIndex({ ids: idsToLoad }).then(books => {
     dispatch(addBooks(books))
   })
 }

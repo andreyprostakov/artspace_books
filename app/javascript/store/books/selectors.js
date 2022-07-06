@@ -17,13 +17,12 @@ export const selectCurrentBookIndexEntry = () => state => {
   return selectBooksIndexEntry(id)(state)
 }
 
-export const selectBooksRefsByYear = year => state => {
-  return Object.values(localState(state).booksRefs).filter(ref => ref.year === year)
-}
+export const selectBooksRefsByYear = year => state =>
+  Object.values(localState(state).booksRefs).filter(ref => ref.year === year)
 
 export const selectBookRef = id => state => localState(state).booksRefs[id]
 
-export const selectBooksRefIds = () => state => Object.keys(localState(state).booksRefs[id]).map(id => parseInt(id))
+export const selectBooksRefIds = () => state => Object.keys(localState(state).booksRefs).map(id => parseInt(id))
 
 export const selectCurrentBookRef = () => state => {
   const id = selectCurrentBookId()(state)

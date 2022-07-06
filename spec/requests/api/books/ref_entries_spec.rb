@@ -29,7 +29,7 @@ RSpec.describe '/api/books/ref_entries' do
       send_request
 
       expect(response).to be_successful
-      expect(json_response).to match([hash_including(id: book.id)])
+      expect(json_response).to match(list: [hash_including(id: book.id)], total: 1)
     end
   end
 end

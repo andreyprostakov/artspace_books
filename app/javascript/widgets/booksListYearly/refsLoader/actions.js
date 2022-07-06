@@ -4,7 +4,6 @@ import { selectCurrentFilters } from 'widgets/booksListYearly/selectors'
 import {
   pickYearsToLoad,
   selectYearsInLoading,
-  selectYearsLoaded,
   selectYearsToLoad,
 } from 'widgets/booksListYearly/refsLoader/selectors'
 import {
@@ -24,13 +23,10 @@ export const requestYearRefsLoaded = year => async(dispatch, getState) => {
   const state = getState()
   const yearsToLoad = pickYearsToLoad(year)(state)
 
-  if (yearsToLoad.length < 1) {
-    return null
-  } else if (!yearsToLoad.includes(year)) {
-    dispatch(fetchBooksForYears(yearsToLoad))
-  } else {
+  if (yearsToLoad.includes(year))
     await dispatch(fetchBooksForYears(yearsToLoad))
-  }
+  else
+    dispatch(fetchBooksForYears(yearsToLoad))
 }
 
 // PRIVATE

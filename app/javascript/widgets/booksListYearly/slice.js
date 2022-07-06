@@ -1,4 +1,4 @@
-import { difference, uniq } from 'lodash'
+import { uniq } from 'lodash'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const slice = createSlice({

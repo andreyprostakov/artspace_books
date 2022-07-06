@@ -35,15 +35,13 @@ class BooksFilter
   end
 
   def apply_years_filter
-    years = params[:years]
-    return if years.blank?
+    return if (years = params[:years]).blank?
 
     @scope = scope.where(year_published: years)
   end
 
   def apply_ids_filter
-    ids = params[:ids]
-    return if ids.blank?
+    return if (ids = params[:ids]).blank?
 
     @scope = scope.where(id: ids)
   end

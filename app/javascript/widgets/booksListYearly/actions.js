@@ -1,23 +1,16 @@
-import { clamp, difference, first, last, pull } from 'lodash'
+import { clamp, first, last, pull } from 'lodash'
 import { slice } from 'widgets/booksListYearly/slice'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import apiClient from 'store/books/apiClient'
 
-import {
-  selectCurrentAuthorId,
-  selectCurrentBookId,
-} from 'store/axis/selectors'
-
+import { selectCurrentBookId } from 'store/axis/selectors'
 import {
   selectBooksIndexEntry,
   selectBooksIndex,
-  selectBooksIndexIds,
-  selectBookRef,
   selectCurrentBookRef,
 } from 'store/books/selectors'
 import {
   addBook,
-  addBooks,
   fetchMissingBookIndexEntries,
   showBook,
   setCurrentBookDetails,
@@ -27,22 +20,15 @@ import { selectTagNames } from 'store/tags/selectors'
 
 import {
   selectBookIdsByYear,
-  selectCurrentFilters,
   selectBookIdsToDisplay,
   selectShuffledBooksOfYear,
   selectYears,
   selectYearCurrentBookId,
 } from 'widgets/booksListYearly/selectors'
 
-import {
-  clearSelection,
-  selectId,
-  toggleId,
-  unselectId,
-} from 'store/selectables/actions'
+import { clearSelection, toggleId } from 'store/selectables/actions'
 import {
   clearState as clearYearsInnerState,
-  loadRequestedBookRefs,
   requestYearRefsLoaded,
 } from 'widgets/booksListYearly/refsLoader/actions'
 
@@ -172,7 +158,7 @@ export const removeTagFromBook = (id, tagName) => (dispatch, getState) => {
   )
 }
 
-export const jumpToYear = year => (dispatch, getState) => {
+export const jumpToYear = year => dispatch => {
   dispatch(requestYearRefsLoaded(year)).then(() => {
     dispatch(switchToBookByYear(year))
   })
@@ -189,9 +175,9 @@ const changeSelectedYear = selectTargetYear => (dispatch, getState) => {
 const switchToBookByYear = targetYear => (dispatch, getState) => {
   const state = getState()
   const bookIdPreselected = selectYearCurrentBookId(targetYear)(state)
-  if (bookIdPreselected) {
+  if (bookIdPreselected)
     dispatch(showBook(bookIdPreselected))
-  } else {
+  else {
     const bookId = first(selectBookIdsByYear(targetYear)(state))
     if (!bookId) return
     dispatch(showBook(bookId))
