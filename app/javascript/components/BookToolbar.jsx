@@ -13,13 +13,9 @@ import {
   selectTagNames,
 } from 'store/tags/selectors'
 
-import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
-import {
-  addBookIdToSelected,
-  addTagToBook,
-  removeBookIdFromSelected,
-  removeTagFromBook,
-} from 'widgets/booksListYearly/actions'
+import { selectIdIsSelected } from 'store/selectables/selectors'
+import { selectId, unselectId } from 'store/selectables/actions'
+import { addTagToBook, removeTagFromBook } from 'widgets/booksListYearly/actions'
 import { selectBookIdsInProcessing } from 'store/bookSync/selectors'
 import { updateBookPopularity } from 'store/bookSync/actions'
 import UrlStoreContext from 'store/urlStore/Context'
@@ -37,7 +33,7 @@ const BookToolbar = (props) => {
   const isBookmarked = tagNames.includes(tagBookmark)
   const tagRead = useSelector(selectTagRead())
   const isRead = tagNames.includes(tagRead)
-  const isSelectedForBatch = useSelector(selectBookIsSelected(book.id))
+  const isSelectedForBatch = useSelector(selectIdIsSelected(book.id))
 
   if (!routesReady) return null
 
@@ -95,11 +91,11 @@ const BookToolbar = (props) => {
         }
 
         { isSelectedForBatch ?
-            <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(removeBookIdFromSelected(book.id)) }>
+            <Button variant='outline-warning' title='Unselect' href='#' onClick={ () => dispatch(unselectId(book.id)) }>
               <FontAwesomeIcon icon={ faCheckSquare }/>
             </Button>
           :
-            <Button variant='outline-warning' title='Select' href='#' onClick={ () => dispatch(addBookIdToSelected(book.id)) }>
+            <Button variant='outline-warning' title='Select' href='#' onClick={ () => dispatch(selectId(book.id)) }>
               <FontAwesomeIcon icon={ faSquare }/>
             </Button>
         }

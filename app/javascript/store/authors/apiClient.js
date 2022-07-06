@@ -11,13 +11,13 @@ class ApiClient {
   static getAuthorsRefs() {
     return jQuery.ajax({
       url: '/api/authors/ref_entries.json'
-    }).then(authors => authors.map(data => AuthorRef.parse(data)))
+    }).then(authors => authors.map(entry => AuthorRef.parse(entry)))
   }
 
   static getAuthorRef(id) {
     return jQuery.ajax({
       url: `/api/authors/ref_entries/${id}.json`
-    }).then(data => AuthorRef.parse(data))
+    }).then(entry => AuthorRef.parse(entry))
   }
 
   static getAuthorsIndex({ page, perPage, sortBy } = {}) {
@@ -28,19 +28,19 @@ class ApiClient {
     }
     return jQuery.ajax({
       url: `/api/authors/index_entries.json${ objectToParams(params) }`
-    }).then(({ list, total }) => ({ total, list: list.map(data => AuthorIndexEntry.parse(data)) }))
+    }).then(({ list, total }) => ({ total, list: list.map(entry => AuthorIndexEntry.parse(entry)) }))
   }
 
   static getAuthorIndexEntry(id) {
     return jQuery.ajax({
       url: `/api/authors/index_entries/${id}.json`
-    }).then(data => AuthorIndexEntry.parse(data))
+    }).then(entry => AuthorIndexEntry.parse(entry))
   }
 
   static getAuthorFull(id) {
     return jQuery.ajax({
       url: `/api/authors/full_entries/${id}.json`
-    }).then(data => AuthorFull.parse(data))
+    }).then(entry => AuthorFull.parse(entry))
   }
 
   static putAuthorUpdates(id, formData) {
@@ -64,7 +64,7 @@ class ApiClient {
   static search(key) {
     return jQuery.ajax({
       url: `/api/authors/search.json${ objectToParams({ key }) }`
-    }).then(entries => entries.map(raw => AuthorSearchEntry.parse(raw)))
+    }).then(entries => entries.map(entry => AuthorSearchEntry.parse(entry)))
   }
 }
 

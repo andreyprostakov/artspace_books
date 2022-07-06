@@ -10,6 +10,7 @@ import storeTagsReducer from 'store/tags/slice'
 
 import booksListLinearReducer from 'widgets/booksListLinear/slice'
 import booksListYearlyReducer from 'widgets/booksListYearly/slice'
+import booksListYearsRefsReducer from 'widgets/booksListYearly/refsLoader/slice'
 import notificationsReducer from 'widgets/notifications/slice'
 
 import imageModalReducer from 'modals/imageFullShow/slice'
@@ -22,6 +23,7 @@ export default configureStore({
     axis: axisReducer,
     booksListLinear: booksListLinearReducer,
     booksListYearly: booksListYearlyReducer,
+    booksListYearlyRefs: booksListYearsRefsReducer,
     bookSync: bookSyncReducer,
     imageModal: imageModalReducer,
     metadata: metadataReducer,

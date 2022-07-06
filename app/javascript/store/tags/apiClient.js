@@ -51,7 +51,7 @@ class ApiClient {
   static search(key) {
     return jQuery.ajax({
       url: `/api/tags/search.json${ objectToParams({ key }) }`
-    }).then(entries => entries.map(raw => TagSearchEntry.parse(raw)))
+    }).then(entries => entries.map(entry => TagSearchEntry.parse(entry)))
   }
 }
 

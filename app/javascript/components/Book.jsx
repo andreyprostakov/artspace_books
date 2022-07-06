@@ -5,24 +5,23 @@ import classnames from 'classnames'
 
 import { selectBooksIndexEntry, selectBookDefaultImageUrl } from 'store/books/selectors'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectBookIsSelected } from 'widgets/booksListYearly/selectors'
+import { selectIdIsSelected } from 'store/selectables/selectors'
 import { toggleId } from 'store/selectables/actions'
 
 import ImageContainer from 'components/ImageContainer'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const Book = (props) => {
-  const { id, showYear, ...options } = props
+  const { bookIndexEntry, showYear, ...options } = props
   const dispatch = useDispatch()
-  const book = useSelector(selectBooksIndexEntry(id))
   const currentBookId = useSelector(selectCurrentBookId())
   const defaultCoverUrl = useSelector(selectBookDefaultImageUrl())
   const ref = useRef(null)
-  const isSelectedForBatch = useSelector(selectBookIsSelected(id))
+  const isSelectedForBatch = useSelector(selectIdIsSelected(bookIndexEntry.id))
   const { actions: { showBooksIndexEntry } } = useContext(UrlStoreContext)
 
-  const isCurrent = id == currentBookId
-  const coverUrl = book?.coverUrl || defaultCoverUrl
+  const isCurrent = bookIndexEntry.id == currentBookId
+  const coverUrl = bookIndexEntry.coverUrl || defaultCoverUrl
   const classNames = classnames('book-case', { 'selected': isCurrent, 'selected-for-batch': isSelectedForBatch })
 
   useEffect(() => {
@@ -30,24 +29,22 @@ const Book = (props) => {
   })
 
   const handleClick = (e) => {
-    if (e.ctrlKey) dispatch(toggleId(id))
-    showBooksIndexEntry(id)
+    if (e.ctrlKey) dispatch(toggleId(bookIndexEntry.id))
+    showBooksIndexEntry(bookIndexEntry.id)
   }
 
-  if (!book) return null
-
   return (
-    <div className={ classNames } onClick={ handleClick } title={ book.title } ref={ ref } { ...options }>
+    <div className={ classNames } onClick={ handleClick } title={ bookIndexEntry.title } ref={ ref } { ...options }>
       <ImageContainer className='book-cover' url={ coverUrl }/>
       { showYear &&
-        <div className='year'>{ book.year }</div>
+        <div className='year'>{ bookIndexEntry.year }</div>
       }
     </div>
   );
 }
 
 Book.propTypes = {
-  id: PropTypes.number.isRequired,
+  bookIndexEntry: PropTypes.object.isRequired,
   showYear: PropTypes.bool,
 }
 

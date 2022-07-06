@@ -25,16 +25,16 @@ const Configurer = () => {
     dispatch(clearListState())
     dispatch(assignSortBy('popularity'))
     dispatch(assignPerPage(40))
-    dispatch(assignFilter({ tagId }))
+    dispatch(assignFilter({ tagIds: [tagId] }))
     Promise.all([
       dispatch(prepareNavRefs()),
-      dispatch(fetchBooks()),
       dispatch(fetchTagsIndexEntry(tagId)),
     ]).then(() => {
       dispatch(setPageIsLoading(false))
       dispatch(setupBooksListSelection())
     })
   }, [tagId])
+
   return null
 }
 

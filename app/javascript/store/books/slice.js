@@ -4,8 +4,10 @@ export const slice = createSlice({
   name: 'storeBooks',
   initialState: {
     booksIndex: {},
+    booksRefs: {},
     bookDetailsCurrent: {},
     defaultCoverUrl: null,
+    requestedBookId: null,
   },
   reducers: {
     addBook: (state, action) => {
@@ -20,12 +22,11 @@ export const slice = createSlice({
       })
     },
 
-    clearBooks: state => {
-      state.booksIndex = {}
-    },
-
-    setPageIsLoading: (state, action) => {
-      state.pageIsLoading = Boolean(action.payload)
+    addBooksRefs: (state, action) => {
+      const refs = action.payload
+      refs.forEach(entry => {
+        state.booksRefs[entry.id] = entry
+      })
     },
 
     setDefaultBookImageUrl: (state, action) => {
@@ -35,6 +36,10 @@ export const slice = createSlice({
 
     setCurrentBookDetails: (state, action) => {
       state.bookDetailsCurrent = action.payload
+    },
+
+    setRequestedBookId: (state, action) => {
+      state.requestedBookId = action.payload
     },
   }
 })

@@ -11,6 +11,7 @@
     padding: 0 0 0 30px;
     position: relative;
     text-align: left;
+    white-space: nowrap;
   }
 
   .book-case {
@@ -42,6 +43,16 @@
     &.selected-for-batch {
       border: 3px dotted rgba(255, 0, 0, 0.3);
       padding: 2px;
+    }
+
+    &.placeholder {
+      background-color: #eee;
+      opacity: 0.3;
+      text-align: center;
+
+      .placeholder-spinner {
+        margin-top: 75px;
+      }
     }
   }
 

@@ -5,30 +5,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import classnames from 'classnames'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { selectBookPopularities, selectCurrentBook } from 'store/books/selectors'
+import { selectBookPopularities, selectCurrentBookRef } from 'store/books/selectors'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import {
-  selectBookIdsByYear,
   selectBookShiftDirectionHorizontal,
-  selectYearCurrentBookId,
+  selectDisplayedBookIdsInYear,
 } from 'widgets/booksListYearly/selectors'
 import {
   setBookShiftDirectionHorizontal,
 } from 'widgets/booksListYearly/actions'
 
 import PopularityChart from 'widgets/booksListYearly/components/PopularityChart'
-import Book from 'widgets/booksListYearly/components/Book'
-import BookSelected from 'widgets/booksListYearly/components/BookSelected'
+import BookIndexEntry from 'widgets/booksListYearly/components/BookIndexEntry'
 
 const YearRow = (props) => {
   const { year } = props
-  const bookIds = useSelector(selectBookIdsByYear(year))
-  const currentBook = useSelector(selectCurrentBook())
-  const currentBookId = useSelector(selectCurrentBookId())
-  const yearCurrentBookId = useSelector(selectYearCurrentBookId(year))
-  const middleBookId = (bookIds.includes(currentBook.id)) ? currentBook.id : (yearCurrentBookId || first(bookIds))
-  const displayedBookIds = pickNearEntries(bookIds, middleBookId, { lengthBefore: 3, lengthAfter: 3 })
-  const yearIsCurrent = year === currentBook.year
+  const currentBookRef = useSelector(selectCurrentBookRef())
+  const displayedBookIds = useSelector(selectDisplayedBookIdsInYear(year))
+  const yearIsCurrent = year === currentBookRef.year
   const direction = useSelector(selectBookShiftDirectionHorizontal())
   const dispatch = useDispatch()
 
@@ -58,12 +52,9 @@ const YearRow = (props) => {
       </div>
 
       <div className={ classNames } onAnimationEnd={ onAnimationEnd }>
-        { displayedBookIds.map(bookId => {
-          const bookKey = [bookId, direction].join()
-          return bookId == currentBookId
-            ? <BookSelected id={ bookId } key={ bookKey }/>
-            : <Book id={ bookId } key={ bookKey }/>
-        }) }
+        { displayedBookIds.map(bookId =>
+          <BookIndexEntry id={ bookId } key={ [bookId, direction].join() }/>
+        ) }
       </div>
     </div>
   )

@@ -1,16 +1,21 @@
 import { first, last } from 'lodash'
 import apiClient from 'store/books/apiClient'
 import { selectCurrentBookId } from 'store/axis/selectors'
-import { setRequestedBookId } from 'widgets/booksListYearly/actions'
 import { clearSelection } from 'store/selectables/actions'
-import { selectBooksIndexEntry, selectCurrentBook } from 'store/books/selectors'
-import { addBooks, showBook } from 'store/books/actions'
+import { selectBooksRefIds, selectCurrentBookRef } from 'store/books/selectors'
+import {
+  addBooks,
+  addBooksRefs,
+  fetchMissingBookIndexEntries,
+  setRequestedBookId,
+  showBook,
+} from 'store/books/actions'
 import { pickNearEntries } from 'utils/pickNearEntries'
 import { selectBookIds, selectFilter, selectPage, selectPerPage, selectSortBy } from 'widgets/booksListLinear/selectors'
 import { slice } from 'widgets/booksListLinear/slice'
 import { toggleId } from 'store/selectables/actions'
 export const {
-  assignBooks,
+  assignBookIds,
   assignBooksTotal,
   assignFilter,
   assignSortBy,
@@ -27,18 +32,22 @@ export const fetchBooks = () => (dispatch, getState) => {
     perPage: selectPerPage()(state),
     sortBy: selectSortBy()(state),
   }
-  return apiClient.getBooksIndex(query).then(({ books, total }) => {
-    if (books.length > 0) dispatch(addBooks(books))
-    dispatch(assignBooks(books))
+  return apiClient.getBooksRefs(query).then(({ books, total }) => {
+    dispatch(addBooksRefs(books))
+    dispatch(assignBookIds(books.map(book => book.id)))
     dispatch(assignBooksTotal(total))
+    if (books.length > 0) {
+      const ids = books.map(book => book.id)
+      dispatch(fetchMissingBookIndexEntries(ids))
+    }
   })
 }
 
 export const shiftSelection = (shift) => (dispatch, getState) => {
   const state = getState()
-  const currentBook = selectCurrentBook()(state)
+  const currentBookRef = selectCurrentBookRef()(state)
   const allBookIds = selectBookIds()(state)
-  const currentIndex = allBookIds.indexOf(currentBook.id)
+  const currentIndex = allBookIds.indexOf(currentBookRef.id)
   var targetIndex = currentIndex + shift
   if (targetIndex < 0) { targetIndex = allBookIds.length - 1 }
   if (targetIndex >= allBookIds.length) { targetIndex = 0 }
@@ -47,9 +56,9 @@ export const shiftSelection = (shift) => (dispatch, getState) => {
 }
 
 export const setupBooksListSelection = () => (dispatch, getState) => {
-  const currentBook = selectCurrentBook()(getState())
-  if (currentBook) {
-    dispatch(showBook(currentBook.id))
+  const currentBookRef = selectCurrentBookRef()(getState())
+  if (currentBookRef) {
+    dispatch(showBook(currentBookRef.id))
   } else {
     dispatch(switchToFirstBook())
   }

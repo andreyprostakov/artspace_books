@@ -4,8 +4,9 @@ import { Route } from 'react-router-dom'
 
 import { selectCurrentBookId } from 'store/axis/selectors'
 import { setCurrentBookId } from 'store/axis/actions'
+import { selectRequestedBookId } from 'store/books/selectors'
+import { setRequestedBookId } from 'store/books/actions'
 import { selectPageIsLoading } from 'store/metadata/selectors'
-import { selectRequestedBookId } from 'widgets/booksListYearly/selectors'
 import UrlStoreContext from 'store/urlStore/Context'
 import TagsPage from 'pages/tagsPage/Page'
 
@@ -15,6 +16,7 @@ const LocalStoreConfigurer = () => {
           actions: { addUrlAction, addUrlState },
           helpers: { buildRelativePath },
           getActions,
+          routesReady,
         } = useContext(UrlStoreContext)
   const currentBookId = useSelector(selectCurrentBookId())
   const requestedBookId = useSelector(selectRequestedBookId())
@@ -30,14 +32,17 @@ const LocalStoreConfigurer = () => {
   }, [])
 
   useEffect(() => {
-    if (!storeReady || pageLoading) return
-    if (requestedBookId === bookId) return
+    if (!storeReady || pageLoading || !requestedBookId) return
 
-    getActions().showBooksIndexEntry(requestedBookId)
-  }, [requestedBookId])
+    dispatch(setRequestedBookId(null))
+    if (requestedBookId !== bookId)
+      getActions().showBooksIndexEntry(requestedBookId)
+  }, [pageLoading, storeReady, requestedBookId])
 
   useEffect(() => {
-    dispatch(setCurrentBookId(bookId))
+    if (routesReady) {
+      dispatch(setCurrentBookId(bookId))
+    }
 
     setStoreReady(true)
   }, [bookId])

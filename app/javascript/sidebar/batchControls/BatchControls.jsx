@@ -6,18 +6,14 @@ import CloseIcon from 'components/icons/CloseIcon'
 import FormInputTags from 'components/FormInputTags'
 import { selectAuthorRef } from 'store/authors/selectors'
 import { selectBooksIndexEntry } from 'store/books/selectors'
-import { selectBatchModeOn, selectBookIdsSelected } from 'widgets/booksListYearly/selectors'
-import {
-  clearBooksSelection,
-  reloadBooks,
-  removeBookIdFromSelected,
-} from 'widgets/booksListYearly/actions'
+import { selectIdsSelected, selectBatchModeOn } from 'store/selectables/selectors'
+import { clearSelection, unselectId } from 'store/selectables/actions'
 import apiClient from 'store/books/apiClient'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const BatchControls = (props) => {
   const dispatch = useDispatch()
-  const bookIds = useSelector(selectBookIdsSelected())
+  const bookIds = useSelector(selectIdsSelected())
   const [state, setState] = useState({ currentTags: [] })
   const widgetShown = useSelector(selectBatchModeOn())
   const { onSuccess } = props
@@ -27,7 +23,6 @@ const BatchControls = (props) => {
     const formData = { tagNames: state.currentTags.map(tag => tag.name) }
 
     apiClient.updateBooksBatch(bookIds, state.currentTags.map(tag => tag.name)).then(() => {
-      console.log(['BATCH UPDATE!', onSuccess])
       onSuccess && onSuccess(bookIds)
     })
   }
@@ -36,7 +31,7 @@ const BatchControls = (props) => {
 
   return (
     <Card className='sidebar-widget-batch-controls sidebar-card-widget'>
-      <CloseIcon onClick={ () => dispatch(clearBooksSelection()) }/>
+      <CloseIcon onClick={ () => dispatch(clearSelection()) }/>
       <Card.Header className='widget-title'>Selection</Card.Header>
       <ListGroup variant="flush">
         <ListGroup.Item>
@@ -75,7 +70,7 @@ const SelectedBooksEntry = (props) => {
 
   return (
     <ListGroup.Item key={ id }>
-      <a className='icon-remove' onClick={ () => dispatch(removeBookIdFromSelected(id)) }>X</a>
+      <a className='icon-remove' onClick={ () => dispatch(unselectId(id)) }>X</a>
       { ' | ' }
       <a href='#' onClick={ (e) => { e.preventDefault(); showBooksIndexEntry(id) } }>
         { authorRef.fullname }. { book.title }

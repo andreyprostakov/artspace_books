@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import { selectAuthorFull } from 'store/authors/selectors'
-import { selectCurrentBook } from 'store/books/selectors'
+import { selectCurrentBookRef } from 'store/books/selectors'
 import { selectCurrentAuthorId, selectCurrentBookId } from 'store/axis/selectors'
 import {
   jumpToFirstYear,
@@ -46,8 +46,7 @@ const HotKeysWrap = (props) => {
   const ref = useRef(null)
   const currentAuthorId = useSelector(selectCurrentAuthorId())
   const currentAuthor = useSelector(selectAuthorFull(currentAuthorId))
-  const currentBookId = useSelector(selectCurrentBookId())
-  const currentBook = useSelector(selectCurrentBook())
+  const currentBookRef = useSelector(selectCurrentBookRef())
   const { pageState: { modalBookEditShown },
           actions: { closeModal, openEditBookModal } } = useContext(UrlStoreContext)
 
@@ -72,7 +71,7 @@ const HotKeysWrap = (props) => {
     SYNC_BOOK_STATS: () => dispatch(syncCurrentBookStats()),
     TOGGLE_AUTHOR: () => alert('TOGGLE'),
     TOGGLE_EDIT: () => {
-      if (!currentBook) { return }
+      if (!currentBookRef) { return }
 
       if (modalBookEditShown) {
         closeModal()

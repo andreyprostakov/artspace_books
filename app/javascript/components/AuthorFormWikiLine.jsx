@@ -38,10 +38,9 @@ const AuthorFormWikiLine = (props) => {
 
 AuthorFormWikiLine.propTypes = {
   controlId: PropTypes.string.isRequired,
-  bookDetails: PropTypes.object.isRequired,
-  authorRef: PropTypes.object.isRequired,
+  authorForm: PropTypes.object.isRequired,
   errors: PropTypes.array,
-  currentTitle: PropTypes.string
+  fullname: PropTypes.string
 }
 
 export default AuthorFormWikiLine
