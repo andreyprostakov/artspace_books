@@ -29,6 +29,10 @@ export const slice = createSlice({
       })
     },
 
+    clearBooksRefs: state => {
+      state.booksRefs = {}
+    },
+
     setDefaultBookImageUrl: (state, action) => {
       const url = action.payload
       state.defaultCoverUrl = url

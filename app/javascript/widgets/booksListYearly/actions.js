@@ -11,6 +11,7 @@ import {
 } from 'store/books/selectors'
 import {
   addBook,
+  clearBooksRefs,
   fetchMissingBookIndexEntries,
   showBook,
   setCurrentBookDetails,
@@ -191,6 +192,7 @@ export const requestBookIndexNeighboursLoaded = () => (dispatch, getState) => {
 }
 
 export const clearListState = () => dispatch => {
+  dispatch(clearBooksRefs())
   dispatch(clearListInnerState())
   dispatch(clearYearsInnerState())
   dispatch(clearSelection())

@@ -10,6 +10,7 @@ export const {
   addBook,
   addBooks,
   addBooksRefs,
+  clearBooksRefs,
   setDefaultBookImageUrl,
   setCurrentBookDetails,
   setRequestedBookId,
