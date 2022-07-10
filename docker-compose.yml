@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b 0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "3002:3000"
+    depends_on:
+      - redis
+      - webpacker
+
+  redis:
+    image: redis:5-alpine
+    restart: unless-stopped
+    command: redis-server
+    volumes:
+      - data:/var/redis
+
+  solr:
+    image: solr
+    ports:
+     - "8983:8983"
+    volumes:
+      - data:/var/solr
+    command:
+      - solr-precreate
+      - artspace_books
+
+  webpacker:
+    build: .
+    command: bash -c "rm -rf /app/public/packs; /app/bin/webpack-dev-server"
+    volumes:
+      - .:/app
+    ports:
+      - "3035:3035"
+
+volumes:
+  data:

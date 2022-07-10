@@ -1,5 +1,6 @@
 defaults: &defaults
   namespace: infospace_books
+  host: redis
   db: 0
 
 development:
