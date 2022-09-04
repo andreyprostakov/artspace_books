@@ -7,7 +7,8 @@ const ImageContainer = (props) => {
     backgroundImage: `url(${url})`,
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
+    ...options.styles
   }
   return (
     <div className={ classNames('image-container', className) } style={ styles } { ...options }>
