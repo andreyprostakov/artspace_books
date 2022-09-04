@@ -101,6 +101,8 @@
     }
 
     &.current {
+      height: 430px;
+
       .background {
         position: absolute;
         width: 100%;
@@ -111,6 +113,18 @@
         height: 100%;
         opacity: 0.2;
         background-size: cover;
+      }
+
+      .popularities-chart canvas {
+        top: 110px;
+      }
+
+      .year-books {
+        margin-top: 90px;
+      }
+
+      .year-number {
+        bottom: 90px;
       }
     }
   }
@@ -267,6 +281,8 @@
     white-space: normal;
     font-size: 12px;
     font-style: italic;
+    font-weight: 500;
+    margin-bottom: 10px;
   }
 
   .popularities-chart {
