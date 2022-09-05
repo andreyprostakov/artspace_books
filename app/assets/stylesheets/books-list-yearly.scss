@@ -113,6 +113,7 @@
         height: 100%;
         opacity: 0.2;
         background-size: cover;
+        filter: grayscale(100%);
       }
 
       .popularities-chart canvas {

@@ -15,6 +15,8 @@ const TagCard = (props) => {
       <Card.Body>
         <Toolbar tagIndexEntry={ tagIndexEntry }/>
       </Card.Body>
+
+      <div className='widget-arrow-triangle-down'/>
     </Card>
   )
 }

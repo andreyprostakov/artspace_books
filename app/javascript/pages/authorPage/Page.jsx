@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Col } from 'react-bootstrap'
 
 import Layout from 'pages/Layout'
-import AuthorCard from 'sidebar/authorCard/AuthorCard'
+import SidebarAuthorCard from 'pages/authorPage/SidebarAuthorCard'
 import BookCard from 'sidebar/bookCard/BookCard'
 import BooksListLinearControls from 'sidebar/booksListLinearControls/BooksListLinearControls'
 import BooksLinearControls from 'sidebar/batchControls/BooksLinearControls'
@@ -17,10 +17,10 @@ const AuthorPage = () => {
       <Layout>
         <Col xs={ 4 }>
           <div className='page-sidebar'>
-            <BookCard/>
-            <AuthorCard/>
+            <SidebarAuthorCard/>
             <BooksListLinearControls/>
             <BooksLinearControls/>
+            <BookCard/>
           </div>
         </Col>
 

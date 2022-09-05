@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { useSelector } from 'react-redux'
 import { HotKeys } from 'react-hotkeys'
 
 import { selectSortedAuthors } from 'pages/authorsPage/selectors'
@@ -8,12 +7,11 @@ import { selectSortedAuthors } from 'pages/authorsPage/selectors'
 import Layout from 'pages/Layout'
 import AuthorsIndexControls from 'sidebar/authorsIndexControls/Controls'
 import AuthorsListItem from 'pages/authorsPage/components/AuthorsListItem'
-import AuthorCard from 'sidebar/authorCard/AuthorCard'
+import SidebarAuthorCard from 'pages/authorsPage/SidebarAuthorCard'
 import PageConfigurer from 'pages/authorsPage/PageConfigurer'
 import UrlStoreContext from 'store/urlStore/Context'
 
 const AuthorsPage = () => {
-  const dispatch = useDispatch()
   const { pageState: { sortOrder }, actions: { removeAuthorWidget } } = useContext(UrlStoreContext)
   const authors = useSelector(selectSortedAuthors(sortOrder))
 
@@ -35,20 +33,16 @@ const AuthorsPage = () => {
 
       <HotKeys keyMap={ keyMap } handlers={ hotKeysHandlers }>
         <Layout className='authors-list-page'>
-          <Col sm={4}>
-            <div className='page-sidebar'>
-              <AuthorCard onClose={ () => removeAuthorWidget() }/>
-              <AuthorsIndexControls/>
-            </div>
-          </Col>
+          <Layout.Sidebar>
+            <AuthorsIndexControls/>
+            <SidebarAuthorCard onClose={ () => removeAuthorWidget() }/>
+          </Layout.Sidebar>
 
-          <Col sm={8}>
-            <Row className='authors-list'>
-              { authors.map(author =>
-                <AuthorsListItem key={ author.id } author={ author }/>
-              ) }
-            </Row>
-          </Col>
+          <Layout.MainContent className='authors-list'>
+            { authors.map(author =>
+              <AuthorsListItem key={ author.id } author={ author }/>
+            ) }
+          </Layout.MainContent>
         </Layout>
       </HotKeys>
     </>

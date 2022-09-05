@@ -2,7 +2,6 @@
 
 .page-sidebar {
   height: calc(100vh - 56px - 10px);
-  overflow-y: auto;
   padding-top: 10px;
   position: relative;
 }
@@ -23,5 +22,55 @@
     position: absolute;
     right: 14px;
     top: 14px;
+  }
+}
+
+.widget-header-arrow-triangle-right {
+  width: 0;
+  height: 0;
+  border-top: 22px solid transparent;
+  border-bottom: 22px solid transparent;
+  border-left: 22px solid rgba(0, 0, 0, 0.125);
+  position: absolute;
+  right: -22px;
+  z-index: 1;
+  top: 7px;
+
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #f7f7f7;
+    position: absolute;
+    top: -20px;
+    left: -22px;
+  }
+}
+
+.widget-arrow-triangle-down {
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-top: 22px solid rgba(0, 0, 0, 0.125);
+  position: absolute;
+  bottom: -23px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 21px solid transparent;
+    border-right: 21px solid transparent;
+    border-top: 21px solid #fff;
+    position: absolute;
+    top: -23px;
+    left: -21px;
   }
 }

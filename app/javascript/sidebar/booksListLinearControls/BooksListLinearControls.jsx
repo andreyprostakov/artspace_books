@@ -23,6 +23,9 @@ const BooksListControls = () => {
         <SortingDropdown/>
         <Pagination/>
       </Card.Body>
+
+      <div className='widget-header-arrow-triangle-right'/>
+      <div className='widget-arrow-triangle-down'/>
     </Card>
   )
 }

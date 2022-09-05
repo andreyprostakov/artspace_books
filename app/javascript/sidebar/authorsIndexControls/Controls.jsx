@@ -1,29 +1,30 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Card } from 'react-bootstrap'
 
 import {
   selectAuthorsTotal,
   selectPage,
   selectPerPage,
 } from 'pages/authorsPage/selectors'
+import { selectCurrentAuthorId } from 'store/axis/selectors'
 
 import Pagination from 'sidebar/authorsIndexControls/Pagination'
 import SortingDropdown from 'sidebar/authorsIndexControls/SortingDropdown'
+import SidebarWidget from 'sidebar/SidebarWidget'
 
 const AuthorsIndexControls = () => {
   const totalCount = useSelector(selectAuthorsTotal())
   const page = useSelector(selectPage())
   const perPage = useSelector(selectPerPage())
+  const authorId = useSelector(selectCurrentAuthorId())
 
   return (
-    <Card className='sidebar-authors-index-controls-widget sidebar-card-widget'>
-      <Card.Header className='widget-title'>Authors: { totalCount }</Card.Header>
-      <Card.Body>
-        <SortingDropdown/>
-        <Pagination/>
-      </Card.Body>
-    </Card>
+    <SidebarWidget className='sidebar-authors-index-controls-widget'
+      isCurrent={ true } isParent={ Boolean(authorId) }
+      title={ `Authors: ${ totalCount }` }>
+      <SortingDropdown/>
+      <Pagination/>
+    </SidebarWidget>
   )
 }
 

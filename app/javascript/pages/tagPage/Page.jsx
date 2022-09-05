@@ -17,10 +17,10 @@ const TagPage = () => {
       <Layout>
         <Col xs={ 4 }>
           <div className='page-sidebar'>
-            <BookCard/>
             <TagCard/>
             <BooksListLinearControls/>
             <BooksLinearControls/>
+            <BookCard/>
           </div>
         </Col>
 
