@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe GoodreadsStatsScraper do
   describe '.extract_stats' do
-    subject { described_class.extract_stats(book) }
+    subject(:result) { described_class.extract_stats(book) }
 
     let(:book) { build_stubbed(:book, goodreads_url: 'https://www.goodreads.com/book/show/2452383.The_Chimes') }
     let(:test_goodreads_page) { File.read File.join(fixture_path, 'goodreads_test.html') }
@@ -16,9 +16,9 @@ RSpec.describe GoodreadsStatsScraper do
     end
 
     it 'fetches data from HTML page' do
-      expect(subject).to match(
-        rating: 3.3,
-        popularity: 341
+      expect(result).to match(
+        rating: 3.19,
+        ratings_count: 8670
       )
     end
 
@@ -26,7 +26,7 @@ RSpec.describe GoodreadsStatsScraper do
       before { book.goodreads_url = nil }
 
       it 'returns empty hash' do
-        expect(subject).to eq({})
+        expect(result).to eq({})
       end
     end
   end

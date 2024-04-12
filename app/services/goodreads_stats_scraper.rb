@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class GoodreadsStatsScraper
-  RATING_PATTERN = /&quot;rating&quot;:&quot;([\d.]+)&quot;/
-  POPULARITY_PATTERN = /&quot;ratingsCount&quot;:(\d+),&quot;/
+  RATING_PATTERN = /<div class="RatingStatistics__rating"[\s\w\-\=\"]*>([\d\.]+).*<\/div>/
+  COUNT_PATTERN = /<span data-testid="ratingsCount"[\s\w\-\=\"]*>([\d\,]+).*<\/span>/
 
   def self.extract_stats(book)
     return {} unless book.goodreads_url
 
     site_page_content = HTTParty.get(book.goodreads_url).body
     (rating,), = site_page_content.scan(RATING_PATTERN)
-    (popularity,), = site_page_content.scan(POPULARITY_PATTERN)
+    (ratings_count,), = site_page_content.scan(COUNT_PATTERN)
     {
       rating: rating&.to_f,
-      popularity: popularity&.to_i
+      ratings_count: ratings_count&.gsub(',', '')&.to_i
     }
   end
 end

@@ -10,6 +10,7 @@ gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 
 # data storage
 gem 'redis'
+gem 'redis-namespace' # needed or not?
 gem 'sqlite3', '~> 1.4'
 
 # data search
@@ -18,6 +19,8 @@ gem 'sunspot_rails'
 # integrations
 gem 'foreman'
 gem 'httparty'
+gem 'oauth2'
+gem 'google-apis-drive_v2'
 
 # views
 gem 'bootstrap', '~> 5.0.1'

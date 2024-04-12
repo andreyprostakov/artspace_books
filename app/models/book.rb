@@ -64,6 +64,12 @@ class Book < ApplicationRecord
     assign_remote_url_or_data(:aws_covers, value)
   end
 
+  def current_popularity_change
+    return 0 if popularity_previous_change.blank?
+
+    -popularity_previous_change.inject(:-)
+  end
+
   protected
 
   def strip_title

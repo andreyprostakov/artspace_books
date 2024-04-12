@@ -10,6 +10,7 @@ services:
       - "3010:3000"
     depends_on:
       - redis
+      - solr
       - webpacker
 
   redis:

@@ -5,14 +5,7 @@ An app to collect & present great books, with focus on chronology of publication
 Setup:
 
 ```sh
-bundle install
-yarn install
-rake db.setup
-rake db:migrate
-
-rspec
-
-foreman start
+docker-compose up
 ```
 
 Code style checks:
@@ -26,4 +19,10 @@ Tests:
 
 ```sh
 bundle exec rspec
+```
+
+Server debug:
+put `byebug` in the code and run the app via
+```sh
+docker-compose run --service-ports web
 ```
