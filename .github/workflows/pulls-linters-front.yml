@@ -3,6 +3,11 @@ on:
   pull_request:
     branches:
       - '*'
+
+concurrency:
+  group: ci-code-quality-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analize:
     runs-on: ubuntu-latest
