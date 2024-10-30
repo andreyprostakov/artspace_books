@@ -8,19 +8,8 @@ services:
       - "3010:3000"
     depends_on:
       - redis
+      - solr
       - webpacker
-
-  console:
-    build: .
-    command: bash -c "bundle exec rails c"
-    stdin_open: true
-    tty: true
-    volumes:
-      - .:/app
-    depends_on:
-      - redis
-    profiles:
-      - debug
 
   redis:
     image: redis:5-alpine
@@ -40,8 +29,6 @@ services:
     command:
       - solr-precreate
       - artspace_books
-    profiles:
-      - later
 
   webpacker:
     build: .

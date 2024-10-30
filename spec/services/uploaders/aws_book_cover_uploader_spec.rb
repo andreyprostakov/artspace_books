@@ -8,7 +8,7 @@ RSpec.describe Uploaders::AwsBookCoverUploader do
   end
 
   describe '.processors' do
-    it { expect(described_class.processors).to include([:resize_to_limit, [600, 800], anything]) }
+    it { expect(described_class.processors).to include([:resize_to_limit, [600, 800], anything, anything]) }
   end
 
   describe '.versions' do

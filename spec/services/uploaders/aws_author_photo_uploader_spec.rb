@@ -8,7 +8,7 @@ RSpec.describe Uploaders::AwsAuthorPhotoUploader do
   end
 
   describe '.processors' do
-    it { expect(described_class.processors).to include([:resize_to_limit, [1000, 600], anything]) }
+    it { expect(described_class.processors).to include([:resize_to_limit, [1000, 600], anything, anything]) }
   end
 
   describe '.versions' do
