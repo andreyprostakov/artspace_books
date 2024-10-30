@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web:
     build: .
@@ -11,6 +9,18 @@ services:
     depends_on:
       - redis
       - webpacker
+
+  console:
+    build: .
+    command: bash -c "bundle exec rails c"
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    profiles:
+      - debug
 
   redis:
     image: redis:5-alpine
@@ -30,6 +40,8 @@ services:
     command:
       - solr-precreate
       - artspace_books
+    profiles:
+      - later
 
   webpacker:
     build: .
