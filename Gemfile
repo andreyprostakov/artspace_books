@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.2'
+ruby '3.3.5'
 
 # runners
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -43,7 +43,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails', require: 'dotenv/rails-now'
+  gem 'dotenv-rails', '>= 3.1', require: 'dotenv/load'
   gem 'pry-rails'
 end
 
@@ -54,6 +54,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'listen', '~> 3.3'
   gem 'pronto'
+  gem 'rugged', '< 1.7.1' # incompatibility with pronto
   gem 'pronto-flay', require: false
   gem 'pronto-rubocop', require: false
   gem 'spring'

@@ -14,7 +14,7 @@ Local access: <a href="http://localhost:3010/" target="_blank">http://localhost:
 
 ## Development
 
-![rubyBadge](https://img.shields.io/badge/ruby-3.0.4-yellow)
+![rubyBadge](https://img.shields.io/badge/ruby-3.3.5-green)
 ![railsBadge](https://img.shields.io/badge/rails-6.1.6-yellow)
 
 Code style checks:

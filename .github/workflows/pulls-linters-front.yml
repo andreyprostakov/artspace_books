@@ -3,6 +3,11 @@ on:
   pull_request:
     branches:
       - '*'
+
+concurrency:
+  group: ci-code-quality-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analize:
     runs-on: ubuntu-latest
@@ -13,7 +18,7 @@ jobs:
       - name: Setup Node JS
         uses: actions/setup-node@v3
         with:
-          node-version: 17
+          node-version: 20
       - name: Yarn setup
         run: yarn
       - name: Run ESLint

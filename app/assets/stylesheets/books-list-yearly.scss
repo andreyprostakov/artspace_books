@@ -58,77 +58,6 @@
     }
   }
 
-  .list-year {
-    position: relative;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-    margin-bottom: 2px;
-    margin-right: 25px;
-    padding: 0 0 20px;
-    min-width: 2000px;
-    text-align: center;
-
-    .year-number {
-      position: absolute;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      margin: auto;
-      text-align: center;
-      font-size: 12px;
-    }
-
-    &.death-year {
-      height: 40px;
-
-      .death-icon {
-        display: inline-block;
-        padding: 8px 0;
-        margin-right: 4px;
-        background-color: #fff;
-      }
-    }
-
-    &.birth-year {
-      height: 40px;
-
-      .birthday-icon {
-        display: inline-block;
-        padding: 10px 0;
-        margin-right: 4px;
-        background-color: #fff;
-      }
-    }
-
-    &.current {
-      height: 430px;
-
-      .background {
-        position: absolute;
-        width: 100%;
-        max-width: 1100px;
-        margin: auto;
-        left: 0;
-        right: 0;
-        height: 100%;
-        opacity: 0.2;
-        background-size: cover;
-      }
-
-      .popularities-chart canvas {
-        top: 110px;
-      }
-
-      .year-books {
-        margin-top: 90px;
-      }
-
-      .year-number {
-        bottom: 90px;
-      }
-    }
-  }
-
   @keyframes move-left {
     from {
       transform: translate(160px, 0);
@@ -320,6 +249,77 @@
       .book-details {
         animation: none;
         opacity: 0;
+      }
+    }
+  }
+
+  .list-year {
+    position: relative;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-bottom: 2px;
+    margin-right: 25px;
+    padding: 0 0 20px;
+    min-width: 2000px;
+    text-align: center;
+
+    .year-number {
+      position: absolute;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      margin: auto;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    &.death-year {
+      height: 40px;
+
+      .death-icon {
+        display: inline-block;
+        padding: 8px 0;
+        margin-right: 4px;
+        background-color: #fff;
+      }
+    }
+
+    &.birth-year {
+      height: 40px;
+
+      .birthday-icon {
+        display: inline-block;
+        padding: 10px 0;
+        margin-right: 4px;
+        background-color: #fff;
+      }
+    }
+
+    &.current {
+      height: 430px;
+
+      .background {
+        position: absolute;
+        width: 100%;
+        max-width: 1100px;
+        margin: auto;
+        left: 0;
+        right: 0;
+        height: 100%;
+        opacity: 0.2;
+        background-size: cover;
+      }
+
+      .popularities-chart canvas {
+        top: 110px;
+      }
+
+      .year-books {
+        margin-top: 90px;
+      }
+
+      .year-number {
+        bottom: 90px;
       }
     }
   }
