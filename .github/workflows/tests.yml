@@ -32,6 +32,9 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
+          ADMIN_USERNAME: ADMIN
+          ADMIN_PASSWORD: PASSWORD
           AWS_ACCESS_KEY_ID: STUB
           AWS_SECRET_ACCESS_KEY: STUB
+          REDIS_URL: redis://localhost:6379/1
         run: bundle exec rspec ./spec
