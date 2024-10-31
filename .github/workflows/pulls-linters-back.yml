@@ -5,7 +5,7 @@ on:
       - '*'
 
 concurrency:
-  group: ci-code-quality-${{ github.ref }}
+  group: ci-linters-back-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
