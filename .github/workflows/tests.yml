@@ -30,4 +30,8 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
+        env:
+          RAILS_ENV: test
+          AWS_ACCESS_KEY_ID: STUB
+          AWS_SECRET_ACCESS_KEY: STUB
         run: bundle exec rspec ./spec
