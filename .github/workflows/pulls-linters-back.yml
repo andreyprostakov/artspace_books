@@ -3,17 +3,22 @@ on:
   pull_request:
     branches:
       - '*'
+
+concurrency:
+  group: ci-code-quality-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analize:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Fetch base for diff
         run: git fetch origin
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
-      - name: Setup pronto
-        run: gem install rugged:1.6.5 pronto pronto-rubocop
       - name: Run Pronto
         run: pronto run -f github_status github_pr_review -c origin/${{ github.base_ref }}
         env:
