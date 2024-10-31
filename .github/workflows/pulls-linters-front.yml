@@ -5,14 +5,14 @@ on:
       - '*'
 
 concurrency:
-  group: ci-code-quality-${{ github.ref }}
+  group: ci-linters-front-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   analize:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Fetch base for diff
         run: git fetch origin
       - name: Setup Node JS
