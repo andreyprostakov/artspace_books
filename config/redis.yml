@@ -1,5 +1,9 @@
 defaults: &defaults
+  <% if ENV["REDIS_URL"] %>
+  url: <%= ENV["REDIS_URL"] %>
+  <% else %>
   host: redis
+  <% end %>
   db: 0
 
 development:
